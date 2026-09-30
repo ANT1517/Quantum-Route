@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qflux"
+version = "0.1.0"
+description = "QuantumFlux: the QuantumRoute optimization engine"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy", "scipy", "pandas", "networkx", "numba", "pyyaml",
+  "osmnx>=2.0", "ortools", "matplotlib",
+]
+
+[tool.setuptools.packages.find]
+include = ["qflux*"]

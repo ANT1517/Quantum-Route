@@ -1,0 +1,39 @@
+seed_base: 12345
+qpso:
+  N: 40
+  alpha_max: 1.0          # contraction–expansion coefficient (CE)
+  alpha_min: 0.5
+  alpha_mode: adaptive    # linear | adaptive | fixed
+  alpha_fixed: 0.75
+  mbest: rank             # uniform | rank
+  init: sobol             # uniform | sobol
+  ls_every: 10
+  ls_top_pbests: 3
+  lamarck: true
+  diversity_delta: 0.01
+  reinit_frac: 0.2
+  tunneling: {enabled: true, stagnation: 15, trials: 30, kappa: 8.0}
+  qubo_slot: {enabled: true, every: 25, max_stops: 7, backend: neal, num_reads: 200}
+pso: {N: 40, w: 0.729, c1: 1.49445, c2: 1.49445, vmax: 0.5}
+ga:  {pop: 40, crossover: ox, pc: 0.9, pm: 0.2, tournament: 3, elitism: 2}
+sa:  {initial_accept: 0.3, cooling: geometric}
+ortools: {first_solution: PATH_CHEAPEST_ARC, metaheuristic: GUIDED_LOCAL_SEARCH, time_limit_s: 30}
+milp: {time_limit_s: 600, max_n: 25}
+budget: {evals: 12000, time_s: 30}
+weights_presets:
+  balanced: [0.5, 0.2, 0.2, 0.1]
+  fastest:  [1.0, 0.0, 0.0, 0.0]
+  greenest: [0.2, 0.0, 0.0, 0.8]
+  least_congestion: [0.3, 0.0, 0.7, 0.0]
+fleet_penalty_lambda: 0.5
+traffic: {bpr_a: 0.15, bpr_b: 4.0, platform_scale_S: 25, fleet_eq_iters: 3}
+hyd:
+  center: [17.4065, 78.4772]
+  radius_m: 12000
+  depot_label: "Balanagar logistics hub (illustrative)"
+  n_customers: 60
+  K: 6
+  Q: 200             # D24: was 100, infeasible with 60 x U{5..25} demand
+  tau0: 1050            # 17:30
+synth: {grid: 20, block_km: 0.5, arterial_every: 5}
+limits: {max_customers: 1000, max_iterations: 5000, max_concurrent_jobs: 2, job_timeout_s: 120}

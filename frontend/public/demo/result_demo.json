@@ -1,0 +1,227 @@
+{
+ "job_id": "MOCK-job",
+ "scenario_id": "MOCK-hyd-60",
+ "algorithm": "qpso",
+ "seed": 7,
+ "status": "COMPLETED",
+ "weights": {
+  "wT": 0.5,
+  "wD": 0.2,
+  "wC": 0.2,
+  "wE": 0.1,
+  "lam": 0.5
+ },
+ "kpis": {
+  "total_time_min": 300.0,
+  "total_distance_km": 102.0,
+  "congestion_delay_min": 69.0,
+  "co2_kg": 24.0,
+  "vehicles_used": 3,
+  "fleet_limit": 6,
+  "fitness": 0.95,
+  "runtime_s": 1.0,
+  "evals": 1000,
+  "feasible": true
+ },
+ "routes": [
+  {
+   "vehicle": 1,
+   "stops": [
+    1,
+    2,
+    3
+   ],
+   "load": 60,
+   "capacity": 100,
+   "time_min": 90.0,
+   "distance_km": 30.0,
+   "congestion_delay_min": 20.0,
+   "co2_kg": 7.0,
+   "depart_min": 1050,
+   "return_min": 1140,
+   "geometry": [
+    [
+     17.4717,
+     78.4479
+    ],
+    [
+     17.46,
+     78.42
+    ],
+    [
+     17.4474,
+     78.3762
+    ],
+    [
+     17.4483,
+     78.3915
+    ],
+    [
+     17.4717,
+     78.4479
+    ]
+   ],
+   "color": "#14b8a6"
+  },
+  {
+   "vehicle": 2,
+   "stops": [
+    4,
+    5,
+    6
+   ],
+   "load": 65,
+   "capacity": 100,
+   "time_min": 100.0,
+   "distance_km": 34.0,
+   "congestion_delay_min": 23.0,
+   "co2_kg": 8.0,
+   "depart_min": 1050,
+   "return_min": 1150,
+   "geometry": [
+    [
+     17.4717,
+     78.4479
+    ],
+    [
+     17.4447,
+     78.4664
+    ],
+    [
+     17.4399,
+     78.4983
+    ],
+    [
+     17.4375,
+     78.4482
+    ],
+    [
+     17.4717,
+     78.4479
+    ]
+   ],
+   "color": "#f59e0b"
+  },
+  {
+   "vehicle": 3,
+   "stops": [
+    7,
+    8,
+    9
+   ],
+   "load": 70,
+   "capacity": 100,
+   "time_min": 110.0,
+   "distance_km": 38.0,
+   "congestion_delay_min": 26.0,
+   "co2_kg": 9.0,
+   "depart_min": 1050,
+   "return_min": 1160,
+   "geometry": [
+    [
+     17.4717,
+     78.4479
+    ],
+    [
+     17.4156,
+     78.4347
+    ],
+    [
+     17.3918,
+     78.4758
+    ],
+    [
+     17.3688,
+     78.5247
+    ],
+    [
+     17.4717,
+     78.4479
+    ]
+   ],
+   "color": "#8b5cf6"
+  }
+ ],
+ "edge_flows": [
+  {
+   "geometry": [
+    [
+     17.4717,
+     78.4479
+    ],
+    [
+     17.46,
+     78.42
+    ]
+   ],
+   "fleet_flow": 25.0,
+   "vc_ratio": 1.2
+  }
+ ],
+ "explanation": [
+  "MOCK: Vehicle 1 serves 3 stops (load 60/100) in 90 min, of which 20 min is congestion delay; 30.0 km; 7.0 kg CO2."
+ ],
+ "convergence": [
+  {
+   "iter": 0,
+   "evals": 0,
+   "best_F": 1.2
+  },
+  {
+   "iter": 5,
+   "evals": 200,
+   "best_F": 1.0976225
+  },
+  {
+   "iter": 10,
+   "evals": 400,
+   "best_F": 1.0371696100249999
+  },
+  {
+   "iter": 15,
+   "evals": 600,
+   "best_F": 1.0014727830236623
+  },
+  {
+   "iter": 20,
+   "evals": 800,
+   "best_F": 0.9803941636476423
+  },
+  {
+   "iter": 25,
+   "evals": 1000,
+   "best_F": 0.9679474496922963
+  },
+  {
+   "iter": 30,
+   "evals": 1200,
+   "best_F": 0.960597789568804
+  },
+  {
+   "iter": 35,
+   "evals": 1400,
+   "best_F": 0.9562578887624831
+  },
+  {
+   "iter": 40,
+   "evals": 1600,
+   "best_F": 0.9536952207353586
+  },
+  {
+   "iter": 45,
+   "evals": 1800,
+   "best_F": 0.9521819908920219
+  }
+ ],
+ "refs": {
+  "T": 320.0,
+  "D": 110.0,
+  "C": 80.0,
+  "E": 26.0
+ },
+ "meta": {
+  "config_hash": "MOCK",
+  "instance": "MOCK hyderabad-60",
+  "tau0": 1050
+ }
+}

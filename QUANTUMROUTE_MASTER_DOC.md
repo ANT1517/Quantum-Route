@@ -506,7 +506,7 @@ hyd:
   depot_label: "Balanagar logistics hub (illustrative)"
   n_customers: 60
   K: 6
-  Q: 100
+  Q: 200             # D24: was 100, infeasible with 60 x U{5..25} demand
   tau0: 1050            # 17:30
 synth: {grid: 20, block_km: 0.5, arterial_every: 5}
 limits: {max_customers: 1000, max_iterations: 5000, max_concurrent_jobs: 2, job_timeout_s: 120}
@@ -1316,6 +1316,10 @@ Finale deck flow (10 slides, later): Title · Problem · Why it matters · Solut
 | D21 | Tuning budget ≤ 4 configs per algorithm on A-n44-k6 only | Avoids tuning on test instances |
 | D22 | System optimum counts delay to **all** traffic: mc = t + (v⁰+x)·∂t/∂x (v3 used x·∂t/∂x, which only counts the fleet's own delay) | Matches the externality metric and the "reduce congestion for everyone" claim |
 | D23 | Dispatch wave treated as a 1-hour flow: each route traversal = S vehicles/h on its edges | Makes flow units consistent with BPR capacity (pcu/h) |
+| D24 | (2026-09-30, Person B) Hyderabad default Q = 200 (was 100) | 60 customers × U{5..25} demand ≈ 1,005 units > K·Q = 600, so the default demo was infeasible; Q = 200 keeps 6 vans at ≈ 84% utilisation |
+| D25 | (2026-09-30, Person B) `Instance.T0[i,j]` = free-flow time of the **free-flow-fastest** path; C = max(T(t) − T0, 0) | Paths differ per slot, so "free-flow time of the same path" is not one 2-D matrix; this keeps C ≥ 0. Per-slot own-path free-flow times are kept in the TD cache (`T0_path`) |
+| D26 | (2026-09-30, Person B) An incident is applied to every slot whose centre lies in its window; if none does, to the slot nearest the window midpoint | Short incidents between slot centres would otherwise have no effect on slot matrices. Shortest path (TD-Dijkstra/A*) applies incidents exactly by time |
+| D27 | (2026-09-30, Person B) Python 3.11+ (3.13 tested) | Laptop has 3.13; all pinned deps support it |
 | … | Add new decisions with date/time | |
 
 ---

@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+frontend/dist/
+*.egg-info/
+data/hyd/cache/
+data/hyd/*.graphml
+data/synth/*.npz
+*.db
+.env
