@@ -1,0 +1,219 @@
+{
+ "table": [
+  {
+   "instance": "MOCK A-n32-k5",
+   "algorithm": "qpso",
+   "mean_gap_pct": 1.6,
+   "std_gap_pct": 0.43,
+   "best_gap_pct": 1.05,
+   "wilcoxon_p_vs_qpso": null,
+   "evals_to_5pct": 8356,
+   "gaps": [
+    2.31,
+    1.05,
+    1.43,
+    2.0,
+    1.25,
+    1.76,
+    1.9,
+    1.35,
+    1.09,
+    1.9
+   ]
+  },
+  {
+   "instance": "MOCK A-n32-k5",
+   "algorithm": "pso",
+   "mean_gap_pct": 3.27,
+   "std_gap_pct": 1.03,
+   "best_gap_pct": 1.81,
+   "wilcoxon_p_vs_qpso": 0.146,
+   "evals_to_5pct": 8291,
+   "gaps": [
+    2.34,
+    3.08,
+    3.15,
+    1.81,
+    3.09,
+    5.14,
+    4.79,
+    2.92,
+    3.75,
+    2.64
+   ]
+  },
+  {
+   "instance": "MOCK A-n32-k5",
+   "algorithm": "ga",
+   "mean_gap_pct": 1.4,
+   "std_gap_pct": 0.44,
+   "best_gap_pct": 0.74,
+   "wilcoxon_p_vs_qpso": 0.161,
+   "evals_to_5pct": 5840,
+   "gaps": [
+    1.29,
+    1.03,
+    1.89,
+    1.78,
+    0.74,
+    0.86,
+    2.0,
+    1.39,
+    1.73,
+    1.24
+   ]
+  },
+  {
+   "instance": "MOCK A-n32-k5",
+   "algorithm": "sa",
+   "mean_gap_pct": 2.42,
+   "std_gap_pct": 0.79,
+   "best_gap_pct": 0.95,
+   "wilcoxon_p_vs_qpso": 0.174,
+   "evals_to_5pct": 3337,
+   "gaps": [
+    3.54,
+    2.5,
+    1.32,
+    3.2,
+    2.38,
+    2.37,
+    0.95,
+    2.46,
+    2.42,
+    3.04
+   ]
+  },
+  {
+   "instance": "MOCK A-n32-k5",
+   "algorithm": "ortools",
+   "mean_gap_pct": 0.93,
+   "std_gap_pct": 0.21,
+   "best_gap_pct": 0.72,
+   "wilcoxon_p_vs_qpso": 0.111,
+   "evals_to_5pct": 6945,
+   "gaps": [
+    0.72,
+    0.82,
+    1.38,
+    0.8,
+    0.8,
+    0.94,
+    0.76,
+    1.19,
+    1.02,
+    0.85
+   ]
+  },
+  {
+   "instance": "MOCK A-n63-k9",
+   "algorithm": "qpso",
+   "mean_gap_pct": 2.41,
+   "std_gap_pct": 0.93,
+   "best_gap_pct": 0.81,
+   "wilcoxon_p_vs_qpso": null,
+   "evals_to_5pct": 4032,
+   "gaps": [
+    1.52,
+    2.68,
+    0.81,
+    2.58,
+    2.18,
+    2.43,
+    1.98,
+    3.64,
+    2.26,
+    4.03
+   ]
+  },
+  {
+   "instance": "MOCK A-n63-k9",
+   "algorithm": "pso",
+   "mean_gap_pct": 5.14,
+   "std_gap_pct": 1.76,
+   "best_gap_pct": 2.17,
+   "wilcoxon_p_vs_qpso": 0.18,
+   "evals_to_5pct": 8461,
+   "gaps": [
+    6.0,
+    6.6,
+    3.73,
+    4.0,
+    4.88,
+    5.71,
+    5.76,
+    2.17,
+    8.46,
+    4.1
+   ]
+  },
+  {
+   "instance": "MOCK A-n63-k9",
+   "algorithm": "ga",
+   "mean_gap_pct": 3.36,
+   "std_gap_pct": 1.05,
+   "best_gap_pct": 1.65,
+   "wilcoxon_p_vs_qpso": 0.091,
+   "evals_to_5pct": 6621,
+   "gaps": [
+    2.56,
+    3.33,
+    3.36,
+    2.77,
+    4.39,
+    1.65,
+    4.74,
+    2.72,
+    4.95,
+    3.16
+   ]
+  },
+  {
+   "instance": "MOCK A-n63-k9",
+   "algorithm": "sa",
+   "mean_gap_pct": 4.3,
+   "std_gap_pct": 1.57,
+   "best_gap_pct": 2.54,
+   "wilcoxon_p_vs_qpso": 0.024,
+   "evals_to_5pct": 3543,
+   "gaps": [
+    7.34,
+    4.33,
+    4.55,
+    3.87,
+    3.24,
+    3.41,
+    2.66,
+    2.54,
+    4.49,
+    6.54
+   ]
+  },
+  {
+   "instance": "MOCK A-n63-k9",
+   "algorithm": "ortools",
+   "mean_gap_pct": 2.31,
+   "std_gap_pct": 0.5,
+   "best_gap_pct": 1.56,
+   "wilcoxon_p_vs_qpso": 0.136,
+   "evals_to_5pct": 2186,
+   "gaps": [
+    2.26,
+    1.56,
+    2.22,
+    1.83,
+    2.69,
+    2.88,
+    2.89,
+    2.33,
+    2.76,
+    1.68
+   ]
+  }
+ ],
+ "figures": [],
+ "meta": {
+  "runs": 10,
+  "budget": "MOCK 12000 evals"
+ }
+}

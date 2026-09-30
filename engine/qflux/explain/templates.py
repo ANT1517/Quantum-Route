@@ -35,11 +35,12 @@ def incident_sentence(vehicle: int, area: str, d_before_km: float, d_after_km: f
 def reroute_sentences(report: dict) -> list[str]:
     out = []
     if report["accepted"]:
-        out.append(f"Re-optimisation after the simulated incident saves {report['delay_avoided_min']:.1f} min "
-                   f"versus keeping the old routes under the new traffic "
+        how = "detours and re-sequenced stops" if report.get("resequenced") else "road-level detours"
+        out.append(f"Re-routing after the simulated incident ({how}) saves {report['delay_avoided_min']:.1f} min "
+                   f"of driving versus vehicles keeping their old road paths "
                    f"({report['reopt_time_s']:.1f} s to re-plan).")
     else:
-        out.append("Re-optimisation found no cheaper plan under the new traffic, so the original routes were kept.")
+        out.append("Re-routing found no cheaper plan under the new traffic, so the original routes and paths were kept.")
     affected = [e for e in report.get("eta_change", []) if e.get("affected")]
     if affected:
         out.append(f"{len(affected)} vehicle(s) had a remaining road path through the incident zone.")
@@ -49,8 +50,10 @@ def reroute_sentences(report: dict) -> list[str]:
 def fleet_sentence(naive: dict, so: dict) -> str:
     diff = naive["externality_veh_h"] - so["externality_veh_h"]
     verb = "reducing" if diff >= 0 else "increasing"
-    return (f"System-optimal routing spread the fleet over {so['corridors_used']} corridors instead of "
-            f"{naive['corridors_used']}, {verb} background delay by {abs(diff):.1f} vehicle-hours.")
+    dt = so["kpis"]["total_time_min"] - naive["kpis"]["total_time_min"]
+    return (f"System-optimal routing used {so['corridors_used']} major-road corridors (naive: "
+            f"{naive['corridors_used']}), {verb} the delay imposed on background traffic by {abs(diff):.1f} "
+            f"vehicle-hours, at {dt:+.0f} min of fleet driving time.")
 
 
 def shortest_path_sentence(before: dict, after: dict) -> str:

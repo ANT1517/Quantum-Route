@@ -166,6 +166,43 @@ def fleet_compare(spec: dict, req: dict) -> dict:
     return fleet_compare_request(inst, req, scenario_id=str(spec.get("id", inst.name)))
 
 
+def incident_reroute(spec: dict, req: dict) -> dict:
+    """req: {incident: §5.4 incident body, t_inc, weights, routes?, seed, time_s}
+    -> {incident, before: ResultJSON, after: ResultJSON, report} (Results screen, J2)."""
+    from qflux.dynamic.reroute import reroute
+    from qflux.dynamic.solver import solve
+    from qflux.traffic.result_json import build_result
+    from qflux.traffic.route_eval import compute_refs
+    from qflux.traffic.td_matrix import bundle_for
+
+    inst = build_instance(spec)
+    old = bundle_for(inst)
+    w = weights_from(req.get("weights"))
+    refs = compute_refs(inst, old)
+    seed = int(req.get("seed", 0))
+    routes = req.get("routes")
+    t = time.time()
+    if routes is None:
+        sol = solve(inst, w, refs, algorithm=req.get("algorithm", "qpso"), seed=seed,
+                    budget={"time_s": float(req.get("time_s", 5.0))})
+        routes, algo = sol["routes"], sol["algorithm"]
+    else:
+        algo = req.get("algorithm", "given")
+    plan_s = time.time() - t
+    inc = req["incident"]
+    inst_new = build_instance(dict(spec, incidents=list(spec.get("incidents", [])) + [inc]))
+    new = bundle_for(inst_new)
+    t_inc = float(req.get("t_inc", inc["start_min"]))
+    rr = reroute(inst, old, new, routes, t_inc, w, refs)
+    sid = str(spec.get("id", inst.name))
+    before = build_result(inst, old, routes, w, refs, algorithm=algo, seed=seed, runtime_s=plan_s, evals=0,
+                          convergence=[], job_id="incident-before", scenario_id=sid)
+    after = build_result(inst_new, rr["bundle"], rr["routes"], w, refs, algorithm=f"{algo}+reroute", seed=seed,
+                         runtime_s=rr["report"]["reopt_time_s"], evals=0, convergence=[],
+                         job_id="incident-after", scenario_id=sid, extra_explanation=rr["report"]["sentences"])
+    return {"incident": inc, "before": before, "after": after, "report": rr["report"]}
+
+
 def solve_route_qubo(req: dict) -> dict:
     try:
         from qflux.quantum.backends import solve_route_request   # Person A's module

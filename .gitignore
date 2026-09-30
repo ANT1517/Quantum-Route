@@ -10,3 +10,4 @@ data/hyd/*.graphml
 data/synth/*.npz
 *.db
 .env
+cache/

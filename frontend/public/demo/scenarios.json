@@ -1,0 +1,22 @@
+[
+ {
+  "id": "hyderabad-60",
+  "name": "Hyderabad-60 (17:30)",
+  "source": "hyderabad",
+  "n_customers": 60,
+  "K": 6,
+  "Q": 200,
+  "seed": 7,
+  "tau0": 1050
+ },
+ {
+  "id": "synth-60",
+  "name": "SynthCity-60",
+  "source": "synth",
+  "n_customers": 60,
+  "K": 6,
+  "Q": 200,
+  "seed": 0,
+  "tau0": 1050
+ }
+]

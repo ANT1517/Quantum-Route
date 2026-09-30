@@ -1,0 +1,49 @@
+{
+ "table": [
+  {
+   "m": 3,
+   "routes": 12,
+   "feasibility_rate": 1.0,
+   "neal_optimal_pct": 100.0,
+   "mean_gap_pct": 0.0,
+   "time_per_route_s": 0.04,
+   "label": "MOCK"
+  },
+  {
+   "m": 4,
+   "routes": 15,
+   "feasibility_rate": 1.0,
+   "neal_optimal_pct": 93.3,
+   "mean_gap_pct": 0.4,
+   "time_per_route_s": 0.06,
+   "label": "MOCK"
+  },
+  {
+   "m": 5,
+   "routes": 11,
+   "feasibility_rate": 0.96,
+   "neal_optimal_pct": 81.8,
+   "mean_gap_pct": 1.2,
+   "time_per_route_s": 0.09,
+   "label": "MOCK"
+  },
+  {
+   "m": 6,
+   "routes": 9,
+   "feasibility_rate": 0.9,
+   "neal_optimal_pct": 66.7,
+   "mean_gap_pct": 2.9,
+   "time_per_route_s": 0.15,
+   "label": "MOCK"
+  },
+  {
+   "m": 7,
+   "routes": 6,
+   "feasibility_rate": 0.83,
+   "neal_optimal_pct": 50.0,
+   "mean_gap_pct": 4.8,
+   "time_per_route_s": 0.24,
+   "label": "MOCK"
+  }
+ ]
+}
