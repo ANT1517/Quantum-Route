@@ -122,12 +122,12 @@ def run_fleet(inst: Instance, w: Weights, *, modes=MODES, S: float | None = None
     bundle = bundle_for(inst)
     ds = DispatchSlot(inst, bundle)
     refs = compute_refs(inst, bundle)
-    solver = solver or _standin_solver(inst, w, refs, time_s)
+    solver = solver or _default_solver(inst, w, refs, time_s, seed)
     out: dict = {}
 
     t = time.time()
     paths0, W0, D0, E0 = ds.plan(None, "naive")
-    R0 = solver(plan_cost(inst, w, refs, W0, D0, E0, True), None)
+    R0 = solver(W0, D0, E0, None)
     naive = dict(routes=R0, paths=paths0, history=[], real=ds.realized(R0, paths0, S), wall_s=time.time() - t)
     out["naive"] = naive
     for mode in [m for m in modes if m != "naive"]:
@@ -141,7 +141,7 @@ def run_fleet(inst: Instance, w: Weights, *, modes=MODES, S: float | None = None
             hist.append(dict(k=k, step_norm=float(np.linalg.norm(x_new - x))))
             x = x_new
             paths, W, D, E = ds.plan(x, mode)
-            R = solver(plan_cost(inst, w, refs, W, D, E, mode == "user_eq"), R)
+            R = solver(W, D, E, R)
             if log:
                 log(f"{mode} k={k} |dx|={hist[-1]['step_norm']:.1f}")
         out[mode] = dict(routes=R, paths=paths, history=hist, real=ds.realized(R, paths, S), wall_s=time.time() - t)
@@ -149,12 +149,33 @@ def run_fleet(inst: Instance, w: Weights, *, modes=MODES, S: float | None = None
     return out
 
 
-def _standin_solver(inst, w, refs, time_s):
+def _default_solver(inst, w, refs, time_s, seed):
+    """solve(W, D, E, warm_routes) -> routes on the dispatch-slot planning matrices.
+
+    With Person A's engine: QPSO on a one-slot planning instance (full budget cold, 50 iterations when
+    warm-started, §6.6.2). Otherwise the OR-Tools stand-in on the same weighted matrix."""
+    from qflux.dynamic.solver import engine_available, solve
+    if engine_available():
+        cfg = load_config()
+        N = int(cfg["qpso"]["N"])
+
+        def solve_engine(W, D, E, warm):
+            plan = Instance(name=f"{inst.name}#plan", source=inst.source, n=inst.n, Q=inst.Q, K=inst.K,
+                            demand=inst.demand, service=inst.service, coords=inst.coords, D=D,
+                            slot_centers=np.array([inst.tau0]), T_slots=W[None], T0=inst.T0,
+                            D_slots=D[None], E_slots=E[None], tau0=inst.tau0)
+            perm = None if warm is None else [c for r in warm for c in r]
+            evals = cfg["budget"]["evals"] if warm is None else 50 * N
+            return solve(plan, w, refs, algorithm="qpso", seed=seed, budget={"evals": evals},
+                         warm_start_perm=perm)["routes"]
+        return solve_engine
+
     from qflux.dynamic.standin import solve_ortools
 
-    def solve(cost, warm):
-        return solve_ortools(inst, w, refs, time_limit_s=time_s, cost_matrix=cost, warm_start_routes=warm)["routes"]
-    return solve
+    def solve_standin(W, D, E, warm):
+        return solve_ortools(inst, w, refs, time_limit_s=time_s, cost_matrix=plan_cost(inst, w, refs, W, D, E, True),
+                             warm_start_routes=warm)["routes"]
+    return solve_standin
 
 
 def fleet_result(inst: Instance, w: Weights, res: dict, mode: str, *, seed: int, scenario_id: str) -> dict:
@@ -168,7 +189,9 @@ def fleet_result(inst: Instance, w: Weights, res: dict, mode: str, *, seed: int,
     note = [f"Fleet mode {mode}: planned with {'marginal cost' if mode == 'system_opt' else 'current travel times'}"
             f", reported with real BPR times at the dispatch slot; S = {S:g} vehicle-equivalents per route "
             f"(modelling assumption)."]
-    out = build_result(inst, rb, r["routes"], w, refs, algorithm="ortools-standin", seed=seed,
+    from qflux.dynamic.solver import engine_available
+    algo = "qpso" if engine_available() else "ortools-standin"
+    out = build_result(inst, rb, r["routes"], w, refs, algorithm=algo, seed=seed,
                        runtime_s=r["wall_s"], evals=0, convergence=[], job_id=f"fleet-{mode}",
                        scenario_id=scenario_id, ev=ev, extra_explanation=note)
     net, used = ds.net, real["used"]
