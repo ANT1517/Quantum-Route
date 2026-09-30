@@ -38,6 +38,14 @@ def _map_params(algorithm: str, params: dict) -> dict:
     return out
 
 
+def _warm_up_jit(ev) -> None:
+    """Trigger Numba compilation of Split and LS without counting evaluations (first call can take ~5 s)."""
+    from qflux.core.localsearch import improve_routes
+    perm = np.arange(1, ev.inst.n + 1)
+    sol = ev.solution(perm)
+    improve_routes(sol.routes[:2], ev, max_rounds=1)
+
+
 def solve(inst: Instance, w: Weights, refs: Refs, *, algorithm: str = "qpso", seed: int = 0,
           budget: dict | None = None, params: dict | None = None, warm_start_perm=None,
           warm_start_routes=None, progress=None, should_stop=None) -> dict:
@@ -54,6 +62,7 @@ def solve(inst: Instance, w: Weights, refs: Refs, *, algorithm: str = "qpso", se
         if budget.get("evals") is None and "N" in params and "iterations" in params:
             budget["evals"] = int(params["N"]) * int(params["iterations"])
         ev = Evaluator(inst, w, refs)
+        _warm_up_jit(ev)                       # Numba compile time must not eat a time budget
         rng = make_rng(seed)
         init_keys = None if warm_start_perm is None else encode_perm(np.asarray(warm_start_perm), rng)
         opt = get_optimizer(algorithm, _map_params(algorithm, params))

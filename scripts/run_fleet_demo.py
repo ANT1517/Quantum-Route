@@ -42,6 +42,11 @@ def dump(name: str, obj) -> None:
     print(f"  wrote results/demo/{name}")
 
 
+def _engine() -> bool:
+    from qflux.dynamic.solver import engine_available
+    return engine_available()
+
+
 def geojson(routes: list[dict], props=("vehicle", "time_min", "distance_km", "co2_kg")) -> dict:
     feats = [{"type": "Feature", "properties": {k: r.get(k) for k in props},
               "geometry": {"type": "LineString", "coordinates": [[p[1], p[0]] for p in r["geometry"]]}}
@@ -63,7 +68,9 @@ def main():
                "weights": BALANCED, "planner_time_s": args.time_s}
 
     print("[1/4] Hyderabad-60 plans at 17:30 and 03:00")
-    job = {"algorithm": "qpso", "weights": BALANCED, "seed": args.seed, "budget": {"time_s": args.time_s},
+    # QPSO: equal-evaluation budget (§11.3); time_s only bounds the OR-Tools stand-in
+    job = {"algorithm": "qpso", "weights": BALANCED, "seed": args.seed,
+           "budget": {"evals": load_config()["budget"]["evals"], "time_s": None if _engine() else args.time_s},
            "job_id": "demo-1730"}
     r1730 = api.run_job(dict(HYD, tau0=1050), job)
     r0300 = api.run_job(dict(HYD, tau0=180), dict(job, job_id="demo-0300"))
