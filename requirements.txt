@@ -8,3 +8,7 @@ pyyaml
 ortools
 matplotlib
 pytest
+pulp>=2.8,<3
+vrplib
+dimod
+dwave-samplers
