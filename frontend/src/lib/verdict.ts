@@ -49,12 +49,13 @@ export function computeVerdict(rows: Row[]): string[] {
       s += ` QPSO: ${fmtNum(num(q[k.gap])!)}`;
       if (k.pval) {
         const p = num(best[k.pval]);
-        if (p !== null) s += `; Wilcoxon p = ${fmtNum(p)} (${bestAlg} vs QPSO${p < 0.05 ? ", significant at 0.05" : ", not significant at 0.05"})`;
+        const pname = /holm/i.test(k.pval) ? "Holm-corrected Wilcoxon p" : "Wilcoxon p";
+        if (p !== null) s += `; ${pname} = ${fmtNum(p)} (${bestAlg} vs QPSO${p < 0.05 ? ", significant at 0.05" : ", not significant at 0.05"})`;
       }
       s += ".";
     } else if (/qpso/i.test(bestAlg) && k.pval) {
       const ps = valid.map((r) => num(r[k.pval!])).filter((p): p is number => p !== null);
-      if (ps.length) s += ` Largest p-value vs QPSO among the others: ${fmtNum(Math.max(...ps))}.`;
+      if (ps.length) s += ` Largest ${/holm/i.test(k.pval) ? "Holm-corrected " : ""}p-value vs QPSO among the others: ${fmtNum(Math.max(...ps))}.`;
     }
     out.push(s);
   }
