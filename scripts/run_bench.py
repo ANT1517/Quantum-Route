@@ -66,6 +66,8 @@ def report(exp: dict, runs_dir: Path = RUNS, tables: Path = TABLES, figures: Pat
         "config_hashes": {f"{a}|{bt}|{b:g}": sorted(g.config_hash.unique().tolist())
                           for (a, bt, b), g in df.groupby(["algo", "budget_type", "budget"])},
         "note": "Measured on one machine; wall times depend on hardware.",
+        "launches": json.loads((runs_dir / f"{name}.run_info.json").read_text(encoding="utf-8"))
+        if (runs_dir / f"{name}.run_info.json").exists() else None,
     }
     out["meta"].write_text(json.dumps(meta, indent=2), encoding="utf-8")
     return out

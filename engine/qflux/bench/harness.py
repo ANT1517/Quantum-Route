@@ -41,7 +41,7 @@ INSTANCE_ORDER = ["P-n16-k8", "P-n19-k2", "P-n22-k8", "A-n32-k5", "A-n44-k6", "A
 CURVE_STEP = 100
 SUSPEND_FACTOR = 1.10        # a time-budget run longer than this x budget was suspended (sleep) or hit a clock jump
 META_KEYS = ("iterations", "moves", "partial", "ls_calls", "qubo_calls", "qubo_improvements", "qubo_skipped_time",
-             "reinits", "solutions_found", "max_abs_key", "curve_t")
+             "reinits", "solutions_found", "max_abs_key", "curve_t", "start_ts", "end_ts")
 THREAD_ENV = {"NUMBA_NUM_THREADS": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1",
               "OPENBLAS_NUM_THREADS": "1"}
 
@@ -67,6 +67,33 @@ def physical_cores() -> int:
 
 def default_workers() -> int:
     return max(1, physical_cores() - 1)
+
+
+def _ps(cmd: str) -> str:
+    try:
+        return subprocess.run(["powershell", "-NoProfile", "-Command", cmd], capture_output=True, text=True,
+                              timeout=20).stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        return ""
+
+
+def machine_info() -> dict:
+    """CPU model, physical cores, logical threads and the active power plan (timing provenance)."""
+    import platform
+    info = {"platform": platform.platform(), "cpu": platform.processor(), "physical_cores": physical_cores(),
+            "logical_threads": os.cpu_count()}
+    if sys.platform == "win32":
+        info["cpu"] = _ps("(Get-CimInstance Win32_Processor).Name") or info["cpu"]
+        info["power_scheme"] = _ps("powercfg /getactivescheme")
+    return info
+
+
+def git_commit() -> str | None:
+    try:
+        return subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True,
+                              cwd=REPO_ROOT, timeout=10).stdout.strip() or None
+    except (OSError, subprocess.SubprocessError):
+        return None
 
 
 def load_experiment(name_or_path: str) -> dict:
@@ -129,6 +156,7 @@ def single_run(inst, algo: str, params: dict, weights: Weights, budget_type: str
     sol, curve = opt.run(ev, int(budget) if budget_type == "evals" else None,
                          float(budget) if budget_type == "time" else None, make_rng(seed))
     wall = time.time() - t
+    sol.meta["start_ts"], sol.meta["end_ts"] = round(t, 3), round(t + wall, 3)   # throttling-drift check
     ok, errs = check(inst, sol, ev)
     gap = None
     fleet_excess = max(0, sol.n_vehicles - inst.K) if inst.K is not None else 0
@@ -213,6 +241,14 @@ def run_experiment(exp: dict, out_dir: Path | None = None, log=print, workers: i
     workers = int(workers or exp.get("workers") or default_workers())
     workers = max(1, min(workers, len(jobs) or 1))
     log(f"[{exp['name']}] {len(jobs)} runs to do ({len(done)} already recorded), {workers} worker(s) -> {path}")
+    if jobs:                                      # provenance of this launch (merged into <exp>_meta.json)
+        info_path = out_dir / f"{exp['name']}.run_info.json"
+        launches = json.loads(info_path.read_text(encoding="utf-8")) if info_path.exists() else []
+        launches.append({"started": time.strftime("%Y-%m-%d %H:%M:%S"), "runs_planned": len(jobs),
+                         "workers": workers, "thread_env": THREAD_ENV, "git_commit": git_commit(),
+                         "run_order": "per (budget, instance, seed): all algorithms in config order",
+                         "machine": machine_info()})
+        info_path.write_text(json.dumps(launches, indent=2), encoding="utf-8")
     if not jobs:
         return path
     variants = exp.get("variants", {}) or {}         # label -> {algo, params}: several configs of one algorithm

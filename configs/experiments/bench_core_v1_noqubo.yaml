@@ -1,0 +1,15 @@
+# D45, PRE-REGISTERED on 2026-10-04 before any bench_core_v1 result was looked at.
+# Supplementary row for the bench_core_v1 table: QPSO-full with the QUBO slot disabled. Same instances, same seeds
+# (seed = seed_base + 1000 * instance_idx + run_idx), same budgets (D43) and the same code as bench_core_v1.
+# Starts as soon as bench_core_v1 finishes.
+name: bench_core_v1_noqubo
+description: "Supplementary row (D45): QPSO-noQUBO = QPSO-full without the QUBO slot; bench_core_v1 seeds and budgets, 30 runs"
+instances: [A-n32-k5, A-n63-k9, A-n80-k10, CMT1, CMT5, X-n101-k25]
+runs: 30
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: qpso_noqubo
+variants:
+  qpso_noqubo: {algo: qpso, params: {qubo_slot: {enabled: false}}}
+budgets:
+  - {type: time, value: 30, instances: [A-n32-k5, A-n63-k9, A-n80-k10, CMT1], algorithms: [qpso_noqubo]}
+  - {type: time, value: 60, instances: [CMT5, X-n101-k25], algorithms: [qpso_noqubo]}

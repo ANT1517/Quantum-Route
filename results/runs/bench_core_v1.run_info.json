@@ -1,0 +1,23 @@
+[
+  {
+    "started": "2026-10-04 (bench_core_v1 launch; recorded after the fact)",
+    "runs_planned": 1080,
+    "workers": 11,
+    "thread_env": {
+      "NUMBA_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    },
+    "git_commit": "466d24a",
+    "run_order": "per (budget, instance, seed): all algorithms in config order (not shuffled)",
+    "machine": {
+      "platform": "Windows-11-10.0.26200-SP0",
+      "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+      "physical_cores": 12,
+      "logical_threads": 16,
+      "power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+    },
+    "note": "run_info written by hand while v1 was running; per-run start times for v1 come from results/logs/bench_core_v1.arrivals.csv (start ~ arrival - wall_s); records before the logger started have no time."
+  }
+]
