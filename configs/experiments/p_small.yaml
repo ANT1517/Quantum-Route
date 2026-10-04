@@ -6,8 +6,10 @@ description: "P-n16/19/22 (proven optima, K = k): QPSO-noQUBO, PSO+LS, OR-Tools;
 instances: [P-n16-k8, P-n19-k2, P-n22-k8]
 runs: 10
 weights: [0.0, 1.0, 0.0, 0.0]
-reference: qpso_noqubo
+# D59 (2026-10-04): the QPSO row is the shipped engine QPSO-noQUBO (tuned, fixed alpha 0.3). The earlier
+# adaptive-alpha rows are archived in results/runs/p_small.d59_replaced.jsonl. Same seeds and budget.
+reference: qn_tuned
 variants:
-  qpso_noqubo: {algo: qpso, params: {qubo_slot: {enabled: false}}}
+  qn_tuned: {algo: qpso, params: {qubo_slot: {enabled: false}, alpha_mode: fixed, alpha_fixed: 0.3}}
 budgets:
-  - {type: time, value: 10, algorithms: [qpso_noqubo, pso_ls, ortools]}
+  - {type: time, value: 10, algorithms: [qn_tuned, pso_ls, ortools]}

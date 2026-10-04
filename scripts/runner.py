@@ -80,6 +80,10 @@ PHASES = {
         ("scaling_v2_audit", [PY, "scripts/audit_throughput.py", "--exps", "scaling_v2", "--no-arrivals",
                               "--out", "d51_audit_scaling_v2"]),
         ("scaling_v2_calibration", [PY, "scripts/check_calibration.py", "scaling_v2"]),
+        ("p_small_d59_archive", [PY, "scripts/supersede_rows.py", "--exp", "p_small", "--algos", "qpso_noqubo",
+                                 "--tag", "d59"]),
+        ("p_small_d59", [PY, "-u", "scripts/run_bench.py", "--exp", "p_small"]),
+        ("p_small_d59_calibration", [PY, "scripts/check_calibration.py", "p_small"]),
     ],
     # optional, after D46: nothing else may run during the P-core check
     "optional": [
