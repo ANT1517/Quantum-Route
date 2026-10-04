@@ -65,6 +65,7 @@ class JobParams(BaseModel):
     iterations: Annotated[int, Field(ge=1, le=MAX_ITERATIONS)] | None = None
     alpha_start: Annotated[float, Field(gt=0, lt=1.78)] | None = None
     alpha_end: Annotated[float, Field(gt=0, lt=1.78)] | None = None
+    qubo_slot: bool | None = None      # D53: QPSO's QUBO sub-route slot; off by default (Quantum Lab can switch it on)
 
 
 class JobCreate(Strict):

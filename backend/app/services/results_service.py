@@ -56,19 +56,26 @@ def benchmark(name: str) -> dict:
         raise ApiError(404, "NOT_FOUND", f"benchmark {name} not found")
     meta = _meta(name)
     summary = pd.read_csv(summ)
-    ref = meta.get("reference", "qpso")
-    wil = TABLES / f"{name}_wilcoxon.csv"
-    pcol = f"wilcoxon_p_vs_{ref}"                       # Benchmark Studio's verdict reads a /wilcoxon/ column
-    summary[pcol] = None
-    if wil.exists() and wil.stat().st_size > 1:
+    refs = meta.get("references") or [meta.get("reference", "qpso")]
+    for k, ref in enumerate(refs):
+        wil = TABLES / (f"{name}_wilcoxon.csv" if k == 0 else f"{name}_wilcoxon_{ref}.csv")
+        # Benchmark Studio's verdict reads the first column matching /wilcoxon/: the Holm-corrected p vs the
+        # primary reference. Other columns avoid the word so they cannot be picked by mistake.
+        pcol = f"wilcoxon_p_holm_vs_{ref}" if k == 0 else f"p_holm_vs_{ref}"
+        for col in (pcol, f"p_raw_vs_{ref}", f"median_diff_gap_pts_vs_{ref}"):
+            summary[col] = None
+        if not wil.exists() or wil.stat().st_size <= 1:
+            continue
         try:
             w = pd.read_csv(wil)
-            for _, r in w.iterrows():
-                m = ((summary.instance == r.instance) & (summary.algo == r.other) &
-                     (summary.budget_type == r.budget_type) & (summary.budget == r.budget))
-                summary.loc[m, pcol] = r.p_value
         except pd.errors.EmptyDataError:
-            pass
+            continue
+        for _, r in w.iterrows():
+            m = ((summary.instance == r.instance) & (summary.algo == r.other) &
+                 (summary.budget_type == r.budget_type) & (summary.budget == r.budget))
+            summary.loc[m, pcol] = r.get("p_holm", r.p_value)
+            summary.loc[m, f"p_raw_vs_{ref}"] = r.p_value
+            summary.loc[m, f"median_diff_gap_pts_vs_{ref}"] = r.get("median_diff_gap_pts")
     gaps = _gap_arrays(name, meta)                     # per-run gaps -> Benchmark Studio box plot
     summary["gap_runs_pct"] = [gaps.get((r.budget_type, float(r.budget), r.instance, r.algo), [])
                                for r in summary.itertuples()]
@@ -77,7 +84,7 @@ def benchmark(name: str) -> dict:
            "meta": {**meta, "kind": kind_of(name), "runs": meta.get("runs_planned"),
                     "budget": ", ".join(f"{b:g} {'s' if t == 'time' else 'evals'}"
                                         for t, b in sorted(set(zip(summary.budget_type, summary.budget))))}}
-    for extra in ("wilcoxon", "friedman", "chain"):
+    for extra in ("wilcoxon", "friedman", "chain", *[f"wilcoxon_{r}" for r in refs[1:]]):
         p = TABLES / f"{name}_{extra}.csv"
         if p.exists() and p.stat().st_size > 1:
             try:

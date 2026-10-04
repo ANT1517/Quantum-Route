@@ -49,8 +49,12 @@ def report(exp: dict, runs_dir: Path = RUNS, tables: Path = TABLES, figures: Pat
     out = {"summary": tables / f"{name}_summary.csv", "wilcoxon": tables / f"{name}_wilcoxon.csv",
            "friedman": tables / f"{name}_friedman.csv", "meta": tables / f"{name}_meta.json", "figures": []}
     stats.summary(df).to_csv(out["summary"], index=False, float_format="%.6g")
-    ref = exp.get("reference", "qpso")
+    refs = exp.get("references") or [exp.get("reference", "qpso")]
+    ref = refs[0]
     stats.wilcoxon_table(df, ref).to_csv(out["wilcoxon"], index=False, float_format="%.6g")
+    for extra_ref in refs[1:]:                        # second comparison set, e.g. vs QPSO-noQUBO (D53)
+        out[f"wilcoxon_{extra_ref}"] = tables / f"{name}_wilcoxon_{extra_ref}.csv"
+        stats.wilcoxon_table(df, extra_ref).to_csv(out[f"wilcoxon_{extra_ref}"], index=False, float_format="%.6g")
     stats.friedman_table(df).to_csv(out["friedman"], index=False, float_format="%.6g")
     if exp.get("scaling_figure") or name.startswith("scaling"):
         p = plots.scaling_plot(df, figures / f"{name}_gap_vs_n.png", rule=exp.get("budget_rule"))
@@ -70,7 +74,8 @@ def report(exp: dict, runs_dir: Path = RUNS, tables: Path = TABLES, figures: Pat
         if p:
             out["figures"].append(p)
     meta = {
-        "experiment": name, "description": exp.get("description", ""), "reference": ref,
+        "experiment": name, "description": exp.get("description", ""), "reference": ref, "references": refs,
+        "multiple_testing": "Holm-Bonferroni per table (p_holm); effect size = paired difference in gap points",
         "weights": exp.get("weights", [0, 1, 0, 0]), "runs_planned": int(exp.get("runs", 3)),
         "records": len(recs), "infeasible": len(bad),
         "budgets": [{"type": b["type"], "value": b["value"], "algorithms": b["algorithms"]} for b in exp["budgets"]],

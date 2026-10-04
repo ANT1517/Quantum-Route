@@ -111,7 +111,7 @@ def test_benchmark_rows_have_p_values_and_run_arrays(client):
     d = client.get(f"/api/benchmarks/{items[0]['name']}").json()
     row = d["table"][0]
     assert {"instance", "algo", "gap_mean_pct", "gap_runs_pct"} <= set(row)
-    assert any(k.startswith("wilcoxon_p_vs_") for k in row)
+    assert any(k.startswith("wilcoxon_p_holm_vs_") for k in row)
     assert isinstance(d["meta"]["budget"], str) and d["meta"]["budget"]
 
 
@@ -193,3 +193,14 @@ def test_websocket_unknown_job_closes_4404(client):
         with client.websocket_connect("/ws/jobs/nope") as ws:
             ws.receive_json()
     assert e.value.code == 4404
+
+
+def test_d53_default_engine_is_qpso_noqubo():
+    from backend.app.schemas import JobCreate
+    from backend.app.services.job_params import engine_job
+    body = JobCreate(scenario_id="x", algorithm="qpso", weights=W)
+    j = engine_job(body, None)
+    assert j["params"]["qubo_slot"] == {"enabled": False} and j["label"] == "qpso_noqubo"
+    body = JobCreate(scenario_id="x", algorithm="qpso", weights=W, params={"qubo_slot": True})
+    j = engine_job(body, None)
+    assert j["params"]["qubo_slot"] == {"enabled": True} and j["label"] == "qpso_full"

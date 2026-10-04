@@ -8,6 +8,7 @@ instances: [A-n32-k5, A-n63-k9, A-n80-k10, CMT1, CMT5, X-n101-k25]
 runs: 30
 weights: [0.0, 1.0, 0.0, 0.0]
 reference: qpso
+references: [qpso, qpso_noqubo]   # second comparison set vs QPSO-noQUBO (D53)
 budgets:
   - {type: time, value: 30, instances: [A-n32-k5, A-n63-k9, A-n80-k10, CMT1], algorithms: [qpso, pso_ls, ga_ls, sa, rr_ls, ortools]}
   - {type: time, value: 60, instances: [CMT5, X-n101-k25], algorithms: [qpso, pso_ls, ga_ls, sa, rr_ls, ortools]}

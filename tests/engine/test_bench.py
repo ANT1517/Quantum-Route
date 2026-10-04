@@ -95,3 +95,10 @@ def test_cluster_qpso_feasible():
     assert time.time() - t <= 8.0 * 1.05
     assert check(inst, sol, ev)[0]
     assert len(sol.meta["clusters"]) == 5 and sum(c["size"] for c in sol.meta["clusters"]) == inst.n
+
+
+def test_holm_matches_reference_values():
+    # textbook example: p = (0.01, 0.04, 0.03, 0.005) -> Holm (0.03, 0.06, 0.06, 0.02)
+    adj = stats.holm([0.01, 0.04, 0.03, 0.005])
+    assert np.allclose(adj, [0.03, 0.06, 0.06, 0.02])
+    assert (stats.holm([0.5, 0.9]) <= 1).all()

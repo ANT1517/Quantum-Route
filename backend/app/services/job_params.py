@@ -20,6 +20,9 @@ def engine_job(body, warm_perm: list[int] | None) -> dict:
     iterations = p.pop("iterations", None)
     a0, a1 = p.pop("alpha_start", None), p.pop("alpha_end", None)
     N = p.get("N")
+    qubo = bool(p.pop("qubo_slot", False) or False)
+    if body.algorithm == "qpso":                       # D53: default engine = QPSO-noQUBO; qubo_slot=true -> QPSO-full
+        p["qubo_slot"] = {"enabled": qubo}
     if body.algorithm == "qpso" and (a0 is not None or a1 is not None):
         p.update(alpha_mode="linear", alpha_max=a0 if a0 is not None else 1.0, alpha_min=a1 if a1 is not None else 0.5)
     if body.algorithm == "ga" and N is not None:
@@ -41,4 +44,5 @@ def engine_job(body, warm_perm: list[int] | None) -> dict:
     w = body.weights.model_dump(exclude_none=True)
     return {"algorithm": body.algorithm, "weights": w, "params": p, "seed": body.seed, "budget": budget,
             "timeout_bound": timeout_bound,
+            "label": ("qpso_full" if qubo else "qpso_noqubo") if body.algorithm == "qpso" else body.algorithm,
             "fleet_mode": body.fleet_mode, "warm_start": {"perm": warm_perm} if warm_perm else None}

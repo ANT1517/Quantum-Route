@@ -46,4 +46,6 @@ def run(job_id: str, spec: dict, job: dict, q, cancel, timeout_s: float):
     else:
         status = "COMPLETED"
     res["status"] = "COMPLETED_PARTIAL" if status in ("COMPLETED_PARTIAL", "CANCELLED") else "COMPLETED"
+    if job.get("label") and res.get("algorithm") == job.get("algorithm"):
+        res["algorithm"] = job["label"]                # D53: say which QPSO variant ran (qpso_noqubo / qpso_full)
     return {"status": status, "result": res, "error": None}

@@ -89,8 +89,44 @@ def wilcoxon_pair(a: np.ndarray, b: np.ndarray) -> tuple[float, float]:
     return float(res.statistic), float(res.pvalue)
 
 
+def holm(pvals) -> np.ndarray:
+    """Holm-Bonferroni adjusted p-values (step-down, monotone, capped at 1) for one family of tests."""
+    p = np.asarray(pvals, float)
+    m = len(p)
+    if m == 0:
+        return p
+    order = np.argsort(p)
+    adj = np.empty(m)
+    running = 0.0
+    for k, i in enumerate(order):
+        running = max(running, min(1.0, (m - k) * p[i]))
+        adj[i] = running
+    return adj
+
+
+def _effect(g: pd.DataFrame, a: str, b: str, seeds) -> tuple[float | None, float | None]:
+    """(median, mean) paired difference in gap points, a - b, over the given seeds (None without gaps)."""
+    gp = g.pivot_table(index="seed", columns="algo", values="gap_pct", aggfunc="first")
+    if a not in gp or b not in gp:
+        return None, None
+    d = (gp.loc[gp.index.intersection(seeds), a] - gp.loc[gp.index.intersection(seeds), b]).dropna()
+    return (float(d.median()), float(d.mean())) if len(d) else (None, None)
+
+
+def _finish(rows: list[dict], alpha: float) -> pd.DataFrame:
+    """Holm-Bonferroni across the whole table (one family per table)."""
+    out = pd.DataFrame(rows)
+    if len(out):
+        out["p_holm"] = holm(out["p_value"].to_numpy())
+        out["significant_holm"] = out["p_holm"] < alpha
+        out["holm_family_size"] = len(out)
+    return out
+
+
 def wilcoxon_table(df: pd.DataFrame, reference: str, metric: str = "best_D", alpha: float = 0.05) -> pd.DataFrame:
-    """Reference algorithm vs each other algorithm, paired by seed, per (budget, instance); fleet-feasible runs only."""
+    """Reference algorithm vs each other algorithm, paired by seed, per (budget, instance); fleet-feasible runs only.
+    p_holm: Holm-Bonferroni over all comparisons in this table. Effect size: paired difference in gap points
+    (reference - other; negative = reference better)."""
     df = df[fleet_ok(df)]
     rows = []
     for (bt, b, inst), g in df.groupby(["budget_type", "budget", "instance"], sort=False):
@@ -105,12 +141,14 @@ def wilcoxon_table(df: pd.DataFrame, reference: str, metric: str = "best_D", alp
                 continue
             stat, p = wilcoxon_pair(pair[reference].to_numpy(), pair[algo].to_numpy())
             diff = float(np.median(pair[reference] - pair[algo]))
-            better = "ref better" if diff < 0 else ("ref worse" if diff > 0 else "tie")
+            med_gap, mean_gap = _effect(g, reference, algo, pair.index)
+            key = mean_gap if mean_gap is not None else float(np.mean(pair[reference] - pair[algo]))
+            better = "ref better" if key < 0 else ("ref worse" if key > 0 else "tie")
             rows.append({"budget_type": bt, "budget": b, "instance": inst, "reference": reference,
                          "other": algo, "runs": len(pair), "seeds": _seed_range(pair.index),
-                         "median_diff": diff, "statistic": stat, "p_value": p,
-                         "significant": p < alpha, "direction": better})
-    return pd.DataFrame(rows)
+                         "median_diff": diff, "median_diff_gap_pts": med_gap, "mean_diff_gap_pts": mean_gap,
+                         "statistic": stat, "p_value": p, "significant": p < alpha, "direction": better})
+    return _finish(rows, alpha)
 
 
 def friedman_table(df: pd.DataFrame, metric: str = "best_D") -> pd.DataFrame:
@@ -145,9 +183,12 @@ def chain_table(df: pd.DataFrame, chain: list[str], metric: str = "best_D", alph
                 continue
             stat, p = wilcoxon_pair(pair[cur].to_numpy(), pair[prev].to_numpy())
             diff = float(np.median(pair[cur] - pair[prev]))
+            med_gap, mean_gap = _effect(g, cur, prev, pair.index)
+            key = mean_gap if mean_gap is not None else float(np.mean(pair[cur] - pair[prev]))
             rows.append({"budget_type": bt, "budget": b, "instance": inst, "row": cur, "previous": prev,
                          "runs": len(pair), "seeds": _seed_range(pair.index),
                          "mean_row": float(pair[cur].mean()), "mean_previous": float(pair[prev].mean()),
-                         "median_diff": diff, "statistic": stat, "p_value": p, "significant": p < alpha,
-                         "direction": "better" if diff < 0 else ("worse" if diff > 0 else "tie")})
-    return pd.DataFrame(rows)
+                         "median_diff": diff, "median_diff_gap_pts": med_gap, "mean_diff_gap_pts": mean_gap,
+                         "statistic": stat, "p_value": p, "significant": p < alpha,
+                         "direction": "better" if key < 0 else ("worse" if key > 0 else "tie")})
+    return _finish(rows, alpha)
