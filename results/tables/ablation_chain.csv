@@ -1,0 +1,15 @@
+budget_type,budget,instance,row,previous,runs,seeds,mean_row,mean_previous,median_diff,median_diff_gap_pts,mean_diff_gap_pts,statistic,p_value,significant,direction,p_holm,significant_holm,holm_family_size
+time,30,A-n63-k9,a1_rank_mbest,a0_base,9,17345..17354,1940,1938.11,0,0,0.116887,5,1,False,worse,1,False,14
+time,30,A-n63-k9,a2_sobol,a1_rank_mbest,9,17345..17354,1911.56,1940,-4,-0.247525,-1.76018,19,0.734375,False,better,1,False,14
+time,30,A-n63-k9,a3_adaptive_alpha,a2_sobol,10,17345..17354,1921,1915.8,0,0,0.321782,9,0.84375,False,worse,1,False,14
+time,30,A-n63-k9,a4_memetic_ls,a3_adaptive_alpha,10,17345..17354,1650.5,1921,-268,-16.5842,-16.7389,0,0.00195312,True,better,0.0273438,True,14
+time,30,A-n63-k9,a5_tunneling,a4_memetic_ls,10,17345..17354,1650,1650.5,-4,-0.247525,-0.0309406,21,0.539062,False,better,1,False,14
+time,30,A-n63-k9,a6_qubo,a5_tunneling,10,17345..17354,1660,1650,5.5,0.340347,0.618812,5,0.078125,False,worse,0.9375,False,14
+time,30,A-n63-k9,a7_full,a6_qubo,10,17345..17354,1658.9,1660,0,0,-0.0680693,0,1,False,better,1,False,14
+time,30,A-n80-k10,a1_rank_mbest,a0_base,10,18345..18354,2126.1,2107.3,0,0,1.06636,15,0.742188,False,worse,1,False,14
+time,30,A-n80-k10,a2_sobol,a1_rank_mbest,10,18345..18354,2160.6,2126.1,49.5,2.80771,1.95689,17,0.322266,False,worse,1,False,14
+time,30,A-n80-k10,a3_adaptive_alpha,a2_sobol,10,18345..18354,2130.1,2160.6,-35,-1.98525,-1.73001,6,0.21875,False,better,1,False,14
+time,30,A-n80-k10,a4_memetic_ls,a3_adaptive_alpha,10,18345..18354,1841.2,2130.1,-265.5,-15.0596,-16.3868,0,0.00195312,True,better,0.0273438,True,14
+time,30,A-n80-k10,a5_tunneling,a4_memetic_ls,10,18345..18354,1839.9,1841.2,-1.5,-0.0850822,-0.0737379,17,0.554688,False,better,1,False,14
+time,30,A-n80-k10,a6_qubo,a5_tunneling,10,18345..18354,1847.9,1839.9,2.5,0.141804,0.453772,15,0.222656,False,worse,1,False,14
+time,30,A-n80-k10,a7_full,a6_qubo,10,18345..18354,1847.9,1847.9,0,0,0,0,1,False,tie,1,False,14

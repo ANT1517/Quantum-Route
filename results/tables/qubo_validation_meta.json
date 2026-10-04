@@ -1,0 +1,11 @@
+{
+  "note":"Classical simulated annealing (dwave-samplers) on the route QUBO; readiness, not quantum advantage.",
+  "brute_force":"exact optimum for m <= 7",
+  "machine":{
+    "platform":"Windows-11-10.0.26200-SP0",
+    "cpu":"13th Gen Intel(R) Core(TM) i7-1360P",
+    "physical_cores":12,
+    "logical_threads":16,
+    "power_scheme":"Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+  }
+}

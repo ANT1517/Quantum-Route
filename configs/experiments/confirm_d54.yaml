@@ -1,0 +1,17 @@
+# D54 confirmation (2026-10-04): tuned QPSO-noQUBO vs tuned PSO+LS, with GA+LS and OR-Tools as references.
+# Configs from d54_choice.yaml (committed before this run). bench_core instances and budgets (D43), 30 runs,
+# NEW seeds: seed_base = 12345 + 50000. Holm-corrected Wilcoxon per table (D56). Reported whichever way it goes.
+name: confirm_d54
+description: "D54 confirmation: tuned QPSO-noQUBO (fixed alpha 0.3) vs tuned PSO+LS (current) + GA+LS, OR-Tools; 30 runs, new seeds"
+instances: [A-n32-k5, A-n63-k9, A-n80-k10, CMT1, CMT5, X-n101-k25]
+runs: 30
+seed_base: 62345
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: qn_tuned
+references: [qn_tuned, pso_tuned]
+variants:
+  qn_tuned:  {algo: qpso, params: {qubo_slot: {enabled: false}, alpha_mode: fixed, alpha_fixed: 0.3}}
+  pso_tuned: {algo: pso_ls, params: {w: 0.729, c1: 1.49445, c2: 1.49445}}
+budgets:
+  - {type: time, value: 30, instances: [A-n32-k5, A-n63-k9, A-n80-k10, CMT1], algorithms: [qn_tuned, pso_tuned, ga_ls, ortools]}
+  - {type: time, value: 60, instances: [CMT5, X-n101-k25], algorithms: [qn_tuned, pso_tuned, ga_ls, ortools]}

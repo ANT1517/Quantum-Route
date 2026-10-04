@@ -1,0 +1,13 @@
+instance,method,runs,budget_s,mean_gap_pct,max_gap_pct,reached_optimum,median_time_to_optimum_s,note
+P-n16-k8,"MILP (CBC, 600 s)",1,600,0,0,1,209,optimal (proved by CBC)
+P-n16-k8,ortools,10,10,0,0,10,0.0896,
+P-n16-k8,pso_ls,10,10,0,0,10,0.00725,
+P-n16-k8,qn_tuned,10,10,0,0,10,0.00625,
+P-n19-k2,"MILP (CBC, 600 s)",1,600,9.434,9.434,0,,"time limit, gap 29.4%"
+P-n19-k2,ortools,10,10,0,0,10,2.512,
+P-n19-k2,pso_ls,10,10,4.34,5.66,1,0.03,
+P-n19-k2,qn_tuned,10,10,2.453,5.66,5,0.0349,
+P-n22-k8,"MILP (CBC, 600 s)",1,600,0.4975,0.4975,0,,"time limit, gap 28.6%"
+P-n22-k8,ortools,10,10,0,0,10,0.7077,
+P-n22-k8,pso_ls,10,10,0,0,10,0.0184,
+P-n22-k8,qn_tuned,10,10,0,0,10,0.0112,

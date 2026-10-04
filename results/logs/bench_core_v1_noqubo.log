@@ -1,0 +1,30 @@
+[bench_core_v1_noqubo] 0 runs to do (180 already recorded), 1 worker(s) -> C:\Users\nisha\Quantum-Route-solver\results\runs\bench_core_v1_noqubo.jsonl
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+budget_type  budget   instance        algo  runs    D_mean  gap_mean_pct  gap_best_pct  wall_s_mean
+       time      30   A-n32-k5 qpso_noqubo    30   784.000      0.000000      0.000000      30.0027
+       time      30   A-n63-k9 qpso_noqubo    30  1649.430      2.068890      0.804455      30.0038
+       time      30  A-n80-k10 qpso_noqubo    30  1841.370      4.445070      2.439020      30.0044
+       time      30       CMT1 qpso_noqubo    30   524.639      0.005302      0.000028      30.0030
+       time      60       CMT5 qpso_noqubo    30  1432.010     10.897800      7.447790      60.0146
+       time      60 X-n101-k25 qpso_noqubo    30 28323.900      2.656180      2.199990      60.0063
+
+wrote:
+  C:\Users\nisha\Quantum-Route-solver\results\tables\bench_core_v1_noqubo_summary.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\bench_core_v1_noqubo_wilcoxon.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\bench_core_v1_noqubo_friedman.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\bench_core_v1_noqubo_meta.json
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_noqubo_convergence_A-n32-k5_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_noqubo_convergence_A-n63-k9_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_noqubo_convergence_A-n80-k10_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_noqubo_convergence_CMT1_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_noqubo_gap_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_noqubo_convergence_CMT5_time60.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_noqubo_convergence_X-n101-k25_time60.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_noqubo_gap_time60.png

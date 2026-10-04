@@ -1,0 +1,71 @@
+{
+  "experiment": "smoke",
+  "description": "Harness smoke test (not a benchmark)",
+  "reference": "qpso",
+  "weights": [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "runs_planned": 3,
+  "records": 42,
+  "infeasible": 0,
+  "budgets": [
+    {
+      "type": "evals",
+      "value": 12000,
+      "algorithms": [
+        "qpso",
+        "pso",
+        "ga"
+      ]
+    },
+    {
+      "type": "time",
+      "value": 5,
+      "algorithms": [
+        "qpso",
+        "pso",
+        "ga",
+        "ortools"
+      ]
+    }
+  ],
+  "instances": [
+    "A-n32-k5",
+    "CMT1"
+  ],
+  "seeds": [
+    15345,
+    15346,
+    15347,
+    19345,
+    19346,
+    19347
+  ],
+  "config_hashes": {
+    "ga|evals|12000": [
+      "7b6f65d419a4"
+    ],
+    "ga|time|5": [
+      "ce1cd5fe4f46"
+    ],
+    "ortools|time|5": [
+      "ea51756878a2"
+    ],
+    "pso|evals|12000": [
+      "6d1918b411a0"
+    ],
+    "pso|time|5": [
+      "8fc9e7f8c07f"
+    ],
+    "qpso|evals|12000": [
+      "58deda45b740"
+    ],
+    "qpso|time|5": [
+      "0097f2fa932b"
+    ]
+  },
+  "note": "Measured on one machine; wall times depend on hardware."
+}

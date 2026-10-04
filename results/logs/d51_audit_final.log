@@ -1,0 +1,8 @@
+                 exp  timed_runs  flagged  min_work_rel  min_ls_rel  min_calib_rel  max_wall_ratio  runs_with_start_time
+            ablation         200        0         0.801       0.792          0.758           1.001                   200
+         alpha_sweep          90        0         0.783       0.781          0.756           1.000                    90
+       bench_core_v1        1080        0         0.781       0.775          0.758           1.005                     5
+bench_core_v1_noqubo         180        0         0.861       0.859            NaN           1.001                   180
+             scaling          40        0         0.912       0.906          0.864           1.000                    40
+
+flagged runs: 0

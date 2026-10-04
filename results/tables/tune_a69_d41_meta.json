@@ -1,0 +1,55 @@
+{
+  "experiment": "tune_a69_d41",
+  "description": "[information only, after D41; no config changes based on it] A-n69-k9 tuning-only check of the final configs: QPSO-full (D33), RR+LS, PSO+LS, GA+LS, SA. Not a benchmark",
+  "reference": "qpso_full",
+  "weights": [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "runs_planned": 5,
+  "records": 25,
+  "infeasible": 0,
+  "budgets": [
+    {
+      "type": "time",
+      "value": 10,
+      "algorithms": [
+        "qpso_full",
+        "rr_ls",
+        "pso_ls",
+        "ga_ls",
+        "sa"
+      ]
+    }
+  ],
+  "instances": [
+    "A-n69-k9"
+  ],
+  "seeds": [
+    25345,
+    25346,
+    25347,
+    25348,
+    25349
+  ],
+  "config_hashes": {
+    "ga_ls|time|10": [
+      "584309ade86d"
+    ],
+    "pso_ls|time|10": [
+      "4bf32eb517e6"
+    ],
+    "qpso_full|time|10": [
+      "b14754d03671"
+    ],
+    "rr_ls|time|10": [
+      "48d5ebd194e9"
+    ],
+    "sa|time|10": [
+      "82245e355272"
+    ]
+  },
+  "note": "Measured on one machine; wall times depend on hardware."
+}

@@ -1,0 +1,88 @@
+{
+  "experiment": "smoke_v1",
+  "description": "Acceptance smoke after the D41 LS speed-up (2 seeds, D43 budgets). Not a benchmark",
+  "reference": "qpso",
+  "weights": [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "runs_planned": 2,
+  "records": 24,
+  "infeasible": 0,
+  "budgets": [
+    {
+      "type": "time",
+      "value": 30,
+      "algorithms": [
+        "qpso",
+        "pso_ls",
+        "ga_ls",
+        "sa",
+        "rr_ls",
+        "ortools"
+      ]
+    },
+    {
+      "type": "time",
+      "value": 60,
+      "algorithms": [
+        "qpso",
+        "pso_ls",
+        "ga_ls",
+        "sa",
+        "rr_ls",
+        "ortools"
+      ]
+    }
+  ],
+  "instances": [
+    "A-n80-k10"
+  ],
+  "seeds": [
+    18345,
+    18346,
+    20345,
+    20346
+  ],
+  "config_hashes": {
+    "ga_ls|time|30": [
+      "380b825e6987"
+    ],
+    "ga_ls|time|60": [
+      "263b65040262"
+    ],
+    "ortools|time|30": [
+      "6e7db6bd22b6"
+    ],
+    "ortools|time|60": [
+      "8636c6f9bd36"
+    ],
+    "pso_ls|time|30": [
+      "81dce9804009"
+    ],
+    "pso_ls|time|60": [
+      "195194233733"
+    ],
+    "qpso|time|30": [
+      "e777c20447d7"
+    ],
+    "qpso|time|60": [
+      "f6045f479cf6"
+    ],
+    "rr_ls|time|30": [
+      "9dcf3a432eae"
+    ],
+    "rr_ls|time|60": [
+      "7a94d40f58c5"
+    ],
+    "sa|time|30": [
+      "743f76d2585c"
+    ],
+    "sa|time|60": [
+      "b7699e66f1a9"
+    ]
+  },
+  "note": "Measured on one machine; wall times depend on hardware."
+}

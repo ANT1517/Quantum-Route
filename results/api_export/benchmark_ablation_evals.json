@@ -1,0 +1,302 @@
+{
+ "table": [
+  {
+   "budget_type": "evals",
+   "budget": 12000,
+   "instance": "A-n63-k9",
+   "algo": "pso_plain",
+   "runs": 10,
+   "runs_fleet_ok": 5,
+   "fleet_violations": 5,
+   "seeds": "17345..17354",
+   "F_mean": 1.62879,
+   "F_std": 0.0808244,
+   "D_best": 3325,
+   "D_mean": 3563.8,
+   "D_median": 3556.0,
+   "D_worst": 3818,
+   "D_std": 176.844,
+   "gap_best_pct": 105.755,
+   "gap_mean_pct": 120.532,
+   "gap_std_pct": 10.9433,
+   "vehicles_mean": 9.5,
+   "evals_to_1pct_median": 9700,
+   "evals_to_5pct_median": 9400,
+   "time_to_1pct_s_median": 5.7572,
+   "time_to_5pct_s_median": 5.5304,
+   "evals_mean": 12000,
+   "wall_s_mean": 6.99569,
+   "ls_calls_mean": 0,
+   "wilcoxon_p_holm_vs_qpso_base_plain": 0.25,
+   "p_raw_vs_qpso_base_plain": 0.25,
+   "median_diff_gap_pts_vs_qpso_base_plain": 18.1931,
+   "gap_runs_pct": [
+    105.755,
+    136.2624,
+    117.7599,
+    120.0495,
+    122.8342
+   ]
+  },
+  {
+   "budget_type": "evals",
+   "budget": 12000,
+   "instance": "A-n63-k9",
+   "algo": "qpso_base_plain",
+   "runs": 10,
+   "runs_fleet_ok": 4,
+   "fleet_violations": 6,
+   "seeds": "17345..17354",
+   "F_mean": 1.7404,
+   "F_std": 0.0970171,
+   "D_best": 3619,
+   "D_mean": 3808.0,
+   "D_median": 3799.0,
+   "D_worst": 4015,
+   "D_std": 212.273,
+   "gap_best_pct": 123.948,
+   "gap_mean_pct": 135.644,
+   "gap_std_pct": 13.1357,
+   "vehicles_mean": 9.6,
+   "evals_to_1pct_median": 7050,
+   "evals_to_5pct_median": 7050,
+   "time_to_1pct_s_median": 4.1508,
+   "time_to_5pct_s_median": 4.1508,
+   "evals_mean": 12000,
+   "wall_s_mean": 7.13243,
+   "ls_calls_mean": 0,
+   "wilcoxon_p_holm_vs_qpso_base_plain": null,
+   "p_raw_vs_qpso_base_plain": null,
+   "median_diff_gap_pts_vs_qpso_base_plain": null,
+   "gap_runs_pct": [
+    123.948,
+    148.453,
+    145.4827,
+    124.6906
+   ]
+  },
+  {
+   "budget_type": "evals",
+   "budget": 12000,
+   "instance": "A-n80-k10",
+   "algo": "pso_plain",
+   "runs": 10,
+   "runs_fleet_ok": 10,
+   "fleet_violations": 0,
+   "seeds": "18345..18354",
+   "F_mean": 1.69284,
+   "F_std": 0.0313358,
+   "D_best": 3862,
+   "D_mean": 3974.8,
+   "D_median": 3975.0,
+   "D_worst": 4083,
+   "D_std": 73.5766,
+   "gap_best_pct": 119.058,
+   "gap_mean_pct": 125.457,
+   "gap_std_pct": 4.17337,
+   "vehicles_mean": 10.0,
+   "evals_to_1pct_median": 9250,
+   "evals_to_5pct_median": 5500,
+   "time_to_1pct_s_median": 7.33115,
+   "time_to_5pct_s_median": 3.9671,
+   "evals_mean": 12000,
+   "wall_s_mean": 8.8835,
+   "ls_calls_mean": 0,
+   "wilcoxon_p_holm_vs_qpso_base_plain": 0.00390625,
+   "p_raw_vs_qpso_base_plain": 0.00195312,
+   "median_diff_gap_pts_vs_qpso_base_plain": 19.7391,
+   "gap_runs_pct": [
+    119.4555,
+    125.7516,
+    124.3902,
+    125.7516,
+    119.0584,
+    125.1843,
+    129.6653,
+    123.7663,
+    129.949,
+    131.5939
+   ]
+  },
+  {
+   "budget_type": "evals",
+   "budget": 12000,
+   "instance": "A-n80-k10",
+   "algo": "qpso_base_plain",
+   "runs": 10,
+   "runs_fleet_ok": 10,
+   "fleet_violations": 0,
+   "seeds": "18345..18354",
+   "F_mean": 1.83352,
+   "F_std": 0.0131828,
+   "D_best": 4263,
+   "D_mean": 4305.1,
+   "D_median": 4302.5,
+   "D_worst": 4359,
+   "D_std": 30.9532,
+   "gap_best_pct": 141.804,
+   "gap_mean_pct": 144.192,
+   "gap_std_pct": 1.75571,
+   "vehicles_mean": 10.0,
+   "evals_to_1pct_median": 5950,
+   "evals_to_5pct_median": 1450,
+   "time_to_1pct_s_median": 4.40255,
+   "time_to_5pct_s_median": 1.08715,
+   "evals_mean": 12000,
+   "wall_s_mean": 9.32816,
+   "ls_calls_mean": 0,
+   "wilcoxon_p_holm_vs_qpso_base_plain": null,
+   "p_raw_vs_qpso_base_plain": null,
+   "median_diff_gap_pts_vs_qpso_base_plain": null,
+   "gap_runs_pct": [
+    144.0159,
+    143.1651,
+    144.0726,
+    147.249,
+    146.9087,
+    142.9382,
+    144.4697,
+    144.6398,
+    142.6546,
+    141.8037
+   ]
+  }
+ ],
+ "figures": [
+  "figures/ablation_evals_convergence_A-n63-k9_evals12000.png",
+  "figures/ablation_evals_convergence_A-n80-k10_evals12000.png",
+  "figures/ablation_evals_gap_evals12000.png"
+ ],
+ "meta": {
+  "experiment": "ablation_evals",
+  "description": "Plain QPSO-base vs plain PSO (no LS), 12,000 evaluations, 10 runs",
+  "reference": "qpso_base_plain",
+  "references": [
+   "qpso_base_plain"
+  ],
+  "multiple_testing": "Holm-Bonferroni per table (p_holm); effect size = paired difference in gap points",
+  "weights": [
+   0.0,
+   1.0,
+   0.0,
+   0.0
+  ],
+  "runs_planned": 10,
+  "records": 40,
+  "infeasible": 0,
+  "budgets": [
+   {
+    "type": "evals",
+    "value": 12000,
+    "algorithms": [
+     "qpso_base_plain",
+     "pso_plain"
+    ]
+   }
+  ],
+  "instances": [
+   "A-n63-k9",
+   "A-n80-k10"
+  ],
+  "import_runs": [],
+  "seeds": [
+   17345,
+   17346,
+   17347,
+   17348,
+   17349,
+   17350,
+   17351,
+   17352,
+   17353,
+   17354,
+   18345,
+   18346,
+   18347,
+   18348,
+   18349,
+   18350,
+   18351,
+   18352,
+   18353,
+   18354
+  ],
+  "config_hashes": {
+   "pso_plain|evals|12000": [
+    "475fc540e0d4"
+   ],
+   "qpso_base_plain|evals|12000": [
+    "35d4788f0f34"
+   ]
+  },
+  "note": "Measured on one machine; wall times depend on hardware.",
+  "launches": [
+   {
+    "started": "2026-10-04 15:42:54",
+    "runs_planned": 40,
+    "workers": 11,
+    "thread_env": {
+     "NUMBA_NUM_THREADS": "1",
+     "OMP_NUM_THREADS": "1",
+     "MKL_NUM_THREADS": "1",
+     "OPENBLAS_NUM_THREADS": "1"
+    },
+    "git_commit": "1a3d308",
+    "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
+    "pinned_cpus": null,
+    "machine": {
+     "platform": "Windows-11-10.0.26200-SP0",
+     "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+     "physical_cores": 12,
+     "logical_threads": 16,
+     "power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+    }
+   }
+  ],
+  "kind": "benchmark",
+  "runs": 10,
+  "excluded_rows": {},
+  "budget": "12000 evals"
+ },
+ "wilcoxon": [
+  {
+   "budget_type": "evals",
+   "budget": 12000,
+   "instance": "A-n63-k9",
+   "reference": "qpso_base_plain",
+   "other": "pso_plain",
+   "runs": 3,
+   "seeds": "17345..17353",
+   "median_diff": 294,
+   "median_diff_gap_pts": 18.1931,
+   "mean_diff_gap_pts": 15.1609,
+   "statistic": 0,
+   "p_value": 0.25,
+   "significant": false,
+   "direction": "ref worse",
+   "p_holm": 0.25,
+   "significant_holm": false,
+   "holm_family_size": 2
+  },
+  {
+   "budget_type": "evals",
+   "budget": 12000,
+   "instance": "A-n80-k10",
+   "reference": "qpso_base_plain",
+   "other": "pso_plain",
+   "runs": 10,
+   "seeds": "18345..18354",
+   "median_diff": 348,
+   "median_diff_gap_pts": 19.7391,
+   "mean_diff_gap_pts": 18.7351,
+   "statistic": 0,
+   "p_value": 0.00195312,
+   "significant": true,
+   "direction": "ref worse",
+   "p_holm": 0.00390625,
+   "significant_holm": true,
+   "holm_family_size": 2
+  }
+ ],
+ "friedman": []
+}

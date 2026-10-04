@@ -1,0 +1,7 @@
+budget_type,budget,instance,reference,other,runs,seeds,median_diff,median_diff_gap_pts,mean_diff_gap_pts,statistic,p_value,significant,direction,p_holm,significant_holm,holm_family_size
+time,10,P-n16-k8,qn_tuned,ortools,10,12345..12354,0,0,0,0,1,False,tie,1,False,6
+time,10,P-n16-k8,qn_tuned,pso_ls,10,12345..12354,0,0,0,0,1,False,tie,1,False,6
+time,10,P-n19-k2,qn_tuned,ortools,10,13345..13354,5,2.35849,2.45283,0,0.0625,False,ref worse,0.375,False,6
+time,10,P-n19-k2,qn_tuned,pso_ls,10,13345..13354,-5.5,-2.59434,-1.88679,12,0.128906,False,ref better,0.644531,False,6
+time,10,P-n22-k8,qn_tuned,ortools,10,14345..14354,0,0,0,0,1,False,tie,1,False,6
+time,10,P-n22-k8,qn_tuned,pso_ls,10,14345..14354,0,0,0,0,1,False,tie,1,False,6

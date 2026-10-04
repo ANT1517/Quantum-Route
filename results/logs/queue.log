@@ -1,0 +1,78 @@
+2026-10-04 14:32:46 waiting for bench_core_v1
+2026-10-04 15:17:18 bench_core_v1 finished; rebuilding its report with run provenance
+2026-10-04 15:17:48 cluster solver test
+2026-10-04 15:18:09 profile QPSO-full on A-n80-k10 (30 s, idle machine)
+2026-10-04 15:18:59 start bench_core_v1_noqubo
+2026-10-04 15:23:19 queue2: waiting for leftover run_bench processes to exit
+2026-10-04 15:31:18 start bench_core_v1_report
+2026-10-04 15:31:45 done bench_core_v1_report
+2026-10-04 15:31:45 start bench_core_v1_noqubo
+2026-10-04 15:32:00 done bench_core_v1_noqubo
+2026-10-04 15:32:00 start bench_core_v1_report2
+2026-10-04 15:32:25 done bench_core_v1_report2
+2026-10-04 15:32:25 start ablation
+2026-10-04 15:42:40 done ablation
+2026-10-04 15:42:41 start ablation_evals
+2026-10-04 15:43:55 done ablation_evals
+2026-10-04 15:43:55 start alpha_sweep
+2026-10-04 15:49:05 done alpha_sweep
+2026-10-04 15:49:05 start test_cluster
+2026-10-04 15:49:24 done test_cluster
+2026-10-04 15:49:25 start scaling
+2026-10-04 16:04:40 done scaling
+2026-10-04 16:04:40 start milp
+2026-10-04 16:16:57 runner[main] start d51_rerun_bench_core_v1
+2026-10-04 16:18:32 runner[main] done d51_rerun_bench_core_v1 rc=0
+2026-10-04 16:18:32 runner[main] start d51_rerun_ablation
+2026-10-04 16:20:08 runner[main] done d51_rerun_ablation rc=0
+2026-10-04 16:20:08 runner[main] start d51_rerun_alpha_sweep
+2026-10-04 16:21:00 runner[main] done d51_rerun_alpha_sweep rc=0
+2026-10-04 16:21:01 runner[main] start d51_audit_after
+2026-10-04 16:21:02 runner[main] done d51_audit_after rc=0
+2026-10-04 16:21:02 runner[main] start milp_parallel
+2026-10-04 17:02:44 runner[resume] start d51_pass2_move
+2026-10-04 17:02:46 runner[resume] done d51_pass2_move rc=0
+2026-10-04 17:02:46 runner[resume] start d51_pass2_bench_core_v1
+2026-10-04 17:04:01 runner[resume] done d51_pass2_bench_core_v1 rc=0
+2026-10-04 17:04:01 runner[resume] start d51_pass2_ablation
+2026-10-04 17:04:46 runner[resume] done d51_pass2_ablation rc=0
+2026-10-04 17:04:46 runner[resume] start d51_audit_final
+2026-10-04 17:04:48 runner[resume] done d51_audit_final rc=0
+2026-10-04 17:04:48 runner[resume] start milp_parallel
+2026-10-04 17:14:52 runner[resume] done milp_parallel rc=0
+2026-10-04 17:14:52 runner[resume] start qubo_check
+2026-10-04 17:15:53 runner[resume] done qubo_check rc=0
+2026-10-04 17:15:53 runner[resume] start api_job_tests
+2026-10-04 17:16:17 runner[resume] done api_job_tests rc=1
+2026-10-04 18:07:14 runner[d55] start d55_move_bench_core_v1
+2026-10-04 18:07:15 runner[d55] done d55_move_bench_core_v1 rc=0
+2026-10-04 18:07:15 runner[d55] start d55_move_scaling
+2026-10-04 18:07:15 runner[d55] done d55_move_scaling rc=0
+2026-10-04 18:07:15 runner[d55] start d55_rerun_bench_core_v1
+2026-10-04 18:20:31 runner[d55] done d55_rerun_bench_core_v1 rc=0
+2026-10-04 18:20:31 runner[d55] start d55_rerun_scaling
+2026-10-04 18:27:50 runner[d55] done d55_rerun_scaling rc=0
+2026-10-04 18:27:50 runner[d55] start p_small
+2026-10-04 18:29:41 runner[d55] done p_small rc=0
+2026-10-04 18:40:16 runner[d54_tune] start tune_d54
+2026-10-04 18:41:37 runner[d54_tune] done tune_d54 rc=0
+2026-10-04 18:42:13 runner[d54_confirm] start confirm_d54
+2026-10-04 19:27:16 runner[d54_confirm] done confirm_d54 rc=0
+2026-10-04 19:27:47 runner[d54_rerun] start d54_move_flagged
+2026-10-04 19:27:48 runner[d54_rerun] done d54_move_flagged rc=0
+2026-10-04 19:27:48 runner[d54_rerun] start d54_rerun_confirm
+2026-10-04 19:28:34 runner[d54_rerun] done d54_rerun_confirm rc=0
+2026-10-04 19:28:34 runner[d54_rerun] start d51_audit_confirm2
+2026-10-04 19:28:35 runner[d54_rerun] done d51_audit_confirm2 rc=0
+2026-10-04 19:46:41 runner[scaling_v2] start scaling_v2
+2026-10-04 20:02:31 runner[scaling_v2] done scaling_v2 rc=0
+2026-10-04 20:02:31 runner[scaling_v2] start scaling_v2_audit
+2026-10-04 20:02:33 runner[scaling_v2] done scaling_v2_audit rc=0
+2026-10-04 20:02:33 runner[scaling_v2] start scaling_v2_calibration
+2026-10-04 20:02:33 runner[scaling_v2] done scaling_v2_calibration rc=1
+2026-10-04 20:03:13 runner[p_small_d59] start p_small_d59_archive
+2026-10-04 20:03:14 runner[p_small_d59] done p_small_d59_archive rc=0
+2026-10-04 20:03:14 runner[p_small_d59] start p_small_d59
+2026-10-04 20:04:01 runner[p_small_d59] done p_small_d59 rc=0
+2026-10-04 20:04:01 runner[p_small_d59] start p_small_d59_calibration
+2026-10-04 20:04:01 runner[p_small_d59] done p_small_d59_calibration rc=1

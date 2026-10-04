@@ -1,0 +1,110 @@
+[alpha_sweep] 90 runs to do (0 already recorded), 11 worker(s) -> C:\Users\nisha\Quantum-Route-solver\results\runs\alpha_sweep.jsonl
+  [1/90] A-n63-k9 alpha_fixed_0.9 time=30 seed=17345: D=1699.0 gap=5.14% evals=6538 30.00s ls=1597
+  [2/90] A-n63-k9 alpha_fixed_0.7 time=30 seed=17345: D=1658.0 gap=2.60% evals=6731 30.00s ls=1633
+  [3/90] A-n63-k9 alpha_fixed_0.3 time=30 seed=17345: D=1666.0 gap=3.09% evals=6013 30.00s ls=1475
+  [4/90] A-n63-k9 alpha_lin_1.0_0.5 time=30 seed=17345: D=1668.0 gap=3.22% evals=7657 30.00s ls=1869
+  [5/90] A-n63-k9 alpha_adaptive time=30 seed=17345: D=1655.0 gap=2.41% evals=6522 30.00s ls=1586
+  [6/90] A-n63-k9 alpha_fixed_1.0 time=30 seed=17345: D=1678.0 gap=3.84% evals=8555 30.00s ls=2081
+  [7/90] A-n63-k9 alpha_fixed_1.2 time=30 seed=17345: D=1672.0 gap=3.47% evals=5530 30.00s ls=1344
+  [8/90] A-n63-k9 alpha_lin_0.8_0.3 time=30 seed=17345: D=1677.0 gap=3.77% evals=6662 30.00s ls=1631
+  [9/90] A-n63-k9 alpha_fixed_0.5 time=30 seed=17345: D=1647.0 gap=1.92% evals=7434 30.00s ls=1829
+  [10/90] A-n63-k9 alpha_fixed_1.2 time=30 seed=17346: D=1655.0 gap=2.41% evals=8586 30.00s ls=2104
+  [11/90] A-n63-k9 alpha_fixed_0.9 time=30 seed=17346: D=1655.0 gap=2.41% evals=7173 30.00s ls=1734
+  [12/90] A-n63-k9 alpha_lin_0.8_0.3 time=30 seed=17346: D=1650.0 gap=2.10% evals=6680 30.00s ls=1637
+  [13/90] A-n63-k9 alpha_fixed_1.0 time=30 seed=17346: D=1643.0 gap=1.67% evals=8159 30.00s ls=1997
+  [14/90] A-n63-k9 alpha_lin_1.0_0.5 time=30 seed=17346: D=1660.0 gap=2.72% evals=7656 30.00s ls=1864
+  [15/90] A-n63-k9 alpha_adaptive time=30 seed=17346: D=1663.0 gap=2.91% evals=6588 30.00s ls=1616
+  [16/90] A-n63-k9 alpha_fixed_0.7 time=30 seed=17346: D=1647.0 gap=1.92% evals=7419 30.00s ls=1799
+  [17/90] A-n63-k9 alpha_fixed_0.3 time=30 seed=17346: D=1630.0 gap=0.87% evals=7545 30.00s ls=1856
+  [18/90] A-n63-k9 alpha_fixed_0.5 time=30 seed=17346: D=1664.0 gap=2.97% evals=6681 30.00s ls=1614
+  [19/90] A-n63-k9 alpha_fixed_0.3 time=30 seed=17347: D=1662.0 gap=2.85% evals=8448 30.00s ls=2051
+  [20/90] A-n63-k9 alpha_fixed_0.9 time=30 seed=17347: D=1657.0 gap=2.54% evals=6981 30.00s ls=1694
+  [21/90] A-n63-k9 alpha_fixed_0.7 time=30 seed=17347: D=1671.0 gap=3.40% evals=7406 30.01s ls=1800
+  [22/90] A-n63-k9 alpha_lin_0.8_0.3 time=30 seed=17347: D=1657.0 gap=2.54% evals=7625 30.00s ls=1879
+  [23/90] A-n63-k9 alpha_fixed_1.0 time=30 seed=17347: D=1683.0 gap=4.15% evals=6776 30.00s ls=1635
+  [24/90] A-n63-k9 alpha_fixed_0.5 time=30 seed=17347: D=1654.0 gap=2.35% evals=6145 30.00s ls=1487
+  [25/90] A-n63-k9 alpha_fixed_1.2 time=30 seed=17347: D=1695.0 gap=4.89% evals=6507 30.00s ls=1595
+  [26/90] A-n63-k9 alpha_lin_1.0_0.5 time=30 seed=17347: D=1667.0 gap=3.16% evals=7637 30.01s ls=1854
+  [27/90] A-n63-k9 alpha_adaptive time=30 seed=17347: D=1646.0 gap=1.86% evals=7565 30.01s ls=1854
+  [28/90] A-n63-k9 alpha_fixed_0.7 time=30 seed=17348: D=1662.0 gap=2.85% evals=7363 30.00s ls=1807
+  [29/90] A-n63-k9 alpha_adaptive time=30 seed=17348: D=1638.0 gap=1.36% evals=6818 30.00s ls=1647
+  [30/90] A-n63-k9 alpha_fixed_1.0 time=30 seed=17348: D=1658.0 gap=2.60% evals=7586 30.00s ls=1859
+  [31/90] A-n63-k9 alpha_fixed_0.3 time=30 seed=17348: D=1665.0 gap=3.03% evals=6771 30.01s ls=1663
+  [32/90] A-n63-k9 alpha_lin_1.0_0.5 time=30 seed=17348: D=1645.0 gap=1.79% evals=7347 30.00s ls=1811
+  [33/90] A-n63-k9 alpha_fixed_0.5 time=30 seed=17348: D=1642.0 gap=1.61% evals=8484 30.01s ls=2101
+  [34/90] A-n63-k9 alpha_fixed_1.2 time=30 seed=17348: D=1678.0 gap=3.84% evals=6270 30.00s ls=1526
+  [35/90] A-n63-k9 alpha_lin_0.8_0.3 time=30 seed=17348: D=1649.0 gap=2.04% evals=6547 30.01s ls=1586
+  [36/90] A-n63-k9 alpha_fixed_0.9 time=30 seed=17348: D=1669.0 gap=3.28% evals=6322 30.00s ls=1536
+  [37/90] A-n63-k9 alpha_lin_0.8_0.3 time=30 seed=17349: D=1680.0 gap=3.96% evals=5326 30.00s ls=1283
+  [38/90] A-n63-k9 alpha_fixed_0.5 time=30 seed=17349: D=1641.0 gap=1.55% evals=6493 30.00s ls=1593
+  [39/90] A-n63-k9 alpha_fixed_0.3 time=30 seed=17349: D=1635.0 gap=1.18% evals=8517 30.00s ls=2091
+  [40/90] A-n63-k9 alpha_lin_1.0_0.5 time=30 seed=17349: D=1683.0 gap=4.15% evals=7320 30.00s ls=1795
+  [41/90] A-n63-k9 alpha_fixed_1.0 time=30 seed=17349: D=1660.0 gap=2.72% evals=6397 30.00s ls=1576
+  [42/90] A-n63-k9 alpha_fixed_0.9 time=30 seed=17349: D=1682.0 gap=4.08% evals=7185 30.00s ls=1744
+  [43/90] A-n63-k9 alpha_adaptive time=30 seed=17349: D=1698.0 gap=5.07% evals=6784 30.00s ls=1627
+  [44/90] A-n63-k9 alpha_fixed_0.7 time=30 seed=17349: D=1646.0 gap=1.86% evals=6365 30.00s ls=1569
+  [45/90] A-n63-k9 alpha_fixed_1.2 time=30 seed=17349: D=1658.0 gap=2.60% evals=6460 30.00s ls=1596
+  [46/90] A-n63-k9 alpha_fixed_1.2 time=30 seed=17350: D=1694.0 gap=4.83% evals=5737 30.00s ls=1388
+  [47/90] A-n63-k9 alpha_fixed_0.5 time=30 seed=17350: D=1654.0 gap=2.35% evals=6549 30.00s ls=1606
+  [48/90] A-n63-k9 alpha_adaptive time=30 seed=17350: D=1661.0 gap=2.78% evals=6433 30.01s ls=1565
+  [49/90] A-n63-k9 alpha_fixed_0.9 time=30 seed=17350: D=1674.0 gap=3.59% evals=8491 30.00s ls=2073
+  [50/90] A-n63-k9 alpha_fixed_0.7 time=30 seed=17350: D=1660.0 gap=2.72% evals=6777 30.01s ls=1666
+  [51/90] A-n63-k9 alpha_fixed_0.3 time=30 seed=17350: D=1628.0 gap=0.74% evals=7587 30.00s ls=1858
+  [52/90] A-n63-k9 alpha_fixed_1.0 time=30 seed=17350: D=1652.0 gap=2.23% evals=6606 30.00s ls=1596
+  [53/90] A-n63-k9 alpha_lin_1.0_0.5 time=30 seed=17350: D=1657.0 gap=2.54% evals=7052 30.01s ls=1728
+  [54/90] A-n63-k9 alpha_lin_0.8_0.3 time=30 seed=17350: D=1683.0 gap=4.15% evals=6722 30.00s ls=1647
+  [55/90] A-n63-k9 alpha_fixed_1.0 time=30 seed=17351: D=1689.0 gap=4.52% evals=6328 30.00s ls=1531
+  [56/90] A-n63-k9 alpha_fixed_0.9 time=30 seed=17351: D=1654.0 gap=2.35% evals=6930 30.00s ls=1688
+  [57/90] A-n63-k9 alpha_fixed_0.7 time=30 seed=17351: D=1668.0 gap=3.22% evals=7290 30.00s ls=1778
+  [58/90] A-n63-k9 alpha_fixed_1.2 time=30 seed=17351: D=1674.0 gap=3.59% evals=8249 30.00s ls=2005
+  [59/90] A-n63-k9 alpha_adaptive time=30 seed=17351: D=1668.0 gap=3.22% evals=8515 30.00s ls=2089
+  [60/90] A-n63-k9 alpha_fixed_0.5 time=30 seed=17351: D=1640.0 gap=1.49% evals=7522 30.00s ls=1852
+  [61/90] A-n63-k9 alpha_lin_0.8_0.3 time=30 seed=17351: D=1636.0 gap=1.24% evals=6745 30.00s ls=1649
+  [62/90] A-n63-k9 alpha_lin_1.0_0.5 time=30 seed=17351: D=1678.0 gap=3.84% evals=6393 30.00s ls=1549
+  [63/90] A-n63-k9 alpha_fixed_0.3 time=30 seed=17351: D=1677.0 gap=3.77% evals=7489 30.01s ls=1830
+  [64/90] A-n63-k9 alpha_fixed_0.7 time=30 seed=17352: D=1637.0 gap=1.30% evals=7406 30.00s ls=1818
+  [65/90] A-n63-k9 alpha_fixed_0.3 time=30 seed=17352: D=1635.0 gap=1.18% evals=7773 30.00s ls=1891
+  [66/90] A-n63-k9 alpha_lin_0.8_0.3 time=30 seed=17352: D=1667.0 gap=3.16% evals=7546 30.00s ls=1836
+  [67/90] A-n63-k9 alpha_lin_1.0_0.5 time=30 seed=17352: D=1664.0 gap=2.97% evals=7660 30.00s ls=1873
+  [68/90] A-n63-k9 alpha_fixed_1.2 time=30 seed=17352: D=1683.0 gap=4.15% evals=6722 30.00s ls=1647
+  [69/90] A-n63-k9 alpha_fixed_0.9 time=30 seed=17352: D=1666.0 gap=3.09% evals=7560 30.00s ls=1833
+  [70/90] A-n63-k9 alpha_adaptive time=30 seed=17352: D=1634.0 gap=1.11% evals=7462 30.00s ls=1818
+  [71/90] A-n63-k9 alpha_fixed_1.0 time=30 seed=17352: D=1659.0 gap=2.66% evals=6928 30.00s ls=1687
+  [72/90] A-n63-k9 alpha_fixed_0.5 time=30 seed=17352: D=1665.0 gap=3.03% evals=6024 30.01s ls=1482
+  [73/90] A-n63-k9 alpha_fixed_0.3 time=30 seed=17353: D=1658.0 gap=2.60% evals=5541 30.00s ls=1349
+  [74/90] A-n63-k9 alpha_fixed_1.2 time=30 seed=17353: D=1660.0 gap=2.72% evals=6839 30.00s ls=1657
+  [75/90] A-n63-k9 alpha_fixed_1.0 time=30 seed=17353: D=1683.0 gap=4.15% evals=5850 30.00s ls=1414
+  [76/90] A-n63-k9 alpha_fixed_0.5 time=30 seed=17353: D=1663.0 gap=2.91% evals=6755 30.00s ls=1647
+  [77/90] A-n63-k9 alpha_adaptive time=30 seed=17353: D=1657.0 gap=2.54% evals=6640 30.00s ls=1633
+  [78/90] A-n63-k9 alpha_fixed_0.7 time=30 seed=17353: D=1665.0 gap=3.03% evals=7577 30.00s ls=1845
+  [79/90] A-n63-k9 alpha_lin_0.8_0.3 time=30 seed=17353: D=1644.0 gap=1.73% evals=6553 30.01s ls=1606
+  [80/90] A-n63-k9 alpha_fixed_0.9 time=30 seed=17353: D=1679.0 gap=3.90% evals=6779 30.00s ls=1659
+  [81/90] A-n63-k9 alpha_lin_1.0_0.5 time=30 seed=17353: D=1676.0 gap=3.71% evals=7580 30.00s ls=1830
+  [82/90] A-n63-k9 alpha_fixed_1.0 time=30 seed=17354: D=1691.0 gap=4.64% evals=5987 30.00s ls=1475
+  [83/90] A-n63-k9 alpha_adaptive time=30 seed=17354: D=1676.0 gap=3.71% evals=7488 30.00s ls=1825
+  [84/90] A-n63-k9 alpha_lin_0.8_0.3 time=30 seed=17354: D=1656.0 gap=2.48% evals=7314 30.00s ls=1778
+  [85/90] A-n63-k9 alpha_fixed_0.5 time=30 seed=17354: D=1641.0 gap=1.55% evals=6826 30.00s ls=1667
+  [86/90] A-n63-k9 alpha_lin_1.0_0.5 time=30 seed=17354: D=1653.0 gap=2.29% evals=8169 30.00s ls=2000
+  [87/90] A-n63-k9 alpha_fixed_1.2 time=30 seed=17354: D=1678.0 gap=3.84% evals=6802 30.00s ls=1647
+  [88/90] A-n63-k9 alpha_fixed_0.7 time=30 seed=17354: D=1662.0 gap=2.85% evals=6824 30.00s ls=1663
+  [89/90] A-n63-k9 alpha_fixed_0.9 time=30 seed=17354: D=1675.0 gap=3.65% evals=8549 30.00s ls=2097
+  [90/90] A-n63-k9 alpha_fixed_0.3 time=30 seed=17354: D=1630.0 gap=0.87% evals=9873 30.00s ls=2423
+[alpha_sweep] done in 289 s
+budget_type  budget instance              algo  runs  D_mean  gap_mean_pct  gap_best_pct  wall_s_mean
+       time      30 A-n63-k9   alpha_fixed_0.9    10  1671.0       3.40347      2.351490      30.0034
+       time      30 A-n63-k9   alpha_fixed_0.7    10  1657.6       2.57426      1.299500      30.0044
+       time      30 A-n63-k9   alpha_fixed_0.3    10  1648.6       2.01733      0.742574      30.0037
+       time      30 A-n63-k9 alpha_lin_1.0_0.5    10  1665.1       3.03837      1.794550      30.0039
+       time      30 A-n63-k9    alpha_adaptive    10  1659.6       2.69802      1.113860      30.0035
+       time      30 A-n63-k9   alpha_fixed_1.0    10  1669.6       3.31683      1.670790      30.0032
+       time      30 A-n63-k9   alpha_fixed_1.2    10  1674.7       3.63243      2.413370      30.0035
+       time      30 A-n63-k9 alpha_lin_0.8_0.3    10  1659.9       2.71658      1.237620      30.0033
+       time      30 A-n63-k9   alpha_fixed_0.5    10  1651.1       2.17203      1.485150      30.0036
+
+wrote:
+  C:\Users\nisha\Quantum-Route-solver\results\tables\alpha_sweep_summary.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\alpha_sweep_wilcoxon.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\alpha_sweep_friedman.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\alpha_sweep_meta.json
+  C:\Users\nisha\Quantum-Route-solver\results\figures\alpha_sweep_convergence_A-n63-k9_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\alpha_sweep_gap_time30.png

@@ -1,0 +1,19 @@
+budget_type,budget,instance,reference,other,runs,seeds,median_diff,median_diff_gap_pts,mean_diff_gap_pts,statistic,p_value,significant,direction,p_holm,significant_holm,holm_family_size
+time,30,A-n32-k5,qn_tuned,ga_ls,30,65345..65374,-37.5,-4.78316,-2.78486,56,0.000448213,True,ref better,0.00358571,True,18
+time,30,A-n32-k5,qn_tuned,ortools,30,65345..65374,0,0,1.27551,0,0.0111092,True,ref worse,0.0555461,False,18
+time,30,A-n32-k5,qn_tuned,pso_tuned,30,65345..65374,0,0,1.27551,0,0.0111092,True,ref worse,0.0555461,False,18
+time,30,A-n63-k9,qn_tuned,ga_ls,30,67345..67374,-52,-3.21782,-3.32921,0,1.73222e-06,True,ref better,2.94477e-05,True,18
+time,30,A-n63-k9,qn_tuned,ortools,30,67345..67374,-12.5,-0.773515,-0.604373,15.5,6.15253e-06,True,ref better,7.38304e-05,True,18
+time,30,A-n63-k9,qn_tuned,pso_tuned,30,67345..67374,-6,-0.371287,-0.32797,80,0.00293222,True,ref better,0.0175933,True,18
+time,30,A-n80-k10,qn_tuned,ga_ls,30,68345..68374,-78.5,-4.45264,-4.73057,0,1.73222e-06,True,ref better,2.94477e-05,True,18
+time,30,A-n80-k10,qn_tuned,ortools,30,68345..68374,-12,-0.680658,-0.535073,25.5,2.0073e-05,True,ref better,0.000216118,True,18
+time,30,A-n80-k10,qn_tuned,pso_tuned,30,68345..68374,-39,-2.21214,-2.11004,0,2.53901e-06,True,ref better,3.55462e-05,True,18
+time,30,CMT1,qn_tuned,ga_ls,30,69345..69374,-20.7298,-3.95146,-3.07548,9,4.28069e-06,True,ref better,5.5649e-05,True,18
+time,30,CMT1,qn_tuned,ortools,30,69345..69374,1.13687e-13,2.16707e-14,0.255217,0,1.96471e-05,True,ref worse,0.000216118,True,18
+time,30,CMT1,qn_tuned,pso_tuned,30,69345..69374,0,0,0.201942,26,0.0265398,True,ref worse,0.0796194,False,18
+time,60,CMT5,qn_tuned,ga_ls,30,70345..70374,-9.37254,-0.725828,-0.850702,137,0.0497101,True,ref better,0.0994202,False,18
+time,60,CMT5,qn_tuned,ortools,30,70345..70374,-0.234076,-0.0181273,0.395453,182,0.308521,False,ref worse,0.308521,False,18
+time,60,CMT5,qn_tuned,pso_tuned,30,70345..70374,-20.8894,-1.61772,-1.7163,48,4.40758e-05,True,ref better,0.000396682,True,18
+time,60,X-n101-k25,qn_tuned,ga_ls,30,71345..71374,-359.5,-1.30296,-1.43718,3,9.31323e-09,True,ref better,1.67638e-07,True,18
+time,60,X-n101-k25,qn_tuned,ortools,30,71345..71374,-1051.5,-3.81103,-3.75485,0,1.73331e-06,True,ref better,2.94477e-05,True,18
+time,60,X-n101-k25,qn_tuned,pso_tuned,30,71345..71374,-76.5,-0.277264,-0.279801,86,0.00186401,True,ref better,0.013048,True,18

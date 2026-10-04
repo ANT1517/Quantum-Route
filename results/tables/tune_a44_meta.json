@@ -1,0 +1,105 @@
+{
+  "experiment": "tune_a44",
+  "description": "A-n44-k6 tuning log: QPSO configs 1-4 (config 4 = D33 = QPSO-full), RR+LS control, PSO+LS, GA+LS, SA. Not a benchmark",
+  "reference": "qpso_full",
+  "weights": [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "runs_planned": 5,
+  "records": 80,
+  "infeasible": 0,
+  "budgets": [
+    {
+      "type": "evals",
+      "value": 12000,
+      "algorithms": [
+        "qpso_prefix",
+        "qpso_norenorm",
+        "qpso_d28",
+        "qpso_full",
+        "rr_ls",
+        "pso_ls",
+        "ga_ls",
+        "sa"
+      ]
+    },
+    {
+      "type": "time",
+      "value": 10,
+      "algorithms": [
+        "qpso_prefix",
+        "qpso_norenorm",
+        "qpso_d28",
+        "qpso_full",
+        "rr_ls",
+        "pso_ls",
+        "ga_ls",
+        "sa"
+      ]
+    }
+  ],
+  "instances": [
+    "A-n44-k6"
+  ],
+  "seeds": [
+    16345,
+    16346,
+    16347,
+    16348,
+    16349
+  ],
+  "config_hashes": {
+    "ga_ls|evals|12000": [
+      "5ec9c08345b9"
+    ],
+    "ga_ls|time|10": [
+      "584309ade86d"
+    ],
+    "pso_ls|evals|12000": [
+      "d4f5739d3816"
+    ],
+    "pso_ls|time|10": [
+      "4bf32eb517e6"
+    ],
+    "qpso_d28|evals|12000": [
+      "fe43fb47349e"
+    ],
+    "qpso_d28|time|10": [
+      "965af0b479fd"
+    ],
+    "qpso_full|evals|12000": [
+      "318a58ca8db5"
+    ],
+    "qpso_full|time|10": [
+      "b14754d03671"
+    ],
+    "qpso_norenorm|evals|12000": [
+      "441499abf775"
+    ],
+    "qpso_norenorm|time|10": [
+      "ffe66d1b76c3"
+    ],
+    "qpso_prefix|evals|12000": [
+      "38c5c446716e"
+    ],
+    "qpso_prefix|time|10": [
+      "9a8ec5a4eb7f"
+    ],
+    "rr_ls|evals|12000": [
+      "409229032bcd"
+    ],
+    "rr_ls|time|10": [
+      "48d5ebd194e9"
+    ],
+    "sa|evals|12000": [
+      "c0540c09d216"
+    ],
+    "sa|time|10": [
+      "82245e355272"
+    ]
+  },
+  "note": "Measured on one machine; wall times depend on hardware."
+}

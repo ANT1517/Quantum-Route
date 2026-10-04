@@ -1,0 +1,1 @@
+{'instance': 'P-n16-k8', 'n': 15, 'K': 8, 'proven_optimum_sol': 450.0, 'cbc_result': 'Optimal solution found', 'verdict': 'optimal (proved by CBC)', 'best_value': 450.0, 'lower_bound': None, 'gap_pct': None, 'best_vs_optimum_pct': 0.0, 'routes_feasible': True, 'wall_s': 503.0446527004242, 'time_limit_s': 600.0}

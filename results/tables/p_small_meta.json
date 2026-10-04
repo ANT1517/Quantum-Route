@@ -1,0 +1,124 @@
+{
+  "experiment": "p_small",
+  "description": "P-n16/19/22 (proven optima, K = k): QPSO-noQUBO, PSO+LS, OR-Tools; 10 s, 10 runs",
+  "reference": "qn_tuned",
+  "references": [
+    "qn_tuned"
+  ],
+  "multiple_testing": "Holm-Bonferroni per table (p_holm); effect size = paired difference in gap points",
+  "weights": [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "runs_planned": 10,
+  "records": 90,
+  "infeasible": 0,
+  "budgets": [
+    {
+      "type": "time",
+      "value": 10,
+      "algorithms": [
+        "qn_tuned",
+        "pso_ls",
+        "ortools"
+      ]
+    }
+  ],
+  "instances": [
+    "P-n16-k8",
+    "P-n19-k2",
+    "P-n22-k8"
+  ],
+  "import_runs": [],
+  "excluded_algos": [],
+  "seeds": [
+    12345,
+    12346,
+    12347,
+    12348,
+    12349,
+    12350,
+    12351,
+    12352,
+    12353,
+    12354,
+    13345,
+    13346,
+    13347,
+    13348,
+    13349,
+    13350,
+    13351,
+    13352,
+    13353,
+    13354,
+    14345,
+    14346,
+    14347,
+    14348,
+    14349,
+    14350,
+    14351,
+    14352,
+    14353,
+    14354
+  ],
+  "config_hashes": {
+    "ortools|time|10": [
+      "4935e8263b65"
+    ],
+    "pso_ls|time|10": [
+      "4bf32eb517e6"
+    ],
+    "qn_tuned|time|10": [
+      "6ecc2078b4c5"
+    ]
+  },
+  "note": "Measured on one machine; wall times depend on hardware.",
+  "launches": [
+    {
+      "started": "2026-10-04 18:27:55",
+      "runs_planned": 90,
+      "workers": 11,
+      "thread_env": {
+        "NUMBA_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "git_commit": "73f6def",
+      "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
+      "pinned_cpus": null,
+      "machine": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+        "physical_cores": 12,
+        "logical_threads": 16,
+        "power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+      }
+    },
+    {
+      "started": "2026-10-04 20:03:20",
+      "runs_planned": 30,
+      "workers": 11,
+      "thread_env": {
+        "NUMBA_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "git_commit": "83ae61e",
+      "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
+      "pinned_cpus": null,
+      "machine": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+        "physical_cores": 12,
+        "logical_threads": 16,
+        "power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+      }
+    }
+  ]
+}

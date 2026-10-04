@@ -1,0 +1,90 @@
+[scaling_v2] 60 runs to do (0 already recorded), 11 worker(s) -> C:\Users\nisha\Quantum-Route-solver\results\runs\scaling_v2.jsonl
+  [1/60] X-n101-k25 ortools time=60 seed=81346: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [2/60] X-n101-k25 ortools time=60 seed=81345: D=29159.0 gap=5.68% evals=0 59.91s ls=0
+  [3/60] X-n101-k25 qn_tuned time=60 seed=81345: D=28150.0 gap=2.03% evals=41064 60.00s ls=10223
+  [4/60] X-n101-k25 ortools time=60 seed=81347: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [5/60] X-n101-k25 ortools time=60 seed=81348: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [6/60] X-n101-k25 ortools time=60 seed=81349: D=29159.0 gap=5.68% evals=0 59.91s ls=0
+  [7/60] X-n101-k25 qn_tuned time=60 seed=81346: D=28079.0 gap=1.77% evals=40854 60.00s ls=10151
+  [8/60] X-n101-k25 qn_tuned time=60 seed=81347: D=28160.0 gap=2.06% evals=41166 60.00s ls=10270
+  [9/60] X-n101-k25 qn_tuned time=60 seed=81348: D=28168.0 gap=2.09% evals=40153 60.00s ls=10005
+  [10/60] X-n101-k25 qn_tuned time=60 seed=81349: D=28079.0 gap=1.77% evals=42717 60.00s ls=10627
+  [11/60] X-n101-k25 ortools time=60 seed=81350: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [12/60] X-n101-k25 ortools time=60 seed=81351: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [13/60] X-n101-k25 ortools time=60 seed=81352: D=29159.0 gap=5.68% evals=0 59.91s ls=0
+  [14/60] X-n101-k25 qn_tuned time=60 seed=81350: D=28136.0 gap=1.98% evals=41114 60.00s ls=10221
+  [15/60] X-n101-k25 qn_tuned time=60 seed=81351: D=28057.0 gap=1.69% evals=43433 60.00s ls=10791
+  [16/60] X-n101-k25 ortools time=60 seed=81353: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [17/60] X-n101-k25 ortools time=60 seed=81354: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [18/60] X-n101-k25 qn_tuned time=60 seed=81352: D=28064.0 gap=1.71% evals=44690 60.00s ls=11120
+  [19/60] X-n101-k25 qn_tuned time=60 seed=81353: D=28157.0 gap=2.05% evals=41430 60.00s ls=10328
+  [20/60] X-n101-k25 qn_tuned time=60 seed=81354: D=28007.0 gap=1.51% evals=52052 60.00s ls=12985
+  [21/60] X-n200-k36 ortools time=120 seed=82345: D=60382.0 gap=3.08% evals=0 119.90s ls=0
+  [22/60] X-n200-k36 qn_tuned time=120 seed=82345: D=60494.0 gap=3.27% evals=10047 120.01s ls=2496
+  [23/60] X-n200-k36 ortools time=120 seed=82346: D=60382.0 gap=3.08% evals=0 119.91s ls=0
+  [24/60] X-n200-k36 qn_tuned time=120 seed=82346: D=60487.0 gap=3.26% evals=9359 120.01s ls=2316
+  [25/60] X-n200-k36 ortools time=120 seed=82347: D=60382.0 gap=3.08% evals=0 119.91s ls=0
+  [26/60] X-n200-k36 ortools time=120 seed=82348: D=60382.0 gap=3.08% evals=0 119.91s ls=0
+  [27/60] X-n200-k36 qn_tuned time=120 seed=82347: D=60454.0 gap=3.20% evals=8735 120.00s ls=2174
+  [28/60] X-n200-k36 ortools time=120 seed=82349: D=60382.0 gap=3.08% evals=0 119.90s ls=0
+  [29/60] X-n200-k36 qn_tuned time=120 seed=82348: D=60589.0 gap=3.43% evals=8782 120.01s ls=2192
+  [30/60] X-n200-k36 qn_tuned time=120 seed=82349: D=60464.0 gap=3.22% evals=7984 120.01s ls=1988
+  [31/60] X-n200-k36 qn_tuned time=120 seed=82350: D=60620.0 gap=3.49% evals=8525 120.01s ls=2129
+  [32/60] X-n200-k36 ortools time=120 seed=82350: D=60382.0 gap=3.08% evals=0 119.90s ls=0
+  [33/60] X-n200-k36 qn_tuned time=120 seed=82351: D=60711.0 gap=3.64% evals=9905 120.00s ls=2454
+  [34/60] X-n200-k36 ortools time=120 seed=82351: D=60382.0 gap=3.08% evals=0 119.91s ls=0
+  [35/60] X-n200-k36 ortools time=120 seed=82352: D=60382.0 gap=3.08% evals=0 119.90s ls=0
+  [36/60] X-n200-k36 qn_tuned time=120 seed=82352: D=60487.0 gap=3.26% evals=9349 120.01s ls=2310
+  [37/60] X-n200-k36 ortools time=120 seed=82353: D=60382.0 gap=3.08% evals=0 119.90s ls=0
+  [38/60] X-n200-k36 ortools time=120 seed=82354: D=60382.0 gap=3.08% evals=0 119.91s ls=0
+  [39/60] X-n200-k36 qn_tuned time=120 seed=82353: D=60528.0 gap=3.33% evals=8994 120.01s ls=2228
+  [40/60] X-n200-k36 qn_tuned time=120 seed=82354: D=60649.0 gap=3.54% evals=9746 120.00s ls=2417
+  [41/60] X-n502-k39 qn_tuned_cluster time=300 seed=83345: D=71331.0 gap=3.04% evals=267698 270.06s ls=1
+  [42/60] X-n502-k39 ortools time=300 seed=83345: D=70221.0 gap=1.44% evals=0 299.92s ls=0
+  [43/60] X-n502-k39 qn_tuned_cluster time=300 seed=83346: D=71263.0 gap=2.94% evals=283676 270.06s ls=1
+  [44/60] X-n502-k39 ortools time=300 seed=83346: D=70221.0 gap=1.44% evals=0 299.91s ls=0
+  [45/60] X-n502-k39 qn_tuned_cluster time=300 seed=83347: D=71273.0 gap=2.96% evals=257194 270.05s ls=1
+  [46/60] X-n502-k39 qn_tuned_cluster time=300 seed=83349: D=71355.0 gap=3.08% evals=273592 270.05s ls=1
+  [47/60] X-n502-k39 qn_tuned_cluster time=300 seed=83348: D=71338.0 gap=3.05% evals=284154 270.06s ls=1
+  [48/60] X-n502-k39 qn_tuned_cluster time=300 seed=83350: D=71286.0 gap=2.98% evals=285140 270.06s ls=1
+  [49/60] X-n502-k39 ortools time=300 seed=83347: D=70218.0 gap=1.43% evals=0 299.92s ls=0
+  [50/60] X-n502-k39 ortools time=300 seed=83348: D=70227.0 gap=1.45% evals=0 299.92s ls=0
+  [51/60] X-n502-k39 ortools time=300 seed=83349: D=70218.0 gap=1.43% evals=0 299.91s ls=0
+  [52/60] X-n502-k39 ortools time=300 seed=83350: D=70218.0 gap=1.43% evals=0 299.91s ls=0
+  [53/60] X-n502-k39 ortools time=300 seed=83351: D=70218.0 gap=1.43% evals=0 299.91s ls=0
+  [54/60] X-n502-k39 qn_tuned_cluster time=300 seed=83351: D=71422.0 gap=3.17% evals=280527 270.05s ls=1
+  [55/60] X-n502-k39 ortools time=300 seed=83352: D=70193.0 gap=1.40% evals=0 299.91s ls=0
+  [56/60] X-n502-k39 qn_tuned_cluster time=300 seed=83352: D=71250.0 gap=2.92% evals=339806 270.04s ls=1
+  [57/60] X-n502-k39 qn_tuned_cluster time=300 seed=83353: D=71320.0 gap=3.02% evals=323328 270.04s ls=1
+  [58/60] X-n502-k39 qn_tuned_cluster time=300 seed=83354: D=71219.0 gap=2.88% evals=367701 270.05s ls=1
+  [59/60] X-n502-k39 ortools time=300 seed=83353: D=70193.0 gap=1.40% evals=0 299.91s ls=0
+  [60/60] X-n502-k39 ortools time=300 seed=83354: D=70193.0 gap=1.40% evals=0 299.91s ls=0
+[scaling_v2] done in 940 s
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+budget_type  budget   instance             algo  runs  D_mean  gap_mean_pct  gap_best_pct  wall_s_mean
+       time      60 X-n101-k25          ortools    10 29159.0       5.68301       5.68301      59.9047
+       time      60 X-n101-k25         qn_tuned    10 28105.7       1.86546       1.50774      60.0022
+       time     120 X-n200-k36          ortools    10 60382.0       3.07965       3.07965     119.9050
+       time     120 X-n200-k36         qn_tuned    10 60548.3       3.36355       3.20257     120.0070
+       time     300 X-n502-k39 qn_tuned_cluster    10 71305.7       3.00422       2.87898     270.0510
+       time     300 X-n502-k39          ortools    10 70212.0       1.42432       1.39687     299.9120
+
+wrote:
+  C:\Users\nisha\Quantum-Route-solver\results\tables\scaling_v2_summary.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\scaling_v2_wilcoxon.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\scaling_v2_friedman.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\scaling_v2_meta.json
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_v2_gap_vs_n.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_v2_convergence_X-n101-k25_time60.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_v2_gap_time60.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_v2_convergence_X-n200-k36_time120.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_v2_gap_time120.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_v2_convergence_X-n502-k39_time300.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_v2_gap_time300.png

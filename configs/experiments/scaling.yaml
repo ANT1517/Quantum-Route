@@ -1,0 +1,16 @@
+# Scaling (§9 Phase 9 item 4), D50 budget rule: 0.6 s per customer, capped at 300 s.
+#   X-n101-k25: 60 s -> reused from bench_core_v1 (qpso, ortools; 30 runs there), not re-run
+#   X-n200-k36: 120 s (QPSO-full direct)   X-n502-k39: 300 s (cluster-first QPSO, D47)
+# OR-Tools on the same budgets as an industry reference. 10 runs for the new instances.
+name: scaling
+description: "Scaling: budget 0.6 s per customer, capped at 300 s (D50). QPSO-full direct (X-n101 60 s reused from bench_core_v1, X-n200 120 s), cluster-first QPSO (X-n502 300 s), OR-Tools reference"
+budget_rule: "0.6 s per customer, capped at 300 s (D50)"
+instances: [X-n200-k36, X-n502-k39]
+runs: 10
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: qpso
+import_runs:
+  - {exp: bench_core_v1, instances: [X-n101-k25], algorithms: [qpso, ortools]}
+budgets:
+  - {type: time, value: 120, instances: [X-n200-k36], algorithms: [qpso, ortools]}
+  - {type: time, value: 300, instances: [X-n502-k39], algorithms: [qpso_cluster, ortools]}

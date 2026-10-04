@@ -1,0 +1,17 @@
+# Core benchmark v1 (§9 Phase 9 item 1): D29 core set, D33 final LS rule, D38 fleet rule (K = k for A instances),
+# D39 time budget only, D40 30 runs, D41 fast exact LS, D43 budgets by size class (30 s for n <= 80, 60 s for n > 80).
+# evals_used and ls_calls are recorded in every RunRecord. Headline rows: QPSO-full, PSO+LS, GA+LS, SA, OR-Tools;
+# RR+LS is the ablation control (D34). Supersedes bench_core v0 (stopped before D41).
+name: bench_core_v1
+description: "Core benchmark v1: QPSO-full vs PSO+LS vs GA+LS vs SA vs OR-Tools (+ RR+LS control), 30 runs; 30 s (n <= 80), 60 s (n > 80)"
+instances: [A-n32-k5, A-n63-k9, A-n80-k10, CMT1, CMT5, X-n101-k25]
+runs: 30
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: qpso
+references: [qpso, qpso_noqubo]   # second comparison set vs QPSO-noQUBO (D53)
+budgets:
+  - {type: time, value: 30, instances: [A-n32-k5, A-n63-k9, A-n80-k10, CMT1], algorithms: [qpso, pso_ls, ga_ls, sa, rr_ls, ortools]}
+  - {type: time, value: 60, instances: [CMT5, X-n101-k25], algorithms: [qpso, pso_ls, ga_ls, sa, rr_ls, ortools]}
+import_runs:
+  - {exp: bench_core_v1_noqubo}    # D45 supplementary row (QPSO-noQUBO), same seeds and budgets
+exclude_algos: [ortools]          # D58: OR-Tools rows ran at full speed after D55, the rest throttled (D57); see confirm_d54

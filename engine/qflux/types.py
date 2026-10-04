@@ -57,3 +57,4 @@ class RunRecord:                     # one JSON line in results/runs/*.jsonl
     evals_used: int; wall_s: float
     curve: list[tuple[int, float]]   # (evals, best_F) every 100 evals
     config_hash: str
+    meta: dict = field(default_factory=dict)   # D28: ls_calls etc.; optional, added in v4.1

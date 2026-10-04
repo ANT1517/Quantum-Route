@@ -1,0 +1,15 @@
+budget_type,budget,instance,reference,other,runs,seeds,median_diff,statistic,p_value,significant,direction
+evals,12000,A-n44-k6,qpso_full,ga_ls,5,16345..16349,-41,0,0.0625,False,ref better
+evals,12000,A-n44-k6,qpso_full,pso_ls,5,16345..16349,-2,4,0.875,False,ref better
+evals,12000,A-n44-k6,qpso_full,qpso_d28,5,16345..16349,-64,0,0.0625,False,ref better
+evals,12000,A-n44-k6,qpso_full,qpso_norenorm,5,16345..16349,-57,0,0.0625,False,ref better
+evals,12000,A-n44-k6,qpso_full,qpso_prefix,5,16345..16349,-104,0,0.0625,False,ref better
+evals,12000,A-n44-k6,qpso_full,rr_ls,5,16345..16349,-6,1,0.125,False,ref better
+evals,12000,A-n44-k6,qpso_full,sa,5,16345..16349,-75,0,0.0625,False,ref better
+time,10,A-n44-k6,qpso_full,ga_ls,5,16345..16349,7,5,0.625,False,ref worse
+time,10,A-n44-k6,qpso_full,pso_ls,5,16345..16349,11,4,0.4375,False,ref worse
+time,10,A-n44-k6,qpso_full,qpso_d28,5,16345..16349,-20,0,0.0625,False,ref better
+time,10,A-n44-k6,qpso_full,qpso_norenorm,5,16345..16349,-36,1,0.125,False,ref better
+time,10,A-n44-k6,qpso_full,qpso_prefix,5,16345..16349,-64,0,0.0625,False,ref better
+time,10,A-n44-k6,qpso_full,rr_ls,5,16345..16349,-18,1,0.125,False,ref better
+time,10,A-n44-k6,qpso_full,sa,5,16345..16349,-29,0,0.0625,False,ref better

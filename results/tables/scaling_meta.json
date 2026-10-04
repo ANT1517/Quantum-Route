@@ -1,0 +1,169 @@
+{
+  "experiment": "scaling",
+  "description": "Scaling: budget 0.6 s per customer, capped at 300 s (D50). QPSO-full direct (X-n101 60 s reused from bench_core_v1, X-n200 120 s), cluster-first QPSO (X-n502 300 s), OR-Tools reference",
+  "reference": "qpso",
+  "references": [
+    "qpso"
+  ],
+  "multiple_testing": "Holm-Bonferroni per table (p_holm); effect size = paired difference in gap points",
+  "weights": [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "runs_planned": 10,
+  "records": 100,
+  "infeasible": 0,
+  "budgets": [
+    {
+      "type": "time",
+      "value": 120,
+      "algorithms": [
+        "qpso",
+        "ortools"
+      ]
+    },
+    {
+      "type": "time",
+      "value": 300,
+      "algorithms": [
+        "qpso_cluster",
+        "ortools"
+      ]
+    }
+  ],
+  "instances": [
+    "X-n200-k36",
+    "X-n502-k39"
+  ],
+  "import_runs": [
+    {
+      "exp": "bench_core_v1",
+      "instances": [
+        "X-n101-k25"
+      ],
+      "algorithms": [
+        "qpso",
+        "ortools"
+      ]
+    }
+  ],
+  "seeds": [
+    21345,
+    21346,
+    21347,
+    21348,
+    21349,
+    21350,
+    21351,
+    21352,
+    21353,
+    21354,
+    21355,
+    21356,
+    21357,
+    21358,
+    21359,
+    21360,
+    21361,
+    21362,
+    21363,
+    21364,
+    21365,
+    21366,
+    21367,
+    21368,
+    21369,
+    21370,
+    21371,
+    21372,
+    21373,
+    21374,
+    22345,
+    22346,
+    22347,
+    22348,
+    22349,
+    22350,
+    22351,
+    22352,
+    22353,
+    22354,
+    23345,
+    23346,
+    23347,
+    23348,
+    23349,
+    23350,
+    23351,
+    23352,
+    23353,
+    23354
+  ],
+  "config_hashes": {
+    "ortools|time|60": [
+      "8636c6f9bd36"
+    ],
+    "ortools|time|120": [
+      "c6ed9920ee6e"
+    ],
+    "ortools|time|300": [
+      "3ff858aa6512"
+    ],
+    "qpso|time|60": [
+      "f6045f479cf6"
+    ],
+    "qpso|time|120": [
+      "74e3e7dd7955"
+    ],
+    "qpso_cluster|time|300": [
+      "1864c841f0c8"
+    ]
+  },
+  "note": "Measured on one machine; wall times depend on hardware.",
+  "launches": [
+    {
+      "started": "2026-10-04 15:49:37",
+      "runs_planned": 40,
+      "workers": 11,
+      "thread_env": {
+        "NUMBA_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "git_commit": "1a3d308",
+      "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
+      "pinned_cpus": null,
+      "machine": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+        "physical_cores": 12,
+        "logical_threads": 16,
+        "power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+      }
+    },
+    {
+      "started": "2026-10-04 18:20:37",
+      "runs_planned": 20,
+      "workers": 11,
+      "thread_env": {
+        "NUMBA_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "git_commit": "73f6def",
+      "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
+      "pinned_cpus": null,
+      "machine": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+        "physical_cores": 12,
+        "logical_threads": 16,
+        "power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+      }
+    }
+  ]
+}

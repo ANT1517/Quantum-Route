@@ -1,0 +1,161 @@
+{
+  "experiment": "ablation",
+  "description": "QPSO ablation chain, 30 s, 10 runs, A-n63-k9 and A-n80-k10; PSO+LS and RR+LS reference rows",
+  "reference": "a7_full",
+  "references": [
+    "a7_full"
+  ],
+  "multiple_testing": "Holm-Bonferroni per table (p_holm); effect size = paired difference in gap points",
+  "weights": [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "runs_planned": 10,
+  "records": 200,
+  "infeasible": 0,
+  "budgets": [
+    {
+      "type": "time",
+      "value": 30,
+      "algorithms": [
+        "a0_base",
+        "a1_rank_mbest",
+        "a2_sobol",
+        "a3_adaptive_alpha",
+        "a4_memetic_ls",
+        "a5_tunneling",
+        "a6_qubo",
+        "a7_full",
+        "pso_ls",
+        "rr_ls"
+      ]
+    }
+  ],
+  "instances": [
+    "A-n63-k9",
+    "A-n80-k10"
+  ],
+  "import_runs": [],
+  "seeds": [
+    17345,
+    17346,
+    17347,
+    17348,
+    17349,
+    17350,
+    17351,
+    17352,
+    17353,
+    17354,
+    18345,
+    18346,
+    18347,
+    18348,
+    18349,
+    18350,
+    18351,
+    18352,
+    18353,
+    18354
+  ],
+  "config_hashes": {
+    "a0_base|time|30": [
+      "8aec60c2b1ab"
+    ],
+    "a1_rank_mbest|time|30": [
+      "6fc34ecb11b0"
+    ],
+    "a2_sobol|time|30": [
+      "6a56f3496b82"
+    ],
+    "a3_adaptive_alpha|time|30": [
+      "9518feffbb93"
+    ],
+    "a4_memetic_ls|time|30": [
+      "d6e8b03251a8"
+    ],
+    "a5_tunneling|time|30": [
+      "7d4d83c650bc"
+    ],
+    "a6_qubo|time|30": [
+      "c534b476b26d"
+    ],
+    "a7_full|time|30": [
+      "e777c20447d7"
+    ],
+    "pso_ls|time|30": [
+      "81dce9804009"
+    ],
+    "rr_ls|time|30": [
+      "9dcf3a432eae"
+    ]
+  },
+  "note": "Measured on one machine; wall times depend on hardware.",
+  "launches": [
+    {
+      "started": "2026-10-04 15:32:36",
+      "runs_planned": 200,
+      "workers": 11,
+      "thread_env": {
+        "NUMBA_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "git_commit": "1a3d308",
+      "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
+      "pinned_cpus": null,
+      "machine": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+        "physical_cores": 12,
+        "logical_threads": 16,
+        "power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+      }
+    },
+    {
+      "started": "2026-10-04 16:18:37",
+      "runs_planned": 17,
+      "workers": 11,
+      "thread_env": {
+        "NUMBA_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "git_commit": "b9df662",
+      "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
+      "pinned_cpus": null,
+      "machine": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+        "physical_cores": 12,
+        "logical_threads": 16,
+        "power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+      }
+    },
+    {
+      "started": "2026-10-04 17:04:07",
+      "runs_planned": 1,
+      "workers": 1,
+      "thread_env": {
+        "NUMBA_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "git_commit": "63adf8d",
+      "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
+      "pinned_cpus": null,
+      "machine": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+        "physical_cores": 12,
+        "logical_threads": 16,
+        "power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+      }
+    }
+  ]
+}

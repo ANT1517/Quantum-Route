@@ -1,0 +1,5 @@
+budget_type,budget,instance,algo,runs,runs_fleet_ok,fleet_violations,seeds,F_mean,F_std,D_best,D_mean,D_median,D_worst,D_std,gap_best_pct,gap_mean_pct,gap_std_pct,vehicles_mean,evals_to_1pct_median,evals_to_5pct_median,time_to_1pct_s_median,time_to_5pct_s_median,evals_mean,wall_s_mean,ls_calls_mean
+evals,12000,A-n63-k9,pso_plain,10,5,5,17345..17354,1.62879,0.0808244,3325,3563.8,3556,3818,176.844,105.755,120.532,10.9433,9.5,9700,9400,5.7572,5.5304,12000,6.99569,0
+evals,12000,A-n63-k9,qpso_base_plain,10,4,6,17345..17354,1.7404,0.0970171,3619,3808,3799,4015,212.273,123.948,135.644,13.1357,9.6,7050,7050,4.1508,4.1508,12000,7.13243,0
+evals,12000,A-n80-k10,pso_plain,10,10,0,18345..18354,1.69284,0.0313358,3862,3974.8,3975,4083,73.5766,119.058,125.457,4.17337,10,9250,5500,7.33115,3.9671,12000,8.8835,0
+evals,12000,A-n80-k10,qpso_base_plain,10,10,0,18345..18354,1.83352,0.0131828,4263,4305.1,4302.5,4359,30.9532,141.804,144.192,1.75571,10,5950,1450,4.40255,1.08715,12000,9.32816,0

@@ -1,0 +1,47 @@
+{
+  "instance": "A-n80-k10",
+  "time_budget_s": 30.0,
+  "seed": 1,
+  "wall_s": 30.003286199993454,
+  "iterations": 201,
+  "evals": 8301,
+  "ls_calls": 2020,
+  "qubo_calls": 7,
+  "tunnel_events": 10,
+  "seconds": {
+    "swarm_update": 0.2963167993584648,
+    "decode_split_eval": 4.321631507365964,
+    "memetic_ls": 7.2185757010011,
+    "gbest_ls": 0.030956599861383438,
+    "tunneling": 0.13875760009977967,
+    "qubo_slot": 17.814991500112228,
+    "final_polish_ls": 0.0,
+    "other": 0.18205649219453335
+  },
+  "share_pct": {
+    "swarm_update": 0.9876144812381566,
+    "decode_split_eval": 14.403860559004057,
+    "memetic_ls": 24.059283549422247,
+    "gbest_ls": 0.10317736415616431,
+    "tunneling": 0.4624746741902223,
+    "qubo_slot": 59.37680086562023,
+    "final_polish_ls": 0.0,
+    "other": 0.6067885063689226
+  },
+  "calls": {
+    "swarm_update": 403,
+    "decode_split_eval": 8079,
+    "memetic_ls": 200,
+    "gbest_ls": 20,
+    "qubo_slot": 7,
+    "tunneling": 10
+  },
+  "machine": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+    "physical_cores": 12,
+    "logical_threads": 16,
+    "power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+  },
+  "note": "Measurement only, one run; not a benchmark. QUBO time inside the final polish is counted under qubo_slot."
+}

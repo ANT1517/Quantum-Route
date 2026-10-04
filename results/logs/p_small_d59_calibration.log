@@ -1,0 +1,7 @@
+p_small: 90 runs; calibration min 2.7e+06, median 3.66e+06, max 7.78e+06 ops/s; missing 0
+  below threshold: ('P-n19-k2', 'ortools', 13353, np.float64(2790000.0))
+  below threshold: ('P-n19-k2', 'ortools', 13354, np.float64(2830000.0))
+  below threshold: ('P-n19-k2', 'pso_ls', 13354, np.float64(2950000.0))
+  below threshold: ('P-n22-k8', 'ortools', 14345, np.float64(2705000.0))
+  below threshold: ('P-n22-k8', 'pso_ls', 14346, np.float64(2760000.0))
+  below threshold: ('P-n19-k2', 'qn_tuned', 13352, np.float64(2865000.0))

@@ -1,0 +1,22 @@
+# Ablation (§9 Phase 9 item 2, D39): one feature added per row; Wilcoxon each row vs the previous (stats per row).
+# 30 s time budget, 10 runs, A-n63-k9 and A-n80-k10. Reference rows: PSO+LS and RR+LS.
+# The last row (+diversity re-init) is identical to QPSO-full, so the chain ends at the headline configuration.
+# Every row keeps rank re-normalisation (D32: representation, not a feature) and gbest LS every 10 iterations.
+name: ablation
+description: "QPSO ablation chain, 30 s, 10 runs, A-n63-k9 and A-n80-k10; PSO+LS and RR+LS reference rows"
+instances: [A-n63-k9, A-n80-k10]
+runs: 10
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: a7_full
+chain: [a0_base, a1_rank_mbest, a2_sobol, a3_adaptive_alpha, a4_memetic_ls, a5_tunneling, a6_qubo, a7_full]
+variants:
+  a0_base:           {algo: qpso, params: {init: uniform, mbest: uniform, alpha_mode: linear, memetic: false, tunneling: {enabled: false}, qubo_slot: {enabled: false}, diversity_delta: 0.0}}
+  a1_rank_mbest:     {algo: qpso, params: {init: uniform, mbest: rank,    alpha_mode: linear, memetic: false, tunneling: {enabled: false}, qubo_slot: {enabled: false}, diversity_delta: 0.0}}
+  a2_sobol:          {algo: qpso, params: {init: sobol,   mbest: rank,    alpha_mode: linear, memetic: false, tunneling: {enabled: false}, qubo_slot: {enabled: false}, diversity_delta: 0.0}}
+  a3_adaptive_alpha: {algo: qpso, params: {init: sobol,   mbest: rank,    alpha_mode: adaptive, memetic: false, tunneling: {enabled: false}, qubo_slot: {enabled: false}, diversity_delta: 0.0}}
+  a4_memetic_ls:     {algo: qpso, params: {init: sobol,   mbest: rank,    alpha_mode: adaptive, memetic: true,  tunneling: {enabled: false}, qubo_slot: {enabled: false}, diversity_delta: 0.0}}
+  a5_tunneling:      {algo: qpso, params: {init: sobol,   mbest: rank,    alpha_mode: adaptive, memetic: true,  tunneling: {enabled: true},  qubo_slot: {enabled: false}, diversity_delta: 0.0}}
+  a6_qubo:           {algo: qpso, params: {init: sobol,   mbest: rank,    alpha_mode: adaptive, memetic: true,  tunneling: {enabled: true},  qubo_slot: {enabled: true},  diversity_delta: 0.0}}
+  a7_full:           {algo: qpso, params: {}}
+budgets:
+  - {type: time, value: 30, algorithms: [a0_base, a1_rank_mbest, a2_sobol, a3_adaptive_alpha, a4_memetic_ls, a5_tunneling, a6_qubo, a7_full, pso_ls, rr_ls]}

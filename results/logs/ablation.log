@@ -1,0 +1,237 @@
+[ablation] 200 runs to do (0 already recorded), 11 worker(s) -> C:\Users\nisha\Quantum-Route-solver\results\runs\ablation.jsonl
+  [1/200] A-n63-k9 a7_full time=30 seed=17345: D=1655.0 gap=2.41% evals=6803 30.00s ls=1654
+  [2/200] A-n63-k9 a3_adaptive_alpha time=30 seed=17345: D=1934.0 gap=19.68% evals=50980 30.00s ls=128
+  [3/200] A-n63-k9 a6_qubo time=30 seed=17345: D=1655.0 gap=2.41% evals=6549 30.00s ls=1589
+  [4/200] A-n63-k9 rr_ls time=30 seed=17345: D=1683.0 gap=4.15% evals=19520 30.00s ls=4917
+  [5/200] A-n63-k9 a4_memetic_ls time=30 seed=17345: D=1653.0 gap=2.29% evals=18920 30.00s ls=4766
+  [6/200] A-n63-k9 a0_base time=30 seed=17345: D=1964.0 gap=21.53% evals=50027 30.00s ls=125
+  [7/200] A-n63-k9 a1_rank_mbest time=30 seed=17345: D=1964.0 gap=21.53% evals=50375 30.00s ls=126
+  [8/200] A-n63-k9 a2_sobol time=30 seed=17345: D=1802.0 gap=11.51% evals=49331 30.00s ls=124
+  [9/200] A-n63-k9 pso_ls time=30 seed=17345: D=1640.0 gap=1.49% evals=19080 30.00s ls=4807
+  [10/200] A-n63-k9 a5_tunneling time=30 seed=17345: D=1649.0 gap=2.04% evals=18782 30.00s ls=4596
+  [11/200] A-n63-k9 a6_qubo time=30 seed=17346: D=1654.0 gap=2.35% evals=6630 30.00s ls=1634
+  [12/200] A-n63-k9 rr_ls time=30 seed=17346: D=1681.0 gap=4.02% evals=19920 30.00s ls=5017
+  [13/200] A-n63-k9 a5_tunneling time=30 seed=17346: D=1654.0 gap=2.35% evals=19454 30.00s ls=4747
+  [14/200] A-n63-k9 a4_memetic_ls time=30 seed=17346: D=1658.0 gap=2.60% evals=18850 30.00s ls=4747
+  [15/200] A-n63-k9 a1_rank_mbest time=30 seed=17346: D=2004.0 gap=24.01% evals=51063 30.00s ls=128
+  [16/200] A-n63-k9 a3_adaptive_alpha time=30 seed=17346: D=2000.0 gap=23.76% evals=50350 30.00s ls=126
+  [17/200] A-n63-k9 pso_ls time=30 seed=17346: D=1667.0 gap=3.16% evals=20800 30.00s ls=5239
+  [18/200] A-n63-k9 a0_base time=30 seed=17346: D=2017.0 gap=24.81% evals=50961 30.00s ls=128
+  [19/200] A-n63-k9 a2_sobol time=30 seed=17346: D=2000.0 gap=23.76% evals=50708 30.00s ls=127
+  [20/200] A-n63-k9 a7_full time=30 seed=17346: D=1654.0 gap=2.35% evals=6710 30.01s ls=1654
+  [21/200] A-n63-k9 rr_ls time=30 seed=17347: D=1682.0 gap=4.08% evals=19901 30.00s ls=5010
+  [22/200] A-n63-k9 a3_adaptive_alpha time=30 seed=17347: D=1952.0 gap=20.79% evals=50935 30.00s ls=128
+  [23/200] A-n63-k9 a2_sobol time=30 seed=17347: D=1830.0 gap=13.24% evals=50182 30.00s ls=126
+  [24/200] A-n63-k9 a7_full time=30 seed=17347: D=1646.0 gap=1.86% evals=7715 30.00s ls=1889
+  [25/200] A-n63-k9 a4_memetic_ls time=30 seed=17347: D=1661.0 gap=2.78% evals=18945 30.00s ls=4768
+  [26/200] A-n63-k9 a1_rank_mbest time=30 seed=17347: D=1967.0 gap=21.72% evals=50638 30.00s ls=127
+  [27/200] A-n63-k9 a6_qubo time=30 seed=17347: D=1646.0 gap=1.86% evals=7405 30.00s ls=1818
+  [28/200] A-n63-k9 a5_tunneling time=30 seed=17347: D=1649.0 gap=2.04% evals=19051 30.00s ls=4663
+  [29/200] A-n63-k9 a0_base time=30 seed=17347: D=1925.0 gap=19.12% evals=50480 30.01s ls=127
+  [30/200] A-n63-k9 pso_ls time=30 seed=17347: D=1643.0 gap=1.67% evals=19230 30.00s ls=4838
+  [31/200] A-n63-k9 a2_sobol time=30 seed=17348: D=1890.0 gap=16.96% evals=50851 30.00s ls=127
+  [32/200] A-n63-k9 rr_ls time=30 seed=17348: D=1651.0 gap=2.17% evals=19680 30.00s ls=4956
+  [33/200] A-n63-k9 a7_full time=30 seed=17348: D=1638.0 gap=1.36% evals=6755 30.00s ls=1637
+  [34/200] A-n63-k9 a5_tunneling time=30 seed=17348: D=1649.0 gap=2.04% evals=19059 30.00s ls=4646
+  [35/200] A-n63-k9 pso_ls time=30 seed=17348: D=1642.0 gap=1.61% evals=20165 30.01s ls=5081
+  [36/200] A-n63-k9 a6_qubo time=30 seed=17348: D=1638.0 gap=1.36% evals=6424 30.00s ls=1550
+  [37/200] A-n63-k9 a3_adaptive_alpha time=30 seed=17348: D=1790.0 gap=10.77% evals=50224 30.00s ls=126
+  [38/200] A-n63-k9 a4_memetic_ls time=30 seed=17348: D=1652.0 gap=2.23% evals=18261 30.00s ls=4596
+  [39/200] A-n63-k9 a1_rank_mbest time=30 seed=17348: D=1901.0 gap=17.64% evals=49803 30.00s ls=125
+  [40/200] A-n63-k9 a0_base time=30 seed=17348: D=1901.0 gap=17.64% evals=50228 30.00s ls=126
+  [41/200] A-n63-k9 a7_full time=30 seed=17349: D=1698.0 gap=5.07% evals=6676 30.00s ls=1597
+  [42/200] A-n63-k9 pso_ls time=30 seed=17349: D=1635.0 gap=1.18% evals=19920 30.00s ls=5017
+  [43/200] A-n63-k9 a4_memetic_ls time=30 seed=17349: D=1646.0 gap=1.86% evals=19520 30.00s ls=4909
+  [44/200] A-n63-k9 a1_rank_mbest time=30 seed=17349: D=1911.0 gap=18.25% evals=49405 30.00s ls=124
+  [45/200] A-n63-k9 a6_qubo time=30 seed=17349: D=1698.0 gap=5.07% evals=6917 30.00s ls=1667
+  [46/200] A-n63-k9 a0_base time=30 seed=17349: D=1911.0 gap=18.25% evals=50810 30.00s ls=127
+  [47/200] A-n63-k9 a2_sobol time=30 seed=17349: D=1916.0 gap=18.56% evals=50959 30.00s ls=128
+  [48/200] A-n63-k9 a3_adaptive_alpha time=30 seed=17349: D=2066.0 gap=27.85% evals=52200 30.01s ls=131
+  [49/200] A-n63-k9 rr_ls time=30 seed=17349: D=1696.0 gap=4.95% evals=20280 30.00s ls=5102
+  [50/200] A-n63-k9 a5_tunneling time=30 seed=17349: D=1698.0 gap=5.07% evals=20773 30.00s ls=5051
+  [51/200] A-n63-k9 pso_ls time=30 seed=17350: D=1646.0 gap=1.86% evals=21340 30.00s ls=5374
+  [52/200] A-n63-k9 a6_qubo time=30 seed=17350: D=1661.0 gap=2.78% evals=6777 30.00s ls=1637
+  [53/200] A-n63-k9 a4_memetic_ls time=30 seed=17350: D=1640.0 gap=1.49% evals=19200 30.00s ls=4837
+  [54/200] A-n63-k9 a2_sobol time=30 seed=17350: D=1867.0 gap=15.53% evals=52152 30.00s ls=131
+  [55/200] A-n63-k9 a3_adaptive_alpha time=30 seed=17350: D=1867.0 gap=15.53% evals=52126 30.00s ls=131
+  [56/200] A-n63-k9 a7_full time=30 seed=17350: D=1650.0 gap=2.10% evals=6823 30.01s ls=1655
+  [57/200] A-n63-k9 a0_base time=30 seed=17350: D=1842.0 gap=13.99% evals=51680 30.01s ls=130
+  [58/200] A-n63-k9 rr_ls time=30 seed=17350: D=1668.0 gap=3.22% evals=20320 30.00s ls=5114
+  [59/200] A-n63-k9 a5_tunneling time=30 seed=17350: D=1646.0 gap=1.86% evals=19750 30.01s ls=4838
+  [60/200] A-n63-k9 a1_rank_mbest time=30 seed=17350: D=1824.0 gap=12.87% evals=51086 30.00s ls=128
+  [61/200] A-n63-k9 a7_full time=30 seed=17351: D=1668.0 gap=3.22% evals=8315 30.00s ls=2039
+  [62/200] A-n63-k9 a2_sobol time=30 seed=17351: D=1817.0 gap=12.44% evals=51632 30.00s ls=129
+  [63/200] A-n63-k9 a4_memetic_ls time=30 seed=17351: D=1656.0 gap=2.48% evals=20621 30.00s ls=5192
+  [64/200] A-n63-k9 pso_ls time=30 seed=17351: D=1645.0 gap=1.79% evals=20000 30.00s ls=5037
+  [65/200] A-n63-k9 a6_qubo time=30 seed=17351: D=1668.0 gap=3.22% evals=8362 30.00s ls=2051
+  [66/200] A-n63-k9 rr_ls time=30 seed=17351: D=1680.0 gap=3.96% evals=20219 30.00s ls=5091
+  [67/200] A-n63-k9 a5_tunneling time=30 seed=17351: D=1632.0 gap=0.99% evals=21442 30.00s ls=5271
+  [68/200] A-n63-k9 a1_rank_mbest time=30 seed=17351: D=2043.0 gap=26.42% evals=50583 30.00s ls=127
+  [69/200] A-n63-k9 a3_adaptive_alpha time=30 seed=17351: D=1817.0 gap=12.44% evals=51360 30.01s ls=129
+  [70/200] A-n63-k9 a0_base time=30 seed=17351: D=2043.0 gap=26.42% evals=50734 30.00s ls=127
+  [71/200] A-n63-k9 a6_qubo time=30 seed=17352: D=1634.0 gap=1.11% evals=7713 30.00s ls=1880
+  [72/200] A-n63-k9 a7_full time=30 seed=17352: D=1634.0 gap=1.11% evals=7713 30.00s ls=1879
+  [73/200] A-n63-k9 a3_adaptive_alpha time=30 seed=17352: D=1888.0 gap=16.83% evals=51690 30.00s ls=130
+  [74/200] A-n63-k9 a5_tunneling time=30 seed=17352: D=1629.0 gap=0.80% evals=20220 30.00s ls=4938
+  [75/200] A-n63-k9 a2_sobol time=30 seed=17352: D=1954.0 gap=20.92% evals=51360 30.00s ls=129
+  [76/200] A-n63-k9 a4_memetic_ls time=30 seed=17352: D=1633.0 gap=1.05% evals=19800 30.00s ls=4987
+  [77/200] A-n63-k9 a0_base time=30 seed=17352: D=1954.0 gap=n/a evals=51606 30.00s ls=129
+  [78/200] A-n63-k9 a1_rank_mbest time=30 seed=17352: D=1954.0 gap=n/a evals=52342 30.00s ls=131
+  [79/200] A-n63-k9 pso_ls time=30 seed=17352: D=1654.0 gap=2.35% evals=21248 30.00s ls=5353
+  [80/200] A-n63-k9 rr_ls time=30 seed=17352: D=1678.0 gap=3.84% evals=20400 30.00s ls=5134
+  [81/200] A-n63-k9 a6_qubo time=30 seed=17353: D=1670.0 gap=3.34% evals=6593 30.00s ls=1616
+  [82/200] A-n63-k9 a0_base time=30 seed=17353: D=1904.0 gap=17.82% evals=51785 30.00s ls=130
+  [83/200] A-n63-k9 a1_rank_mbest time=30 seed=17353: D=1904.0 gap=17.82% evals=51574 30.00s ls=129
+  [84/200] A-n63-k9 a7_full time=30 seed=17353: D=1670.0 gap=3.34% evals=6577 30.00s ls=1614
+  [85/200] A-n63-k9 a5_tunneling time=30 seed=17353: D=1640.0 gap=1.49% evals=19953 30.00s ls=4884
+  [86/200] A-n63-k9 a2_sobol time=30 seed=17353: D=2077.0 gap=28.53% evals=52000 30.00s ls=130
+  [87/200] A-n63-k9 pso_ls time=30 seed=17353: D=1652.0 gap=2.23% evals=19280 30.00s ls=4858
+  [88/200] A-n63-k9 a4_memetic_ls time=30 seed=17353: D=1658.0 gap=2.60% evals=19387 30.00s ls=4879
+  [89/200] A-n63-k9 a3_adaptive_alpha time=30 seed=17353: D=1891.0 gap=17.02% evals=51602 30.00s ls=129
+  [90/200] A-n63-k9 rr_ls time=30 seed=17353: D=1682.0 gap=4.08% evals=20320 30.00s ls=5118
+  [91/200] A-n63-k9 a6_qubo time=30 seed=17354: D=1676.0 gap=3.71% evals=7488 30.00s ls=1819
+  [92/200] A-n63-k9 a7_full time=30 seed=17354: D=1676.0 gap=3.71% evals=7758 30.00s ls=1887
+  [93/200] A-n63-k9 pso_ls time=30 seed=17354: D=1675.0 gap=3.65% evals=19880 30.00s ls=5007
+  [94/200] A-n63-k9 a0_base time=30 seed=17354: D=1936.0 gap=19.80% evals=51063 30.00s ls=128
+  [95/200] A-n63-k9 a2_sobol time=30 seed=17354: D=2005.0 gap=24.07% evals=51917 30.01s ls=130
+  [96/200] A-n63-k9 a4_memetic_ls time=30 seed=17354: D=1648.0 gap=1.98% evals=20160 30.00s ls=5081
+  [97/200] A-n63-k9 rr_ls time=30 seed=17354: D=1676.0 gap=3.71% evals=20200 30.00s ls=5086
+  [98/200] A-n63-k9 a3_adaptive_alpha time=30 seed=17354: D=2005.0 gap=24.07% evals=51600 30.01s ls=129
+  [99/200] A-n63-k9 a5_tunneling time=30 seed=17354: D=1654.0 gap=2.35% evals=20810 30.00s ls=5081
+  [100/200] A-n80-k10 rr_ls time=30 seed=18345: D=1888.0 gap=7.09% evals=12819 30.01s ls=3222
+  [101/200] A-n80-k10 a5_tunneling time=30 seed=18345: D=1843.0 gap=4.54% evals=13340 30.01s ls=3267
+  [102/200] A-n63-k9 a1_rank_mbest time=30 seed=17354: D=1942.0 gap=20.17% evals=49339 30.01s ls=124
+  [103/200] A-n80-k10 a1_rank_mbest time=30 seed=18345: D=2093.0 gap=18.72% evals=33801 30.01s ls=85
+  [104/200] A-n80-k10 a4_memetic_ls time=30 seed=18345: D=1845.0 gap=4.65% evals=13000 30.01s ls=3269
+  [105/200] A-n80-k10 a2_sobol time=30 seed=18345: D=2150.0 gap=21.95% evals=34262 30.00s ls=86
+  [106/200] A-n80-k10 a3_adaptive_alpha time=30 seed=18345: D=2116.0 gap=20.02% evals=34050 30.01s ls=85
+  [107/200] A-n80-k10 a7_full time=30 seed=18345: D=1845.0 gap=4.65% evals=5280 30.00s ls=1283
+  [108/200] A-n80-k10 pso_ls time=30 seed=18345: D=1847.0 gap=4.76% evals=13440 30.01s ls=3384
+  [109/200] A-n80-k10 a0_base time=30 seed=18345: D=2154.0 gap=22.18% evals=34488 30.00s ls=87
+  [110/200] A-n80-k10 a6_qubo time=30 seed=18345: D=1845.0 gap=4.65% evals=5358 30.00s ls=1300
+  [111/200] A-n80-k10 pso_ls time=30 seed=18346: D=1857.0 gap=5.33% evals=12109 30.00s ls=3041
+  [112/200] A-n80-k10 a6_qubo time=30 seed=18346: D=1849.0 gap=4.88% evals=6197 30.02s ls=1526
+  [113/200] A-n80-k10 a7_full time=30 seed=18346: D=1849.0 gap=4.88% evals=6467 30.00s ls=1580
+  [114/200] A-n80-k10 a0_base time=30 seed=18346: D=2048.0 gap=16.17% evals=32989 30.00s ls=83
+  [115/200] A-n80-k10 a2_sobol time=30 seed=18346: D=2273.0 gap=28.93% evals=33129 30.00s ls=83
+  [116/200] A-n80-k10 a4_memetic_ls time=30 seed=18346: D=1846.0 gap=4.71% evals=12280 30.00s ls=3090
+  [117/200] A-n80-k10 a5_tunneling time=30 seed=18346: D=1838.0 gap=4.25% evals=12463 30.00s ls=3051
+  [118/200] A-n80-k10 a3_adaptive_alpha time=30 seed=18346: D=2273.0 gap=28.93% evals=33410 30.00s ls=84
+  [119/200] A-n80-k10 a1_rank_mbest time=30 seed=18346: D=2179.0 gap=23.60% evals=33500 30.00s ls=84
+  [120/200] A-n80-k10 rr_ls time=30 seed=18346: D=1898.0 gap=7.66% evals=12720 30.00s ls=3198
+  [121/200] A-n80-k10 a0_base time=30 seed=18347: D=2193.0 gap=24.39% evals=33836 30.00s ls=85
+  [122/200] A-n80-k10 a4_memetic_ls time=30 seed=18347: D=1808.0 gap=2.55% evals=10960 30.00s ls=2755
+  [123/200] A-n80-k10 a5_tunneling time=30 seed=18347: D=1808.0 gap=2.55% evals=11172 30.00s ls=2760
+  [124/200] A-n80-k10 a3_adaptive_alpha time=30 seed=18347: D=2175.0 gap=23.37% evals=32143 30.00s ls=81
+  [125/200] A-n80-k10 a7_full time=30 seed=18347: D=1795.0 gap=1.82% evals=4645 30.00s ls=1131
+  [126/200] A-n80-k10 a2_sobol time=30 seed=18347: D=2098.0 gap=19.00% evals=31145 30.00s ls=78
+  [127/200] A-n80-k10 a6_qubo time=30 seed=18347: D=1795.0 gap=1.82% evals=4685 30.00s ls=1142
+  [128/200] A-n80-k10 pso_ls time=30 seed=18347: D=1838.0 gap=4.25% evals=11560 30.00s ls=2903
+  [129/200] A-n80-k10 rr_ls time=30 seed=18347: D=1897.0 gap=7.60% evals=11943 30.00s ls=3000
+  [130/200] A-n80-k10 a1_rank_mbest time=30 seed=18347: D=2300.0 gap=30.46% evals=31543 30.00s ls=79
+  [131/200] A-n80-k10 pso_ls time=30 seed=18348: D=1841.0 gap=4.42% evals=11000 30.00s ls=2766
+  [132/200] A-n80-k10 a5_tunneling time=30 seed=18348: D=1866.0 gap=5.84% evals=12220 30.01s ls=2984
+  [133/200] A-n80-k10 a3_adaptive_alpha time=30 seed=18348: D=2095.0 gap=18.83% evals=34226 30.00s ls=86
+  [134/200] A-n80-k10 a1_rank_mbest time=30 seed=18348: D=2227.0 gap=26.32% evals=34118 30.01s ls=86
+  [135/200] A-n80-k10 a7_full time=30 seed=18348: D=1865.0 gap=5.79% evals=5587 30.02s ls=1361
+  [136/200] A-n80-k10 a0_base time=30 seed=18348: D=2024.0 gap=14.80% evals=33952 30.01s ls=85
+  [137/200] A-n80-k10 a2_sobol time=30 seed=18348: D=2143.0 gap=21.55% evals=34072 30.01s ls=85
+  [138/200] A-n80-k10 a4_memetic_ls time=30 seed=18348: D=1879.0 gap=6.58% evals=12889 30.01s ls=3243
+  [139/200] A-n80-k10 rr_ls time=30 seed=18348: D=1881.0 gap=6.69% evals=12782 30.01s ls=3212
+  [140/200] A-n80-k10 a6_qubo time=30 seed=18348: D=1865.0 gap=5.79% evals=5296 30.01s ls=1293
+  [141/200] A-n80-k10 a1_rank_mbest time=30 seed=18349: D=1979.0 gap=12.25% evals=33932 30.01s ls=85
+  [142/200] A-n80-k10 a3_adaptive_alpha time=30 seed=18349: D=2132.0 gap=20.93% evals=32988 30.00s ls=83
+  [143/200] A-n80-k10 a2_sobol time=30 seed=18349: D=2132.0 gap=20.93% evals=33077 30.00s ls=83
+  [144/200] A-n80-k10 a0_base time=30 seed=18349: D=2100.0 gap=19.12% evals=32252 30.00s ls=81
+  [145/200] A-n80-k10 a6_qubo time=30 seed=18349: D=1831.0 gap=3.86% evals=5458 30.00s ls=1344
+  [146/200] A-n80-k10 a4_memetic_ls time=30 seed=18349: D=1830.0 gap=3.80% evals=11218 30.00s ls=2818
+  [147/200] A-n80-k10 a7_full time=30 seed=18349: D=1831.0 gap=3.86% evals=5463 30.01s ls=1346
+  [148/200] A-n80-k10 rr_ls time=30 seed=18349: D=1869.0 gap=6.01% evals=12400 30.00s ls=3117
+  [149/200] A-n80-k10 a5_tunneling time=30 seed=18349: D=1828.0 gap=3.69% evals=11690 30.00s ls=2863
+  [150/200] A-n80-k10 pso_ls time=30 seed=18349: D=1847.0 gap=4.76% evals=12240 30.00s ls=3077
+  [151/200] A-n80-k10 a7_full time=30 seed=18350: D=1882.0 gap=6.75% evals=5468 30.00s ls=1334
+  [152/200] A-n80-k10 rr_ls time=30 seed=18350: D=1890.0 gap=7.20% evals=12560 30.00s ls=3161
+  [153/200] A-n80-k10 a2_sobol time=30 seed=18350: D=2111.0 gap=19.74% evals=32718 30.00s ls=82
+  [154/200] A-n80-k10 a5_tunneling time=30 seed=18350: D=1844.0 gap=4.59% evals=13061 30.00s ls=3207
+  [155/200] A-n80-k10 a0_base time=30 seed=18350: D=2168.0 gap=22.97% evals=35950 30.00s ls=90
+  [156/200] A-n80-k10 pso_ls time=30 seed=18350: D=1832.0 gap=3.91% evals=13440 30.01s ls=3382
+  [157/200] A-n80-k10 a6_qubo time=30 seed=18350: D=1861.0 gap=5.56% evals=5579 30.00s ls=1356
+  [158/200] A-n80-k10 a3_adaptive_alpha time=30 seed=18350: D=2045.0 gap=16.00% evals=35680 30.00s ls=90
+  [159/200] A-n80-k10 a4_memetic_ls time=30 seed=18350: D=1845.0 gap=4.65% evals=13490 30.00s ls=3394
+  [160/200] A-n80-k10 a1_rank_mbest time=30 seed=18350: D=2022.0 gap=14.69% evals=34800 30.00s ls=87
+  [161/200] A-n80-k10 a3_adaptive_alpha time=30 seed=18351: D=2275.0 gap=29.04% evals=34818 30.01s ls=87
+  [162/200] A-n80-k10 a6_qubo time=30 seed=18351: D=1880.0 gap=6.64% evals=6404 30.00s ls=1566
+  [163/200] A-n80-k10 a5_tunneling time=30 seed=18351: D=1839.0 gap=4.31% evals=12884 30.00s ls=3201
+  [164/200] A-n80-k10 a4_memetic_ls time=30 seed=18351: D=1833.0 gap=3.97% evals=12600 30.01s ls=3165
+  [165/200] A-n80-k10 a7_full time=30 seed=18351: D=1880.0 gap=6.64% evals=6365 30.01s ls=1556
+  [166/200] A-n80-k10 a1_rank_mbest time=30 seed=18351: D=2074.0 gap=17.64% evals=33613 30.00s ls=84
+  [167/200] A-n80-k10 pso_ls time=30 seed=18351: D=1867.0 gap=5.90% evals=13391 30.00s ls=3364
+  [168/200] A-n80-k10 a2_sobol time=30 seed=18351: D=2311.0 gap=31.08% evals=34810 30.00s ls=87
+  [169/200] A-n80-k10 rr_ls time=30 seed=18351: D=1895.0 gap=7.49% evals=12972 30.00s ls=3263
+  [170/200] A-n80-k10 a0_base time=30 seed=18351: D=2074.0 gap=17.64% evals=33720 30.00s ls=85
+  [171/200] A-n80-k10 a3_adaptive_alpha time=30 seed=18352: D=1992.0 gap=12.99% evals=34520 30.00s ls=87
+  [172/200] A-n80-k10 a7_full time=30 seed=18352: D=1844.0 gap=4.59% evals=5471 30.01s ls=1361
+  [173/200] A-n80-k10 a4_memetic_ls time=30 seed=18352: D=1837.0 gap=4.20% evals=11920 30.00s ls=2992
+  [174/200] A-n80-k10 a6_qubo time=30 seed=18352: D=1844.0 gap=4.59% evals=5267 30.00s ls=1303
+  [175/200] A-n80-k10 a0_base time=30 seed=18352: D=2114.0 gap=19.91% evals=33768 30.00s ls=85
+  [176/200] A-n80-k10 a5_tunneling time=30 seed=18352: D=1845.0 gap=4.65% evals=12365 30.00s ls=3029
+  [177/200] A-n80-k10 pso_ls time=30 seed=18352: D=1861.0 gap=5.56% evals=13240 30.01s ls=3328
+  [178/200] A-n80-k10 a2_sobol time=30 seed=18352: D=2121.0 gap=20.31% evals=33445 30.00s ls=84
+  [179/200] A-n80-k10 rr_ls time=30 seed=18352: D=1867.0 gap=5.90% evals=12840 30.01s ls=3230
+  [180/200] A-n80-k10 a1_rank_mbest time=30 seed=18352: D=2114.0 gap=19.91% evals=33118 30.01s ls=83
+  [181/200] A-n80-k10 rr_ls time=30 seed=18353: D=1891.0 gap=7.26% evals=12769 30.00s ls=3212
+  [182/200] A-n80-k10 a1_rank_mbest time=30 seed=18353: D=2220.0 gap=25.92% evals=32882 30.00s ls=83
+  [183/200] A-n80-k10 a2_sobol time=30 seed=18353: D=2172.0 gap=23.20% evals=33025 30.00s ls=83
+  [184/200] A-n80-k10 a7_full time=30 seed=18353: D=1862.0 gap=5.62% evals=6411 30.00s ls=1564
+  [185/200] A-n80-k10 a0_base time=30 seed=18353: D=2224.0 gap=26.15% evals=33440 30.00s ls=84
+  [186/200] A-n80-k10 a4_memetic_ls time=30 seed=18353: D=1843.0 gap=4.54% evals=13440 30.00s ls=3376
+  [187/200] A-n80-k10 a6_qubo time=30 seed=18353: D=1862.0 gap=5.62% evals=6444 30.00s ls=1566
+  [188/200] A-n80-k10 a3_adaptive_alpha time=30 seed=18353: D=2103.0 gap=19.29% evals=35112 30.00s ls=88
+  [189/200] A-n80-k10 a5_tunneling time=30 seed=18353: D=1837.0 gap=4.20% evals=13922 30.00s ls=3414
+  [190/200] A-n80-k10 a6_qubo time=30 seed=18354: D=1847.0 gap=4.76% evals=6012 30.00s ls=1477
+  [191/200] A-n80-k10 pso_ls time=30 seed=18353: D=1845.0 gap=4.65% evals=13320 30.00s ls=3354
+  [192/200] A-n80-k10 a2_sobol time=30 seed=18354: D=2095.0 gap=18.83% evals=35654 30.00s ls=89
+  [193/200] A-n80-k10 a5_tunneling time=30 seed=18354: D=1851.0 gap=4.99% evals=13256 30.00s ls=3241
+  [194/200] A-n80-k10 rr_ls time=30 seed=18354: D=1889.0 gap=7.15% evals=13515 30.00s ls=3394
+  [195/200] A-n80-k10 a0_base time=30 seed=18354: D=1974.0 gap=11.97% evals=35579 30.00s ls=89
+  [196/200] A-n80-k10 a7_full time=30 seed=18354: D=1847.0 gap=4.76% evals=6012 30.00s ls=1485
+  [197/200] A-n80-k10 a4_memetic_ls time=30 seed=18354: D=1846.0 gap=4.71% evals=12960 30.00s ls=3257
+  [198/200] A-n80-k10 a1_rank_mbest time=30 seed=18354: D=2053.0 gap=16.45% evals=35635 30.00s ls=89
+  [199/200] A-n80-k10 a3_adaptive_alpha time=30 seed=18354: D=2095.0 gap=18.83% evals=54064 30.00s ls=135
+  [200/200] A-n80-k10 pso_ls time=30 seed=18354: D=1829.0 gap=3.74% evals=19000 30.00s ls=4783
+[ablation] done in 591 s
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+budget_type  budget  instance              algo  runs  D_mean  gap_mean_pct  gap_best_pct  wall_s_mean
+       time      30  A-n63-k9           a7_full    10 1658.90       2.65470      1.113860      30.0038
+       time      30  A-n63-k9 a3_adaptive_alpha    10 1921.00      18.87380     10.767300      30.0040
+       time      30  A-n63-k9           a6_qubo    10 1660.00       2.72277      1.113860      30.0032
+       time      30  A-n63-k9             rr_ls    10 1677.70       3.81807      2.165840      30.0032
+       time      30  A-n63-k9     a4_memetic_ls    10 1650.50       2.13490      1.051980      30.0031
+       time      30  A-n63-k9           a0_base    10 1938.11      19.93260     13.985100      30.0031
+       time      30  A-n63-k9     a1_rank_mbest    10 1940.00      20.04950     12.871300      30.0034
+       time      30  A-n63-k9          a2_sobol    10 1915.80      18.55200     11.509900      30.0031
+       time      30  A-n63-k9            pso_ls    10 1649.90       2.09777      1.175740      30.0030
+       time      30  A-n63-k9      a5_tunneling    10 1650.00       2.10396      0.804455      30.0036
+       time      30 A-n80-k10             rr_ls    10 1886.50       7.00510      5.899040      30.0045
+       time      30 A-n80-k10      a5_tunneling    10 1839.90       4.36188      2.552470      30.0047
+       time      30 A-n80-k10     a1_rank_mbest    10 2126.10      20.59560     12.251800      30.0050
+       time      30 A-n80-k10     a4_memetic_ls    10 1841.20       4.43562      2.552470      30.0050
+       time      30 A-n80-k10          a2_sobol    10 2160.60      22.55250     18.831500      30.0042
+       time      30 A-n80-k10 a3_adaptive_alpha    10 2130.10      20.82250     12.989200      30.0040
+       time      30 A-n80-k10           a7_full    10 1850.00       4.93477      1.815090      30.0055
+       time      30 A-n80-k10            pso_ls    10 1846.40       4.73057      3.743620      30.0041
+       time      30 A-n80-k10           a0_base    10 2107.30      19.52920     11.968200      30.0037
+       time      30 A-n80-k10           a6_qubo    10 1847.90       4.81566      1.815090      30.0051
+
+wrote:
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_summary.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_wilcoxon.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_friedman.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_meta.json
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_chain.csv
+  C:\Users\nisha\Quantum-Route-solver\results\figures\ablation_convergence_A-n63-k9_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\ablation_convergence_A-n80-k10_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\ablation_gap_time30.png

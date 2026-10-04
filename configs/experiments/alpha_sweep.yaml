@@ -1,0 +1,20 @@
+# α sensitivity (§9 Phase 9 item 3, §7.5.2): QPSO-full with only the α schedule changed. 30 s, 10 runs, A-n63-k9.
+# Sensitivity analysis only: the QPSO-full configuration is fixed (tuning closed) and is not changed from this.
+name: alpha_sweep
+description: "α sensitivity of QPSO-full on A-n63-k9: fixed 0.3-1.2, linear 1.0→0.5, linear 0.8→0.3, adaptive; 30 s, 10 runs"
+instances: [A-n63-k9]
+runs: 10
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: alpha_adaptive
+variants:
+  alpha_fixed_0.3:   {algo: qpso, params: {alpha_mode: fixed, alpha_fixed: 0.3}}
+  alpha_fixed_0.5:   {algo: qpso, params: {alpha_mode: fixed, alpha_fixed: 0.5}}
+  alpha_fixed_0.7:   {algo: qpso, params: {alpha_mode: fixed, alpha_fixed: 0.7}}
+  alpha_fixed_0.9:   {algo: qpso, params: {alpha_mode: fixed, alpha_fixed: 0.9}}
+  alpha_fixed_1.0:   {algo: qpso, params: {alpha_mode: fixed, alpha_fixed: 1.0}}
+  alpha_fixed_1.2:   {algo: qpso, params: {alpha_mode: fixed, alpha_fixed: 1.2}}
+  alpha_lin_1.0_0.5: {algo: qpso, params: {alpha_mode: linear, alpha_max: 1.0, alpha_min: 0.5}}
+  alpha_lin_0.8_0.3: {algo: qpso, params: {alpha_mode: linear, alpha_max: 0.8, alpha_min: 0.3}}
+  alpha_adaptive:    {algo: qpso, params: {}}
+budgets:
+  - {type: time, value: 30, algorithms: [alpha_fixed_0.3, alpha_fixed_0.5, alpha_fixed_0.7, alpha_fixed_0.9, alpha_fixed_1.0, alpha_fixed_1.2, alpha_lin_1.0_0.5, alpha_lin_0.8_0.3, alpha_adaptive]}
