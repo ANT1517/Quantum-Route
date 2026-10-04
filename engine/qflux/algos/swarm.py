@@ -23,6 +23,8 @@ from qflux.core.encoding import encode_perm, spv_decode
 from qflux.core.localsearch import MEMETIC_OPS, improve_routes
 from qflux.types import Solution
 
+from .curve import TimeCurve
+
 
 def rank_normalise(X: np.ndarray) -> np.ndarray:
     """Row-wise (rank + 0.5) / n: same order (so the same decoded tour), keys in (0, 1)."""
@@ -172,6 +174,7 @@ class KeySwarm:
             st.stagnation = 0 if st.best_F < st.last_best - 1e-12 else st.stagnation + 1
             st.last_best = st.best_F
             st.curve.append((ev.evals, st.best_F))
+            st.ct.add(st.best_F)
             if callback is not None and t % 5 == 0:
                 callback({"iter": t, "evals": ev.evals, "best_F": st.best_F, "elapsed_s": time.time() - st.t0})
             t += 1
@@ -183,6 +186,7 @@ class KeySwarm:
         sol.meta.update(dict(algo=self.name, iterations=t, evals=ev.evals, wall_s=time.time() - st.t0,
                              partial=partial, **st.meta))
         st.curve.append((ev.evals, min(st.best_F, sol.F)))
+        sol.meta["curve_t"] = st.ct.final(min(st.best_F, sol.F))
         return sol, st.curve
 
     def final_polish(self, st, ev, rng):
@@ -209,6 +213,7 @@ class State:
         self.stagnation = 0
         self.improved = False
         self.curve: list[tuple[int, float]] = []
+        self.ct = TimeCurve(self.t0)                    # (elapsed_s, best_F), D40
         self.meta: dict = {"tunnel_events": [], "ls_calls": 0, "max_abs_key": 0.0}
 
     def out_of_time(self) -> bool:

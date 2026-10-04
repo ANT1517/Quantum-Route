@@ -1,0 +1,5 @@
+budget_type,budget,instance,reference,other,runs,seeds,median_diff,statistic,p_value,significant,direction
+time,10,A-n69-k9,qpso_full,ga_ls,5,25345..25349,22,3,0.3125,False,ref worse
+time,10,A-n69-k9,qpso_full,pso_ls,5,25345..25349,-11,0,0.0625,False,ref better
+time,10,A-n69-k9,qpso_full,rr_ls,5,25345..25349,20,5,0.625,False,ref worse
+time,10,A-n69-k9,qpso_full,sa,5,25345..25349,-192,0,0.0625,False,ref better

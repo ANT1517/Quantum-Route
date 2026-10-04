@@ -2,6 +2,8 @@
 algorithm (paired by seed), Friedman test across instances.
 
 Every table carries `runs`, `budget_type`, `budget` and `seeds` columns so its provenance travels with it.
+Fleet rule (D38): a run whose final solution uses more than K vehicles counts as infeasible for gap purposes;
+distance/gap statistics and the tests use only runs with m <= K, and `fleet_violations` counts the others.
 """
 import numpy as np
 import pandas as pd
@@ -10,6 +12,21 @@ from scipy import stats
 
 def to_frame(records: list[dict]) -> pd.DataFrame:
     return pd.DataFrame(records)
+
+
+def fleet_ok(df: pd.DataFrame) -> pd.Series:
+    """True for runs that respect the fleet limit (meta.fleet_excess == 0 or absent)."""
+    if "meta" not in df:
+        return pd.Series(True, index=df.index)
+    return df["meta"].map(lambda m: not (isinstance(m, dict) and m.get("fleet_excess", 0) > 0))
+
+
+def time_to_within(curve_t, final: float, frac: float) -> float | None:
+    """First elapsed second at which best_F is within `frac` of this run's final best (wall-time curve)."""
+    for t, f in curve_t or []:
+        if f <= final * (1.0 + frac) + 1e-12:
+            return float(t)
+    return None
 
 
 def evals_to_within(curve, final: float, frac: float = 0.05) -> int | None:
@@ -27,26 +44,38 @@ def _seed_range(seeds) -> str:
 
 def summary(df: pd.DataFrame) -> pd.DataFrame:
     rows = []
-    for (bt, b, inst, algo), g in df.groupby(["budget_type", "budget", "instance", "algo"], sort=False):
+    def med(xs):
+        xs = [x for x in xs if x is not None]
+        return float(np.median(xs)) if xs else None
+
+    def sd(x):
+        return float(x.std(ddof=1)) if len(x) > 1 else (0.0 if len(x) else None)
+
+    for (bt, b, inst, algo), g_all in df.groupby(["budget_type", "budget", "instance", "algo"], sort=False):
+        g = g_all[fleet_ok(g_all)]
         D = g["best_D"].to_numpy()
-        gap = g["gap_pct"].astype(float).to_numpy() if g["gap_pct"].notna().all() else None
-        e5 = [x for x in (evals_to_within(c, f, 0.05) for c, f in zip(g["curve"], g["best_F"])) if x is not None]
-        e1 = [x for x in (evals_to_within(c, f, 0.01) for c, f in zip(g["curve"], g["best_F"])) if x is not None]
+        gap = g["gap_pct"].dropna().astype(float).to_numpy()
+        has_gap = len(gap) > 0
+        ct = [m.get("curve_t") if isinstance(m, dict) else None for m in g.get("meta", [None] * len(g))]
         rows.append({
-            "budget_type": bt, "budget": b, "instance": inst, "algo": algo, "runs": len(g),
-            "seeds": _seed_range(g["seed"]),
-            "F_mean": g["best_F"].mean(), "F_std": g["best_F"].std(ddof=1) if len(g) > 1 else 0.0,
-            "D_best": D.min(), "D_mean": D.mean(), "D_median": float(np.median(D)), "D_worst": D.max(),
-            "D_std": D.std(ddof=1) if len(D) > 1 else 0.0,
-            "gap_best_pct": None if gap is None else gap.min(),
-            "gap_mean_pct": None if gap is None else gap.mean(),
-            "gap_std_pct": None if gap is None else (gap.std(ddof=1) if len(gap) > 1 else 0.0),
-            "vehicles_mean": g["n_vehicles"].mean(),
-            "fleet_violations": int(sum(1 for m in g["meta"] if isinstance(m, dict) and m.get("fleet_excess", 0) > 0))
-            if "meta" in g else None,
-            "evals_to_1pct_median": float(np.median(e1)) if e1 else None,
-            "evals_to_5pct_median": float(np.median(e5)) if e5 else None,
-            "evals_mean": g["evals_used"].mean(), "wall_s_mean": g["wall_s"].mean(),
+            "budget_type": bt, "budget": b, "instance": inst, "algo": algo, "runs": len(g_all),
+            "runs_fleet_ok": len(g), "fleet_violations": len(g_all) - len(g),
+            "seeds": _seed_range(g_all["seed"]),
+            "F_mean": g["best_F"].mean() if len(g) else None, "F_std": sd(g["best_F"].to_numpy()),
+            "D_best": D.min() if len(D) else None, "D_mean": D.mean() if len(D) else None,
+            "D_median": float(np.median(D)) if len(D) else None, "D_worst": D.max() if len(D) else None,
+            "D_std": sd(D),
+            "gap_best_pct": gap.min() if has_gap else None,
+            "gap_mean_pct": gap.mean() if has_gap else None,
+            "gap_std_pct": sd(gap) if has_gap else None,
+            "vehicles_mean": g_all["n_vehicles"].mean(),
+            "evals_to_1pct_median": med(evals_to_within(c, f, 0.01) for c, f in zip(g["curve"], g["best_F"])),
+            "evals_to_5pct_median": med(evals_to_within(c, f, 0.05) for c, f in zip(g["curve"], g["best_F"])),
+            "time_to_1pct_s_median": med(time_to_within(c, f, 0.01) for c, f in zip(ct, g["best_F"])),
+            "time_to_5pct_s_median": med(time_to_within(c, f, 0.05) for c, f in zip(ct, g["best_F"])),
+            "evals_mean": g_all["evals_used"].mean(), "wall_s_mean": g_all["wall_s"].mean(),
+            "ls_calls_mean": float(np.mean([m.get("ls_calls", 0) if isinstance(m, dict) else 0
+                                            for m in g_all.get("meta", [{}] * len(g_all))])),
         })
     return pd.DataFrame(rows)
 
@@ -61,7 +90,8 @@ def wilcoxon_pair(a: np.ndarray, b: np.ndarray) -> tuple[float, float]:
 
 
 def wilcoxon_table(df: pd.DataFrame, reference: str, metric: str = "best_D", alpha: float = 0.05) -> pd.DataFrame:
-    """Reference algorithm vs each other algorithm, paired by seed, per (budget, instance)."""
+    """Reference algorithm vs each other algorithm, paired by seed, per (budget, instance); fleet-feasible runs only."""
+    df = df[fleet_ok(df)]
     rows = []
     for (bt, b, inst), g in df.groupby(["budget_type", "budget", "instance"], sort=False):
         piv = g.pivot_table(index="seed", columns="algo", values=metric, aggfunc="first")
@@ -84,7 +114,8 @@ def wilcoxon_table(df: pd.DataFrame, reference: str, metric: str = "best_D", alp
 
 
 def friedman_table(df: pd.DataFrame, metric: str = "best_D") -> pd.DataFrame:
-    """Friedman test over instances (blocks) of mean `metric` per algorithm, plus average ranks."""
+    """Friedman test over instances (blocks) of mean `metric` per algorithm, plus average ranks; fleet-feasible runs."""
+    df = df[fleet_ok(df)]
     rows = []
     for (bt, b), g in df.groupby(["budget_type", "budget"], sort=False):
         m = g.groupby(["instance", "algo"])[metric].mean().unstack("algo").dropna(axis=1)

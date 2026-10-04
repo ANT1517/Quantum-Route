@@ -6,6 +6,8 @@ import numpy as np
 
 from qflux.config import load_config
 
+from .curve import TimeCurve
+
 SCALE = 1000
 
 
@@ -47,9 +49,11 @@ class ORTools:
         prm.time_limit.FromMilliseconds(max(100, int(remaining * 1000)))
         curve: list = []
         found: list = []
+        found_t: list = []
 
         def on_sol():
             found.append(routing.CostVar().Max())
+            found_t.append(time.time())
             if callback is not None and len(found) % 5 == 1:
                 callback({"iter": len(found), "evals": len(found), "best_F": float(min(found)),
                           "elapsed_s": time.time() - t0})
@@ -68,5 +72,14 @@ class ORTools:
             if r:
                 routes.append(r)
         out = ev.solution_from_routes(routes)
+        # wall-time curve (D40): integer objective -> F units (distance-only CVRPLIB: D / D_ref; else C * 1e6)
+        if inst.source == "cvrplib" and ev.wv[1] == 1.0 and not ev.wv[[0, 2, 3]].any():
+            to_F = (lambda o: o / SCALE / ev.rv[1]) if inst.distance_convention == "exact" else (lambda o: o / ev.rv[1])
+        else:
+            to_F = lambda o: o / 1e6  # noqa: E731
+        ct = TimeCurve(t0)
+        for o, at in zip(found, found_t):
+            ct.add(to_F(o), at)
+        out.meta["curve_t"] = ct.final(out.F)
         out.meta.update(algo=self.name, evals=0, solutions_found=len(found), wall_s=time.time() - t0, partial=False)
         return out, [(0, out.F)]

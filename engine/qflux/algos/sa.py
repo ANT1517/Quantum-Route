@@ -6,6 +6,8 @@ import numpy as np
 
 from qflux.config import load_config
 
+from .curve import TimeCurve
+
 
 def neighbour(perm: np.ndarray, rng) -> np.ndarray:
     p = perm.copy()
@@ -62,6 +64,8 @@ class SA:
                 fr.append((time.time() - t0) / budget_s)
             return min(max(fr), 1.0) if fr else min(k / 100000, 1.0)
         curve, k, partial = [], 0, False
+        ct = TimeCurve(t0)
+        ct.add(float(fb))
         while not over():
             if should_stop is not None and should_stop():
                 partial = True
@@ -72,6 +76,7 @@ class SA:
                 cur, fc = cand, f
                 if f < fb:
                     best, fb = cand.copy(), f
+                    ct.add(float(fb))
             T = T_start * (T_end / T_start) ** progress()
             k += 1
             if k % int(p["N"]) == 0:
@@ -82,4 +87,5 @@ class SA:
         sol = ev.solution(best)
         sol.meta.update(algo=self.name, moves=k, evals=ev.evals, wall_s=time.time() - t0, partial=partial)
         curve.append((ev.evals, float(min(fb, sol.F))))
+        sol.meta["curve_t"] = ct.final(float(min(fb, sol.F)))
         return sol, curve

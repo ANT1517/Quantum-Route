@@ -14,6 +14,8 @@ import numpy as np
 from qflux.config import load_config
 from qflux.core.localsearch import MEMETIC_OPS, improve_routes
 
+from .curve import TimeCurve
+
 
 def ox(p1: np.ndarray, p2: np.ndarray, rng) -> np.ndarray:
     n = len(p1)
@@ -75,6 +77,7 @@ class GA:
                 break
             fit[i] = ev.fitness_perm(x)
         curve, gen, partial = [], 0, False
+        ct = TimeCurve(t0)
         best_routes = None
         while not over():
             if should_stop is not None and should_stop():
@@ -105,6 +108,7 @@ class GA:
                     i = int(np.argmin(fit))
                     pop[i], fit[i] = ls(pop[i], fit[i], ("2opt", "oropt", "relocate", "swap"))
             curve.append((ev.evals, float(fit.min())))
+            ct.add(float(fit.min()))
             if callback is not None and gen % 5 == 0:
                 callback({"iter": gen, "evals": ev.evals, "best_F": float(fit.min()), "elapsed_s": time.time() - t0})
             gen += 1
@@ -119,4 +123,5 @@ class GA:
         sol.meta.update(algo=self.name, iterations=gen, evals=ev.evals, wall_s=time.time() - t0, partial=partial,
                         ls_calls=ls_calls)
         curve.append((ev.evals, min(sol.F, float(fit.min()))))
+        sol.meta["curve_t"] = ct.final(min(sol.F, float(fit.min())))
         return sol, curve

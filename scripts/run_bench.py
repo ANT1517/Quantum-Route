@@ -47,9 +47,12 @@ def report(exp: dict, runs_dir: Path = RUNS, tables: Path = TABLES, figures: Pat
     stats.wilcoxon_table(df, ref).to_csv(out["wilcoxon"], index=False, float_format="%.6g")
     stats.friedman_table(df).to_csv(out["friedman"], index=False, float_format="%.6g")
     for (bt, b), g in df.groupby(["budget_type", "budget"], sort=False):
-        if bt == "evals":
-            for inst in dict.fromkeys(g.instance):
-                out["figures"].append(plots.convergence(df, inst, b, figures / f"{name}_convergence_{inst}.png", name))
+        for inst in dict.fromkeys(g.instance):
+            fig = figures / f"{name}_convergence_{inst}_{bt}{b:g}.png"
+            if bt == "evals":
+                out["figures"].append(plots.convergence(df, inst, b, fig, name))
+            else:                                   # time budgets: wall-clock x-axis (D40)
+                out["figures"].append(plots.convergence_time(df, inst, b, fig, name))
         p = plots.gap_boxplot(df, bt, b, figures / f"{name}_gap_{bt}{b:g}.png")
         if p:
             out["figures"].append(p)

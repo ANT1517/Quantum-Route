@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from .stats import _seed_range  # noqa: E402
+from .stats import _seed_range, fleet_ok  # noqa: E402
 
 
 def _on_grid(curve, grid):
@@ -36,6 +36,36 @@ def convergence(df: pd.DataFrame, instance: str, budget: float, path: Path, exp:
     ax.set_xlabel("evaluations")
     ax.set_ylabel("best F (distance / nearest-neighbour distance)")
     ax.set_title(f"{instance}: median + IQR, {runs} runs, {int(budget)} evals, seeds {_seed_range(g.seed.unique())}",
+                 fontsize=9)
+    ax.grid(alpha=0.3)
+    ax.legend(fontsize=8)
+    fig.tight_layout()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+    return path
+
+
+def convergence_time(df: pd.DataFrame, instance: str, budget: float, path: Path, exp: str = "") -> Path:
+    """Time-budget runs (D40): median + IQR of best F vs wall-clock seconds, from RunRecord.meta["curve_t"]."""
+    g = df[(df.instance == instance) & (df.budget_type == "time") & (df.budget == budget)]
+    g = g[fleet_ok(g)]
+    grid = np.linspace(0.0, float(budget), 301)[1:]
+    fig, ax = plt.subplots(figsize=(6.4, 4.2))
+    for algo, ga in g.groupby("algo", sort=False):
+        curves = [m.get("curve_t") for m in ga["meta"] if isinstance(m, dict) and m.get("curve_t")]
+        if not curves:
+            continue
+        Y = np.vstack([_on_grid(c, grid) for c in curves])
+        with np.errstate(all="ignore"):
+            med = np.nanmedian(Y, axis=0)
+            q1, q3 = np.nanpercentile(Y, 25, axis=0), np.nanpercentile(Y, 75, axis=0)
+        ax.plot(grid, med, label=algo, lw=1.6)
+        ax.fill_between(grid, q1, q3, alpha=0.2)
+    runs = int(g.groupby("algo").size().min()) if len(g) else 0
+    ax.set_xlabel("wall-clock seconds (one core per run)")
+    ax.set_ylabel("best F (distance / nearest-neighbour distance)")
+    ax.set_title(f"{instance}: median + IQR, {runs} runs, {budget:g} s budget, seeds {_seed_range(g.seed.unique())}",
                  fontsize=9)
     ax.grid(alpha=0.3)
     ax.legend(fontsize=8)

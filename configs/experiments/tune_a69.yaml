@@ -8,6 +8,7 @@ weights: [0.0, 1.0, 0.0, 0.0]
 reference: qpso_full
 variants:
   qpso_full: {algo: qpso, params: {}}
+# Time budget only (D39). The 10 eval-budget runs (SA, GA+LS) finished before the eval budget was dropped are
+# kept in results/runs/tune_a69_evals_partial.jsonl and are not part of this table.
 budgets:
-  - {type: evals, value: 12000, algorithms: [qpso_full, rr_ls, pso_ls, ga_ls, sa]}
   - {type: time, value: 10, algorithms: [qpso_full, rr_ls, pso_ls, ga_ls, sa]}

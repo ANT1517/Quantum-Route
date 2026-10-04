@@ -40,7 +40,7 @@ INSTANCE_ORDER = ["P-n16-k8", "P-n19-k2", "P-n22-k8", "A-n32-k5", "A-n44-k6", "A
                   "A-n69-k9"]                          # appended (D35), so earlier seeds are unchanged
 CURVE_STEP = 100
 META_KEYS = ("iterations", "moves", "partial", "ls_calls", "qubo_calls", "qubo_improvements", "qubo_skipped_time",
-             "reinits", "solutions_found", "max_abs_key")
+             "reinits", "solutions_found", "max_abs_key", "curve_t")
 THREAD_ENV = {"NUMBA_NUM_THREADS": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1",
               "OPENBLAS_NUM_THREADS": "1"}
 
@@ -130,12 +130,13 @@ def single_run(inst, algo: str, params: dict, weights: Weights, budget_type: str
     wall = time.time() - t
     ok, errs = check(inst, sol, ev)
     gap = None
-    if inst.bks:                     # our distance convention always matches the BKS one (§11.2)
+    fleet_excess = max(0, sol.n_vehicles - inst.K) if inst.K is not None else 0
+    if inst.bks and fleet_excess == 0:   # convention matches the BKS (§11.2); m > K: no gap (D38)
         gap = 100.0 * (sol.D - inst.bks) / inst.bks
     eff = getattr(opt, "p", params)
     meta = {k: sol.meta[k] for k in META_KEYS if k in sol.meta}
     meta["tunnel_events"] = len(sol.meta.get("tunnel_events", []))
-    meta["fleet_excess"] = max(0, sol.n_vehicles - inst.K) if inst.K is not None else 0    # D38
+    meta["fleet_excess"] = fleet_excess                                                    # D38
     rec = RunRecord(algo=label or algo, instance=inst.name, seed=seed, budget_type=budget_type, budget=float(budget),
                     best_F=float(sol.F), best_T=float(sol.T), best_D=float(sol.D), best_C=float(sol.C),
                     best_E=float(sol.E), n_vehicles=int(sol.n_vehicles), gap_pct=gap, evals_used=int(ev.evals),
@@ -163,7 +164,7 @@ def plan(exp: dict) -> list[tuple]:
     runs = int(exp.get("runs", 3))
     jobs = []
     for b in exp["budgets"]:
-        for inst in exp["instances"]:
+        for inst in b.get("instances", exp["instances"]):          # a budget may name its own instances
             for r in range(runs):
                 seed = run_seed(inst, r, exp.get("seed_base"))
                 for algo in b["algorithms"]:
