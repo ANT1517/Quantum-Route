@@ -11,6 +11,16 @@ Things on `solver` that touch shared files or affect B's code. Source of truth: 
 - **Benchmark Studio** (§8.2 wireframe, updated in the doc): the instance chips should be the core set **A-n32-k5, A-n63-k9, A-n80-k10, CMT1, CMT5, X-n101-k25** (no A-n44-k6, which is tuning-only), with **"Runs: 30"** and time budgets only: **30 s** for A-n32, A-n63, A-n80, CMT1 and **60 s** for CMT5, X-n101 (D39, D40, D43). Convergence charts for bench_core use wall-clock seconds (`meta.curve_t`), not evaluations. Headline rows: QPSO-full, PSO+LS, GA+LS, SA, OR-Tools. Show `fleet_violations` next to the gap (runs with m > k have no gap, D38). Plain PSO/GA, QPSO-base and RR+LS belong to the ablation view.
 - Table and figure names: `results/tables/bench_core_v1_{summary,wilcoxon,friedman}.csv`, `bench_core_v1_meta.json`, `results/figures/bench_core_v1_convergence_<instance>_time{30,60}.png`, `bench_core_v1_gap_time{30,60}.png`. Every summary row carries `runs`, `budget_type`, `budget` and `seeds`.
 
+## Backend (P4, A's code): what the frontend talks to
+- Run from the repo root: `uvicorn backend.app.main:app --port 8000` (deps: `backend/requirements.txt`; SQLAlchemy 2 and websockets were added to the venv). REST under `/api`, WebSocket at **`/ws/jobs/{id}`** (root, as `client.ts` expects). OpenAPI at `/docs`.
+- Seeded scenarios: **Hyderabad-60** and **SynthCity-60**. Errors always `{"error": {code, message}}`: shape errors 400 `INVALID_INPUT` (field list in the message), infeasible scenario 422 `INFEASIBLE`, weights not summing to 1 → 422 `WEIGHTS`, 3rd concurrent job → 429 `TOO_MANY_JOBS`, result before finish → 409 `NOT_FINISHED`.
+- Job `params` `{N, iterations, alpha_start, alpha_end}` are translated (D48): α start/end → linear schedule; `iterations` → N×iterations evaluations if no budget is given; no budget → 10 s; time budgets capped at the 120 s job timeout (timeout → `COMPLETED_PARTIAL`). Optional header `Idempotency-Key` on POST /jobs. `algorithm: "milp"` → 422 (not a platform job).
+- WebSocket events: `{type: "progress", iter, evals, best_F, progress}` every 5 iterations, then `{type: "completed"|"failed", status}` and close; unknown job → close code 4404.
+- `/quantum/solve-route`: `route_stops` are customer ids (1..60) of Hyderabad-60; distances = its dispatch-slot travel times. `/quantum/validation` returns 404 `NOT_AVAILABLE` until `results/tables/qubo_validation.csv` exists.
+- `/benchmarks` items carry `kind` (`benchmark` / `tuning (not a benchmark)` / `smoke test (not a benchmark)`); show only `benchmark` items in Benchmark Studio. `/benchmarks/{name}` adds `wilcoxon`, `friedman` and (ablation) `chain` tables.
+- `qflux/api.py` (B's) is called unchanged. `run_job` still returns the demo JSON for `source: "cvrplib"`.
+- Tests: `tests/api/test_api.py`; the `jobs`-marked tests run real optimizations (`pytest -m "not jobs"` for a quick pass).
+
 ## Engine behaviour B should know about
 - **Fleet limit for CVRPLIB (D38):** `load_instance` now sets `K = k` (from the name) for Augerat A/P instances and `K = None` for CMT/X. `api.build_instance({"source": "cvrplib", ...})` inherits this; pass an explicit `K` in the spec if a screen needs something else.
 - **Algorithm names:** `sa_ls` no longer exists (SA has no +LS variant). The new control `rr_ls` (D34) is ablation only.
