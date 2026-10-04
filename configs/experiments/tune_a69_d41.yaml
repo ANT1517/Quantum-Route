@@ -1,0 +1,14 @@
+# Second tuning-only instance (D35): behaviour at larger n without looking at test instances.
+# Final configurations only (no configuration changes after this run). NOT a benchmark: never quote.
+name: tune_a69_d41
+description: "[information only, after D41; no config changes based on it] A-n69-k9 tuning-only check of the final configs: QPSO-full (D33), RR+LS, PSO+LS, GA+LS, SA. Not a benchmark"
+instances: [A-n69-k9]
+runs: 5
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: qpso_full
+variants:
+  qpso_full: {algo: qpso, params: {}}
+# Time budget only (D39). The 10 eval-budget runs (SA, GA+LS) finished before the eval budget was dropped are
+# kept in results/runs/tune_a69_evals_partial.jsonl and are not part of this table.
+budgets:
+  - {type: time, value: 10, algorithms: [qpso_full, rr_ls, pso_ls, ga_ls, sa]}
