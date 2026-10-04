@@ -212,12 +212,13 @@ def static_matrix(ev):
 
 
 def improve_routes(routes, ev, ops=OPS, max_rounds: int = 50, deadline: float | None = None,
-                   inner_cap: int = 25, fast: bool = True) -> list[list[int]]:
+                   inner_cap: int = 25, fast: bool = True, td_proxy: bool = True) -> list[list[int]]:
     """First-improvement LS. Stops at a local optimum, after `max_rounds` rounds, or when
     time.time() passes `deadline` (checked between rounds, D31).
     Static instances use the exact O(1)-delta kernels (D41; same moves, same order, same local optimum);
-    time-dependent instances re-evaluate only the 1-2 routes a move touches. fast=False forces the generic
-    kernels (used by the equivalence test)."""
+    time-dependent instances use the static-proxy kernels with TD verification (D46: never worse than the
+    input, not move-for-move identical to the generic kernel) unless td_proxy=False, which keeps the generic
+    kernels (full TD re-evaluation of the 1-2 routes a move touches). fast=False forces the generic kernels."""
     routes = [list(r) for r in routes if r]
     if not routes:
         return routes
@@ -232,9 +233,20 @@ def improve_routes(routes, ev, ops=OPS, max_rounds: int = 50, deadline: float | 
         loads[k] = ev.demand[r].sum()
     mask = np.array([op in ops for op in OPS])
     W = static_matrix(ev) if fast else None
+    P = None
+    if fast and W is None and td_proxy:               # D46: time-dependent instance
+        from .ls_td_proxy import proxy_matrix
+        P = proxy_matrix(ev)
     for _ in range(max_rounds):
         if deadline is not None and time.time() >= deadline:
             break
+        if P is not None:
+            from .ls_td_proxy import local_search_td_proxy
+            _, improved = local_search_td_proxy(R, L, loads, ev.demand, ev.Q, P, ev.centers, ev.Ts, ev.Ds, ev.Es,
+                                                ev.T0, ev.service, ev.tau0, ev.wv, ev.rv, mask, 1, inner_cap)
+            if not improved:
+                break
+            continue
         if W is not None:
             from .ls_static import local_search_static
             _, improved = local_search_static(R, L, loads, ev.demand, ev.Q, W, mask, 1, inner_cap)

@@ -53,6 +53,10 @@ class QPSO(KeySwarm):
         super().__init__(**{**base, **params})
         self._qubo_dist = None
         self._qubo_route_s = 0.15            # running estimate of seconds per route solve (D31)
+        if self.p["qubo_slot"].get("enabled"):
+            # import the sampler at construction, before any run clock starts: the first neal call in a
+            # process otherwise pays the import inside the time budget (found by the D31 deadline test)
+            from dwave.samplers import SimulatedAnnealingSampler  # noqa: F401
 
     def alpha(self, fX, t, T_est):
         p = self.p
