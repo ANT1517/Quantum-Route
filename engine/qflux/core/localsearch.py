@@ -2,6 +2,8 @@
 capacity checks; first improvement. Moves are scored with exact time-dependent route costs (not counted
 as evaluations). The whole search runs in Numba.
 """
+import time
+
 import numpy as np
 from numba import njit
 
@@ -160,7 +162,9 @@ def _swap(R, L, cost, loads, demand, Q, buf, tmp, A0, A1, A2, A3, A4, sv, tau0, 
 
 
 @njit(cache=True)
-def local_search(R, L, loads, demand, Q, A0, A1, A2, A3, A4, sv, tau0, wv, rv, ops, max_rounds):
+def local_search(R, L, loads, demand, Q, A0, A1, A2, A3, A4, sv, tau0, wv, rv, ops, max_rounds, inner_cap):
+    """Up to `max_rounds` rounds; relocate/swap make at most `inner_cap` moves per round so the Python
+    caller can check the deadline between rounds. Returns (route costs, improved?)."""
     m, width = R.shape
     buf = np.empty(width + 1, np.int64)
     tmp = np.empty(width + 1, np.int64)
@@ -168,6 +172,7 @@ def local_search(R, L, loads, demand, Q, A0, A1, A2, A3, A4, sv, tau0, wv, rv, o
     for r in range(m):
         if L[r] > 0:
             cost[r] = _rc(R[r], L[r], A0, A1, A2, A3, A4, sv, tau0, wv, rv)
+    any_improved = False
     for _ in range(max_rounds):
         improved = False
         if ops[0] and _two_opt(R, L, cost, buf, A0, A1, A2, A3, A4, sv, tau0, wv, rv):
@@ -175,17 +180,29 @@ def local_search(R, L, loads, demand, Q, A0, A1, A2, A3, A4, sv, tau0, wv, rv, o
         if ops[1] and _or_opt(R, L, cost, buf, tmp, A0, A1, A2, A3, A4, sv, tau0, wv, rv):
             improved = True
         if ops[2]:
-            while _relocate(R, L, cost, loads, demand, Q, buf, tmp, A0, A1, A2, A3, A4, sv, tau0, wv, rv):
+            k = 0
+            while k < inner_cap and _relocate(R, L, cost, loads, demand, Q, buf, tmp, A0, A1, A2, A3, A4, sv, tau0, wv, rv):
                 improved = True
+                k += 1
         if ops[3]:
-            while _swap(R, L, cost, loads, demand, Q, buf, tmp, A0, A1, A2, A3, A4, sv, tau0, wv, rv):
+            k = 0
+            while k < inner_cap and _swap(R, L, cost, loads, demand, Q, buf, tmp, A0, A1, A2, A3, A4, sv, tau0, wv, rv):
                 improved = True
-        if not improved:
+                k += 1
+        if improved:
+            any_improved = True
+        else:
             break
-    return cost
+    return cost, any_improved
 
 
-def improve_routes(routes, ev, ops=OPS, max_rounds: int = 50) -> list[list[int]]:
+MEMETIC_OPS = ("2opt", "relocate", "swap")
+
+
+def improve_routes(routes, ev, ops=OPS, max_rounds: int = 50, deadline: float | None = None,
+                   inner_cap: int = 25) -> list[list[int]]:
+    """First-improvement LS. Stops at a local optimum, after `max_rounds` rounds, or when
+    time.time() passes `deadline` (checked between rounds, D31)."""
     routes = [list(r) for r in routes if r]
     if not routes:
         return routes
@@ -199,8 +216,13 @@ def improve_routes(routes, ev, ops=OPS, max_rounds: int = 50) -> list[list[int]]
         L[k] = len(r)
         loads[k] = ev.demand[r].sum()
     mask = np.array([op in ops for op in OPS])
-    local_search(R, L, loads, ev.demand, ev.Q, ev.centers, ev.Ts, ev.Ds, ev.Es, ev.T0, ev.service, ev.tau0,
-                 ev.wv, ev.rv, mask, max_rounds)
+    for _ in range(max_rounds):
+        if deadline is not None and time.time() >= deadline:
+            break
+        _, improved = local_search(R, L, loads, ev.demand, ev.Q, ev.centers, ev.Ts, ev.Ds, ev.Es, ev.T0, ev.service,
+                                   ev.tau0, ev.wv, ev.rv, mask, 1, inner_cap)
+        if not improved:
+            break
     return [R[k, :L[k]].tolist() for k in range(m) if L[k] > 0]
 
 

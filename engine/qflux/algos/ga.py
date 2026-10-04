@@ -40,10 +40,11 @@ class GA:
         p = self.p
         n, pop_n = ev.inst.n, int(p["pop"])
         t0 = time.time()
+        deadline = t0 + budget_s if budget_s is not None else None
 
         def over():
             return (budget_evals is not None and ev.evals >= budget_evals) or \
-                   (budget_s is not None and time.time() - t0 >= budget_s)
+                   (deadline is not None and time.time() >= deadline)
 
         pop = [rng.permutation(n) + 1 for _ in range(pop_n)]
         if init_keys is not None:
@@ -70,7 +71,7 @@ class GA:
             ls = int(p.get("ls_every") or 0)
             if ls and gen % ls == 0 and not over():
                 i = int(np.argmin(fit))
-                routes = improve_routes(ev.decode_routes(pop[i]), ev)
+                routes = improve_routes(ev.decode_routes(pop[i]), ev, deadline=deadline)
                 perm = np.array([c for r in routes for c in r], dtype=np.int64)
                 f = ev.fitness_perm(perm)
                 if f < fit[i]:
@@ -80,8 +81,9 @@ class GA:
                 callback({"iter": gen, "evals": ev.evals, "best_F": float(fit.min()), "elapsed_s": time.time() - t0})
             gen += 1
         best = pop[int(np.argmin(fit))]
-        if int(p.get("ls_every") or 0) and not partial:
-            best_routes = improve_routes(ev.decode_routes(best), ev)
+        if int(p.get("ls_every") or 0) and not partial and \
+                (deadline is None or deadline - time.time() > 0.01 * budget_s):
+            best_routes = improve_routes(ev.decode_routes(best), ev, deadline=deadline)
         sol = ev.solution_from_routes(best_routes) if best_routes else ev.solution(best)
         if best_routes and sol.F > ev.solution(best).F:
             sol = ev.solution(best)

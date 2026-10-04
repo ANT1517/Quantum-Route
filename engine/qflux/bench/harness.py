@@ -141,7 +141,10 @@ def warm_up(algos, inst_name: str):
     """Compile Numba kernels before any timed run (wall times must not include JIT)."""
     inst = load_instance(inst_name)
     for a in dict.fromkeys(algos):
-        if a in ("ortools", "nn"):
+        if a == "ortools":
+            from ortools.constraint_solver import pywrapcp  # noqa: F401  (one-time import kept out of timed runs)
+            continue
+        if a == "nn":
             continue
         get_optimizer(a).run(Evaluator(inst, Weights(wT=0, wD=1)), 200, None, make_rng(0))
 

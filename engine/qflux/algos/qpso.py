@@ -3,6 +3,8 @@
 Every enhancement is behind a flag (needed for the ablation): init sobol|uniform, mbest rank|uniform,
 alpha_mode linear|adaptive|fixed, diversity re-init, tunneling, QUBO slot, LS + Lamarck.
 """
+import time
+
 import numpy as np
 
 from qflux.config import load_config
@@ -49,6 +51,7 @@ class QPSO(KeySwarm):
         base["qubo_slot"] = dict(cfg["qubo_slot"], **params.pop("qubo_slot", {}))
         super().__init__(**{**base, **params})
         self._qubo_dist = None
+        self._qubo_route_s = 0.15            # running estimate of seconds per route solve (D31)
 
     def alpha(self, fX, t, T_est):
         p = self.p
@@ -71,12 +74,17 @@ class QPSO(KeySwarm):
         from qflux.quantum.backends import solve_route_order
         if self._qubo_dist is None:
             self._qubo_dist = dispatch_cost_matrix(ev)
-        routes = ev.decode_routes(st.best_perm)
+        routes = ev.decode_routes(st.best_perm) if st.best_routes is None else [list(r) for r in st.best_routes]
         changed = False
         for k, r in enumerate(routes):
             if 2 < len(r) <= int(q["max_stops"]):
+                if st.deadline is not None and st.deadline - time.time() < 1.5 * self._qubo_route_s:
+                    st.meta["qubo_skipped_time"] = st.meta.get("qubo_skipped_time", 0) + 1
+                    break                         # too little time left for another route (D31)
+                t_r = time.time()
                 out = solve_route_order(r, self._qubo_dist, q["backend"], num_reads=int(q["num_reads"]),
                                         seed=int(rng.integers(2**31)))
+                self._qubo_route_s = 0.7 * self._qubo_route_s + 0.3 * (time.time() - t_r)
                 if out["feasible"] and ev.route_cost(out["order"]) < ev.route_cost(r) - 1e-12:
                     routes[k] = out["order"]
                     changed = True
@@ -99,7 +107,8 @@ class QPSO(KeySwarm):
             self.qubo_slot(st, ev, rng)
         tun = p["tunneling"]
         if tun.get("enabled") and st.stagnation + 1 >= int(tun["stagnation"]) and not st.over_budget():
-            cand, f, kind = tunnel(st.best_perm, st.best_F, ev, rng, int(tun["trials"]), float(tun["kappa"]))
+            cand, f, kind = tunnel(st.best_perm, st.best_F, ev, rng, int(tun["trials"]), float(tun["kappa"]),
+                                   stop=st.over_budget)
             if cand is not None:
                 w = int(np.argmax(st.fP))                 # only the worst particle is overwritten
                 keys = encode_perm(cand, rng)
@@ -118,7 +127,7 @@ class QPSO(KeySwarm):
 
     def final_polish(self, st, ev, rng):
         super().final_polish(st, ev, rng)
-        if self.p["qubo_slot"].get("enabled"):
+        if self.p["qubo_slot"].get("enabled") and not st.out_of_time():
             self.qubo_slot(st, ev, rng)
 
 

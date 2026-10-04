@@ -47,3 +47,20 @@ def test_resample_curve_every_100():
 
 def test_seed_formula():
     assert run_seed("A-n32-k5", 2, 12345) == 12345 + 1000 * 3 + 2
+
+
+@pytest.mark.parametrize("algo", ["qpso", "pso_ls", "ga_ls", "sa", "ortools"])
+def test_deadline_respected(algo):
+    """D31: wall time stays within the time budget (+2% in the benchmark; looser here for CI jitter)."""
+    import time
+    from qflux.algos.registry import get_optimizer
+    from qflux.bench.loader import load_instance
+    from qflux.core.evaluate import Evaluator
+    from qflux.rng import make_rng
+    from qflux.types import Weights
+    inst = load_instance("A-n63-k9")
+    ev = Evaluator(inst, Weights(wT=0, wD=1))
+    get_optimizer(algo).run(Evaluator(inst, Weights(wT=0, wD=1)), 200, None, make_rng(0))   # JIT warm-up
+    t = time.time()
+    sol, _ = get_optimizer(algo).run(ev, None, 2.0, make_rng(1))
+    assert time.time() - t <= 2.0 * 1.05

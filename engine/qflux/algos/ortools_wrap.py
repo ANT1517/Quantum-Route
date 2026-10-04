@@ -16,11 +16,11 @@ class ORTools:
         self.p = {**load_config()["ortools"], **params}
 
     def run(self, ev, budget_evals=None, budget_s=None, rng=None, callback=None, should_stop=None, init_keys=None):
+        t0 = time.time()                    # the budget includes imports and model building (D31)
         from ortools.constraint_solver import pywrapcp, routing_enums_pb2
 
         from qflux.algos.qpso import dispatch_cost_matrix
         inst = ev.inst
-        t0 = time.time()
         C = dispatch_cost_matrix(ev)
         if inst.source == "cvrplib" and ev.wv[1] == 1.0 and not ev.wv[[0, 2, 3]].any():
             icost = np.rint(inst.D).astype(np.int64)             # integer CVRPLIB distances (nint)
@@ -41,7 +41,10 @@ class ORTools:
         prm.first_solution_strategy = getattr(routing_enums_pb2.FirstSolutionStrategy, self.p["first_solution"])
         prm.local_search_metaheuristic = getattr(routing_enums_pb2.LocalSearchMetaheuristic, self.p["metaheuristic"])
         limit = float(budget_s if budget_s is not None else self.p["time_limit_s"])
-        prm.time_limit.FromMilliseconds(int(limit * 1000))
+        # D31: the solver gets what is left of the budget after model building, minus a small margin
+        # for extracting and evaluating the routes
+        remaining = limit - (time.time() - t0) - min(0.1, 0.005 * limit)
+        prm.time_limit.FromMilliseconds(max(100, int(remaining * 1000)))
         curve: list = []
         found: list = []
 

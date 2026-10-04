@@ -52,7 +52,7 @@ class KeySwarm:
         idx = [int(np.argmin(st.fP))] + [int(i) for i in np.argsort(st.fP)[1:1 + k_top]]
         for i in dict.fromkeys(idx):
             routes = ev.decode_routes(spv_decode(st.P[i]))
-            new = improve_routes(routes, ev)
+            new = improve_routes(routes, ev, deadline=st.deadline)
             perm = np.array([c for r in new for c in r], dtype=np.int64)
             f = ev.fitness_perm(perm)
             if f < st.fP[i] - 1e-12:
@@ -103,7 +103,7 @@ class KeySwarm:
             if callback is not None and t % 5 == 0:
                 callback({"iter": t, "evals": ev.evals, "best_F": st.best_F, "elapsed_s": time.time() - st.t0})
             t += 1
-        if not partial:
+        if not partial and st.time_left_frac() > 0.01:     # D31: skip the polish if too little time is left
             self.final_polish(st, ev, rng)
         sol = ev.solution(st.best_perm)
         if sol.F > st.best_F + 1e-9:     # best found via route-level moves not reproduced by Split
@@ -115,7 +115,7 @@ class KeySwarm:
 
     def final_polish(self, st, ev, rng):
         if int(self.p.get("ls_every", 0) or 0):
-            routes = improve_routes(ev.decode_routes(st.best_perm), ev)
+            routes = improve_routes(ev.decode_routes(st.best_perm), ev, deadline=st.deadline)
             st.offer_routes(routes, ev)
 
     @staticmethod
@@ -127,6 +127,7 @@ class State:
     def __init__(self, ev, budget_evals, budget_s):
         self.ev, self.budget_evals, self.budget_s = ev, budget_evals, budget_s
         self.t0 = time.time()
+        self.deadline = self.t0 + budget_s if budget_s is not None else None
         self.best_F = np.inf
         self.best_perm = None
         self.best_routes = None
@@ -136,10 +137,19 @@ class State:
         self.curve: list[tuple[int, float]] = []
         self.meta: dict = {"tunnel_events": []}
 
+    def out_of_time(self) -> bool:
+        return self.deadline is not None and time.time() >= self.deadline
+
+    def time_left_frac(self) -> float:
+        """Share of the time budget still left (1.0 without a time budget)."""
+        if self.deadline is None:
+            return 1.0
+        return max(0.0, (self.deadline - time.time()) / self.budget_s)
+
     def over_budget(self) -> bool:
         if self.budget_evals is not None and self.ev.evals >= self.budget_evals:
             return True
-        return self.budget_s is not None and time.time() - self.t0 >= self.budget_s
+        return self.out_of_time()
 
     def progress(self) -> float | None:
         """Fraction of the budget used, so schedules follow time budgets as well as evaluation budgets."""

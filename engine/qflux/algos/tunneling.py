@@ -15,9 +15,12 @@ def random_move(perm: np.ndarray, rng) -> tuple[np.ndarray, int]:
     return np.concatenate([rest[:j], block, rest[j:]]), width
 
 
-def tunnel(best_perm: np.ndarray, f0: float, ev, rng, trials: int = 30, kappa: float = 8.0):
-    """Returns (candidate perm, its F, "improve" | "tunnel" | "none"). Each trial is one evaluation."""
+def tunnel(best_perm: np.ndarray, f0: float, ev, rng, trials: int = 30, kappa: float = 8.0, stop=None):
+    """Returns (candidate perm, its F, "improve" | "tunnel" | "none"). Each trial is one evaluation.
+    `stop()` (budget / deadline check, D31) ends the trials early."""
     for _ in range(trials):
+        if stop is not None and stop():
+            break
         cand, width = random_move(best_perm, rng)
         f = ev.fitness_perm(cand)
         if f < f0:
