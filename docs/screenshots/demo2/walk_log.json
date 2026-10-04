@@ -1,0 +1,107 @@
+{
+  "label": "demo2",
+  "mode": "demo",
+  "steps": [
+    {
+      "name": "demo_home",
+      "ok": true,
+      "seconds": 0.3,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\demo2\\01_demo_home.png"
+    },
+    {
+      "name": "demo_run",
+      "ok": true,
+      "seconds": 9.4,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\demo2\\02_demo_run.png"
+    },
+    {
+      "name": "demo_results",
+      "ok": true,
+      "seconds": 0.4,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\demo2\\03_demo_results.png"
+    },
+    {
+      "name": "demo_incident_reoptimized",
+      "ok": true,
+      "seconds": 0.4,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\demo2\\04_demo_incident_reoptimized.png"
+    },
+    {
+      "name": "demo_fleet",
+      "ok": true,
+      "seconds": 3.3,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\demo2\\05_demo_fleet.png"
+    },
+    {
+      "name": "demo_path",
+      "ok": true,
+      "seconds": 1.4,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\demo2\\06_demo_path.png"
+    },
+    {
+      "name": "demo_bench",
+      "ok": true,
+      "seconds": 1,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\demo2\\07_demo_bench.png"
+    },
+    {
+      "name": "demo_quantum",
+      "ok": true,
+      "seconds": 2.5,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\demo2\\08_demo_quantum.png"
+    }
+  ],
+  "consoleErrors": [],
+  "apiErrors": [],
+  "started": "2026-10-04T15:59:29.269Z",
+  "blockedRequestErrors": 41,
+  "blocked": [
+    "http://localhost:5173/api/health",
+    "http://localhost:5173/api/health",
+    "http://localhost:5173/api/health",
+    "http://localhost:5173/api/health",
+    "https://c.tile.openstreetmap.org/11/1470/923.png",
+    "https://b.tile.openstreetmap.org/11/1470/922.png",
+    "https://b.tile.openstreetmap.org/11/1469/923.png",
+    "https://a.tile.openstreetmap.org/11/1471/923.png",
+    "https://a.tile.openstreetmap.org/11/1470/924.png",
+    "https://a.tile.openstreetmap.org/11/1469/922.png",
+    "https://c.tile.openstreetmap.org/11/1471/922.png",
+    "https://c.tile.openstreetmap.org/11/1469/924.png",
+    "https://b.tile.openstreetmap.org/11/1471/924.png",
+    "https://a.tile.openstreetmap.org/11/1468/923.png",
+    "https://b.tile.openstreetmap.org/11/1472/923.png",
+    "https://c.tile.openstreetmap.org/11/1468/922.png",
+    "https://a.tile.openstreetmap.org/11/1472/922.png",
+    "https://b.tile.openstreetmap.org/11/1468/924.png",
+    "https://c.tile.openstreetmap.org/11/1472/924.png",
+    "https://c.tile.openstreetmap.org/11/1470/923.png",
+    "https://b.tile.openstreetmap.org/11/1470/922.png",
+    "https://b.tile.openstreetmap.org/11/1469/923.png",
+    "https://a.tile.openstreetmap.org/11/1471/923.png",
+    "https://a.tile.openstreetmap.org/11/1470/924.png",
+    "https://a.tile.openstreetmap.org/11/1469/922.png",
+    "https://c.tile.openstreetmap.org/11/1471/922.png",
+    "https://c.tile.openstreetmap.org/11/1469/924.png",
+    "https://b.tile.openstreetmap.org/11/1471/924.png",
+    "https://c.tile.openstreetmap.org/11/1470/923.png",
+    "https://b.tile.openstreetmap.org/11/1470/922.png",
+    "https://b.tile.openstreetmap.org/11/1469/923.png",
+    "https://a.tile.openstreetmap.org/11/1471/923.png",
+    "https://a.tile.openstreetmap.org/11/1470/924.png",
+    "https://a.tile.openstreetmap.org/11/1469/922.png",
+    "https://c.tile.openstreetmap.org/11/1471/922.png",
+    "https://c.tile.openstreetmap.org/11/1469/924.png",
+    "https://b.tile.openstreetmap.org/11/1471/924.png",
+    "https://a.tile.openstreetmap.org/11/1468/923.png",
+    "https://b.tile.openstreetmap.org/11/1472/923.png",
+    "https://c.tile.openstreetmap.org/11/1468/922.png",
+    "https://a.tile.openstreetmap.org/11/1472/922.png",
+    "https://b.tile.openstreetmap.org/11/1468/924.png",
+    "https://c.tile.openstreetmap.org/11/1472/924.png"
+  ],
+  "benchFirstOption": "Headline (D58): equal conditions, new seeds, 30 runs, Holm-corrected",
+  "mockMentions": 0,
+  "finished": "2026-10-04T15:59:50.735Z",
+  "allOk": true
+}

@@ -1,0 +1,78 @@
+{
+  "label": "walk4",
+  "mode": "live",
+  "steps": [
+    {
+      "name": "home",
+      "ok": true,
+      "seconds": 0.2,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\walk4\\01_home.png"
+    },
+    {
+      "name": "scenario_select_hyderabad60",
+      "ok": true,
+      "seconds": 0.4,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\walk4\\02_scenario_select_hyderabad60.png"
+    },
+    {
+      "name": "run_optimizer",
+      "ok": true,
+      "seconds": 8.7,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\walk4\\03_run_optimizer.png"
+    },
+    {
+      "name": "results_hyderabad",
+      "ok": true,
+      "seconds": 2.9,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\walk4\\04_results_hyderabad.png"
+    },
+    {
+      "name": "results_incident_reoptimized",
+      "ok": true,
+      "seconds": 6.1,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\walk4\\05_results_incident_reoptimized.png"
+    },
+    {
+      "name": "fleet_impact",
+      "ok": true,
+      "seconds": 32.4,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\walk4\\06_fleet_impact.png"
+    },
+    {
+      "name": "shortest_path_with_incident",
+      "ok": true,
+      "seconds": 10.4,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\walk4\\07_shortest_path_with_incident.png"
+    },
+    {
+      "name": "benchmark_studio_headline",
+      "ok": true,
+      "seconds": 2.7,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\walk4\\08_benchmark_studio_headline.png"
+    },
+    {
+      "name": "quantum_lab",
+      "ok": true,
+      "seconds": 24.5,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\walk4\\09_quantum_lab.png"
+    },
+    {
+      "name": "run_with_qubo_slot",
+      "ok": true,
+      "seconds": 8.7,
+      "screenshot": "C:\\Users\\nisha\\Quantum-Route-integration\\docs\\screenshots\\walk4\\10_run_with_qubo_slot.png"
+    }
+  ],
+  "consoleErrors": [],
+  "apiErrors": [],
+  "started": "2026-10-04T15:56:04.076Z",
+  "blockedRequestErrors": 0,
+  "incidentTable": "INCIDENT IMPACT\nKPI\tBefore\tAfter\tΔ\nTotal time\t481.6\t491\t+9.4 min\nCongestion delay\t113.5\t112.4\t-1.2 min\nDistance\t218.2\t219.5\t+1.2 km\nCO₂\t55.8\t56.6\t+0.8 kg",
+  "shortestPath": "BEFORE 70.1 min ETA arrive 18:40 · cost 70.1 · runtime 3.338 s WITH INCIDENT 74.8 min ETA arrive 18:45 · cost 74.81 · runtime 3.265 s",
+  "benchFirstOption": "Headline (D58): equal conditions, new seeds, 30 runs, Holm-corrected",
+  "verdict": "VERDICT (COMPUTED FROM THE TABLE BELOW)\nOn A-n32-k5, OR-Tools (industry reference) had the lowest gap mean pct (0). QPSO: 1.28; Holm-corrected Wilcoxon p = 0.056 (OR-Tools (industry reference) vs QPSO, not significant at 0.05).\nOn A-n63-k9, QPSO-noQUBO (tuned) had the lowest gap mean pct (0.943). Largest Holm-corrected p-value vs QPSO among the others: 0.018.\nOn A-n80-k10, QPSO-noQUBO (tuned) had the lowest gap mean pct (1.18). Largest Holm-corrected p-value vs QPSO among the others: 0.000.\nOn CMT1, OR-Tools (industry reference) had the lowest gap mean pct (0.000). QPSO: 0.255; Holm-corrected Wilcoxon p = 0.000 (OR-Tools (industry reference) vs QPSO, significant at 0.05).\nOn CMT5, OR-Tools (industry reference) had the lowest gap mean pct (7.60). QPSO: 7.99; Holm-corrected Wilcoxon p = 0.309 (OR-Tools (industry reference) vs QPSO, not significant at 0.05).\nOn X-n101-k25, QPSO-noQUBO (tuned) had the lowest gap mean pct (1.83). Largest Holm-corrected p-value vs QPSO among the others: 0.013.",
+  "quboSolve": "Decoded order: depot → 50 → 18 → 47 → 25 → 54 → 10 → 21 → depot | Energy: -1,100.613 | Feasible: yes | Optimal cost (brute force): 63.281 | Time: 0.811 s",
+  "quboTooltip": "Validated quantum-ready module; on classical hardware it is slower than 2-opt — see Quantum Lab.",
+  "finished": "2026-10-04T15:57:45.504Z",
+  "allOk": true
+}

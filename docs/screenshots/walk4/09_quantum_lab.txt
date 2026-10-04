@@ -1,0 +1,256 @@
+QuantumRoute
+Home
+Scenario
+Run
+Results
+Fleet
+Path
+Bench
+Quantum
+API 0.4.0
+Demo mode
+Quantum Lab
+Honesty note: the QUBO sub-route slot runs a classical simulated annealer today. We claim readiness, not advantage — measured by how often the sampler matches the brute-force optimum. The same call can later target a quantum annealer without redesign.
+QUBO VALIDATION (SAMPLER VS BRUTE FORCE VS 2-OPT)
+SOURCE	A FACTOR X MAX D	ROUTES	M RANGE	NUM READS	NEAL FEASIBLE PCT	NEAL OPTIMAL PCT	NEAL MEAN GAP PCT FEASIBLE	NEAL MAX GAP PCT FEASIBLE	TWOOPT OPTIMAL PCT	TWOOPT MEAN GAP PCT	TIME PER ROUTE NEAL MS	TIME PER ROUTE BRUTE MS	TIME PER ROUTE 2OPT MS
+CVRPLIB A (BKS routes)	1.5	20	4-7	200	100	80	0.518	3.141	100	0	154.189	7.904	0.027
+CVRPLIB A (BKS routes)	3	20	4-7	200	100	60	1.665	11	100	0	146.183	7.904	0.027
+CVRPLIB A (BKS routes)	6	20	4-7	200	100	50	2.069	13	100	0	138.13	7.904	0.027
+Hyderabad (QPSO-full routes, Hyderabad-60: demo scenario, K=6, Q=200)	1.5	1	4-4	200	100	100	0	0	0	6.429	51.431	0.071	0.022
+Hyderabad (QPSO-full routes, Hyderabad-60: demo scenario, K=6, Q=200)	3	1	4-4	200	100	100	0	0	0	6.429	48.659	0.071	0.022
+Hyderabad (QPSO-full routes, Hyderabad-60: demo scenario, K=6, Q=200)	6	1	4-4	200	100	100	0	0	0	6.429	48.057	0.071	0.022
+Hyderabad (QPSO-full routes, Hyderabad-60-K12: short-route variant, K=12, Q=100)	1.5	11	3-7	200	100	72.727	0.363	2.087	72.727	1.113	116.562	3.497	0.03
+Hyderabad (QPSO-full routes, Hyderabad-60-K12: short-route variant, K=12, Q=100)	3	11	3-7	200	100	63.636	1.836	7.519	72.727	1.113	106.153	3.497	0.03
+Hyderabad (QPSO-full routes, Hyderabad-60-K12: short-route variant, K=12, Q=100)	6	11	3-7	200	100	81.818	0.866	6.408	72.727	1.113	102.088	3.497	0.03
+SOLVE ONE ROUTE’S STOP ORDER AS A QUBO
+ROUTE
+Vehicle 1 (11 stops)
+Vehicle 2 (12 stops)
+Vehicle 3 (8 stops)
+Vehicle 4 (9 stops)
+Vehicle 5 (7 stops)
+Vehicle 6 (13 stops)
+BACKEND
+neal (simulated annealing)
+brute force (exact)
+2-opt
+qiskit QAOA (m ≤ 4)
+Build QUBO & solve
+18@1
+18@1
+18@2
+18@2
+18@3
+18@3
+18@4
+18@4
+18@5
+18@5
+18@6
+18@6
+18@7
+18@7
+47@1
+47@1
+47@2
+47@2
+47@3
+47@3
+47@4
+47@4
+47@5
+47@5
+47@6
+47@6
+47@7
+47@7
+25@1
+25@1
+25@2
+25@2
+25@3
+25@3
+25@4
+25@4
+25@5
+25@5
+25@6
+25@6
+25@7
+25@7
+54@1
+54@1
+54@2
+54@2
+54@3
+54@3
+54@4
+54@4
+54@5
+54@5
+54@6
+54@6
+54@7
+54@7
+10@1
+10@1
+10@2
+10@2
+10@3
+10@3
+10@4
+10@4
+10@5
+10@5
+10@6
+10@6
+10@7
+10@7
+50@1
+50@1
+50@2
+50@2
+50@3
+50@3
+50@4
+50@4
+50@5
+50@5
+50@6
+50@6
+50@7
+50@7
+21@1
+21@1
+21@2
+21@2
+21@3
+21@3
+21@4
+21@4
+21@5
+21@5
+21@6
+21@6
+21@7
+21@7
+negative
+positive (penalty / distance)
+|max| = 167.1
+Stops: 18, 47, 25, 54, 10, 50, 21
+Decoded order: depot → 18 → 47 → 54 → 25 → 10 → 50 → 21 → depot
+Energy: -1,103.478
+Feasible: yes
+Optimal cost (brute force): 63.281
+Time: 0.86 s
+Variables x(stop, position); labels read “stop@position”. One-hot penalties sit on the diagonal/blocks; distances couple consecutive positions.
+EXAMPLE QUBO HEATMAP (QUBO_ROUTE_DEMO.JSON)
+18@1
+18@1
+18@2
+18@2
+18@3
+18@3
+18@4
+18@4
+18@5
+18@5
+18@6
+18@6
+18@7
+18@7
+47@1
+47@1
+47@2
+47@2
+47@3
+47@3
+47@4
+47@4
+47@5
+47@5
+47@6
+47@6
+47@7
+47@7
+25@1
+25@1
+25@2
+25@2
+25@3
+25@3
+25@4
+25@4
+25@5
+25@5
+25@6
+25@6
+25@7
+25@7
+54@1
+54@1
+54@2
+54@2
+54@3
+54@3
+54@4
+54@4
+54@5
+54@5
+54@6
+54@6
+54@7
+54@7
+10@1
+10@1
+10@2
+10@2
+10@3
+10@3
+10@4
+10@4
+10@5
+10@5
+10@6
+10@6
+10@7
+10@7
+50@1
+50@1
+50@2
+50@2
+50@3
+50@3
+50@4
+50@4
+50@5
+50@5
+50@6
+50@6
+50@7
+50@7
+21@1
+21@1
+21@2
+21@2
+21@3
+21@3
+21@4
+21@4
+21@5
+21@5
+21@6
+21@6
+21@7
+21@7
+negative
+positive (penalty / distance)
+|max| = 167.1
+Stops: 18, 47, 25, 54, 10, 50, 21
+Decoded order: depot → 50 → 18 → 47 → 25 → 54 → 10 → 21 → depot
+Energy: -1,100.613
+Feasible: yes
+Optimal cost (brute force): 63.281
+Time: 0.811 s
+Variables x(stop, position); labels read “stop@position”. One-hot penalties sit on the diagonal/blocks; distances couple consecutive positions.
+QPSO is a classical, quantum-inspired metaheuristic running on ordinary CPUs. No quantum speedup is claimed. Traffic is simulated.

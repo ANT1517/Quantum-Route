@@ -1,0 +1,186 @@
+QuantumRoute
+Home
+Scenario
+Run
+Results
+Fleet
+Path
+Bench
+Quantum
+API 0.4.0
+Demo mode
+Job 92d3fd3e-ee60-4109-a8b2-6c6da010059c
+QPSO-noQUBO (tuned)
+seed 7
+depart 17:30
+Completed
+instance hyderabad-60
++ Incident
+Export JSON
++
+−
+ Leaflet | © OpenStreetMap contributors
+Congested edges (amber → red by V/C, width = fleet flow)
+(no edge_flows in this result)
+★ depot · ○ customer
+Total time
+481.6 min
+Congestion delay
+113.5 min
+Distance
+218.2 km
+CO₂ (illustrative)
+55.8 kg
+Vehicles
+6 / 6
+Runtime
+5.02 s
+Evaluations
+6,000
+Fitness F
+0.8256
+SHORTEST PATH (TD-DIJKSTRA)
+Depot
+Customer 1
+Customer 2
+Customer 3
+Customer 4
+Customer 5
+Customer 6
+Customer 7
+Customer 8
+Customer 9
+Customer 10
+Customer 11
+Customer 12
+Customer 13
+Customer 14
+Customer 15
+Customer 16
+Customer 17
+Customer 18
+Customer 19
+Customer 20
+Customer 21
+Customer 22
+Customer 23
+Customer 24
+Customer 25
+Customer 26
+Customer 27
+Customer 28
+Customer 29
+Customer 30
+Customer 31
+Customer 32
+Customer 33
+Customer 34
+Customer 35
+Customer 36
+Customer 37
+Customer 38
+Customer 39
+Customer 40
+Customer 41
+Customer 42
+Customer 43
+Customer 44
+Customer 45
+Customer 46
+Customer 47
+Customer 48
+Customer 49
+Customer 50
+Customer 51
+Customer 52
+Customer 53
+Customer 54
+Customer 55
+Customer 56
+Customer 57
+Customer 58
+Customer 59
+Customer 60
+target…
+Depot
+Customer 1
+Customer 2
+Customer 3
+Customer 4
+Customer 5
+Customer 6
+Customer 7
+Customer 8
+Customer 9
+Customer 10
+Customer 11
+Customer 12
+Customer 13
+Customer 14
+Customer 15
+Customer 16
+Customer 17
+Customer 18
+Customer 19
+Customer 20
+Customer 21
+Customer 22
+Customer 23
+Customer 24
+Customer 25
+Customer 26
+Customer 27
+Customer 28
+Customer 29
+Customer 30
+Customer 31
+Customer 32
+Customer 33
+Customer 34
+Customer 35
+Customer 36
+Customer 37
+Customer 38
+Customer 39
+Customer 40
+Customer 41
+Customer 42
+Customer 43
+Customer 44
+Customer 45
+Customer 46
+Customer 47
+Customer 48
+Customer 49
+Customer 50
+Customer 51
+Customer 52
+Customer 53
+Customer 54
+Customer 55
+Customer 56
+Customer 57
+Customer 58
+Customer 59
+Customer 60
+Compute path
+ROUTES
+VEH	STOPS	LOAD / Q	DEPART → RETURN	TIME (MIN)	DELAY (MIN)	KM	CO₂ (KG)
+1	6 → 11 → 58 → 14 → 44 → 59 → 15 → 30 → 29 → 45 → 9	173 / 200	17:30 → 19:47	81.7	17.6	35.4	9.3
+2	36 → 55 → 42 → 56 → 12 → 57 → 28 → 13 → 43 → 27 → 26 → 41	195 / 200	17:30 → 20:15	105	27.4	53.9	12.8
+3	51 → 7 → 22 → 37 → 23 → 38 → 52 → 8	143 / 200	17:30 → 19:02	51.7	13.8	22.6	5.9
+4	24 → 39 → 53 → 40 → 31 → 16 → 35 → 5 → 20	167 / 200	17:30 → 19:41	86	21.7	38.7	9.9
+5	18 → 47 → 25 → 54 → 10 → 50 → 21	130 / 200	17:30 → 19:05	60.2	12.7	24.4	6.7
+6	3 → 33 → 1 → 46 → 2 → 17 → 32 → 60 → 19 → 4 → 34 → 48 → 49	197 / 200	17:30 → 20:12	97	20.4	43.3	11.2
+WHY THIS PLAN
+Plan departs at 17:30 and uses 6 of 6 vehicles: 482 min total driving, 218.2 km, 55.8 kg CO2.
+Congestion accounts for 114 min (24%) of driving time (simulated traffic).
+Vehicle 1 serves 11 stops (load 173/200) in 82 min, of which 18 min is congestion delay; 35.4 km; 9.3 kg CO2.
+Vehicle 2 serves 12 stops (load 195/200) in 105 min, of which 27 min is congestion delay; 53.9 km; 12.8 kg CO2.
+Vehicle 3 serves 8 stops (load 143/200) in 52 min, of which 14 min is congestion delay; 22.6 km; 5.9 kg CO2.
+Vehicle 4 serves 9 stops (load 167/200) in 86 min, of which 22 min is congestion delay; 38.7 km; 9.9 kg CO2.
+Vehicle 5 serves 7 stops (load 130/200) in 60 min, of which 13 min is congestion delay; 24.4 km; 6.7 kg CO2.
+Vehicle 6 serves 13 stops (load 197/200) in 97 min, of which 20 min is congestion delay; 43.3 km; 11.2 kg CO2.
+Deterministic template sentences generated from the result (no LLM).
+QPSO is a classical, quantum-inspired metaheuristic running on ordinary CPUs. No quantum speedup is claimed. Traffic is simulated.
+6000

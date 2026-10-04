@@ -1,0 +1,63 @@
+QuantumRoute
+Home
+Scenario
+Run
+Results
+Fleet
+Path
+Bench
+Quantum
+API 0.4.0
+Demo mode
+Run Optimizer
+Scenario: Hyderabad-60 · depart 17:30
+ALGORITHM
+QPSO-noQUBO (tuned) · default engine
+PSO
+GA
+Simulated annealing
+OR-Tools (industry reference)
+OBJECTIVE WEIGHTS (SUM = 1)
+Balanced
+Fastest
+Greenest
+Least congestion
+Time wT
+0.500
+Distance wD
+0.200
+Congestion wC
+0.200
+CO₂ wE
+0.100
+SWARM / POP N
+ITERATIONS
+Custom α schedule (linear)
+α = 0.3 fixed — QPSO-noQUBO (tuned), tuned on CVRPLIB tuning instances only.
+Quantum QUBO slot (classical sampler; slower)
+ⓘ
+SEED
+FLEET MODE
+naive
+user_eq
+system_opt
+Budget: 6,000 evaluations (N × iterations)
+Start
+Cancel
+LIVE CONVERGENCE (BEST F VS EVALUATIONS)
+job 92d3fd3e-ee60-4109-a8b2-6c6da010059c
+COMPLETED
+via websocket
+80
+1580
+3080
+6000
+evaluations
+0.8250
+0.8500
+0.8750
+0.9000
+0.9250
+View results →
+QPSO is a classical, quantum-inspired metaheuristic running on ordinary CPUs. No quantum speedup is claimed. Traffic is simulated.
+6000
