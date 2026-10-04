@@ -1,0 +1,18 @@
+# Scaling v2 (D58/D59, 2026-10-04): replaces scaling (v1), whose OR-Tools and QPSO rows ran under different CPU
+# conditions (D57). Runner only (own console window, keep-awake, memory guard). New seeds (seed_base 72345).
+# Engine = QPSO-noQUBO (tuned): QUBO slot off, fixed alpha 0.3 (D54). Budget rule D50: 0.6 s per customer, cap 300 s.
+name: scaling_v2
+description: "Scaling v2: QPSO-noQUBO (tuned) direct on X-n101 (60 s) and X-n200 (120 s), cluster-first on X-n502 (300 s), vs OR-Tools; 10 runs, new seeds, equal launch conditions"
+budget_rule: "0.6 s per customer, capped at 300 s (D50)"
+instances: [X-n101-k25, X-n200-k36, X-n502-k39]
+runs: 10
+seed_base: 72345
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: qn_tuned
+variants:
+  qn_tuned:         {algo: qpso, params: {qubo_slot: {enabled: false}, alpha_mode: fixed, alpha_fixed: 0.3}}
+  qn_tuned_cluster: {algo: qpso_cluster, params: {qubo_slot: {enabled: false}, alpha_mode: fixed, alpha_fixed: 0.3}}
+budgets:
+  - {type: time, value: 60,  instances: [X-n101-k25], algorithms: [qn_tuned, ortools]}
+  - {type: time, value: 120, instances: [X-n200-k36], algorithms: [qn_tuned, ortools]}
+  - {type: time, value: 300, instances: [X-n502-k39], algorithms: [qn_tuned_cluster, ortools]}

@@ -200,7 +200,8 @@ def test_d53_default_engine_is_qpso_noqubo():
     from backend.app.services.job_params import engine_job
     body = JobCreate(scenario_id="x", algorithm="qpso", weights=W)
     j = engine_job(body, None)
-    assert j["params"]["qubo_slot"] == {"enabled": False} and j["label"] == "qpso_noqubo"
+    assert j["params"]["qubo_slot"] == {"enabled": False} and j["label"] == "qpso_noqubo_tuned"
+    assert j["params"]["alpha_mode"] == "fixed" and j["params"]["alpha_fixed"] == 0.3     # D59
     body = JobCreate(scenario_id="x", algorithm="qpso", weights=W, params={"qubo_slot": True})
     j = engine_job(body, None)
     assert j["params"]["qubo_slot"] == {"enabled": True} and j["label"] == "qpso_full"

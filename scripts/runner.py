@@ -74,6 +74,13 @@ PHASES = {
         ("d51_audit_confirm2", [PY, "scripts/audit_throughput.py", "--exps", "confirm_d54", "--no-arrivals",
                                 "--out", "d51_audit_confirm2"]),
     ],
+    # D58/D59: scaling re-run under equal (runner) conditions + calibration check
+    "scaling_v2": [
+        ("scaling_v2", [PY, "-u", "scripts/run_bench.py", "--exp", "scaling_v2"]),
+        ("scaling_v2_audit", [PY, "scripts/audit_throughput.py", "--exps", "scaling_v2", "--no-arrivals",
+                              "--out", "d51_audit_scaling_v2"]),
+        ("scaling_v2_calibration", [PY, "scripts/check_calibration.py", "scaling_v2"]),
+    ],
     # optional, after D46: nothing else may run during the P-core check
     "optional": [
         ("pcore_check", [PY, "-u", "scripts/run_bench.py", "--exp", "pcore_check"]),

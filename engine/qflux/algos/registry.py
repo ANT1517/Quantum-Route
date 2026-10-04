@@ -37,7 +37,12 @@ def get_optimizer(name: str, params: dict | None = None):
     if name == "qpso":
         from .qpso import QPSO
         return QPSO(**params)
-    if name == "qpso_noqubo":                       # D53: default "QuantumRoute engine" (QUBO slot off)
+    if name == "qpso_noqubo_tuned":                 # D59: shipped engine = benchmarked engine (D54 choice)
+        from .qpso import QPSO
+        opt = QPSO(**{**TUNED_NOQUBO, **params})
+        opt.name = "qpso_noqubo_tuned"
+        return opt
+    if name == "qpso_noqubo":                       # D53 (adaptive alpha); kept to reproduce earlier tables
         from .qpso import QPSO
         opt = QPSO(**{"qubo_slot": {"enabled": False}, **params})
         opt.name = "qpso_noqubo"
@@ -74,4 +79,10 @@ def get_optimizer(name: str, params: dict | None = None):
     raise KeyError(f"unknown optimizer {name!r}")
 
 
-ALGORITHMS = ("qpso", "qpso_noqubo", "qpso_base", "pso", "pso_ls", "ga", "ga_ls", "sa", "rr_ls", "qpso_cluster", "ortools", "nn")
+# D59: "QPSO-noQUBO (tuned)". alpha chosen on the static CVRPLIB tuning instances A-n44-k6 and A-n69-k9 (D54,
+# configs/experiments/d54_choice.yaml); road-network (Hyderabad/SynthCity) instances use the same value untuned.
+TUNED_NOQUBO = {"qubo_slot": {"enabled": False}, "alpha_mode": "fixed", "alpha_fixed": 0.3}
+DISPLAY_NAMES = {"qpso_noqubo_tuned": "QPSO-noQUBO (tuned)", "qpso_noqubo": "QPSO-noQUBO (adaptive alpha)",
+                 "qpso": "QPSO-full", "ortools": "OR-Tools (industry reference engine)"}
+
+ALGORITHMS = ("qpso", "qpso_noqubo_tuned", "qpso_noqubo", "qpso_base", "pso", "pso_ls", "ga", "ga_ls", "sa", "rr_ls", "qpso_cluster", "ortools", "nn")
