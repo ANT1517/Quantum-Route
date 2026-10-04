@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-04 21:18",
+ "generated_at": "2026-10-04 21:35",
  "scenario": "hyderabad-60",
  "weights": {
   "wT": 0.5,
@@ -18,7 +18,7 @@
    "vehicles_used": 6,
    "fleet_limit": 6,
    "fitness": 0.825553,
-   "runtime_s": 11.225,
+   "runtime_s": 5.207,
    "evals": 12000,
    "feasible": true
   },
@@ -30,14 +30,14 @@
    "vehicles_used": 6,
    "fleet_limit": 6,
    "fitness": 0.695676,
-   "runtime_s": 12.477,
+   "runtime_s": 3.875,
    "evals": 12000,
    "feasible": true
   }
  },
  "fleet": {
   "S": 25.0,
-  "wall_s": 54.9,
+  "wall_s": 19.3,
   "naive": {
    "externality_veh_h": 259.664,
    "max_vc": 1.608,
@@ -69,13 +69,13 @@
   "resequenced": false,
   "delay_increase_min": 14.365,
   "delay_avoided_min": 6.326,
-  "reopt_time_s": 0.938
+  "reopt_time_s": 0.369
  },
  "ambulance": {
   "eta_before_min": 28.095,
-  "eta_after_min": 28.295,
-  "astar_eta_min": 28.295,
-  "dijkstra_s": 6.6473,
-  "astar_s": 4.5776
+  "eta_after_min": 31.504,
+  "astar_eta_min": 31.504,
+  "dijkstra_s": 1.4357,
+  "astar_s": 1.2097
  }
 }

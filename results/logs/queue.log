@@ -100,3 +100,11 @@
 2026-10-04 21:20:35 runner[demos] done export_api_json rc=0
 2026-10-04 21:20:35 runner[demos] start export_demo
 2026-10-04 21:20:38 runner[demos] done export_demo rc=0
+2026-10-04 21:35:12 runner[demos] start run_fleet_demo
+2026-10-04 21:35:54 runner[demos] done run_fleet_demo rc=0
+2026-10-04 21:35:54 runner[demos] start plot_demo
+2026-10-04 21:35:56 runner[demos] done plot_demo rc=0
+2026-10-04 21:35:56 runner[demos] start export_api_json
+2026-10-04 21:36:00 runner[demos] done export_api_json rc=0
+2026-10-04 21:36:00 runner[demos] start export_demo
+2026-10-04 21:36:03 runner[demos] done export_demo rc=0

@@ -1,0 +1,31 @@
+QuantumRoute
+Home
+Scenario
+Run
+Results
+Fleet
+Path
+Bench
+Quantum
+API offline
+Demo mode
+QuantumRoute
+
+QuantumRoute plans delivery-fleet routes on Hyderabad's road network with QPSO-noQUBO (tuned), a quantum-inspired swarm optimizer that runs on ordinary CPUs. It weighs travel time, distance, congestion delay and CO₂, can plan the fleet with marginal cost so its own traffic is spread out, re-plans around incidents and has an optional QUBO slot for route ordering. Benchmark Studio shows how it compares with PSO, GA, SA and Google OR-Tools (industry reference) under equal conditions — including where it does not win.
+
+Run demo
+Open scenario
+
+QPSO is a classical metaheuristic inspired by quantum-mechanical mathematics; it runs on ordinary CPUs. Traffic is simulated.
+
+DEMO SCENARIO NUMBERS (HYDERABAD-60, SIMULATED TRAFFIC — NOT BENCHMARKS)
+Background delay cut by system-optimal routing
+37.6 %
+Source: results/demo/metrics.json (S=25, simulated traffic, planner QPSO-noQUBO (tuned))
+Congestion delay at 17:30 vs 03:00 (same 60 customers)
+114 vs 10 min
+Source: results/demo/result_demo.json, result_0300.json
+Delay avoided by incident re-routing
+6.3 min
+Source: results/demo/incident_demo.json (simulated incident)
+QPSO is a classical, quantum-inspired metaheuristic running on ordinary CPUs. No quantum speedup is claimed. Traffic is simulated.

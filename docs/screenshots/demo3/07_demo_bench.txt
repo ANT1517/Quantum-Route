@@ -1,0 +1,76 @@
+QuantumRoute
+Home
+Scenario
+Run
+Results
+Fleet
+Path
+Bench
+Quantum
+demo data
+Demo mode
+Demo mode: screens read results pre-exported from results/ into /demo (no backend, no network). Numbers match live mode; traffic is simulated.
+Benchmark Studio
+Headline (D58): equal conditions, new seeds, 30 runs, Holm-corrected
+v1: QPSO-noQUBO (adaptive alpha) vs metaheuristics, all rows under equal throttling
+P-n16/19/22 (proven optima, K = k): QPSO-noQUBO, PSO+LS, OR-Tools; 10 s, 10 runs
+Scaling: QPSO-noQUBO (tuned) vs OR-Tools, equal conditions
+QPSO ablation chain, 30 s, 10 runs, A-n63-k9 and A-n80-k10; PSO+LS and RR+LS reference rows
+Plain QPSO-base vs plain PSO (no LS), 12,000 evaluations, 10 runs
+α sensitivity of QPSO-full on A-n63-k9: fixed 0.3-1.2, linear 1.0→0.5, linear 0.8→0.3, adaptive; 30 s, 10 runs
+Convergence overlay →
+INSTANCES
+All
+A-n32-k5
+A-n63-k9
+A-n80-k10
+CMT1
+CMT5
+X-n101-k25
+Runs: 30 · Budget: 30 s, 60 s
+VERDICT (COMPUTED FROM THE TABLE BELOW)
+On A-n32-k5, OR-Tools (industry reference) had the lowest gap mean pct (0). QPSO: 1.28; Holm-corrected Wilcoxon p = 0.056 (OR-Tools (industry reference) vs QPSO, not significant at 0.05).
+On A-n63-k9, QPSO-noQUBO (tuned) had the lowest gap mean pct (0.943). Largest Holm-corrected p-value vs QPSO among the others: 0.018.
+On A-n80-k10, QPSO-noQUBO (tuned) had the lowest gap mean pct (1.18). Largest Holm-corrected p-value vs QPSO among the others: 0.000.
+On CMT1, OR-Tools (industry reference) had the lowest gap mean pct (0.000). QPSO: 0.255; Holm-corrected Wilcoxon p = 0.000 (OR-Tools (industry reference) vs QPSO, significant at 0.05).
+On CMT5, OR-Tools (industry reference) had the lowest gap mean pct (7.60). QPSO: 7.99; Holm-corrected Wilcoxon p = 0.309 (OR-Tools (industry reference) vs QPSO, not significant at 0.05).
+On X-n101-k25, QPSO-noQUBO (tuned) had the lowest gap mean pct (1.83). Largest Holm-corrected p-value vs QPSO among the others: 0.013.
+ALGORITHM	BUDGET TYPE	BUDGET	INSTANCE	ALGO	RUNS	RUNS FLEET OK	FLEET VIOLATIONS	SEEDS	F MEAN	F STD	D BEST	D MEAN	D MEDIAN	D WORST	D STD	GAP BEST PCT	GAP MEAN PCT	GAP STD PCT	VEHICLES MEAN	EVALS TO 1PCT MEDIAN	EVALS TO 5PCT MEDIAN	TIME TO 1PCT S MEDIAN	TIME TO 5PCT S MEDIAN	EVALS MEAN	WALL S MEAN	LS CALLS MEAN	WILCOXON P HOLM VS QN TUNED	P RAW VS QN TUNED	MEDIAN DIFF GAP PTS VS QN TUNED	P HOLM VS PSO TUNED	P RAW VS PSO TUNED	MEDIAN DIFF GAP PTS VS PSO TUNED	GAP RUNS PCT
+OR-Tools (industry reference)	time	30	A-n32-k5	ortools	30	30	0	65345..65374	0.685	0	784	784	784	784	0	0	0	0	5	0	0	1.514	0.018	0	29.906	0	0.056	0.011	0	1	1	0	[30 values]
+QPSO-noQUBO (tuned)	time	30	A-n32-k5	qn_tuned	30	30	0	65345..65374	0.693	0.015	784	794	784	828	17.368	0	1.276	2.215	5	200	200	0.058	0.025	151,493	30.001	37,046.3	–	–	–	0.044	0.011	0	[30 values]
+PSO+LS (tuned)	time	30	A-n32-k5	pso_tuned	30	30	0	65345..65374	0.685	0	784	784	784	784	0	0	0	0	5	350	200	0.066	0.037	136,100	30.001	34,350.2	0.056	0.011	0	–	–	–	[30 values]
+GA+LS	time	30	A-n32-k5	ga_ls	30	30	0	65345..65374	0.713	0.017	784	815.833	829	848	19.14	0	4.06	2.441	5	200	100	0.034	0.022	103,645	30.001	27,532.5	0.004	0	-4.783	0	0	-5.74	[30 values]
+QPSO-noQUBO (tuned)	time	30	A-n63-k9	qn_tuned	30	30	0	67345..67374	0.746	0.003	1,618	1,631.23	1,628.5	1,650	6.207	0.124	0.943	0.384	9	4,850	500	2.434	0.239	75,858.8	30.001	18,516.5	–	–	–	0.015	0.003	0.371	[30 values]
+PSO+LS (tuned)	time	30	A-n63-k9	pso_tuned	30	30	0	67345..67374	0.748	0.003	1,627	1,636.53	1,635.5	1,656	6.394	0.681	1.271	0.396	9	7,500	500	3.898	0.222	58,723.3	30.001	14,813.3	0.018	0.003	-0.371	–	–	–	[30 values]
+OR-Tools (industry reference)	time	30	A-n63-k9	ortools	30	30	0	67345..67374	0.75	0	1,641	1,641	1,641	1,641	0	1.547	1.547	0	9	0	0	22.454	3.009	0	29.903	0	0	0	-0.774	0.009	0.001	-0.34	[30 values]
+GA+LS	time	30	A-n63-k9	ga_ls	30	30	0	67345..67374	0.77	0.011	1,639	1,685.03	1,684	1,732	25.017	1.423	4.272	1.548	9	400	200	0.197	0.089	65,535.4	30.001	17,404	0	0	-3.218	0	0	-2.847	[30 values]
+PSO+LS (tuned)	time	30	A-n80-k10	pso_tuned	30	30	0	68345..68374	0.776	0.006	1,793	1,820.97	1,822	1,852	13.071	1.702	3.288	0.741	10	9,750	550	7.422	0.368	41,137.8	30.001	10,373.4	0	0	-2.212	–	–	–	[30 values]
+GA+LS	time	30	A-n80-k10	ga_ls	30	30	0	68345..68374	0.795	0.014	1,815	1,867.17	1,862	1,955	32.662	2.95	5.908	1.853	10	500	200	0.274	0.107	51,161.4	30.001	13,584.3	0	0	-4.453	0	0	-2.411	[30 values]
+QPSO-noQUBO (tuned)	time	30	A-n80-k10	qn_tuned	30	30	0	68345..68374	0.76	0.003	1,765	1,783.77	1,782	1,801	7.601	0.113	1.178	0.431	10	9,650	850	7.02	0.687	48,347.6	30.002	11,879.8	–	–	–	0	0	2.212	[30 values]
+OR-Tools (industry reference)	time	30	A-n80-k10	ortools	30	30	0	68345..68374	0.764	0	1,791	1,793.2	1,793	1,797	1.095	1.588	1.713	0.062	10	0	0	10.516	0.098	0	29.902	0	0	0	-0.681	0	0	1.645	[30 values]
+OR-Tools (industry reference)	time	30	CMT1	ortools	30	30	0	69345..69374	0.737	0	524.611	524.611	524.611	524.611	0	0	0	0	5	0	0	12.909	4.837	0	29.904	0	0	0	0	0	0	0	[30 values]
+PSO+LS (tuned)	time	30	CMT1	pso_tuned	30	30	0	69345..69374	0.738	0.002	524.611	524.891	524.611	532.996	1.531	0	0.053	0.292	5	1,250	350	0.567	0.135	70,191.4	30.001	17,709.6	0.08	0.027	0	–	–	–	[30 values]
+GA+LS	time	30	CMT1	ga_ls	30	30	0	69345..69374	0.762	0.017	524.611	542.084	546.083	564.095	12.386	0	3.331	2.361	5.5	300	200	0.126	0.054	64,447.9	30.001	17,113.8	0	0	-3.951	0	0	-4.093	[30 values]
+QPSO-noQUBO (tuned)	time	30	CMT1	qn_tuned	30	30	0	69345..69374	0.739	0.004	524.611	525.95	524.611	532.996	2.625	0	0.255	0.5	5	700	300	0.292	0.128	87,098.3	30.001	21,334.1	–	–	–	0.053	0.027	0	[30 values]
+OR-Tools (industry reference)	time	60	CMT5	ortools	30	30	0	70345..70374	0.76	0	1,389.39	1,389.39	1,389.39	1,389.39	0	7.597	7.597	0	17	0	0	33.176	14.553	0	59.905	0	0.309	0.309	-0.018	0	0	1.924	[30 values]
+GA+LS	time	60	CMT5	ga_ls	30	30	0	70345..70374	0.768	0.011	1,353.61	1,405.48	1,405.51	1,451.07	20.582	4.826	8.843	1.594	17.067	700	300	1.822	0.903	31,918.6	60.003	8,468.37	0.099	0.05	-0.726	0.044	0.014	0.81	[30 values]
+QPSO-noQUBO (tuned)	time	60	CMT5	qn_tuned	30	30	0	70345..70374	0.762	0.009	1,362.61	1,394.49	1,389.15	1,426.37	17.302	5.523	7.992	1.34	17.167	2,100	400	18.535	3.084	6,470.43	60.005	1,598.5	–	–	–	0	0	1.618	[30 values]
+PSO+LS (tuned)	time	60	CMT5	pso_tuned	30	30	0	70345..70374	0.774	0.008	1,385.42	1,416.66	1,414.22	1,444.53	14.126	7.29	9.709	1.094	17.133	2,250	500	19.844	3.588	6,052.67	60.005	1,513.47	0	0	-1.618	–	–	–	[30 values]
+PSO+LS (tuned)	time	60	X-n101-k25	pso_tuned	30	30	0	71345..71374	0.672	0.002	27,975	28,174.1	28,178.5	28,328	75.659	1.392	2.113	0.274	26.867	2,650	100	3.485	0.074	41,876.1	60.002	10,559.5	0.013	0.002	-0.277	–	–	–	[30 values]
+OR-Tools (industry reference)	time	60	X-n101-k25	ortools	30	30	0	71345..71374	0.695	0.002	28,767	29,132.9	29,159	29,159	99.454	4.262	5.588	0.36	27	0	0	0.935	0.158	0	59.904	0	0	0	-3.811	0	0	-3.512	[30 values]
+GA+LS	time	60	X-n101-k25	ga_ls	30	30	0	71345..71374	0.679	0.006	28,149	28,493.4	28,469	29,041	257.572	2.022	3.271	0.934	27	300	100	0.197	0.066	108,322	60.002	28,775.2	0	0	-1.303	0	0	-1.075	[30 values]
+QPSO-noQUBO (tuned)	time	60	X-n101-k25	qn_tuned	30	30	0	71345..71374	0.67	0.002	27,928	28,096.9	28,105.5	28,304	82.858	1.221	1.833	0.3	26.967	3,050	200	4.329	0.104	43,597.9	60.003	10,856.9	–	–	–	0.011	0.002	0.277	[30 values]
+Highlighted: lowest gap mean pct per instance.
+PER-RUN DISTRIBUTION (GAP_RUNS_PCT) · A-N32-K5
+-0.653
+1.71
+4.08
+6.45
+8.82
+gap_runs_pct
+OR-Tools (industry reference)
+QPSO-noQUBO (tuned)
+PSO+LS (tuned)
+GA+LS
+Within each table every algorithm gets the same time budget and the same seeds; the metaheuristics share one decoder, while OR-Tools (industry reference) uses its own C++ model. Heuristics give good solutions, not optimality proofs; if QPSO does not win on an instance, the table says so.
+QPSO is a classical, quantum-inspired metaheuristic running on ordinary CPUs. No quantum speedup is claimed. Traffic is simulated.

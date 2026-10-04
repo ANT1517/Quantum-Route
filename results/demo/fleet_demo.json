@@ -21,7 +21,7 @@
     "vehicles_used": 6,
     "fleet_limit": 6,
     "fitness": 0.967765,
-    "runtime_s": 10.977,
+    "runtime_s": 1.962,
     "evals": 0,
     "feasible": true
    },
@@ -43922,7 +43922,7 @@
     "vehicles_used": 6,
     "fleet_limit": 6,
     "fitness": 0.967575,
-    "runtime_s": 21.091,
+    "runtime_s": 8.513,
     "evals": 0,
     "feasible": true
    },
@@ -87925,7 +87925,7 @@
     "vehicles_used": 6,
     "fleet_limit": 6,
     "fitness": 1.226054,
-    "runtime_s": 22.067,
+    "runtime_s": 8.621,
     "evals": 0,
     "feasible": true
    },

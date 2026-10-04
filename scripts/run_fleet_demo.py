@@ -128,7 +128,7 @@ def main():
     req = {"source": src, "target": dst, "depart_min": 1050, "algorithm": "dijkstra"}
     before = api.shortest_path(HYD, req)
     mid = before["halfway_by_time"]                 # path point at ~50% of the travel time (on the fastest path)
-    sp_inc = {"type": "zone", "center": mid, "radius_m": 600, "factor": 2.5, "start_min": 1020, "end_min": 1140}
+    sp_inc = {"type": "zone", "center": mid, "radius_m": 1000, "factor": 3, "start_min": 1050, "end_min": 1170}  # = live screen default
     after = api.shortest_path(HYD, dict(req, incidents=[sp_inc]))
     astar = api.shortest_path(HYD, dict(req, algorithm="astar", incidents=[sp_inc]))
     sp = {"source": net.node_xy[src].tolist(), "target": net.node_xy[dst].tolist(),
