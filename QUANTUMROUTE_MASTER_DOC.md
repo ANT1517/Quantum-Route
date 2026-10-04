@@ -53,7 +53,7 @@ Naming: **QuantumRoute** is the platform (what judges see). **QuantumFlux** is i
 | QR 1.0 | Product blueprint |
 | **4.0** | Unified doc. Fixes listed in §0.5 |
 | 4.1 | (2026-10-04, Person A) Memetic LS rule, rank re-normalisation, deadline-aware budgets, core set without A-n44-k6, 10 runs + parallel rule, `RunRecord.meta` (D28–D32) |
-| 4.4 | (2026-10-04, Person A) Exact O(1)-delta LS for static instances (D41); D42 granular neighbourhoods not needed; budgets by size class (D43) |
+| 4.4 | (2026-10-04, Person A) Exact O(1)-delta LS for static instances (D41); D42 granular neighbourhoods not needed; budgets by size class (D43); invalid-run guard for machine sleep |
 | 4.3 | (2026-10-04, Person A) Time budget only for LS hybrids (D39); 30 runs + wall-time curves `RunRecord.meta["curve_t"]` (D40); fleet-infeasible runs excluded from gaps (D38 addendum) |
 | 4.2 | (2026-10-04, Person A) Memetic trigger = LS on the best 25% of new positions (D33), RR+LS control (D34), A-n69-k9 tuning-only (D35), new bench_core gate (D36), `RunRecord.meta` logged as a frozen-file change (D37), T11 against proven optima, fleet limit K = k for Augerat A/P (D38) |
 
@@ -913,7 +913,7 @@ Fleet Impact
 | S (vehicle-equivalents per route) [==25==]    iterations: 1 2 3        |
 
 Benchmark Studio
-| Instances [A-n32][A-n63][A-n80][CMT1][CMT5][X-n101]  Runs: 30  Budget: 30 s (time)     |
+| Instances [A-n32][A-n63][A-n80][CMT1] 30 s · [CMT5][X-n101] 60 s   Runs: 30   |
 | Algo    | Mean gap % | Std | Best | Wilcoxon p vs QPSO | Evals to 5%            |
 | Verdict: computed text from the table, e.g. "On A-n63-k9, QPSO+LS had the lowest mean gap (p=...)." |
 ```
@@ -1038,7 +1038,7 @@ Acceptance (H12 milestone): judge demo path (§12.1) works **5 times in a row** 
 
 ### Phase 9 — Experiments (H11–H17) [M2, M1 supports]
 Run in this order; stop adding when H17 is reached:
-1. Core benchmark (`bench_core.yaml`, D29/D39/D40): A-n32-k5, A-n63-k9, A-n80-k10, CMT1, CMT5, X-n101-k25 (A-n44-k6 and A-n69-k9 are tuning-only, §11.1) × {QPSO-full, PSO+LS, GA+LS, SA, OR-Tools} + RR+LS control, **30 s time budget only, 30 runs**. `evals_used` and `ls_calls` are recorded in every RunRecord for transparency. Plain PSO, plain GA and QPSO-base appear in the ablation, not as headline rows.
+1. Core benchmark (`bench_core_v1.yaml`, D29/D39/D40/D43): A-n32-k5, A-n63-k9, A-n80-k10, CMT1 at **30 s**; CMT5, X-n101-k25 at **60 s** (A-n44-k6 and A-n69-k9 are tuning-only, §11.1) × {QPSO-full, PSO+LS, GA+LS, SA, OR-Tools} + RR+LS control, time budget only, **30 runs**. `evals_used` and `ls_calls` are recorded in every RunRecord for transparency. Plain PSO, plain GA and QPSO-base appear in the ablation, not as headline rows. (bench_core v0 was stopped before D41 and is superseded.)
 2. Ablation (A-n63-k9, A-n80-k10, 30 s time budget, 10 runs): QPSO-base → +rank mbest → +Sobol → +adaptive α → +memetic LS → +tunneling → +QUBO slot → +diversity (= QPSO-full), with PSO+LS and RR+LS as reference rows; Wilcoxon each row vs the previous. Separately, the only evaluation-budget comparison (D39): plain QPSO-base vs plain PSO (no LS), 12,000 evaluations.
 3. α sweep: fixed α ∈ {0.3, 0.5, 0.7, 0.9, 1.0, 1.2}, linear 1.0→0.5, linear 0.8→0.3, adaptive.
 4. Scaling: X-n101, X-n200 direct; X-n502, X-n1001 clustered; SynthCity n = 20, 50, 100, 200, 500 on road graphs.
@@ -1154,7 +1154,7 @@ If the plan is at risk at H12, freeze to: QPSO-full vs PSO+LS vs GA+LS vs SA vs 
 Augerat/Uchoa (EUC_2D): D = nint(Euclidean) — the BKS assume this. CMT: real Euclidean. Gap is computed **only** when our convention matches the BKS convention.
 
 ### 11.3 Budgets
-**Time budget (primary, and the only budget for LS hybrids; D39):** 30 s wall clock per run, one core per run (D30), deadline-aware (D31). LS moves are not counted as evaluations, so at 12,000 evaluations QPSO-full needed ≈240 s against ≈32 s for GA+LS on A-n44-k6: an evaluation budget is not an equal budget for hybrids. `evals_used` and `ls_calls` are still recorded in every RunRecord.
+**Time budget (primary, and the only budget for LS hybrids; D39):** by instance size class (D43): **30 s for n ≤ 80** (A-n32-k5, A-n63-k9, A-n80-k10, CMT1) and **60 s for n > 80** (CMT5, X-n101-k25); one core per run (D30), deadline-aware (D31). The budget is stated on every table and figure. A time-budget run whose wall time exceeds 1.10× its budget (machine sleep or clock jump) is invalid, kept in `<exp>.invalid.jsonl` and re-run; `run_bench.py` asks the OS not to sleep while it runs. LS moves are not counted as evaluations, so at 12,000 evaluations QPSO-full needed ≈240 s against ≈32 s for GA+LS on A-n44-k6: an evaluation budget is not an equal budget for hybrids. `evals_used` and `ls_calls` are still recorded in every RunRecord.
 **Evaluation budget (ablation only):** 12,000 full evaluations, used only to compare the non-LS variants (plain QPSO-base vs plain PSO), where an evaluation really is the unit of work. OR-Tools only on time.
 Convergence plots for time-budget runs use wall-clock seconds on the x-axis (`RunRecord.meta["curve_t"]`, D40); evaluation-budget plots use evaluations.
 
@@ -1358,6 +1358,7 @@ Finale deck flow (10 slides, later): Title · Problem · Why it matters · Solut
 | D40 | (2026-10-04, Person A) 30 runs per (algorithm, instance) for bench_core (replaces D30's 10; D30's parallel rule stays). Time-budget convergence plots use wall time: `RunRecord.meta["curve_t"]` = (elapsed_s, best_F) at each improvement (additive, see MERGE_NOTES.md) | The time-only benchmark fits in ≈1 h on 11 workers |
 | D41 | (2026-10-04, Person A) Exact O(1)-delta LS kernels for static instances (`core/ls_static.py`); same move order and acceptance, so the same local optimum; time-dependent instances unchanged (full re-evaluation of the touched routes) | Profiling: ≈90% of LS time was full route re-evaluation (A-n69-k9 random tour: 233 ms median per memetic LS call, ≈57k route-cost calls). After D41: 1.8 ms (≈130×). A performance fix applied to all hybrids equally, not tuning. bench_core_v0 (stopped, partial) is superseded |
 | D42 | (2026-10-04, Person A) Granular neighbourhoods **not adopted** | Only required if the median LS call stayed > 20 ms on A-n69-k9 random tours after D41; it is 1.8 ms |
+| D43 | (2026-10-04, Person A) Time budget by size class: 30 s for n ≤ 80 (A-n32, A-n63, A-n80, CMT1), 60 s for n > 80 (CMT5, X-n101); stated on every table and figure. Time-budget runs longer than 1.10× budget are invalid and re-run | Equal time per size class; at n = 199, 30 s gives too few iterations for any swarm (QPSO-full: 44–55 iterations in 60 s on CMT5). Guard added after the laptop entered Modern Standby for ≈28 min during a smoke run (every run then reported ≈1,607 s) |
 | … | Add new decisions with date/time | |
 
 ---

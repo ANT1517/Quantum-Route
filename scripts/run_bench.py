@@ -71,6 +71,16 @@ def report(exp: dict, runs_dir: Path = RUNS, tables: Path = TABLES, figures: Pat
     return out
 
 
+def keep_awake(on: bool = True):
+    """Ask Windows not to sleep while a benchmark runs (a suspended run gets an unfair time budget).
+    ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED; closing the lid can still suspend the laptop."""
+    if sys.platform != "win32":
+        return
+    import ctypes
+    flags = 0x80000000 | (0x00000001 | 0x00000002 if on else 0)
+    ctypes.windll.kernel32.SetThreadExecutionState(flags)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--exp", required=True, help="experiment name in configs/experiments or a yaml path")
@@ -82,7 +92,11 @@ def main():
     if a.runs:
         exp["runs"] = a.runs
     if not a.report_only:
-        run_experiment(exp, workers=a.workers)
+        keep_awake(True)
+        try:
+            run_experiment(exp, workers=a.workers)
+        finally:
+            keep_awake(False)
     out = report(exp)
     pd.set_option("display.width", 200)
     print(pd.read_csv(out["summary"])[["budget_type", "budget", "instance", "algo", "runs", "D_mean", "gap_mean_pct",

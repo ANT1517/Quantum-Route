@@ -1,0 +1,11 @@
+budget_type,budget,instance,reference,other,runs,seeds,median_diff,statistic,p_value,significant,direction
+time,30,A-n80-k10,qpso,ga_ls,2,18345..18346,-29,0,0.5,False,ref better
+time,30,A-n80-k10,qpso,ortools,2,18345..18346,5,0,0.5,False,ref worse
+time,30,A-n80-k10,qpso,pso_ls,2,18345..18346,-2.5,1,1,False,ref better
+time,30,A-n80-k10,qpso,rr_ls,2,18345..18346,-46,0,0.5,False,ref better
+time,30,A-n80-k10,qpso,sa,2,18345..18346,-157,0,0.5,False,ref better
+time,60,CMT5,qpso,ga_ls,2,20345..20346,22.8275,0,0.5,False,ref worse
+time,60,CMT5,qpso,ortools,2,20345..20346,-41.5583,0,0.5,False,ref better
+time,60,CMT5,qpso,pso_ls,2,20345..20346,-5.09609,1,1,False,ref better
+time,60,CMT5,qpso,rr_ls,2,20345..20346,-29.3582,0,0.5,False,ref better
+time,60,CMT5,qpso,sa,2,20345..20346,-528.507,0,0.5,False,ref better

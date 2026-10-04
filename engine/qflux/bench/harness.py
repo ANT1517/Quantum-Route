@@ -39,6 +39,7 @@ INSTANCE_ORDER = ["P-n16-k8", "P-n19-k2", "P-n22-k8", "A-n32-k5", "A-n44-k6", "A
                   "CMT1", "CMT5", "X-n101-k25", "X-n200-k36", "X-n502-k39", "X-n1001-k43",
                   "A-n69-k9"]                          # appended (D35), so earlier seeds are unchanged
 CURVE_STEP = 100
+SUSPEND_FACTOR = 1.10        # a time-budget run longer than this x budget was suspended (sleep) or hit a clock jump
 META_KEYS = ("iterations", "moves", "partial", "ls_calls", "qubo_calls", "qubo_improvements", "qubo_skipped_time",
              "reinits", "solutions_found", "max_abs_key", "curve_t")
 THREAD_ENV = {"NUMBA_NUM_THREADS": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1",
@@ -224,9 +225,20 @@ def run_experiment(exp: dict, out_dir: Path | None = None, log=print, workers: i
     t_all = time.time()
     n_done = 0
 
+    invalid_path = out_dir / f"{exp['name']}.invalid.jsonl"
+
     def record(rd, ok, errs):
         nonlocal n_done
         n_done += 1
+        if rd["budget_type"] == "time" and rd["wall_s"] > SUSPEND_FACTOR * rd["budget"]:
+            # machine sleep / clock jump: the run did not get a fair budget. Not recorded as done, so a
+            # resume re-runs it; kept in <exp>.invalid.jsonl for the record.
+            with open(invalid_path, "a", encoding="utf-8") as f:
+                f.write(json.dumps({**rd, "invalid_reason": f"wall {rd['wall_s']:.1f} s > {SUSPEND_FACTOR} x budget"},
+                                   default=_jsonable) + "\n")
+            log(f"  [{n_done}/{len(jobs)}] {rd['instance']} {rd['algo']} seed={rd['seed']}: INVALID "
+                f"(wall {rd['wall_s']:.1f} s on a {rd['budget']:g} s budget; suspended?) -> will re-run on resume")
+            return
         if ok:
             with open(path, "a", encoding="utf-8") as f:
                 f.write(json.dumps(rd, default=_jsonable) + "\n")
