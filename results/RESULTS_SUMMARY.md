@@ -3,15 +3,34 @@
 All numbers come from `results/tables/`; every quotable number has an ID in `results/SLIDE_NUMBERS.md`.
 Gaps are % above the best-known solution. "Significant" means Holm–Bonferroni-corrected Wilcoxon p < 0.05 within that table.
 
-## What we can claim
+## Headline claims
+(bench_core_v1: 30 runs per algorithm and instance; 30 s for n <= 80, 60 s for CMT5 and X-n101; "significant" = Holm-corrected p < 0.05. IDs refer to `SLIDE_NUMBERS.md`.)
 
-1. **Among the metaheuristics we built, the default engine QPSO-noQUBO is the strongest or tied.** At equal wall-clock time (30 runs per instance), it is significantly better than GA+LS on 4 of 6 core instances, than SA on 6/6, than the random-restart control RR+LS on 5/6, and than QPSO-full on 3/6. It is never significantly worse than any of them, and it is not significantly different from PSO+LS on any instance. Friedman average rank at 30 s: QPSO-noQUBO 2.63, PSO+LS 3.00, QPSO-full 3.38, RR+LS 4.75, GA+LS 6.00, SA 6.75. *(bench_core_v1_wilcoxon_qpso_noqubo.csv, bench_core_v1_friedman.csv)*
-2. **Mean gaps of QPSO-noQUBO:** A-n32 0.00%, A-n63 2.07%, A-n80 4.45%, CMT1 0.005% (30 s); CMT5 10.90%, X-n101 2.66% (60 s). 0 infeasible solutions and 0 fleet-limit violations in 1,260 runs. *(bench_core_v1_summary.csv, bench_core_v1_meta.json)*
-3. **Local search is what makes swarm search work on CVRP.** In the ablation, memetic local search lowers the gap by 16.7 points on A-n63 and 16.4 on A-n80 (Holm p = 0.027 on both). No other QPSO component (rank mbest, Sobol, adaptive α, tunneling, QUBO slot, diversity re-init) has a significant effect. *(ablation_chain.csv)*
-4. **Heuristics reach proven optima fast on the small instances.** Within 10 s, QPSO-noQUBO hits the proven optimum in 10/10, 9/10 and 10/10 runs on P-n16, P-n19 and P-n22, with a median under 0.05 s. The exact MILP (CBC, 600 s) proves optimality only on P-n16 (209 s); on the other two it stops at the time limit with a ≈29% optimality gap (best found 9.4% and 0.5% above the optimum). *(p_vs_exact.csv, milp_p_instances.csv)*
-5. **It scales to 500 customers with stated budgets** (0.6 s per customer, capped at 300 s): QPSO 3.02% at n = 100 (60 s) and 3.85% at n = 199 (120 s); cluster-first QPSO 3.40% at n = 501 (300 s). *(scaling_summary.csv)*
-6. **The QUBO formulation is correct and ready for a sampler.** A classical annealer (neal) returned a feasible route order in 100% of cases and the optimal order in 50–80% of 20 CVRPLIB routes, depending on the penalty weight. *(qubo_validation.csv)*
-7. **Road-network demos run fast:** local search on Hyderabad-60 takes a median 3.0 ms per call instead of 128 ms (D46). *(d46_td_ls_speed.csv)*
+1. **QPSO-noQUBO significantly beats GA+LS, SA and random-restart+LS:**
+   - **GA+LS** on A-n32-k5, A-n63-k9, A-n80-k10 and CMT1 *(PN-<instance>-ga_ls)*;
+   - **SA** on all six core instances *(PN-<instance>-sa)*;
+   - **random-restart+LS** on A-n63-k9, A-n80-k10, CMT1, CMT5 and X-n101-k25 *(PN-<instance>-rr_ls)*.
+2. **Statistically level with PSO+LS.** There is no significant difference on any instance; the smallest Holm-corrected p is 0.141, on CMT1 *(PN-<instance>-pso_ls)*.
+3. **Google OR-Tools (industry reference, C++) is ahead** on A-n63-k9 (1.54% vs 2.07%), A-n80-k10 (1.93% vs 4.45%), CMT1 (0.000% vs 0.005%) and CMT5 (7.60% vs 10.90%). QPSO-noQUBO is ahead on X-n101-k25 (2.66% vs 5.45%). They are tied on A-n32-k5 (0.00% each) *(G-<instance>-ortools, G-<instance>-qpso_noqubo, PN-<instance>-ortools)*.
+4. **Reaches the proven optimum on the P instances** in 10/10 (P-n16-k8), 9/10 (P-n19-k2) and 10/10 (P-n22-k8) runs, with a median time to the optimum ≤ 0.05 s (0.009, 0.046 and 0.015 s). The MILP proves optimality only on P-n16-k8, in 209 s *(E-P-n16-k8-*, E-P-n19-k2-*, E-P-n22-k8-*)*.
+
+## Other measured results
+- **0 infeasible solutions and 0 fleet-limit violations** in the 1,260 bench_core_v1 runs *(H1, H2)*.
+- **Local search is what makes swarm search work on CVRP:** the memetic LS row of the ablation lowers the gap by 16.7 points on A-n63-k9 and 16.4 on A-n80-k10 (Holm p = 0.027 on both). No other QPSO component has a significant effect *(A-<instance>-a4_memetic_ls and the other A- rows)*.
+- **Scaling** (0.6 s per customer, capped at 300 s):
+  - n = 100 (60 s): QPSO 3.02%, OR-Tools 5.45%;
+  - n = 199 (120 s): QPSO 3.85%, OR-Tools 3.08%;
+  - n = 501 (300 s): cluster-first QPSO 3.40%, OR-Tools 1.43% *(S-…)*.
+- **QUBO formulation:** neal (a classical annealer) returns a feasible route order in 100% of cases and the optimal order on 50–80% of 20 CVRPLIB routes, depending on the penalty weight *(Q0–Q2)*.
+- **Road-network local search** on Hyderabad-60: median 128 → 3.0 ms per call (D46) *(D46)*.
+
+## Platform differentiators (not benchmarked against OR-Tools)
+These are features of the platform. They are not performance claims.
+- **System-optimal fleet routing:** the fleet's own traffic is fed into the BPR travel-time model, and routes are planned with marginal cost (it counts the delay imposed on all traffic), iterated with the method of successive averages. Naive, user-equilibrium and system-optimal modes can be compared side by side (`engine/qflux/traffic/fleet_eq.py`, `POST /api/fleet-compare`).
+- **Time-dependent multi-objective cost:** travel time, distance, congestion delay and CO₂, with weights and presets (Balanced / Fastest / Greenest / Least congestion). Travel times change with departure time across 7 time-of-day slots (`engine/qflux/core/split.py`, `engine/qflux/traffic/td_matrix.py`).
+- **Incident re-routing:** zone or edge incidents raise travel times on the affected roads. Affected vehicles are re-sequenced and re-routed, and the new plan is kept only if it is cheaper under the new traffic (`engine/qflux/dynamic/reroute.py`, `POST /api/scenarios/{id}/incidents`).
+- **QUBO module:** route ordering as a QUBO with interchangeable backends (neal simulated annealing, brute force, Held-Karp, 2-opt, D-Wave stub), exposed as an optional slot in QPSO and as `POST /api/quantum/solve-route` (`engine/qflux/quantum/`).
+- **Also included:** time-dependent shortest path (Dijkstra / A*) for the ambulance scenario (`engine/qflux/sp/`).
 
 ## What we can NOT claim
 

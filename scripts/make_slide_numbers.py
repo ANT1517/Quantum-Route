@@ -21,7 +21,11 @@ def add(id_, statement, value, source):
 
 
 def f(x, d=2):
-    return "n/a" if x is None or (isinstance(x, float) and pd.isna(x)) else f"{x:.{d}f}"
+    if x is None or (isinstance(x, float) and pd.isna(x)):
+        return "n/a"
+    if d == 2 and 0 < abs(x) < 0.1:              # small values (e.g. 0.005 %) keep 3 decimals
+        d = 3
+    return f"{x:.{d}f}"
 
 
 def main():
@@ -61,7 +65,7 @@ def main():
     if pe.exists():
         for r in pd.read_csv(pe).itertuples():
             add(f"E-{r.instance}-{r.method.split(' ')[0]}", f"{r.method} on {r.instance}: mean gap to proven optimum; runs at optimum",
-                f"{f(r.mean_gap_pct)} %; {r.reached_optimum}/{r.runs}; median time {f(r.median_time_to_optimum_s, 1)} s",
+                f"{f(r.mean_gap_pct)} %; {r.reached_optimum}/{r.runs}; median time to optimum {f(r.median_time_to_optimum_s, 3)} s",
                 f"results/tables/p_vs_exact.csv ({r.instance}, {r.method})")
     qv = pd.read_csv(T / "qubo_validation.csv")
     for k, r in enumerate(qv.itertuples()):

@@ -22,8 +22,8 @@ Every number used on a slide, in the README or in the pitch, with its source. Ge
 | G-A-n80-k10-ga_ls | Mean gap to BKS, ga_ls on A-n80-k10 (30 s, 30 runs) | 6.27 % (sd 2.16) | `results/tables/bench_core_v1_summary.csv (A-n80-k10, ga_ls)` |
 | G-A-n80-k10-sa | Mean gap to BKS, sa on A-n80-k10 (30 s, 30 runs) | 14.86 % (sd 2.78) | `results/tables/bench_core_v1_summary.csv (A-n80-k10, sa)` |
 | G-A-n80-k10-rr_ls | Mean gap to BKS, rr_ls on A-n80-k10 (30 s, 30 runs) | 6.80 % (sd 0.82) | `results/tables/bench_core_v1_summary.csv (A-n80-k10, rr_ls)` |
-| G-CMT1-qpso | Mean gap to BKS, qpso on CMT1 (30 s, 30 runs) | 0.01 % (sd 0.02) | `results/tables/bench_core_v1_summary.csv (CMT1, qpso)` |
-| G-CMT1-pso_ls | Mean gap to BKS, pso_ls on CMT1 (30 s, 30 runs) | 0.02 % (sd 0.02) | `results/tables/bench_core_v1_summary.csv (CMT1, pso_ls)` |
+| G-CMT1-qpso | Mean gap to BKS, qpso on CMT1 (30 s, 30 runs) | 0.005 % (sd 0.021) | `results/tables/bench_core_v1_summary.csv (CMT1, qpso)` |
+| G-CMT1-pso_ls | Mean gap to BKS, pso_ls on CMT1 (30 s, 30 runs) | 0.016 % (sd 0.024) | `results/tables/bench_core_v1_summary.csv (CMT1, pso_ls)` |
 | G-CMT1-ga_ls | Mean gap to BKS, ga_ls on CMT1 (30 s, 30 runs) | 3.78 % (sd 2.38) | `results/tables/bench_core_v1_summary.csv (CMT1, ga_ls)` |
 | G-CMT1-sa | Mean gap to BKS, sa on CMT1 (30 s, 30 runs) | 4.99 % (sd 2.20) | `results/tables/bench_core_v1_summary.csv (CMT1, sa)` |
 | G-CMT1-rr_ls | Mean gap to BKS, rr_ls on CMT1 (30 s, 30 runs) | 1.85 % (sd 0.92) | `results/tables/bench_core_v1_summary.csv (CMT1, rr_ls)` |
@@ -38,15 +38,15 @@ Every number used on a slide, in the README or in the pitch, with its source. Ge
 | G-X-n101-k25-rr_ls | Mean gap to BKS, rr_ls on X-n101-k25 (60 s, 30 runs) | 3.22 % (sd 0.47) | `results/tables/bench_core_v1_summary.csv (X-n101-k25, rr_ls)` |
 | G-X-n101-k25-sa | Mean gap to BKS, sa on X-n101-k25 (60 s, 30 runs) | 4.90 % (sd 1.06) | `results/tables/bench_core_v1_summary.csv (X-n101-k25, sa)` |
 | G-A-n32-k5-ortools | Mean gap to BKS, ortools on A-n32-k5 (30 s, 30 runs) | 0.00 % (sd 0.00) | `results/tables/bench_core_v1_summary.csv (A-n32-k5, ortools)` |
-| G-A-n63-k9-ortools | Mean gap to BKS, ortools on A-n63-k9 (30 s, 30 runs) | 1.54 % (sd 0.02) | `results/tables/bench_core_v1_summary.csv (A-n63-k9, ortools)` |
-| G-A-n80-k10-ortools | Mean gap to BKS, ortools on A-n80-k10 (30 s, 30 runs) | 1.93 % (sd 0.00) | `results/tables/bench_core_v1_summary.csv (A-n80-k10, ortools)` |
-| G-CMT1-ortools | Mean gap to BKS, ortools on CMT1 (30 s, 30 runs) | 0.00 % (sd 0.00) | `results/tables/bench_core_v1_summary.csv (CMT1, ortools)` |
-| G-CMT5-ortools | Mean gap to BKS, ortools on CMT5 (60 s, 30 runs) | 7.60 % (sd 0.00) | `results/tables/bench_core_v1_summary.csv (CMT5, ortools)` |
+| G-A-n63-k9-ortools | Mean gap to BKS, ortools on A-n63-k9 (30 s, 30 runs) | 1.54 % (sd 0.019) | `results/tables/bench_core_v1_summary.csv (A-n63-k9, ortools)` |
+| G-A-n80-k10-ortools | Mean gap to BKS, ortools on A-n80-k10 (30 s, 30 runs) | 1.93 % (sd 0.000) | `results/tables/bench_core_v1_summary.csv (A-n80-k10, ortools)` |
+| G-CMT1-ortools | Mean gap to BKS, ortools on CMT1 (30 s, 30 runs) | 0.000 % (sd 0.000) | `results/tables/bench_core_v1_summary.csv (CMT1, ortools)` |
+| G-CMT5-ortools | Mean gap to BKS, ortools on CMT5 (60 s, 30 runs) | 7.60 % (sd 0.000) | `results/tables/bench_core_v1_summary.csv (CMT5, ortools)` |
 | G-X-n101-k25-ortools | Mean gap to BKS, ortools on X-n101-k25 (60 s, 30 runs) | 5.45 % (sd 0.54) | `results/tables/bench_core_v1_summary.csv (X-n101-k25, ortools)` |
 | G-A-n32-k5-qpso_noqubo | Mean gap to BKS, qpso_noqubo on A-n32-k5 (30 s, 30 runs) | 0.00 % (sd 0.00) | `results/tables/bench_core_v1_summary.csv (A-n32-k5, qpso_noqubo)` |
 | G-A-n63-k9-qpso_noqubo | Mean gap to BKS, qpso_noqubo on A-n63-k9 (30 s, 30 runs) | 2.07 % (sd 0.81) | `results/tables/bench_core_v1_summary.csv (A-n63-k9, qpso_noqubo)` |
 | G-A-n80-k10-qpso_noqubo | Mean gap to BKS, qpso_noqubo on A-n80-k10 (30 s, 30 runs) | 4.45 % (sd 0.90) | `results/tables/bench_core_v1_summary.csv (A-n80-k10, qpso_noqubo)` |
-| G-CMT1-qpso_noqubo | Mean gap to BKS, qpso_noqubo on CMT1 (30 s, 30 runs) | 0.01 % (sd 0.02) | `results/tables/bench_core_v1_summary.csv (CMT1, qpso_noqubo)` |
+| G-CMT1-qpso_noqubo | Mean gap to BKS, qpso_noqubo on CMT1 (30 s, 30 runs) | 0.005 % (sd 0.021) | `results/tables/bench_core_v1_summary.csv (CMT1, qpso_noqubo)` |
 | G-CMT5-qpso_noqubo | Mean gap to BKS, qpso_noqubo on CMT5 (60 s, 30 runs) | 10.90 % (sd 1.46) | `results/tables/bench_core_v1_summary.csv (CMT5, qpso_noqubo)` |
 | G-X-n101-k25-qpso_noqubo | Mean gap to BKS, qpso_noqubo on X-n101-k25 (60 s, 30 runs) | 2.66 % (sd 0.35) | `results/tables/bench_core_v1_summary.csv (X-n101-k25, qpso_noqubo)` |
 | P-A-n32-k5-ga_ls | qpso vs ga_ls on A-n32-k5: Holm-corrected Wilcoxon p; median paired gap difference (qpso - ga_ls) | p_holm 0.000758; -1.531 gap points | `results/tables/bench_core_v1_wilcoxon.csv (A-n32-k5, ga_ls)` |
@@ -139,14 +139,14 @@ Every number used on a slide, in the README or in the pitch, with its source. Ge
 | A-A-n63-k9-a2_sobol | Ablation a2_sobol vs a1_rank_mbest on A-n63-k9 (30 s, 9 paired runs) | mean gap change -1.76 points; p_holm 1 | `results/tables/ablation_chain.csv (A-n63-k9, a2_sobol)` |
 | A-A-n63-k9-a3_adaptive_alpha | Ablation a3_adaptive_alpha vs a2_sobol on A-n63-k9 (30 s, 10 paired runs) | mean gap change 0.32 points; p_holm 1 | `results/tables/ablation_chain.csv (A-n63-k9, a3_adaptive_alpha)` |
 | A-A-n63-k9-a4_memetic_ls | Ablation a4_memetic_ls vs a3_adaptive_alpha on A-n63-k9 (30 s, 10 paired runs) | mean gap change -16.74 points; p_holm 0.0273 | `results/tables/ablation_chain.csv (A-n63-k9, a4_memetic_ls)` |
-| A-A-n63-k9-a5_tunneling | Ablation a5_tunneling vs a4_memetic_ls on A-n63-k9 (30 s, 10 paired runs) | mean gap change -0.03 points; p_holm 1 | `results/tables/ablation_chain.csv (A-n63-k9, a5_tunneling)` |
+| A-A-n63-k9-a5_tunneling | Ablation a5_tunneling vs a4_memetic_ls on A-n63-k9 (30 s, 10 paired runs) | mean gap change -0.031 points; p_holm 1 | `results/tables/ablation_chain.csv (A-n63-k9, a5_tunneling)` |
 | A-A-n63-k9-a6_qubo | Ablation a6_qubo vs a5_tunneling on A-n63-k9 (30 s, 10 paired runs) | mean gap change 0.62 points; p_holm 0.938 | `results/tables/ablation_chain.csv (A-n63-k9, a6_qubo)` |
-| A-A-n63-k9-a7_full | Ablation a7_full vs a6_qubo on A-n63-k9 (30 s, 10 paired runs) | mean gap change -0.07 points; p_holm 1 | `results/tables/ablation_chain.csv (A-n63-k9, a7_full)` |
+| A-A-n63-k9-a7_full | Ablation a7_full vs a6_qubo on A-n63-k9 (30 s, 10 paired runs) | mean gap change -0.068 points; p_holm 1 | `results/tables/ablation_chain.csv (A-n63-k9, a7_full)` |
 | A-A-n80-k10-a1_rank_mbest | Ablation a1_rank_mbest vs a0_base on A-n80-k10 (30 s, 10 paired runs) | mean gap change 1.07 points; p_holm 1 | `results/tables/ablation_chain.csv (A-n80-k10, a1_rank_mbest)` |
 | A-A-n80-k10-a2_sobol | Ablation a2_sobol vs a1_rank_mbest on A-n80-k10 (30 s, 10 paired runs) | mean gap change 1.96 points; p_holm 1 | `results/tables/ablation_chain.csv (A-n80-k10, a2_sobol)` |
 | A-A-n80-k10-a3_adaptive_alpha | Ablation a3_adaptive_alpha vs a2_sobol on A-n80-k10 (30 s, 10 paired runs) | mean gap change -1.73 points; p_holm 1 | `results/tables/ablation_chain.csv (A-n80-k10, a3_adaptive_alpha)` |
 | A-A-n80-k10-a4_memetic_ls | Ablation a4_memetic_ls vs a3_adaptive_alpha on A-n80-k10 (30 s, 10 paired runs) | mean gap change -16.39 points; p_holm 0.0273 | `results/tables/ablation_chain.csv (A-n80-k10, a4_memetic_ls)` |
-| A-A-n80-k10-a5_tunneling | Ablation a5_tunneling vs a4_memetic_ls on A-n80-k10 (30 s, 10 paired runs) | mean gap change -0.07 points; p_holm 1 | `results/tables/ablation_chain.csv (A-n80-k10, a5_tunneling)` |
+| A-A-n80-k10-a5_tunneling | Ablation a5_tunneling vs a4_memetic_ls on A-n80-k10 (30 s, 10 paired runs) | mean gap change -0.074 points; p_holm 1 | `results/tables/ablation_chain.csv (A-n80-k10, a5_tunneling)` |
 | A-A-n80-k10-a6_qubo | Ablation a6_qubo vs a5_tunneling on A-n80-k10 (30 s, 10 paired runs) | mean gap change 0.45 points; p_holm 1 | `results/tables/ablation_chain.csv (A-n80-k10, a6_qubo)` |
 | A-A-n80-k10-a7_full | Ablation a7_full vs a6_qubo on A-n80-k10 (30 s, 10 paired runs) | mean gap change 0.00 points; p_holm 1 | `results/tables/ablation_chain.csv (A-n80-k10, a7_full)` |
 | S-X-n200-k36-qpso | Scaling: qpso on X-n200-k36 (120 s, 10 runs) | mean gap 3.85 % | `results/tables/scaling_summary.csv (X-n200-k36, qpso)` |
@@ -155,26 +155,26 @@ Every number used on a slide, in the README or in the pitch, with its source. Ge
 | S-X-n502-k39-ortools | Scaling: ortools on X-n502-k39 (300 s, 10 runs) | mean gap 1.43 % | `results/tables/scaling_summary.csv (X-n502-k39, ortools)` |
 | S-X-n101-k25-qpso | Scaling: qpso on X-n101-k25 (60 s, 30 runs) | mean gap 3.02 % | `results/tables/scaling_summary.csv (X-n101-k25, qpso)` |
 | S-X-n101-k25-ortools | Scaling: ortools on X-n101-k25 (60 s, 30 runs) | mean gap 5.45 % | `results/tables/scaling_summary.csv (X-n101-k25, ortools)` |
-| E-P-n16-k8-MILP | MILP (CBC, 600 s) on P-n16-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 1/1; median time 209.0 s | `results/tables/p_vs_exact.csv (P-n16-k8, MILP (CBC, 600 s))` |
-| E-P-n16-k8-ortools | ortools on P-n16-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time 0.1 s | `results/tables/p_vs_exact.csv (P-n16-k8, ortools)` |
-| E-P-n16-k8-pso_ls | pso_ls on P-n16-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time 0.0 s | `results/tables/p_vs_exact.csv (P-n16-k8, pso_ls)` |
-| E-P-n16-k8-qpso_noqubo | qpso_noqubo on P-n16-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time 0.0 s | `results/tables/p_vs_exact.csv (P-n16-k8, qpso_noqubo)` |
-| E-P-n19-k2-MILP | MILP (CBC, 600 s) on P-n19-k2: mean gap to proven optimum; runs at optimum | 9.43 %; 0/1; median time n/a s | `results/tables/p_vs_exact.csv (P-n19-k2, MILP (CBC, 600 s))` |
-| E-P-n19-k2-ortools | ortools on P-n19-k2: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time 2.5 s | `results/tables/p_vs_exact.csv (P-n19-k2, ortools)` |
-| E-P-n19-k2-pso_ls | pso_ls on P-n19-k2: mean gap to proven optimum; runs at optimum | 4.34 %; 1/10; median time 0.0 s | `results/tables/p_vs_exact.csv (P-n19-k2, pso_ls)` |
-| E-P-n19-k2-qpso_noqubo | qpso_noqubo on P-n19-k2: mean gap to proven optimum; runs at optimum | 0.42 %; 9/10; median time 0.0 s | `results/tables/p_vs_exact.csv (P-n19-k2, qpso_noqubo)` |
-| E-P-n22-k8-MILP | MILP (CBC, 600 s) on P-n22-k8: mean gap to proven optimum; runs at optimum | 0.50 %; 0/1; median time n/a s | `results/tables/p_vs_exact.csv (P-n22-k8, MILP (CBC, 600 s))` |
-| E-P-n22-k8-ortools | ortools on P-n22-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time 0.7 s | `results/tables/p_vs_exact.csv (P-n22-k8, ortools)` |
-| E-P-n22-k8-pso_ls | pso_ls on P-n22-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time 0.0 s | `results/tables/p_vs_exact.csv (P-n22-k8, pso_ls)` |
-| E-P-n22-k8-qpso_noqubo | qpso_noqubo on P-n22-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time 0.0 s | `results/tables/p_vs_exact.csv (P-n22-k8, qpso_noqubo)` |
-| Q0 | QUBO slot (neal, 200 reads), CVRPLIB A (BKS routes), A=1.5 x max d: routes; optimal %; time per route neal / brute / 2-opt | 20; 80 %; 154 / 7.9 / 0.03 ms | `results/tables/qubo_validation.csv` |
-| Q1 | QUBO slot (neal, 200 reads), CVRPLIB A (BKS routes), A=3.0 x max d: routes; optimal %; time per route neal / brute / 2-opt | 20; 60 %; 146 / 7.9 / 0.03 ms | `results/tables/qubo_validation.csv` |
-| Q2 | QUBO slot (neal, 200 reads), CVRPLIB A (BKS routes), A=6.0 x max d: routes; optimal %; time per route neal / brute / 2-opt | 20; 50 %; 138 / 7.9 / 0.03 ms | `results/tables/qubo_validation.csv` |
-| Q3 | QUBO slot (neal, 200 reads), Hyderabad (QPSO-full routes, Hyderabad-60: demo scenario, K=6, Q=200), A=1.5 x max d: routes; optimal %; time per route neal / brute / 2-opt | 1; 100 %; 51 / 0.1 / 0.02 ms | `results/tables/qubo_validation.csv` |
-| Q4 | QUBO slot (neal, 200 reads), Hyderabad (QPSO-full routes, Hyderabad-60: demo scenario, K=6, Q=200), A=3.0 x max d: routes; optimal %; time per route neal / brute / 2-opt | 1; 100 %; 49 / 0.1 / 0.02 ms | `results/tables/qubo_validation.csv` |
-| Q5 | QUBO slot (neal, 200 reads), Hyderabad (QPSO-full routes, Hyderabad-60: demo scenario, K=6, Q=200), A=6.0 x max d: routes; optimal %; time per route neal / brute / 2-opt | 1; 100 %; 48 / 0.1 / 0.02 ms | `results/tables/qubo_validation.csv` |
-| Q6 | QUBO slot (neal, 200 reads), Hyderabad (QPSO-full routes, Hyderabad-60-K12: short-route variant, K=12, Q=100), A=1.5 x max d: routes; optimal %; time per route neal / brute / 2-opt | 11; 73 %; 117 / 3.5 / 0.03 ms | `results/tables/qubo_validation.csv` |
-| Q7 | QUBO slot (neal, 200 reads), Hyderabad (QPSO-full routes, Hyderabad-60-K12: short-route variant, K=12, Q=100), A=3.0 x max d: routes; optimal %; time per route neal / brute / 2-opt | 11; 64 %; 106 / 3.5 / 0.03 ms | `results/tables/qubo_validation.csv` |
-| Q8 | QUBO slot (neal, 200 reads), Hyderabad (QPSO-full routes, Hyderabad-60-K12: short-route variant, K=12, Q=100), A=6.0 x max d: routes; optimal %; time per route neal / brute / 2-opt | 11; 82 %; 102 / 3.5 / 0.03 ms | `results/tables/qubo_validation.csv` |
+| E-P-n16-k8-MILP | MILP (CBC, 600 s) on P-n16-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 1/1; median time to optimum 209.000 s | `results/tables/p_vs_exact.csv (P-n16-k8, MILP (CBC, 600 s))` |
+| E-P-n16-k8-ortools | ortools on P-n16-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time to optimum 0.090 s | `results/tables/p_vs_exact.csv (P-n16-k8, ortools)` |
+| E-P-n16-k8-pso_ls | pso_ls on P-n16-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time to optimum 0.007 s | `results/tables/p_vs_exact.csv (P-n16-k8, pso_ls)` |
+| E-P-n16-k8-qpso_noqubo | qpso_noqubo on P-n16-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time to optimum 0.009 s | `results/tables/p_vs_exact.csv (P-n16-k8, qpso_noqubo)` |
+| E-P-n19-k2-MILP | MILP (CBC, 600 s) on P-n19-k2: mean gap to proven optimum; runs at optimum | 9.43 %; 0/1; median time to optimum n/a s | `results/tables/p_vs_exact.csv (P-n19-k2, MILP (CBC, 600 s))` |
+| E-P-n19-k2-ortools | ortools on P-n19-k2: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time to optimum 2.512 s | `results/tables/p_vs_exact.csv (P-n19-k2, ortools)` |
+| E-P-n19-k2-pso_ls | pso_ls on P-n19-k2: mean gap to proven optimum; runs at optimum | 4.34 %; 1/10; median time to optimum 0.030 s | `results/tables/p_vs_exact.csv (P-n19-k2, pso_ls)` |
+| E-P-n19-k2-qpso_noqubo | qpso_noqubo on P-n19-k2: mean gap to proven optimum; runs at optimum | 0.42 %; 9/10; median time to optimum 0.046 s | `results/tables/p_vs_exact.csv (P-n19-k2, qpso_noqubo)` |
+| E-P-n22-k8-MILP | MILP (CBC, 600 s) on P-n22-k8: mean gap to proven optimum; runs at optimum | 0.50 %; 0/1; median time to optimum n/a s | `results/tables/p_vs_exact.csv (P-n22-k8, MILP (CBC, 600 s))` |
+| E-P-n22-k8-ortools | ortools on P-n22-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time to optimum 0.708 s | `results/tables/p_vs_exact.csv (P-n22-k8, ortools)` |
+| E-P-n22-k8-pso_ls | pso_ls on P-n22-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time to optimum 0.018 s | `results/tables/p_vs_exact.csv (P-n22-k8, pso_ls)` |
+| E-P-n22-k8-qpso_noqubo | qpso_noqubo on P-n22-k8: mean gap to proven optimum; runs at optimum | 0.00 %; 10/10; median time to optimum 0.015 s | `results/tables/p_vs_exact.csv (P-n22-k8, qpso_noqubo)` |
+| Q0 | QUBO slot (neal, 200 reads), CVRPLIB A (BKS routes), A=1.5 x max d: routes; optimal %; time per route neal / brute / 2-opt | 20; 80 %; 154 / 7.9 / 0.027 ms | `results/tables/qubo_validation.csv` |
+| Q1 | QUBO slot (neal, 200 reads), CVRPLIB A (BKS routes), A=3.0 x max d: routes; optimal %; time per route neal / brute / 2-opt | 20; 60 %; 146 / 7.9 / 0.027 ms | `results/tables/qubo_validation.csv` |
+| Q2 | QUBO slot (neal, 200 reads), CVRPLIB A (BKS routes), A=6.0 x max d: routes; optimal %; time per route neal / brute / 2-opt | 20; 50 %; 138 / 7.9 / 0.027 ms | `results/tables/qubo_validation.csv` |
+| Q3 | QUBO slot (neal, 200 reads), Hyderabad (QPSO-full routes, Hyderabad-60: demo scenario, K=6, Q=200), A=1.5 x max d: routes; optimal %; time per route neal / brute / 2-opt | 1; 100 %; 51 / 0.1 / 0.022 ms | `results/tables/qubo_validation.csv` |
+| Q4 | QUBO slot (neal, 200 reads), Hyderabad (QPSO-full routes, Hyderabad-60: demo scenario, K=6, Q=200), A=3.0 x max d: routes; optimal %; time per route neal / brute / 2-opt | 1; 100 %; 49 / 0.1 / 0.022 ms | `results/tables/qubo_validation.csv` |
+| Q5 | QUBO slot (neal, 200 reads), Hyderabad (QPSO-full routes, Hyderabad-60: demo scenario, K=6, Q=200), A=6.0 x max d: routes; optimal %; time per route neal / brute / 2-opt | 1; 100 %; 48 / 0.1 / 0.022 ms | `results/tables/qubo_validation.csv` |
+| Q6 | QUBO slot (neal, 200 reads), Hyderabad (QPSO-full routes, Hyderabad-60-K12: short-route variant, K=12, Q=100), A=1.5 x max d: routes; optimal %; time per route neal / brute / 2-opt | 11; 73 %; 117 / 3.5 / 0.030 ms | `results/tables/qubo_validation.csv` |
+| Q7 | QUBO slot (neal, 200 reads), Hyderabad (QPSO-full routes, Hyderabad-60-K12: short-route variant, K=12, Q=100), A=3.0 x max d: routes; optimal %; time per route neal / brute / 2-opt | 11; 64 %; 106 / 3.5 / 0.030 ms | `results/tables/qubo_validation.csv` |
+| Q8 | QUBO slot (neal, 200 reads), Hyderabad (QPSO-full routes, Hyderabad-60-K12: short-route variant, K=12, Q=100), A=6.0 x max d: routes; optimal %; time per route neal / brute / 2-opt | 11; 82 %; 102 / 3.5 / 0.030 ms | `results/tables/qubo_validation.csv` |
 | D46 | Hyderabad-60 LS call, generic vs proxy (median ms); TD cost ratio proxy/generic | 127.8 -> 3.0 ms; ratio 1.0022 | `results/tables/d46_td_ls_speed.csv` |
 | D51 | Timed runs flagged by the final memory/throughput audit | 0 | `results/tables/d51_audit_final_summary.csv` |

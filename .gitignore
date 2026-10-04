@@ -11,3 +11,5 @@ data/synth/*.npz
 *.db
 .env
 cache/
+results/run_info/runner.lock
+results/run_info/runner_status.json
