@@ -10,7 +10,7 @@ Source = Literal["hyderabad", "synth", "cvrplib"]
 FleetMode = Literal["naive", "user_eq", "system_opt"]
 # result labels are accepted too (re-optimize re-sends the previous result's algorithm label)
 JobAlgorithm = Literal["qpso", "pso", "ga", "sa", "ortools", "milp", "qpso_noqubo_tuned", "qpso_noqubo",
-                       "qpso_noqubo_linear", "qpso_full"]
+                       "qpso_noqubo_linear", "qpso_full", "qpso_tuned_qubo", "qpso_linear_qubo"]
 
 
 class Strict(BaseModel):

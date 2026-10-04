@@ -56,6 +56,8 @@ export default function RunOptimizer() {
   // Default = the shipped engine QPSO-noQUBO (tuned): fixed alpha 0.3, chosen on CVRPLIB tuning instances (D54/D59).
   // A linear alpha schedule is sent only when the user asks for it.
   const [customAlpha, setCustomAlpha] = useState(false);
+  // D60: optional QUBO sub-route slot (classical sampler); off by default
+  const [quboSlot, setQuboSlot] = useState(false);
   const [seed, setSeed] = useState(7);
   const [fleetMode, setFleetMode] = useState<FleetMode>("naive");
   const [jobId, setJobId] = useState<string | null>(null);
@@ -81,6 +83,7 @@ export default function RunOptimizer() {
     setStarting(true);
     try {
       const p: Record<string, unknown> = { N, iterations: iters };
+      if (algorithm === "qpso" && quboSlot) p.qubo_slot = true;
       if (algorithm === "qpso" && customAlpha) {
         p.alpha_start = alphaStart;
         p.alpha_end = alphaEnd;
@@ -197,6 +200,14 @@ export default function RunOptimizer() {
                 Custom α schedule (linear)
               </label>
               {!customAlpha && <div className="mt-1">α = 0.3 fixed — QPSO-noQUBO (tuned), tuned on CVRPLIB tuning instances only.</div>}
+              <label
+                className="mt-2 flex items-center gap-2"
+                title="Validated quantum-ready module; on classical hardware it is slower than 2-opt — see Quantum Lab."
+              >
+                <input type="checkbox" checked={quboSlot} onChange={(e) => setQuboSlot(e.target.checked)} />
+                Quantum QUBO slot (classical sampler; slower)
+                <span className="cursor-help text-slate-400" aria-label="Validated quantum-ready module; on classical hardware it is slower than 2-opt — see Quantum Lab.">ⓘ</span>
+              </label>
             </div>
           )}
           {algorithm === "qpso" && customAlpha && (

@@ -8,6 +8,8 @@ export const ALGO_LABELS: Record<string, string> = {
   qpso_noqubo: "QPSO-noQUBO (adaptive α)",
   qpso_full: "QPSO-full (QUBO slot on)",
   qpso_noqubo_linear: "QPSO-noQUBO (custom α schedule)",
+  qpso_tuned_qubo: "QPSO-noQUBO (tuned) + QUBO slot",
+  qpso_linear_qubo: "QPSO (custom α schedule) + QUBO slot",
   pso: "PSO",
   pso_ls: "PSO+LS",
   pso_tuned: "PSO+LS (tuned)",

@@ -19,7 +19,7 @@
   "vehicles_used": 6,
   "fleet_limit": 6,
   "fitness": 0.825553,
-  "runtime_s": 9.363,
+  "runtime_s": 11.225,
   "evals": 12000,
   "feasible": true
  },

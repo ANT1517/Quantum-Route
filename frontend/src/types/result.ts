@@ -40,4 +40,6 @@ export interface ShortestPathResponse {
   cost: number;
   runtime_s: number;
   gap_pct?: number;
+  path_times_min?: number[];               // minutes after departure at each path point (D60, additive)
+  halfway_by_time?: [number, number];      // path point at ~50% of the travel time (D60, additive)
 }

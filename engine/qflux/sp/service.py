@@ -38,5 +38,16 @@ def shortest_path_request(net: RoadNet, req: dict, clock: EdgeClock | None = Non
     if not res["found"]:
         raise NoPath(f"no path from {src} to {dst}")
     geom = net.node_xy[res["nodes"]].round(6).tolist()
+    times = res.get("times") or []
     return dict(path_geometry=geom, eta_min=round(res["eta_min"], 3), cost=round(res["eta_min"], 3),
-                runtime_s=round(runtime, 4))
+                runtime_s=round(runtime, 4), path_times_min=[round(x, 3) for x in times],
+                halfway_by_time=halfway_by_time(geom, times))
+
+
+def halfway_by_time(geom: list, times: list) -> list | None:
+    """The path point reached at ~50% of the travel time (where an "incident on the way" is placed)."""
+    if not geom or not times or len(times) != len(geom):
+        return geom[len(geom) // 2] if geom else None
+    half = times[-1] / 2.0
+    k = next((i for i, t in enumerate(times) if t >= half), len(geom) - 1)
+    return geom[k]

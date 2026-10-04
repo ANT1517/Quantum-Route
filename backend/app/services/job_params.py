@@ -19,7 +19,8 @@ def engine_job(body, warm_perm: list[int] | None) -> dict:
     p = body.params.model_dump(exclude_none=True)
     # result labels -> engine settings (integration fix: re-optimize sends the previous result's label)
     alias = {"qpso_noqubo_tuned": {}, "qpso_noqubo": {"alpha_mode": "adaptive"}, "qpso_full": {"qubo_slot": True},
-             "qpso_noqubo_linear": {}}            # re-optimize of a custom-alpha run falls back to the shipped engine
+             "qpso_tuned_qubo": {"qubo_slot": True}, "qpso_linear_qubo": {"qubo_slot": True},
+             "qpso_noqubo_linear": {}}            # re-optimize of a custom-alpha run falls back to the tuned alpha
     if body.algorithm in alias:
         extra = alias[body.algorithm]
         body = body.model_copy(update={"algorithm": "qpso"})
@@ -32,10 +33,10 @@ def engine_job(body, warm_perm: list[int] | None) -> dict:
     N = p.get("N")
     qubo = bool(p.pop("qubo_slot", False) or False)
     if body.algorithm == "qpso":
-        # D59: default engine = QPSO-noQUBO (tuned): QUBO slot off, fixed alpha 0.3 (D54). qubo_slot=true -> QPSO-full
-        # (its own defaults); alpha_start/alpha_end from the UI override alpha with a linear schedule.
+        # D59: default engine = QPSO-noQUBO (tuned): QUBO slot off, fixed alpha 0.3 (D54). qubo_slot=true (D60) keeps
+        # the tuned alpha and only switches the QUBO slot on; alpha_start/alpha_end override alpha (linear schedule).
         p["qubo_slot"] = {"enabled": qubo}
-        if not qubo and a0 is None and a1 is None and p.get("alpha_mode") != "adaptive":
+        if a0 is None and a1 is None and p.get("alpha_mode") != "adaptive":
             from qflux.algos.registry import TUNED_NOQUBO
             p.update(alpha_mode=TUNED_NOQUBO["alpha_mode"], alpha_fixed=TUNED_NOQUBO["alpha_fixed"])
     if body.algorithm == "qpso" and (a0 is not None or a1 is not None):
@@ -59,8 +60,13 @@ def engine_job(body, warm_perm: list[int] | None) -> dict:
     w = body.weights.model_dump(exclude_none=True)
     return {"algorithm": body.algorithm, "weights": w, "params": p, "seed": body.seed, "budget": budget,
             "timeout_bound": timeout_bound,
-            "label": (("qpso_full" if qubo else ("qpso_noqubo_linear" if (a0 is not None or a1 is not None)
-                                                else "qpso_noqubo" if p.get("alpha_mode") == "adaptive"
-                                                else "qpso_noqubo_tuned"))
+            "label": (_qpso_label(qubo, a0 is not None or a1 is not None, p.get("alpha_mode") == "adaptive")
                       if body.algorithm == "qpso" else body.algorithm),
             "fleet_mode": body.fleet_mode, "warm_start": {"perm": warm_perm} if warm_perm else None}
+
+
+def _qpso_label(qubo: bool, custom_alpha: bool, adaptive: bool) -> str:
+    """Result labels (D59/D60): one name per configuration, so labels are never mixed."""
+    if qubo:
+        return "qpso_linear_qubo" if custom_alpha else "qpso_full" if adaptive else "qpso_tuned_qubo"
+    return "qpso_noqubo_linear" if custom_alpha else "qpso_noqubo" if adaptive else "qpso_noqubo_tuned"

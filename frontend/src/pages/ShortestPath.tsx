@@ -78,10 +78,12 @@ export default function ShortestPath() {
         if (demo) {
           incident = spDemo.data?.incident ?? null;
         } else {
-          // Zone on the midpoint of source–target during the trip window (persisted on the scenario by the backend).
+          // Zone on the computed fastest road path, at the point reached after ~50% of the travel time (D60),
+          // active during the trip window; persisted on the scenario by the backend.
+          const onPath = before.halfway_by_time ?? [(src[0] + dst[0]) / 2, (src[1] + dst[1]) / 2];
           incident = {
             type: "zone",
-            center: [(src[0] + dst[0]) / 2, (src[1] + dst[1]) / 2],
+            center: [onPath[0], onPath[1]],
             radius_m: 1000,
             factor: 3,
             start_min: hhmmToMin(depart),
@@ -148,7 +150,7 @@ export default function ShortestPath() {
           Incident on the way (recompute path + ETA)
         </label>
         {withIncident && !demo && (
-          <div className="text-xs text-amber-700">Adds a 1 km zone (×3) at the source–target midpoint to this scenario on the backend.</div>
+          <div className="text-xs text-amber-700">Adds a 1 km zone (×3) on the computed path, at ~50% of its travel time, to this scenario on the backend.</div>
         )}
         <button className="btn-primary w-full justify-center" disabled={busy || !src || !dst} onClick={compute}>
           {busy ? "Computing…" : "Compute path"}

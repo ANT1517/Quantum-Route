@@ -11241,7 +11241,7 @@
    "vehicles_used": 6,
    "fleet_limit": 6,
    "fitness": 0.846027,
-   "runtime_s": 0.632,
+   "runtime_s": 0.938,
    "evals": 0,
    "feasible": true
   },
@@ -22456,7 +22456,7 @@
    }
   ],
   "explanation": [
-   "Re-routing after the simulated incident (road-level detours) saves 6.3 min of driving versus vehicles keeping their old road paths (0.6 s to re-plan).",
+   "Re-routing after the simulated incident (road-level detours) saves 6.3 min of driving versus vehicles keeping their old road paths (0.9 s to re-plan).",
    "3 vehicle(s) had a remaining road path through the incident zone.",
    "Plan departs at 17:30 and uses 6 of 6 vehicles: 490 min total driving, 219.4 km, 56.4 kg CO2.",
    "Congestion accounts for 122 min (25%) of driving time (simulated traffic).",
@@ -22488,7 +22488,7 @@
   "delay_avoided_min": 6.326,
   "F_no_reroute": 0.860139,
   "F_final": 0.846027,
-  "reopt_time_s": 0.632,
+  "reopt_time_s": 0.938,
   "eta_change": [
    {
     "vehicle": 1,
@@ -22534,7 +22534,7 @@
    }
   ],
   "sentences": [
-   "Re-routing after the simulated incident (road-level detours) saves 6.3 min of driving versus vehicles keeping their old road paths (0.6 s to re-plan).",
+   "Re-routing after the simulated incident (road-level detours) saves 6.3 min of driving versus vehicles keeping their old road paths (0.9 s to re-plan).",
    "3 vehicle(s) had a remaining road path through the incident zone."
   ]
  },
@@ -23071,358 +23071,13 @@
     },
     {
      "iter": 105,
-     "evals": 4353,
+     "evals": 4323,
      "best_F": 0.8302239448926049
     },
     {
      "iter": 106,
-     "evals": 4393,
+     "evals": 4323,
      "best_F": 0.8302239448926049
-    },
-    {
-     "iter": 107,
-     "evals": 4433,
-     "best_F": 0.8302239448926049
-    },
-    {
-     "iter": 108,
-     "evals": 4473,
-     "best_F": 0.8302239448926049
-    },
-    {
-     "iter": 109,
-     "evals": 4513,
-     "best_F": 0.8302239448926049
-    },
-    {
-     "iter": 110,
-     "evals": 4553,
-     "best_F": 0.8302239448926049
-    },
-    {
-     "iter": 111,
-     "evals": 4593,
-     "best_F": 0.8302239448926049
-    },
-    {
-     "iter": 112,
-     "evals": 4633,
-     "best_F": 0.8302239448926049
-    },
-    {
-     "iter": 113,
-     "evals": 4673,
-     "best_F": 0.8302239448926049
-    },
-    {
-     "iter": 114,
-     "evals": 4713,
-     "best_F": 0.8302239448926049
-    },
-    {
-     "iter": 115,
-     "evals": 4753,
-     "best_F": 0.8302239448926049
-    },
-    {
-     "iter": 116,
-     "evals": 4793,
-     "best_F": 0.8302239448926049
-    },
-    {
-     "iter": 117,
-     "evals": 4833,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 118,
-     "evals": 4873,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 119,
-     "evals": 4913,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 120,
-     "evals": 4953,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 121,
-     "evals": 4993,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 122,
-     "evals": 5033,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 123,
-     "evals": 5073,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 124,
-     "evals": 5113,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 125,
-     "evals": 5153,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 126,
-     "evals": 5193,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 127,
-     "evals": 5233,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 128,
-     "evals": 5273,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 129,
-     "evals": 5313,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 130,
-     "evals": 5353,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 131,
-     "evals": 5393,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 132,
-     "evals": 5463,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 133,
-     "evals": 5503,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 134,
-     "evals": 5543,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 135,
-     "evals": 5583,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 136,
-     "evals": 5623,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 137,
-     "evals": 5663,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 138,
-     "evals": 5703,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 139,
-     "evals": 5743,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 140,
-     "evals": 5783,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 141,
-     "evals": 5823,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 142,
-     "evals": 5863,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 143,
-     "evals": 5903,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 144,
-     "evals": 5943,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 145,
-     "evals": 5983,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 146,
-     "evals": 6023,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 147,
-     "evals": 6066,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 148,
-     "evals": 6106,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 149,
-     "evals": 6146,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 150,
-     "evals": 6186,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 151,
-     "evals": 6226,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 152,
-     "evals": 6266,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 153,
-     "evals": 6306,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 154,
-     "evals": 6346,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 155,
-     "evals": 6386,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 156,
-     "evals": 6426,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 157,
-     "evals": 6466,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 158,
-     "evals": 6506,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 159,
-     "evals": 6546,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 160,
-     "evals": 6586,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 161,
-     "evals": 6626,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 162,
-     "evals": 6677,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 163,
-     "evals": 6717,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 164,
-     "evals": 6757,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 165,
-     "evals": 6797,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 166,
-     "evals": 6837,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 167,
-     "evals": 6877,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 168,
-     "evals": 6917,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 169,
-     "evals": 6957,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 170,
-     "evals": 6997,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 171,
-     "evals": 7037,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 172,
-     "evals": 7077,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 173,
-     "evals": 7117,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 174,
-     "evals": 7124,
-     "best_F": 0.8301656802471954
-    },
-    {
-     "iter": 175,
-     "evals": 7124,
-     "best_F": 0.8301656802471954
     }
    ]
   },
@@ -23667,107 +23322,7 @@
     },
     {
      "iter": 47,
-     "evals": 2018,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 48,
-     "evals": 2058,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 49,
-     "evals": 2098,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 50,
-     "evals": 2138,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 51,
-     "evals": 2178,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 52,
-     "evals": 2218,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 53,
-     "evals": 2258,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 54,
-     "evals": 2298,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 55,
-     "evals": 2338,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 56,
-     "evals": 2378,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 57,
-     "evals": 2418,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 58,
-     "evals": 2458,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 59,
-     "evals": 2498,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 60,
-     "evals": 2568,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 61,
-     "evals": 2608,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 62,
-     "evals": 2648,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 63,
-     "evals": 2688,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 64,
-     "evals": 2728,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 65,
-     "evals": 2768,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 66,
-     "evals": 2808,
-     "best_F": 0.846026679624774
-    },
-    {
-     "iter": 67,
-     "evals": 2808,
+     "evals": 1978,
      "best_F": 0.846026679624774
     }
    ]

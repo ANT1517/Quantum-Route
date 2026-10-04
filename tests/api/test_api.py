@@ -203,15 +203,16 @@ def test_d53_default_engine_is_qpso_noqubo():
     assert j["params"]["qubo_slot"] == {"enabled": False} and j["label"] == "qpso_noqubo_tuned"
     assert j["params"]["alpha_mode"] == "fixed" and j["params"]["alpha_fixed"] == 0.3     # D59
     body = JobCreate(scenario_id="x", algorithm="qpso", weights=W, params={"qubo_slot": True})
-    j = engine_job(body, None)
-    assert j["params"]["qubo_slot"] == {"enabled": True} and j["label"] == "qpso_full"
+    j = engine_job(body, None)                      # D60: tuned engine + QUBO slot, tuned alpha kept
+    assert j["params"]["qubo_slot"] == {"enabled": True} and j["label"] == "qpso_tuned_qubo"
+    assert j["params"]["alpha_mode"] == "fixed" and j["params"]["alpha_fixed"] == 0.3
 
 
 def test_reoptimize_with_result_label_is_accepted():
     """Integration fix: Results' re-optimize re-sends the previous result's algorithm label."""
     from backend.app.schemas import JobCreate
     from backend.app.services.job_params import engine_job
-    for label, want in (("qpso_noqubo_tuned", "qpso_noqubo_tuned"), ("qpso_full", "qpso_full"),
-                        ("qpso_noqubo", "qpso_noqubo")):
+    for label, want in (("qpso_noqubo_tuned", "qpso_noqubo_tuned"), ("qpso_full", "qpso_tuned_qubo"),
+                        ("qpso_noqubo", "qpso_noqubo"), ("qpso_tuned_qubo", "qpso_tuned_qubo")):
         j = engine_job(JobCreate(scenario_id="x", algorithm=label, weights=W), None)
         assert j["algorithm"] == "qpso" and j["label"] == want

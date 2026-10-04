@@ -3,7 +3,7 @@ import type { FleetMode, FleetResult, ResultJSON, ShortestPathResponse } from ".
 
 export type ScenarioSource = "hyderabad" | "synth" | "cvrplib";
 export type Algorithm = "qpso" | "pso" | "ga" | "sa" | "ortools" | "milp" | "qpso_noqubo_tuned" | "qpso_noqubo"
-  | "qpso_noqubo_linear" | "qpso_full";
+  | "qpso_noqubo_linear" | "qpso_full" | "qpso_tuned_qubo" | "qpso_linear_qubo";
 export type JobStatus =
   | "QUEUED"
   | "RUNNING"

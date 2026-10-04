@@ -93,11 +93,13 @@ def td_shortest_path(net: RoadNet, clock: EdgeClock, src: int, dst: int, t0: flo
     nodes = [src] + [int(net.ev[e]) for e in edges]
     # distance / CO2 along the path at the times each edge is entered
     t, co2 = t0, 0.0
+    times = [0.0]                                   # minutes after departure at each node of the path
     for e in edges:
         dt = float(clock(np.array([e]), t)[0])
         co2 += float(edge_co2_kg(net.length_km[e], dt))
         t += dt
-    return dict(found=True, nodes=nodes, edges=edges, eta_min=best[dst] - t0, settled=settled,
+        times.append(t - t0)
+    return dict(found=True, nodes=nodes, edges=edges, eta_min=best[dst] - t0, settled=settled, times=times,
                 distance_km=float(net.length_km[edges].sum()), co2_kg=co2)
 
 
