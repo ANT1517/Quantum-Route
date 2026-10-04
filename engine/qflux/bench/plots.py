@@ -1,0 +1,71 @@
+"""Benchmark figures (§11.7): convergence (median + IQR of best F vs evaluations) and box plots of the gap.
+
+Titles state runs, budget and seeds, so a figure is never shown without its provenance.
+"""
+from pathlib import Path
+
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+from .stats import _seed_range  # noqa: E402
+
+
+def _on_grid(curve, grid):
+    e = np.array([c[0] for c in curve], float)
+    f = np.array([c[1] for c in curve], float)
+    idx = np.searchsorted(e, grid, side="right") - 1
+    out = np.where(idx >= 0, f[np.clip(idx, 0, None)], np.nan)
+    return out
+
+
+def convergence(df: pd.DataFrame, instance: str, budget: float, path: Path, exp: str = "") -> Path:
+    g = df[(df.instance == instance) & (df.budget_type == "evals") & (df.budget == budget)]
+    grid = np.arange(100, int(budget) + 1, 100)
+    fig, ax = plt.subplots(figsize=(6.4, 4.2))
+    for algo, ga in g.groupby("algo", sort=False):
+        Y = np.vstack([_on_grid(c, grid) for c in ga["curve"]])
+        med = np.nanmedian(Y, axis=0)
+        q1, q3 = np.nanpercentile(Y, 25, axis=0), np.nanpercentile(Y, 75, axis=0)
+        ax.plot(grid, med, label=algo, lw=1.6)
+        ax.fill_between(grid, q1, q3, alpha=0.2)
+    runs = int(g.groupby("algo").size().min())
+    ax.set_xlabel("evaluations")
+    ax.set_ylabel("best F (distance / nearest-neighbour distance)")
+    ax.set_title(f"{instance}: median + IQR, {runs} runs, {int(budget)} evals, seeds {_seed_range(g.seed.unique())}",
+                 fontsize=9)
+    ax.grid(alpha=0.3)
+    ax.legend(fontsize=8)
+    fig.tight_layout()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+    return path
+
+
+def gap_boxplot(df: pd.DataFrame, budget_type: str, budget: float, path: Path) -> Path | None:
+    g = df[(df.budget_type == budget_type) & (df.budget == budget) & df.gap_pct.notna()]
+    if g.empty:
+        return None
+    insts = list(dict.fromkeys(g.instance))
+    algos = list(dict.fromkeys(g.algo))
+    fig, axes = plt.subplots(1, len(insts), figsize=(3.2 * len(insts), 4.0), squeeze=False)
+    for ax, inst in zip(axes[0], insts):
+        gi = g[g.instance == inst]
+        data = [gi[gi.algo == a].gap_pct.astype(float).to_numpy() for a in algos]
+        ax.boxplot(data, tick_labels=algos)
+        ax.set_title(inst, fontsize=9)
+        ax.tick_params(axis="x", rotation=45, labelsize=8)
+        ax.grid(alpha=0.3, axis="y")
+    axes[0][0].set_ylabel("gap to BKS (%)")
+    unit = "evals" if budget_type == "evals" else "s"
+    runs = int(g.groupby(["instance", "algo"]).size().min())
+    fig.suptitle(f"Final gap, {runs} runs, budget {budget:g} {unit}, seeds {_seed_range(g.seed.unique())}", fontsize=9)
+    fig.tight_layout()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+    return path

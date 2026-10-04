@@ -1,0 +1,12 @@
+# Phase 2 acceptance (§9): 2 instances x 3 algorithms x 3 seeds -> CSV table + convergence PNG.
+# Pipeline check and timing estimate only. NOT a benchmark: never quote these numbers.
+name: smoke
+description: "Harness smoke test (not a benchmark)"
+instances: [A-n32-k5, CMT1]          # CMT1 exercises the exact-Euclidean distance convention
+runs: 3
+weights: [0.0, 1.0, 0.0, 0.0]        # CVRPLIB: distance only, K unlimited (§3.4)
+reference: qpso
+budgets:
+  - {type: evals, value: 12000, algorithms: [qpso, pso, ga]}
+  - {type: time, value: 5, algorithms: [qpso, pso, ga, ortools]}   # short time budget just to exercise the mode
+params: {}                           # per-algorithm overrides, e.g. {qpso: {N: 40}}

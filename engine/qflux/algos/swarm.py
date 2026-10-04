@@ -19,6 +19,7 @@ class KeySwarm:
 
     def __init__(self, **params):
         self.p = {**self.defaults, **params}
+        self._progress = None        # fraction of the budget used (evals or time), set each iteration
 
     # ---- hooks -----------------------------------------------------------------------------------
     def setup(self, n: int, rng):
@@ -82,6 +83,7 @@ class KeySwarm:
                 partial = True
                 break
             G = st.P[int(np.argmin(st.fP))]
+            self._progress = st.progress()
             st.X = self.update(st.X, st.P, st.fP, st.fX, G, t, T_est, rng)
             for i in range(N):
                 if st.over_budget():
@@ -138,6 +140,15 @@ class State:
         if self.budget_evals is not None and self.ev.evals >= self.budget_evals:
             return True
         return self.budget_s is not None and time.time() - self.t0 >= self.budget_s
+
+    def progress(self) -> float | None:
+        """Fraction of the budget used, so schedules follow time budgets as well as evaluation budgets."""
+        fr = []
+        if self.budget_evals:
+            fr.append(self.ev.evals / self.budget_evals)
+        if self.budget_s:
+            fr.append((time.time() - self.t0) / self.budget_s)
+        return min(max(fr), 1.0) if fr else None
 
     def eval_keys(self, x) -> float:
         perm = spv_decode(x)

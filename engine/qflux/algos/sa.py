@@ -51,8 +51,17 @@ class SA:
         mean_d = np.mean(deltas) if deltas else 1e-3
         T = -mean_d / np.log(float(p["initial_accept"]))
         T_end = T * 1e-3
-        n_moves = max(1, budget - ev.evals) if budget_evals else 100000
-        alpha = (T_end / T) ** (1.0 / n_moves)
+        T_start, e_start = T, ev.evals
+        n_moves = max(1, budget - ev.evals) if budget_evals else None
+
+        def progress():
+            # cooling follows the fraction of the budget used (evaluations or wall time)
+            fr = []
+            if n_moves:
+                fr.append((ev.evals - e_start) / n_moves)
+            if budget_s:
+                fr.append((time.time() - t0) / budget_s)
+            return min(max(fr), 1.0) if fr else min(k / 100000, 1.0)
         curve, k, partial = [], 0, False
         ls_every = int(p.get("ls_every") or 0) * int(p["N"])     # "every 10 iterations" = every 400 moves
         while not over():
@@ -65,7 +74,7 @@ class SA:
                 cur, fc = cand, f
                 if f < fb:
                     best, fb = cand.copy(), f
-            T *= alpha
+            T = T_start * (T_end / T_start) ** progress()
             k += 1
             if ls_every and k % ls_every == 0 and not over():
                 routes = improve_routes(ev.decode_routes(best), ev)

@@ -59,7 +59,7 @@ class QPSO(KeySwarm):
         if p["alpha_mode"] == "adaptive":
             fmin, fmax = fX.min(), fX.max()
             return amin + (amax - amin) * (fX - fmin) / (fmax - fmin + 1e-12)
-        frac = min(t / max(T_est, 1), 1.0)
+        frac = self._progress if self._progress is not None else min(t / max(T_est, 1), 1.0)
         return np.full(N, amax - (amax - amin) * frac)
 
     def update(self, X, P, fP, fX, G, t, T_est, rng):
