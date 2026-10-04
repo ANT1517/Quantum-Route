@@ -1,0 +1,81 @@
+{
+  "experiment": "tune_a44",
+  "description": "A-n44-k6 validation of memetic LS (D28) and rank re-normalisation (D32); tuning log, not a benchmark",
+  "reference": "qpso_full",
+  "weights": [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "runs_planned": 5,
+  "records": 50,
+  "infeasible": 0,
+  "budgets": [
+    {
+      "type": "evals",
+      "value": 12000,
+      "algorithms": [
+        "qpso_prefix",
+        "qpso_norenorm",
+        "qpso_full",
+        "pso_ls",
+        "ga_ls"
+      ]
+    },
+    {
+      "type": "time",
+      "value": 10,
+      "algorithms": [
+        "qpso_prefix",
+        "qpso_norenorm",
+        "qpso_full",
+        "pso_ls",
+        "ga_ls"
+      ]
+    }
+  ],
+  "instances": [
+    "A-n44-k6"
+  ],
+  "seeds": [
+    16345,
+    16346,
+    16347,
+    16348,
+    16349
+  ],
+  "config_hashes": {
+    "ga_ls|evals|12000": [
+      "5ec9c08345b9"
+    ],
+    "ga_ls|time|10": [
+      "584309ade86d"
+    ],
+    "pso_ls|evals|12000": [
+      "649b92cefd69"
+    ],
+    "pso_ls|time|10": [
+      "e4282cbcfaac"
+    ],
+    "qpso_full|evals|12000": [
+      "58deda45b740"
+    ],
+    "qpso_full|time|10": [
+      "0cd0757fab8d"
+    ],
+    "qpso_norenorm|evals|12000": [
+      "817ec1d57ee1"
+    ],
+    "qpso_norenorm|time|10": [
+      "cc1a19c9ae9f"
+    ],
+    "qpso_prefix|evals|12000": [
+      "fc117fc82948"
+    ],
+    "qpso_prefix|time|10": [
+      "332721312756"
+    ]
+  },
+  "note": "Measured on one machine; wall times depend on hardware."
+}

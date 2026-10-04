@@ -1,0 +1,16 @@
+# D28/D32 validation on the tuning instance only (§11.1, D21: <= 4 configurations per algorithm, all logged).
+# Goal: the search actually searches (curve keeps improving after the first LS pass, keys bounded,
+# 0 infeasible). NOT tuning QPSO to win, and NOT a benchmark: never quote these numbers.
+name: tune_a44
+description: "A-n44-k6 validation of memetic LS (D28) and rank re-normalisation (D32); tuning log, not a benchmark"
+instances: [A-n44-k6]
+runs: 5
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: qpso_full
+variants:
+  qpso_prefix:     {algo: qpso, params: {memetic: false, rank_renorm: false}}   # config 1: LS on gbest only, no re-normalisation (≈ before the fix)
+  qpso_norenorm:   {algo: qpso, params: {memetic: true, rank_renorm: false}}    # config 2: memetic LS only
+  qpso_full:       {algo: qpso, params: {}}                                     # config 3: memetic LS + rank re-normalisation (defaults)
+budgets:
+  - {type: evals, value: 12000, algorithms: [qpso_prefix, qpso_norenorm, qpso_full, pso_ls, ga_ls]}
+  - {type: time, value: 10, algorithms: [qpso_prefix, qpso_norenorm, qpso_full, pso_ls, ga_ls]}

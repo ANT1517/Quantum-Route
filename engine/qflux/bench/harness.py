@@ -118,8 +118,9 @@ def resample_curve(curve, evals_used: int, final_F: float, step: int = CURVE_STE
     return out
 
 
-def single_run(inst, algo: str, params: dict, weights: Weights, budget_type: str, budget: float, seed: int):
-    """One run -> (RunRecord, feasible, errors)."""
+def single_run(inst, algo: str, params: dict, weights: Weights, budget_type: str, budget: float, seed: int,
+               label: str | None = None):
+    """One run -> (RunRecord, feasible, errors). `label` names a variant (RunRecord.algo); default = algo."""
     ev = Evaluator(inst, weights)
     opt = get_optimizer(algo, params)
     t = time.time()
@@ -133,7 +134,7 @@ def single_run(inst, algo: str, params: dict, weights: Weights, budget_type: str
     eff = getattr(opt, "p", params)
     meta = {k: sol.meta[k] for k in META_KEYS if k in sol.meta}
     meta["tunnel_events"] = len(sol.meta.get("tunnel_events", []))
-    rec = RunRecord(algo=algo, instance=inst.name, seed=seed, budget_type=budget_type, budget=float(budget),
+    rec = RunRecord(algo=label or algo, instance=inst.name, seed=seed, budget_type=budget_type, budget=float(budget),
                     best_F=float(sol.F), best_T=float(sol.T), best_D=float(sol.D), best_C=float(sol.C),
                     best_E=float(sol.E), n_vehicles=int(sol.n_vehicles), gap_pct=gap, evals_used=int(ev.evals),
                     wall_s=float(wall), curve=resample_curve(curve, int(ev.evals), float(sol.F)),
@@ -188,11 +189,11 @@ def _worker_init(algos, inst_name):
     warm_up(algos, inst_name)
 
 
-def _job(iname, algo, params, w, btype, budget, seed):
+def _job(iname, label, algo, params, w, btype, budget, seed):
     if iname not in _INST_CACHE:
         _INST_CACHE.clear()                         # one instance in memory per process
         _INST_CACHE[iname] = load_instance(iname)
-    rec, ok, errs = single_run(_INST_CACHE[iname], algo, params, w, btype, budget, seed)
+    rec, ok, errs = single_run(_INST_CACHE[iname], algo, params, w, btype, budget, seed, label)
     return asdict(rec), ok, errs
 
 
@@ -210,7 +211,13 @@ def run_experiment(exp: dict, out_dir: Path | None = None, log=print, workers: i
     log(f"[{exp['name']}] {len(jobs)} runs to do ({len(done)} already recorded), {workers} worker(s) -> {path}")
     if not jobs:
         return path
-    algos = [j[1] for j in jobs]
+    variants = exp.get("variants", {}) or {}         # label -> {algo, params}: several configs of one algorithm
+
+    def resolve(label):
+        v = variants.get(label)
+        return (v["algo"], dict(v.get("params", {}) or {})) if v else (label, dict(params.get(label, {}) or {}))
+
+    algos = [resolve(j[1])[0] for j in jobs]
     t_all = time.time()
     n_done = 0
 
@@ -228,8 +235,8 @@ def run_experiment(exp: dict, out_dir: Path | None = None, log=print, workers: i
             f"seed={rd['seed']}: D={rd['best_D']:.1f} gap={gap} evals={rd['evals_used']} {rd['wall_s']:.2f}s "
             f"ls={rd['meta'].get('ls_calls', 0)}{'' if ok else '  INFEASIBLE ' + '; '.join(errs)}")
 
-    args = [(iname, algo, dict(params.get(algo, {})), w, btype, budget, seed)
-            for (iname, algo, btype, budget, r, seed) in jobs]
+    args = [(iname, label, *resolve(label), w, btype, budget, seed)
+            for (iname, label, btype, budget, r, seed) in jobs]
     if workers == 1:
         warm_up(algos, jobs[0][0])
         for a in args:

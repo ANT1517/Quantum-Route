@@ -1,8 +1,8 @@
 budget_type,budget,algo,avg_rank,instances,runs_per_cell,friedman_stat,p_value
-evals,12000,ga,1.5,2,3,3,0.22313
-evals,12000,pso,3,2,3,3,0.22313
-evals,12000,qpso,1.5,2,3,3,0.22313
-time,5,ga,2,2,3,6,0.11161
-time,5,ortools,1,2,3,6,0.11161
-time,5,pso,4,2,3,6,0.11161
-time,5,qpso,3,2,3,6,0.11161
+evals,12000,ga,2,2,3,4,0.135335
+evals,12000,pso,3,2,3,4,0.135335
+evals,12000,qpso,1,2,3,4,0.135335
+time,5,ga,3,2,3,5.4,0.144744
+time,5,ortools,1.5,2,3,5.4,0.144744
+time,5,pso,4,2,3,5.4,0.144744
+time,5,qpso,1.5,2,3,5.4,0.144744
