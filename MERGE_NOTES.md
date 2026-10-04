@@ -53,3 +53,17 @@ Needs B:
 - **bench_core v0 is superseded** (`results/runs/bench_core_v0_partial.*`): never show it.
 - **Step 8 of the merge:** B's latest `dynamic/solver.py` already uses `qflux.algos.registry.get_optimizer` (verified in the trial merge). Remaining: use `"qpso_noqubo"` in the demos (D53), re-run `run_fleet_demo.py` and `export_demo.py`.
 - **Editable install:** the shared venv imports `qflux` from `~/Quantum-Route/engine` (B's worktree). After merging, reinstall (`pip install -e engine`) or set `PYTHONPATH=<repo>/engine`, otherwise tests import the wrong copy.
+
+## Integration log (branch `integration`, 2026-10-04)
+Merged `origin/Person-A` (4482602) into `origin/Person-B` (78db0c6): no conflicts; all tests pass in the merged tree.
+Fixes made during integration (contract mismatches found by reading the code and by three live walks of the demo path):
+1. **Demos used QPSO-full.** `run_fleet_demo.py`, the fleet loop (`traffic/fleet_eq.py`), incident re-routing (`dynamic/reroute.py`) and `api.run_job` / `api.incident_reroute` defaults now use `qflux.algos.registry.DEFAULT_ENGINE = "qpso_noqubo_tuned"`. Demo artefacts were regenerated through the runner.
+2. **Fleet results were labelled `qpso`** although the shipped engine planned them; now labelled with `DEFAULT_ENGINE`.
+3. **Re-optimize (Results + Incident) sent the previous result's label** (`qpso_noqubo_tuned`) as `algorithm` → 400 INVALID_INPUT. The backend accepts the result labels (`qpso_noqubo_tuned`, `qpso_noqubo`, `qpso_noqubo_linear`, `qpso_full`) as aliases.
+4. **Every UI run sent `alpha_start`/`alpha_end`** (1.0 → 0.5), so the UI never ran the shipped engine. Run Optimizer now sends α only when "Custom α schedule" is ticked (default: QPSO-noQUBO (tuned), α = 0.3); custom schedules are labelled `qpso_noqubo_linear`.
+5. **Benchmark Studio verdict could not find QPSO** in the headline table (row key `qn_tuned`). Benchmark rows now carry an `algorithm` display column ("QPSO-noQUBO (tuned)", "OR-Tools (industry reference)", …) which the verdict and the table use; the verdict says "Holm-corrected Wilcoxon p". Frontend label map: `frontend/src/lib/labels.ts`.
+6. **`export_demo.py`** copies `results/api_export/` (benchmarks in the live-API shape; no separate Wilcoxon/Friedman "benchmarks"), removes stale/MOCK benchmark files, copies the referenced figures to `public/demo/figures/`, and builds a **real** Quantum Lab demo route (`qubo_route_demo.json`, seeded neal on a 7-stop route of the demo plan) instead of the MOCK file. Quantum Lab shows that file's label instead of "MOCK".
+7. **UI wording** aligned with `results/RESULTS_SUMMARY.md`: Home pitch ("proves every claim" and "does not create its own traffic jams" removed), Home tiles headed "Demo scenario numbers (simulated, not benchmarks)" and added to the summary as demo artefacts, Benchmark Studio footer (OR-Tools uses its own C++ model), demo banner (no MOCK files remain), engine and OR-Tools labels.
+8. README: runner rule and link to `docs/RUNNING_EXPERIMENTS.md`; master-doc §8.2 wireframe text updated.
+9. Runner: `--min-start-gb` (default 4); the demos phase was started with 3 GB once (demo artefacts, not benchmarks).
+Checked and not a bug: the Shortest-path screen's "incident on the way" zone is placed at the straight-line midpoint of source and target, so the fastest road path can bypass it (same ETA before/after; replay confirmed). The exported ambulance demo shows an ETA change (28.1 → 29.2 min).

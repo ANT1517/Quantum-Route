@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "engine"))
 
 from qflux import api  # noqa: E402
+from qflux.algos.registry import DISPLAY_NAMES  # noqa: E402
 from qflux.config import load_config  # noqa: E402
 
 SRC = ROOT / "results" / "demo"
@@ -52,7 +53,7 @@ def main():
     tod = m["time_of_day"]
     write("home_kpis.json", [
         {"label": "Background delay cut by system-optimal routing", "value": round(ext_drop, 1), "unit": "%",
-         "source": f"results/demo/metrics.json (S={f['S']:g}, simulated traffic, planner {tod['algorithm']})"},
+         "source": f"results/demo/metrics.json (S={f['S']:g}, simulated traffic, planner {DISPLAY_NAMES.get(tod['algorithm'], tod['algorithm'])})"},
         {"label": "Congestion delay at 17:30 vs 03:00 (same 60 customers)",
          "value": f"{tod['kpis_1730']['congestion_delay_min']:.0f} vs {tod['kpis_0300']['congestion_delay_min']:.0f}",
          "unit": "min", "source": "results/demo/result_demo.json, result_0300.json"},

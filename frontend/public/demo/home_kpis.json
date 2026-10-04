@@ -3,7 +3,7 @@
   "label": "Background delay cut by system-optimal routing",
   "value": 37.6,
   "unit": "%",
-  "source": "results/demo/metrics.json (S=25, simulated traffic, planner qpso_noqubo_tuned)"
+  "source": "results/demo/metrics.json (S=25, simulated traffic, planner QPSO-noQUBO (tuned))"
  },
  {
   "label": "Congestion delay at 17:30 vs 03:00 (same 60 customers)",

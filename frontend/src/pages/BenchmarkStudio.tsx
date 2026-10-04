@@ -148,8 +148,9 @@ export default function BenchmarkStudio() {
         </>
       )}
       <div className="text-xs text-slate-500">
-        All algorithms share the same decoder, budget and seeds. Heuristics give good solutions, not optimality proofs; if QPSO does not win on an instance, the
-        table says so.
+        Within each table every algorithm gets the same time budget and the same seeds; the metaheuristics share one decoder, while OR-Tools
+        (industry reference) uses its own C++ model. Heuristics give good solutions, not optimality proofs; if QPSO does not win on an instance,
+        the table says so.
       </div>
     </div>
   );

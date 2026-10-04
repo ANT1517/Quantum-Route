@@ -83,7 +83,7 @@ export default function Layout() {
         </div>
         {demo && (
           <div className="bg-fuchsia-700 px-4 py-1 text-center text-xs">
-            Demo mode: screens read pre-exported static JSON from /demo. Files labelled MOCK are placeholders, not results.
+            Demo mode: screens read results pre-exported from results/ into /demo (no backend, no network). Numbers match live mode; traffic is simulated.
           </div>
         )}
       </header>

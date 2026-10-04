@@ -24,9 +24,11 @@ export default function Home() {
       <section className="rounded-xl bg-navy-900 px-8 py-12 text-white">
         <h1 className="text-3xl font-bold tracking-tight">QuantumRoute</h1>
         <p className="mt-4 max-w-4xl text-lg text-slate-200">
-          QuantumRoute plans delivery-fleet routes on Hyderabad's real road network with a quantum-inspired swarm optimizer (QPSO), routes
-          the fleet so it does not create its own traffic jams, minimizes time, distance, congestion and CO₂, re-plans when traffic changes,
-          has a quantum-ready solver slot built into the pipeline — and proves every claim in a fair, reproducible Benchmark Studio.
+          QuantumRoute plans delivery-fleet routes on Hyderabad's road network with QPSO-noQUBO (tuned), a quantum-inspired swarm
+          optimizer that runs on ordinary CPUs. It weighs travel time, distance, congestion delay and CO₂, can plan the fleet with
+          marginal cost so its own traffic is spread out, re-plans around incidents and has an optional QUBO slot for route ordering.
+          Benchmark Studio shows how it compares with PSO, GA, SA and Google OR-Tools (industry reference) under equal conditions —
+          including where it does not win.
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
           <button className="btn-primary px-6 py-3 text-base" onClick={runDemo}>
@@ -42,7 +44,9 @@ export default function Home() {
       </section>
 
       <section>
-        <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-500">Headline numbers (from exported results)</h2>
+        <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-500">
+          Demo scenario numbers (Hyderabad-60, simulated traffic — not benchmarks)
+        </h2>
         <QueryState
           q={kpis}
           isEmpty={(d) => !Array.isArray(d) || d.length === 0}

@@ -40,6 +40,12 @@ QPSO-noQUBO (tuned) is ahead at n = 100; OR-Tools is ahead at n = 199 and n = 50
 - **QUBO formulation:** neal (a classical annealer) returns a feasible route order in 100% of cases and the optimal order on 50–80% of 20 CVRPLIB routes, depending on the penalty weight *(Q0–Q2)*.
 - **Road-network local search** on Hyderabad-60: median 128 → 3.0 ms per call (D46) *(D46)*.
 
+## Demo artefacts (one simulated scenario; not benchmarks)
+These numbers come from the Hyderabad-60 demo run with the shipped engine (`results/demo/`, `scripts/run_fleet_demo.py`). They describe one scenario under simulated traffic and are shown on the app's Home screen as demo numbers.
+- **System-optimal fleet routing:** background delay (externality) falls from 259.7 to 162.1 vehicle-hours (−37.6%) versus naive routing, with platform scale factor S = 25, which is a modelling assumption *(results/demo/metrics.json)*.
+- **Time of day:** the same 60 customers have about 114 min of congestion delay when planned at 17:30, versus about 10 min at 03:00 *(result_demo.json, result_0300.json)*.
+- **Incident re-routing:** 6.3 min of delay avoided for a simulated incident; the re-routed plan was accepted only because it is cheaper under the new traffic *(incident_demo.json)*.
+
 ## Platform differentiators (not benchmarked against OR-Tools)
 These are features of the platform. They are not performance claims.
 - **System-optimal fleet routing:** the fleet's own traffic is fed into the BPR travel-time model, and routes are planned with marginal cost (it counts the delay imposed on all traffic), iterated with the method of successive averages. Naive, user-equilibrium and system-optimal modes can be compared side by side (`engine/qflux/traffic/fleet_eq.py`, `POST /api/fleet-compare`).
