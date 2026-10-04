@@ -49,6 +49,16 @@ def test_seed_formula():
     assert run_seed("A-n32-k5", 2, 12345) == 12345 + 1000 * 3 + 2
 
 
+def test_rank_normalise_keeps_tours():
+    from qflux.algos.swarm import rank_normalise
+    from qflux.core.encoding import spv_decode
+    X = np.random.default_rng(3).normal(0, 1e4, (6, 30))
+    Z = rank_normalise(X)
+    assert (Z > 0).all() and (Z < 1).all()
+    for x, z in zip(X, Z):
+        assert (spv_decode(x) == spv_decode(z)).all()
+
+
 @pytest.mark.parametrize("algo", ["qpso", "pso_ls", "ga_ls", "sa", "ortools"])
 def test_deadline_respected(algo):
     """D31: wall time stays within the time budget (+2% in the benchmark; looser here for CI jitter)."""

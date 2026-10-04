@@ -13,12 +13,18 @@ from qflux.core.localsearch import improve_routes
 from qflux.types import Solution
 
 
+def rank_normalise(X: np.ndarray) -> np.ndarray:
+    """Row-wise (rank + 0.5) / n: same order (so the same decoded tour), keys in (0, 1) (D32)."""
+    n = X.shape[1]
+    return (np.argsort(np.argsort(X, axis=1, kind="stable"), axis=1, kind="stable") + 0.5) / n
+
+
 class KeySwarm:
     name = "swarm"
-    defaults: dict = {}
+    defaults: dict = {"rank_renorm": True}
 
     def __init__(self, **params):
-        self.p = {**self.defaults, **params}
+        self.p = {**KeySwarm.defaults, **self.defaults, **params}
         self._progress = None        # fraction of the budget used (evals or time), set each iteration
 
     # ---- hooks -----------------------------------------------------------------------------------
@@ -73,6 +79,8 @@ class KeySwarm:
         st = State(ev, budget_evals, budget_s)
         self.setup(n, rng)
         st.X = self.init_positions(N, n, rng, init_keys)
+        if self.p.get("rank_renorm", True):
+            st.X = rank_normalise(st.X)
         st.fX = np.array([st.eval_keys(x) for x in st.X])
         st.P, st.fP = st.X.copy(), st.fX.copy()
         T_est = self.estimate_iterations(budget_evals, N)
@@ -85,6 +93,9 @@ class KeySwarm:
             G = st.P[int(np.argmin(st.fP))]
             self._progress = st.progress()
             st.X = self.update(st.X, st.P, st.fP, st.fX, G, t, T_est, rng)
+            if self.p.get("rank_renorm", True):
+                st.X = rank_normalise(st.X)
+            st.meta["max_abs_key"] = max(st.meta["max_abs_key"], float(np.abs(st.X).max()))
             for i in range(N):
                 if st.over_budget():
                     break
@@ -135,7 +146,7 @@ class State:
         self.stagnation = 0
         self.improved = False
         self.curve: list[tuple[int, float]] = []
-        self.meta: dict = {"tunnel_events": []}
+        self.meta: dict = {"tunnel_events": [], "max_abs_key": 0.0}
 
     def out_of_time(self) -> bool:
         return self.deadline is not None and time.time() >= self.deadline

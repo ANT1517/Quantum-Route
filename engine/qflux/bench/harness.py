@@ -33,7 +33,7 @@ INSTANCE_ORDER = ["P-n16-k8", "P-n19-k2", "P-n22-k8", "A-n32-k5", "A-n44-k6", "A
                   "CMT1", "CMT5", "X-n101-k25", "X-n200-k36", "X-n502-k39", "X-n1001-k43"]
 CURVE_STEP = 100
 META_KEYS = ("iterations", "moves", "partial", "ls_calls", "qubo_calls", "qubo_improvements", "qubo_skipped_time",
-             "reinits", "solutions_found")
+             "reinits", "solutions_found", "max_abs_key")
 
 
 def load_experiment(name_or_path: str) -> dict:
