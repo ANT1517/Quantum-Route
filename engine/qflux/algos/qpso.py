@@ -43,6 +43,7 @@ def dispatch_cost_matrix(ev) -> np.ndarray:
 
 class QPSO(KeySwarm):
     name = "qpso"
+    defaults = {"memetic": True}
 
     def __init__(self, **params):
         cfg = load_config()["qpso"]
@@ -132,4 +133,4 @@ class QPSO(KeySwarm):
 
 
 BASE_QPSO = dict(init="uniform", mbest="uniform", alpha_mode="linear", alpha_max=1.0, alpha_min=0.5,
-                 ls_top_pbests=0, diversity_delta=0.0, tunneling={"enabled": False}, qubo_slot={"enabled": False})
+                 memetic=False, diversity_delta=0.0, tunneling={"enabled": False}, qubo_slot={"enabled": False})

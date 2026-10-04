@@ -2,26 +2,35 @@
 
 Both use the same decoder (Split), evaluation counting, LS schedule, Lamarckian write-back, callbacks and
 stopping rules, so a QPSO-vs-PSO comparison isolates the position-update rule.
+
+- Rank re-normalisation (D32): after every position update X_i <- (rank(X_i) + 0.5) / n. Order-preserving,
+  so every decoded tour is unchanged; it keeps keys bounded (random-key decoding has no restoring force on
+  the key scale, and without it keys diverged to |X| ~ 1e4-1e5).
+- LS (D28): gbest every `ls_every` iterations (all operators) and, if `memetic`, every particle whose pbest
+  improved this iteration (2-opt + relocate + swap), capped at the best ceil(memetic_frac * N). LS moves are
+  scored with route costs and are not counted as evaluations; `ls_calls` is reported in meta.
+- Deadlines (D31): LS, final polish and every subclass hook get `st.deadline` and stop when it passes.
 """
+import math
 import time
 import warnings
 
 import numpy as np
 
 from qflux.core.encoding import encode_perm, spv_decode
-from qflux.core.localsearch import improve_routes
+from qflux.core.localsearch import MEMETIC_OPS, improve_routes
 from qflux.types import Solution
 
 
 def rank_normalise(X: np.ndarray) -> np.ndarray:
-    """Row-wise (rank + 0.5) / n: same order (so the same decoded tour), keys in (0, 1) (D32)."""
+    """Row-wise (rank + 0.5) / n: same order (so the same decoded tour), keys in (0, 1)."""
     n = X.shape[1]
     return (np.argsort(np.argsort(X, axis=1, kind="stable"), axis=1, kind="stable") + 0.5) / n
 
 
 class KeySwarm:
     name = "swarm"
-    defaults: dict = {"rank_renorm": True}
+    defaults: dict = {"rank_renorm": True, "memetic": False, "memetic_frac": 0.25}
 
     def __init__(self, **params):
         self.p = {**KeySwarm.defaults, **self.defaults, **params}
@@ -52,24 +61,37 @@ class KeySwarm:
             X[0] = init_keys
         return X
 
-    def polish(self, st: "State", ev, rng, final: bool = False):
-        """LS on gbest (+ top pbests) with Lamarckian write-back."""
-        k_top = int(self.p.get("ls_top_pbests", 0))
-        idx = [int(np.argmin(st.fP))] + [int(i) for i in np.argsort(st.fP)[1:1 + k_top]]
-        for i in dict.fromkeys(idx):
-            routes = ev.decode_routes(spv_decode(st.P[i]))
-            new = improve_routes(routes, ev, deadline=st.deadline)
+    def ls_particle(self, st: "State", ev, rng, i: int, ops) -> bool:
+        """LS on particle i's pbest with Lamarckian write-back to X and P. Returns True if improved."""
+        routes = ev.decode_routes(spv_decode(st.P[i]))
+        new = improve_routes(routes, ev, ops, deadline=st.deadline)
+        st.meta["ls_calls"] += 1
+        f = ev.routes_F(new)                         # uncounted (D28)
+        if f < st.fP[i] - 1e-12:
             perm = np.array([c for r in new for c in r], dtype=np.int64)
-            f = ev.fitness_perm(perm)
-            if f < st.fP[i] - 1e-12:
-                if self.p.get("lamarck", True):
-                    keys = encode_perm(perm, rng)
-                    st.P[i] = keys
-                    st.X[i] = keys
-                    st.fP[i] = f
-                st.offer(perm, f)
-            if st.over_budget():
+            if self.p.get("lamarck", True):
+                keys = encode_perm(perm, rng)
+                st.P[i] = keys
+                st.X[i] = keys
+                st.fP[i] = f
+                st.fX[i] = f
+            st.offer_routes(new, ev)
+            return True
+        return False
+
+    def polish(self, st: "State", ev, rng):
+        """Full LS on gbest every `ls_every` iterations."""
+        self.ls_particle(st, ev, rng, int(np.argmin(st.fP)), ("2opt", "oropt", "relocate", "swap"))
+
+    def memetic(self, st: "State", ev, rng, improved: np.ndarray):
+        """LS on particles whose pbest improved this iteration, best ceil(frac * N) first (D28)."""
+        if improved.size == 0:
+            return
+        cap = max(1, math.ceil(float(self.p["memetic_frac"]) * len(st.fP)))
+        for i in improved[np.argsort(st.fP[improved])][:cap]:
+            if st.out_of_time():
                 break
+            self.ls_particle(st, ev, rng, int(i), MEMETIC_OPS)
 
     # ---- main loop ---------------------------------------------------------------------------------
     def run(self, ev, budget_evals: int | None, budget_s: float | None, rng, callback=None, should_stop=None,
@@ -81,9 +103,14 @@ class KeySwarm:
         st.X = self.init_positions(N, n, rng, init_keys)
         if self.p.get("rank_renorm", True):
             st.X = rank_normalise(st.X)
-        st.fX = np.array([st.eval_keys(x) for x in st.X])
+        st.fX = np.full(N, np.inf)
+        for i in range(N):
+            if i and st.over_budget():
+                break
+            st.fX[i] = st.eval_keys(st.X[i])
         st.P, st.fP = st.X.copy(), st.fX.copy()
         T_est = self.estimate_iterations(budget_evals, N)
+        ls_every = int(self.p.get("ls_every", 0) or 0)
         t = 0
         partial = False
         while not st.over_budget():
@@ -96,6 +123,7 @@ class KeySwarm:
             if self.p.get("rank_renorm", True):
                 st.X = rank_normalise(st.X)
             st.meta["max_abs_key"] = max(st.meta["max_abs_key"], float(np.abs(st.X).max()))
+            improved = []
             for i in range(N):
                 if st.over_budget():
                     break
@@ -103,9 +131,10 @@ class KeySwarm:
                 if st.fX[i] < st.fP[i]:
                     st.P[i] = st.X[i]
                     st.fP[i] = st.fX[i]
-            st.improved = st.best_F < st.last_best - 1e-12
-            ls_every = int(self.p.get("ls_every", 0) or 0)
-            if ls_every and t % ls_every == 0 and not st.over_budget():
+                    improved.append(i)
+            if ls_every and self.p.get("memetic") and not st.out_of_time():
+                self.memetic(st, ev, rng, np.array(improved, dtype=np.int64))
+            if ls_every and t % ls_every == 0 and not st.out_of_time():
                 self.polish(st, ev, rng)
             self.after_iteration(st, ev, rng, t)
             st.stagnation = 0 if st.best_F < st.last_best - 1e-12 else st.stagnation + 1
@@ -114,7 +143,7 @@ class KeySwarm:
             if callback is not None and t % 5 == 0:
                 callback({"iter": t, "evals": ev.evals, "best_F": st.best_F, "elapsed_s": time.time() - st.t0})
             t += 1
-        if not partial and st.time_left_frac() > 0.01:     # D31: skip the polish if too little time is left
+        if not partial and st.time_left_frac() > 0.01:
             self.final_polish(st, ev, rng)
         sol = ev.solution(st.best_perm)
         if sol.F > st.best_F + 1e-9:     # best found via route-level moves not reproduced by Split
@@ -126,7 +155,9 @@ class KeySwarm:
 
     def final_polish(self, st, ev, rng):
         if int(self.p.get("ls_every", 0) or 0):
-            routes = improve_routes(ev.decode_routes(st.best_perm), ev, deadline=st.deadline)
+            routes = improve_routes(ev.decode_routes(st.best_perm) if st.best_routes is None else st.best_routes,
+                                    ev, deadline=st.deadline)
+            st.meta["ls_calls"] += 1
             st.offer_routes(routes, ev)
 
     @staticmethod
@@ -146,7 +177,7 @@ class State:
         self.stagnation = 0
         self.improved = False
         self.curve: list[tuple[int, float]] = []
-        self.meta: dict = {"tunnel_events": [], "max_abs_key": 0.0}
+        self.meta: dict = {"tunnel_events": [], "ls_calls": 0, "max_abs_key": 0.0}
 
     def out_of_time(self) -> bool:
         return self.deadline is not None and time.time() >= self.deadline

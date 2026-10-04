@@ -24,6 +24,7 @@ def test_t08_harness_smoke(tmp_path):
         assert r["curve"][-1][0] == r["evals_used"]
         assert all(b[1] <= a[1] + 1e-12 for a, b in zip(r["curve"], r["curve"][1:]))   # best-so-far
     assert {r["seed"] for r in recs} == {run_seed("P-n16-k8", 0), run_seed("P-n16-k8", 1)}
+    assert all("ls_calls" in r["meta"] for r in recs)
     # resume: nothing is re-run
     run_experiment(exp, out_dir=tmp_path, log=lambda *_: None)
     assert len(read_records(path)) == 4
@@ -74,3 +75,5 @@ def test_deadline_respected(algo):
     t = time.time()
     sol, _ = get_optimizer(algo).run(ev, None, 2.0, make_rng(1))
     assert time.time() - t <= 2.0 * 1.05
+    if algo in ("qpso", "pso_ls", "ga_ls"):
+        assert sol.meta["ls_calls"] > 0

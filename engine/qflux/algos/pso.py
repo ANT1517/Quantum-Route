@@ -11,7 +11,9 @@ class PSO(KeySwarm):
 
     def __init__(self, **params):
         cfg = load_config()["pso"]
-        super().__init__(**{**cfg, "init": "uniform", "ls_every": 0, "ls_top_pbests": 0, **params})
+        p = {**cfg, "init": "uniform", "ls_every": 0, **params}
+        p.setdefault("memetic", bool(p["ls_every"]))      # PSO+LS: identical LS rule to QPSO (D28)
+        super().__init__(**p)
         self.V = None
 
     def setup(self, n, rng):

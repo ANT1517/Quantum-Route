@@ -1,7 +1,7 @@
 """get_optimizer(name, params): the one place that maps algorithm names to Optimizer objects (§5.2).
 
-Names: qpso, qpso_base, pso, pso_ls, ga, ga_ls, sa, sa_ls, ortools, nn.
-"+LS" variants use the same LS schedule as QPSO (every 10 iterations, Lamarckian) for fairness (§7.8).
+Names: qpso, qpso_base, pso, pso_ls, ga, ga_ls, sa, ortools, nn. SA has no +LS variant (D28).
+"+LS" variants use the same LS rule as QPSO (gbest every 10 iterations + memetic LS, Lamarckian; D28).
 """
 import time
 
@@ -49,11 +49,9 @@ def get_optimizer(name: str, params: dict | None = None):
         opt = GA(**({"ls_every": ls_every} if name == "ga_ls" else {}), **params)
         opt.name = name
         return opt
-    if name in ("sa", "sa_ls"):
+    if name == "sa":
         from .sa import SA
-        opt = SA(**({"ls_every": ls_every} if name == "sa_ls" else {}), **params)
-        opt.name = name
-        return opt
+        return SA(**params)
     if name == "ortools":
         from .ortools_wrap import ORTools
         return ORTools(**params)
@@ -62,4 +60,4 @@ def get_optimizer(name: str, params: dict | None = None):
     raise KeyError(f"unknown optimizer {name!r}")
 
 
-ALGORITHMS = ("qpso", "qpso_base", "pso", "pso_ls", "ga", "ga_ls", "sa", "sa_ls", "ortools", "nn")
+ALGORITHMS = ("qpso", "qpso_base", "pso", "pso_ls", "ga", "ga_ls", "sa", "ortools", "nn")

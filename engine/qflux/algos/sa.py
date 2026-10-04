@@ -5,7 +5,6 @@ import time
 import numpy as np
 
 from qflux.config import load_config
-from qflux.core.localsearch import improve_routes
 
 
 def neighbour(perm: np.ndarray, rng) -> np.ndarray:
@@ -27,7 +26,7 @@ class SA:
     name = "sa"
 
     def __init__(self, **params):
-        self.p = {**load_config()["sa"], "ls_every": 0, "N": 40, **params}
+        self.p = {**load_config()["sa"], "N": 40, **params}   # no +LS variant: SA is already a local search (D28)
 
     def run(self, ev, budget_evals, budget_s, rng, callback=None, should_stop=None, init_keys=None):
         p = self.p
@@ -63,7 +62,6 @@ class SA:
                 fr.append((time.time() - t0) / budget_s)
             return min(max(fr), 1.0) if fr else min(k / 100000, 1.0)
         curve, k, partial = [], 0, False
-        ls_every = int(p.get("ls_every") or 0) * int(p["N"])     # "every 10 iterations" = every 400 moves
         while not over():
             if should_stop is not None and should_stop():
                 partial = True
@@ -76,23 +74,12 @@ class SA:
                     best, fb = cand.copy(), f
             T = T_start * (T_end / T_start) ** progress()
             k += 1
-            if ls_every and k % ls_every == 0 and not over():
-                routes = improve_routes(ev.decode_routes(best), ev)
-                perm = np.array([c for r in routes for c in r], dtype=np.int64)
-                f2 = ev.fitness_perm(perm)
-                if f2 < fb:
-                    best, fb = perm, f2
-                    cur, fc = perm.copy(), f2
             if k % int(p["N"]) == 0:
                 curve.append((ev.evals, float(fb)))
                 if callback is not None and (k // int(p["N"])) % 5 == 0:
                     callback({"iter": k // int(p["N"]), "evals": ev.evals, "best_F": float(fb),
                               "elapsed_s": time.time() - t0})
         sol = ev.solution(best)
-        if ls_every and not partial:
-            s2 = ev.solution_from_routes(improve_routes(sol.routes, ev))
-            if s2.F < sol.F:
-                sol = s2
         sol.meta.update(algo=self.name, moves=k, evals=ev.evals, wall_s=time.time() - t0, partial=partial)
         curve.append((ev.evals, float(min(fb, sol.F))))
         return sol, curve
