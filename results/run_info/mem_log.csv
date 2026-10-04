@@ -120,3 +120,7 @@ time,free_gb,step
 2026-10-04 20:00:41,2.76,scaling_v2
 2026-10-04 20:01:41,2.62,scaling_v2
 2026-10-04 20:03:13,5.00,p_small_d59_archive
+2026-10-04 20:18:27,3.66,run_fleet_demo
+2026-10-04 20:19:27,3.16,run_fleet_demo
+2026-10-04 20:22:12,3.39,run_fleet_demo
+2026-10-04 20:23:12,2.84,run_fleet_demo

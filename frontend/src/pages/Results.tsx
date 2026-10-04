@@ -20,6 +20,7 @@ import RouteMap, { type LatLon, type MapLine, type MapPoint } from "../component
 import RouteTable from "../components/RouteTable";
 import { Empty, ErrorState, Loading, MockBadge } from "../components/States";
 import { useJobProgress } from "../hooks/useJobProgress";
+import { algoLabel } from "../lib/labels";
 import { algoColor } from "../lib/colors";
 import { useDemoMode } from "../lib/demoMode";
 import { downloadJson, fmt, minToHHMM } from "../lib/format";
@@ -213,7 +214,7 @@ export default function Results() {
           <span className="font-mono text-sm">Job {shown.job_id}</span>
           <MockBadge text={shown.job_id} />
           <span className="badge text-white" style={{ background: algoColor(shown.algorithm) }}>
-            {shown.algorithm.toUpperCase()}
+            {algoLabel(shown.algorithm)}
           </span>
           <span className="text-sm text-slate-600">seed {shown.seed}</span>
           <span className="text-sm text-slate-600">depart {minToHHMM(departOf(shown))}</span>

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-30 16:42",
+ "generated_at": "2026-10-04 20:22",
  "scenario": "hyderabad-60",
  "weights": {
   "wT": 0.5,
@@ -9,73 +9,73 @@
  },
  "planner_time_s": 5.0,
  "time_of_day": {
-  "algorithm": "ortools",
+  "algorithm": "qpso_noqubo_tuned",
   "kpis_1730": {
-   "total_time_min": 479.891,
-   "total_distance_km": 214.558,
-   "congestion_delay_min": 110.959,
-   "co2_kg": 55.3136,
+   "total_time_min": 481.552,
+   "total_distance_km": 218.234,
+   "congestion_delay_min": 113.547,
+   "co2_kg": 55.7982,
    "vehicles_used": 6,
    "fleet_limit": 6,
-   "fitness": 0.816919,
-   "runtime_s": 5.106,
-   "evals": 369,
+   "fitness": 0.825553,
+   "runtime_s": 9.363,
+   "evals": 12000,
    "feasible": true
   },
   "kpis_0300": {
-   "total_time_min": 371.914,
-   "total_distance_km": 219.03,
-   "congestion_delay_min": 10.59,
-   "co2_kg": 48.2242,
+   "total_time_min": 373.742,
+   "total_distance_km": 220.359,
+   "congestion_delay_min": 9.907,
+   "co2_kg": 48.4899,
    "vehicles_used": 6,
    "fleet_limit": 6,
-   "fitness": 0.698168,
-   "runtime_s": 5.008,
-   "evals": 411,
+   "fitness": 0.695676,
+   "runtime_s": 8.635,
+   "evals": 12000,
    "feasible": true
   }
  },
  "fleet": {
   "S": 25.0,
-  "wall_s": 49.4,
+  "wall_s": 39.1,
   "naive": {
-   "externality_veh_h": 266.058,
+   "externality_veh_h": 259.664,
    "max_vc": 1.608,
-   "edges_over_capacity": 1638,
-   "corridors_used": 34,
-   "total_time_min": 542.464,
-   "co2_kg": 59.398
+   "edges_over_capacity": 1583,
+   "corridors_used": 33,
+   "total_time_min": 544.803,
+   "co2_kg": 59.4387
   },
   "user_eq": {
-   "externality_veh_h": 267.979,
+   "externality_veh_h": 262.811,
    "max_vc": 1.608,
-   "edges_over_capacity": 1665,
-   "corridors_used": 33,
-   "total_time_min": 541.243,
-   "co2_kg": 59.3177
+   "edges_over_capacity": 1626,
+   "corridors_used": 32,
+   "total_time_min": 542.122,
+   "co2_kg": 59.3144
   },
   "system_opt": {
-   "externality_veh_h": 172.357,
+   "externality_veh_h": 162.058,
    "max_vc": 1.6,
-   "edges_over_capacity": 873,
-   "corridors_used": 112,
-   "total_time_min": 632.114,
-   "co2_kg": 65.9052
+   "edges_over_capacity": 781,
+   "corridors_used": 117,
+   "total_time_min": 657.746,
+   "co2_kg": 68.0562
   }
  },
  "incident": {
-  "area": "Abids",
+  "area": "Ameerpet",
   "accepted": true,
-  "resequenced": true,
-  "delay_increase_min": 4.344,
-  "delay_avoided_min": 3.65,
-  "reopt_time_s": 0.421
+  "resequenced": false,
+  "delay_increase_min": 14.365,
+  "delay_avoided_min": 6.326,
+  "reopt_time_s": 0.632
  },
  "ambulance": {
   "eta_before_min": 28.095,
   "eta_after_min": 29.217,
   "astar_eta_min": 29.217,
-  "dijkstra_s": 1.4588,
-  "astar_s": 0.9675
+  "dijkstra_s": 4.8383,
+  "astar_s": 3.417
  }
 }

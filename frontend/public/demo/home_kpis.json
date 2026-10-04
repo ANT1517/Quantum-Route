@@ -1,19 +1,19 @@
 [
  {
   "label": "Background delay cut by system-optimal routing",
-  "value": 35.2,
+  "value": 37.6,
   "unit": "%",
-  "source": "results/demo/metrics.json (S=25, simulated traffic, planner ortools)"
+  "source": "results/demo/metrics.json (S=25, simulated traffic, planner qpso_noqubo_tuned)"
  },
  {
   "label": "Congestion delay at 17:30 vs 03:00 (same 60 customers)",
-  "value": "111 vs 11",
+  "value": "114 vs 10",
   "unit": "min",
   "source": "results/demo/result_demo.json, result_0300.json"
  },
  {
   "label": "Delay avoided by incident re-routing",
-  "value": 3.65,
+  "value": 6.326,
   "unit": "min",
   "source": "results/demo/incident_demo.json (simulated incident)"
  }

@@ -84,6 +84,6 @@ def get_optimizer(name: str, params: dict | None = None):
 TUNED_NOQUBO = {"qubo_slot": {"enabled": False}, "alpha_mode": "fixed", "alpha_fixed": 0.3}
 DEFAULT_ENGINE = "qpso_noqubo_tuned"    # D59: the engine used by the app, the demos and every headline number
 DISPLAY_NAMES = {"qpso_noqubo_tuned": "QPSO-noQUBO (tuned)", "qpso_noqubo": "QPSO-noQUBO (adaptive alpha)",
-                 "qpso": "QPSO-full", "ortools": "OR-Tools (industry reference engine)"}
+                 "qpso": "QPSO-full", "ortools": "OR-Tools (industry reference)"}
 
 ALGORITHMS = ("qpso", "qpso_noqubo_tuned", "qpso_noqubo", "qpso_base", "pso", "pso_ls", "ga", "ga_ls", "sa", "rr_ls", "qpso_cluster", "ortools", "nn")

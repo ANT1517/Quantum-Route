@@ -1,6 +1,8 @@
 // Visual rules §8.1: one accent colour per algorithm.
 export const ALGO_COLORS: Record<string, string> = {
   qpso: "#0d9488", // teal
+  qn: "#0d9488", // qn_tuned = QPSO-noQUBO (tuned)
+  rrls: "#94a3b8", // random restart + LS control
   pso: "#f59e0b", // amber
   ga: "#8b5cf6", // purple
   sa: "#6b7280", // grey

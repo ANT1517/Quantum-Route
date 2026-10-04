@@ -191,7 +191,8 @@ def fleet_result(inst: Instance, w: Weights, res: dict, mode: str, *, seed: int,
             f", reported with real BPR times at the dispatch slot; S = {S:g} vehicle-equivalents per route "
             f"(modelling assumption)."]
     from qflux.dynamic.solver import engine_available
-    algo = "qpso" if engine_available() else "ortools-standin"
+    from qflux.algos.registry import DEFAULT_ENGINE
+    algo = DEFAULT_ENGINE if engine_available() else "ortools-standin"   # label = the engine that planned
     out = build_result(inst, rb, r["routes"], w, refs, algorithm=algo, seed=seed,
                        runtime_s=r["wall_s"], evals=0, convergence=[], job_id=f"fleet-{mode}",
                        scenario_id=scenario_id, ev=ev, extra_explanation=note)

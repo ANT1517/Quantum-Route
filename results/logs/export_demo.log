@@ -1,0 +1,19 @@
+  frontend/public/demo/result_demo.json
+  frontend/public/demo/result_0300.json
+  frontend/public/demo/fleet_demo.json
+  frontend/public/demo/incident_demo.json
+  frontend/public/demo/shortest_path_demo.json
+  frontend/public/demo/scenarios.json
+  frontend/public/demo/scenario_demo.json
+  frontend/public/demo/home_kpis.json
+  frontend/public/demo/benchmark_ablation.json
+  frontend/public/demo/benchmark_ablation_evals.json
+  frontend/public/demo/benchmark_alpha_sweep.json
+  frontend/public/demo/benchmark_bench_core_v1.json
+  frontend/public/demo/benchmark_confirm_d54.json
+  frontend/public/demo/benchmark_p_small.json
+  frontend/public/demo/benchmark_scaling_v2.json
+  frontend/public/demo/benchmarks.json
+  frontend/public/demo/qubo_validation.json
+  frontend/public/demo/figures/ (43 figures)
+  frontend/public/demo/qubo_route_demo.json

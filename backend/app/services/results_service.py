@@ -99,6 +99,12 @@ def benchmark(name: str) -> dict:
             summary.loc[m, pcol] = r.get("p_holm", r.p_value)
             summary.loc[m, f"p_raw_vs_{ref}"] = r.p_value
             summary.loc[m, f"median_diff_gap_pts_vs_{ref}"] = r.get("median_diff_gap_pts")
+    # display names first: Benchmark Studio uses the column named exactly "algorithm" for labels and its verdict
+    from qflux.algos.registry import DISPLAY_NAMES
+    labels = {**DISPLAY_NAMES, "qn_tuned": "QPSO-noQUBO (tuned)", "qn_tuned_cluster": "QPSO-noQUBO (tuned), cluster-first",
+              "pso_tuned": "PSO+LS (tuned)", "pso_ls": "PSO+LS", "ga_ls": "GA+LS", "sa": "Simulated annealing",
+              "rr_ls": "Random restart + LS (control)", "pso_plain": "PSO (no LS)", "qpso_base_plain": "QPSO-base (no LS)"}
+    summary.insert(0, "algorithm", [labels.get(a, a) for a in summary.algo])
     gaps = _gap_arrays(name, meta)                     # per-run gaps -> Benchmark Studio box plot
     summary["gap_runs_pct"] = [gaps.get((r.budget_type, float(r.budget), r.instance, r.algo), [])
                                for r in summary.itertuples()]

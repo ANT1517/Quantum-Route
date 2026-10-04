@@ -13,11 +13,11 @@ import { minToHHMM } from "../lib/format";
 import { updateSession, useSession } from "../lib/session";
 
 const ALGOS: Array<[Algorithm, string]> = [
-  ["qpso", "QPSO (quantum-behaved PSO)"],
+  ["qpso", "QPSO-noQUBO (tuned) · default engine"],
   ["pso", "PSO"],
   ["ga", "GA"],
   ["sa", "Simulated annealing"],
-  ["ortools", "OR-Tools"],
+  ["ortools", "OR-Tools (industry reference)"],
 ];
 
 const PRESETS: Array<[string, Weights]> = [

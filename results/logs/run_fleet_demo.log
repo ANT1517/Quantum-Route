@@ -1,0 +1,11 @@
+[1/4] Hyderabad-60 plans at 17:30 and 03:00
+  wrote results/demo/result_demo.json
+  wrote results/demo/result_0300.json
+[2/4] Fleet impact: naive vs user_eq vs system_opt
+  wrote results/demo/fleet_demo.json
+[3/4] Incident re-routing (zone on the busiest arterial used by the 17:30 plan)
+  warm vs cold re-optimisation
+  wrote results/demo/incident_demo.json
+[4/4] Ambulance shortest path (Station A -> Hospital B, generic labels)
+  wrote results/demo/shortest_path_demo.json
+  wrote results/demo/metrics.json

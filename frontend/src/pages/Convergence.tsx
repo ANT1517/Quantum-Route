@@ -3,6 +3,7 @@ import { useState } from "react";
 import { getJobResult } from "../api/client";
 import ConvergenceChart from "../components/ConvergenceChart";
 import { Empty, ErrorState, Loading } from "../components/States";
+import { algoLabel } from "../lib/labels";
 import { algoColor } from "../lib/colors";
 import { useDemoMode } from "../lib/demoMode";
 import { useSession } from "../lib/session";
@@ -22,7 +23,7 @@ export default function Convergence() {
   });
 
   const series = qs
-    .map((q, i) => (q.data ? { name: `${q.data.algorithm.toUpperCase()} · ${ids[i]}`, color: algoColor(q.data.algorithm), points: q.data.convergence } : null))
+    .map((q, i) => (q.data ? { name: `${algoLabel(q.data.algorithm)} · ${ids[i]}`, color: algoColor(q.data.algorithm), points: q.data.convergence } : null))
     .filter((s): s is NonNullable<typeof s> => s !== null);
 
   return (

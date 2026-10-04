@@ -135,6 +135,8 @@ def status(**kw):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--phase", choices=sorted(PHASES), default="main")
+    ap.add_argument("--min-start-gb", type=float, default=START_MIN_GB,
+                    help="free memory required to start (default 4 GB; lowered only with the team's approval)")
     a = ap.parse_args()
     INFO.mkdir(parents=True, exist_ok=True)
     LOGS.mkdir(parents=True, exist_ok=True)
@@ -143,8 +145,8 @@ def main():
         if other and pid_alive(other):
             sys.exit(f"another runner (PID {other}) is alive; lock {LOCK}")
     free = free_memory_gb()
-    if free is not None and free < START_MIN_GB:
-        sys.exit(f"only {free:.1f} GB free (< {START_MIN_GB:g} GB); close applications and retry")
+    if free is not None and free < a.min_start_gb:
+        sys.exit(f"only {free:.1f} GB free (< {a.min_start_gb:g} GB); close applications and retry")
     LOCK.write_text(str(os.getpid()))
     keep_awake(True)                                  # whole runner lifetime (not only benchmark steps)
     stop = threading.Event()

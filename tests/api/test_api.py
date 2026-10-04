@@ -205,3 +205,13 @@ def test_d53_default_engine_is_qpso_noqubo():
     body = JobCreate(scenario_id="x", algorithm="qpso", weights=W, params={"qubo_slot": True})
     j = engine_job(body, None)
     assert j["params"]["qubo_slot"] == {"enabled": True} and j["label"] == "qpso_full"
+
+
+def test_reoptimize_with_result_label_is_accepted():
+    """Integration fix: Results' re-optimize re-sends the previous result's algorithm label."""
+    from backend.app.schemas import JobCreate
+    from backend.app.services.job_params import engine_job
+    for label, want in (("qpso_noqubo_tuned", "qpso_noqubo_tuned"), ("qpso_full", "qpso_full"),
+                        ("qpso_noqubo", "qpso_noqubo")):
+        j = engine_job(JobCreate(scenario_id="x", algorithm=label, weights=W), None)
+        assert j["algorithm"] == "qpso" and j["label"] == want

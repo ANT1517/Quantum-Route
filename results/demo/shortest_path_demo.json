@@ -752,7 +752,7 @@
   ],
   "eta_min": 28.095,
   "cost": 28.095,
-  "runtime_s": 1.2866
+  "runtime_s": 4.5157
  },
  "after": {
   "path_geometry": [
@@ -1495,12 +1495,12 @@
   ],
   "eta_min": 29.217,
   "cost": 29.217,
-  "runtime_s": 1.4588
+  "runtime_s": 4.8383
  },
  "astar_check": {
   "eta_min": 29.217,
-  "runtime_s": 0.9675,
-  "dijkstra_runtime_s": 1.4588
+  "runtime_s": 3.417,
+  "dijkstra_runtime_s": 4.8383
  },
  "explanation": [
   "With the simulated incident the fastest path ETA changes from 28.1 to 29.2 min."
