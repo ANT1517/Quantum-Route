@@ -45,7 +45,7 @@ def solve_one(name: str, time_limit: float | None) -> dict:
                  "best_vs_optimum_pct": None if res["objective"] is None
                  else 100.0 * (res["objective"] - inst.bks) / inst.bks,
             "routes_feasible": feasible, "wall_s": res["wall_s"], "time_limit_s": res["time_limit_s"],
-            "cbc_threads": 1}
+            "cbc_threads": "CBC default (serial; no -threads option, D52)"}
 
 
 def main():
