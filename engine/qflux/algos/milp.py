@@ -50,7 +50,7 @@ def solve_milp(inst, time_limit_s: float | None = None, K: int | None = None, ms
     with tempfile.TemporaryDirectory() as tmp:
         log = Path(tmp) / "cbc.log"
         t = time.time()
-        status = prob.solve(pulp.PULP_CBC_CMD(msg=msg, timeLimit=limit, logPath=str(log)))
+        status = prob.solve(pulp.PULP_CBC_CMD(msg=msg, timeLimit=limit, logPath=str(log), threads=1))
         wall = time.time() - t
         info = _parse_cbc_log(log.read_text(errors="replace") if log.exists() else "")
     succ = {i: j for (i, j), var in x.items() if var.value() is not None and var.value() > 0.5}

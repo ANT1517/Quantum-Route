@@ -1,6 +1,8 @@
 """MILP (PuLP/CBC, MTZ) on the small P instances vs their proven optima (§9 Phase 9 item 5, §7.9).
 
-    python scripts/run_milp.py [--time-limit 600]
+    python scripts/run_milp.py [--time-limit 600] [--jobs 3]
+
+--jobs N solves the instances in N parallel processes (CBC single-threaded each; not a timed race).
 
 Writes results/tables/milp_p_instances.csv: CBC result line, best value found, CBC lower bound, gap %, wall
 time, and the proven optimum from the .sol file. The table never claims an optimum CBC did not prove;
@@ -25,31 +27,41 @@ from qflux.types import Weights  # noqa: E402
 INSTANCES = ["P-n16-k8", "P-n19-k2", "P-n22-k8"]
 
 
+def solve_one(name: str, time_limit: float | None) -> dict:
+    inst = load_instance(name)
+    inst.K = fleet_size_from_name(name)            # the proven optimum assumes k vehicles (D38)
+    res = solve_milp(inst, time_limit, K=inst.K)
+    ev = Evaluator(inst, Weights(wT=0, wD=1))
+    feasible = check(inst, ev.solution_from_routes(res["routes"]))[0] if res["routes"] else None
+    if res["optimal"]:
+        verdict = "optimal (proved by CBC)"
+    elif res["gap_pct"] is not None:
+        verdict = f"time limit, gap {res['gap_pct']:.1f}%"
+    else:
+        verdict = res["cbc_result"] or res["status"]
+    return {"instance": name, "n": inst.n, "K": inst.K, "proven_optimum_sol": inst.bks,
+                 "cbc_result": res["cbc_result"], "verdict": verdict, "best_value": res["objective"],
+                 "lower_bound": res["bound"], "gap_pct": res["gap_pct"],
+                 "best_vs_optimum_pct": None if res["objective"] is None
+                 else 100.0 * (res["objective"] - inst.bks) / inst.bks,
+            "routes_feasible": feasible, "wall_s": res["wall_s"], "time_limit_s": res["time_limit_s"],
+            "cbc_threads": 1}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--time-limit", type=float, default=None, help="seconds per instance (default: config milp)")
+    ap.add_argument("--jobs", type=int, default=1, help="instances solved in parallel")
     a = ap.parse_args()
     keep_awake(True)
-    rows = []
-    for name in INSTANCES:
-        inst = load_instance(name)
-        inst.K = fleet_size_from_name(name)            # the proven optimum assumes k vehicles (D38)
-        res = solve_milp(inst, a.time_limit, K=inst.K)
-        ev = Evaluator(inst, Weights(wT=0, wD=1))
-        feasible = check(inst, ev.solution_from_routes(res["routes"]))[0] if res["routes"] else None
-        if res["optimal"]:
-            verdict = "optimal (proved by CBC)"
-        elif res["gap_pct"] is not None:
-            verdict = f"time limit, gap {res['gap_pct']:.1f}%"
-        else:
-            verdict = res["cbc_result"] or res["status"]
-        rows.append({"instance": name, "n": inst.n, "K": inst.K, "proven_optimum_sol": inst.bks,
-                     "cbc_result": res["cbc_result"], "verdict": verdict, "best_value": res["objective"],
-                     "lower_bound": res["bound"], "gap_pct": res["gap_pct"],
-                     "best_vs_optimum_pct": None if res["objective"] is None
-                     else 100.0 * (res["objective"] - inst.bks) / inst.bks,
-                     "routes_feasible": feasible, "wall_s": res["wall_s"], "time_limit_s": res["time_limit_s"]})
-        print(rows[-1])
+    if a.jobs > 1:
+        from concurrent.futures import ProcessPoolExecutor
+        with ProcessPoolExecutor(max_workers=a.jobs) as pool:
+            rows = list(pool.map(solve_one, INSTANCES, [a.time_limit] * len(INSTANCES)))
+    else:
+        rows = [solve_one(n, a.time_limit) for n in INSTANCES]
+    for r in rows:
+        print(r)
     out = ROOT / "results" / "tables" / "milp_p_instances.csv"
     out.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(out, index=False, float_format="%.6g")

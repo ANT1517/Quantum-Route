@@ -1,0 +1,70 @@
+[scaling] 40 runs to do (0 already recorded), 11 worker(s) -> C:\Users\nisha\Quantum-Route-solver\results\runs\scaling.jsonl
+  [1/40] X-n200-k36 ortools time=120 seed=22345: D=60865.0 gap=3.90% evals=0 119.92s ls=0
+  [2/40] X-n200-k36 ortools time=120 seed=22346: D=60865.0 gap=3.90% evals=0 119.92s ls=0
+  [3/40] X-n200-k36 ortools time=120 seed=22347: D=60865.0 gap=3.90% evals=0 119.92s ls=0
+  [4/40] X-n200-k36 ortools time=120 seed=22348: D=60865.0 gap=3.90% evals=0 119.92s ls=0
+  [5/40] X-n200-k36 qpso time=120 seed=22345: D=60732.0 gap=3.68% evals=2408 120.02s ls=590
+  [6/40] X-n200-k36 ortools time=120 seed=22349: D=60865.0 gap=3.90% evals=0 119.92s ls=0
+  [7/40] X-n200-k36 qpso time=120 seed=22346: D=60891.0 gap=3.95% evals=2365 120.03s ls=579
+  [8/40] X-n200-k36 qpso time=120 seed=22347: D=60779.0 gap=3.76% evals=2280 120.02s ls=564
+  [9/40] X-n200-k36 qpso time=120 seed=22348: D=60708.0 gap=3.64% evals=2380 120.02s ls=580
+  [10/40] X-n200-k36 qpso time=120 seed=22349: D=60817.0 gap=3.82% evals=2371 120.02s ls=581
+  [11/40] X-n200-k36 qpso time=120 seed=22350: D=60744.0 gap=3.70% evals=2408 120.01s ls=587
+  [12/40] X-n200-k36 ortools time=120 seed=22350: D=60865.0 gap=3.90% evals=0 119.92s ls=0
+  [13/40] X-n200-k36 ortools time=120 seed=22351: D=60865.0 gap=3.90% evals=0 119.92s ls=0
+  [14/40] X-n200-k36 ortools time=120 seed=22352: D=60865.0 gap=3.90% evals=0 119.91s ls=0
+  [15/40] X-n200-k36 qpso time=120 seed=22351: D=61040.0 gap=4.20% evals=2335 120.03s ls=569
+  [16/40] X-n200-k36 ortools time=120 seed=22353: D=60865.0 gap=3.90% evals=0 119.93s ls=0
+  [17/40] X-n200-k36 qpso time=120 seed=22352: D=60922.0 gap=4.00% evals=2143 120.01s ls=520
+  [18/40] X-n200-k36 ortools time=120 seed=22354: D=60865.0 gap=3.90% evals=0 119.91s ls=0
+  [19/40] X-n200-k36 qpso time=120 seed=22353: D=60858.0 gap=3.89% evals=2287 120.02s ls=557
+  [20/40] X-n200-k36 qpso time=120 seed=22354: D=60856.0 gap=3.89% evals=2294 120.02s ls=557
+  [21/40] X-n502-k39 qpso_cluster time=300 seed=23345: D=71629.0 gap=3.47% evals=75692 270.15s ls=1
+  [22/40] X-n502-k39 ortools time=300 seed=23345: D=70294.0 gap=1.54% evals=0 299.93s ls=0
+  [23/40] X-n502-k39 qpso_cluster time=300 seed=23346: D=71587.0 gap=3.41% evals=76923 270.18s ls=1
+  [24/40] X-n502-k39 qpso_cluster time=300 seed=23347: D=71551.0 gap=3.36% evals=74088 270.20s ls=1
+  [25/40] X-n502-k39 qpso_cluster time=300 seed=23348: D=71618.0 gap=3.46% evals=75652 270.17s ls=1
+  [26/40] X-n502-k39 qpso_cluster time=300 seed=23349: D=71513.0 gap=3.30% evals=79042 270.18s ls=1
+  [27/40] X-n502-k39 qpso_cluster time=300 seed=23350: D=71550.0 gap=3.36% evals=77014 270.18s ls=1
+  [28/40] X-n502-k39 ortools time=300 seed=23346: D=70294.0 gap=1.54% evals=0 299.93s ls=0
+  [29/40] X-n502-k39 ortools time=300 seed=23347: D=70294.0 gap=1.54% evals=0 299.93s ls=0
+  [30/40] X-n502-k39 ortools time=300 seed=23348: D=70294.0 gap=1.54% evals=0 299.93s ls=0
+  [31/40] X-n502-k39 ortools time=300 seed=23349: D=70294.0 gap=1.54% evals=0 299.93s ls=0
+  [32/40] X-n502-k39 ortools time=300 seed=23350: D=70294.0 gap=1.54% evals=0 299.92s ls=0
+  [33/40] X-n502-k39 qpso_cluster time=300 seed=23351: D=71549.0 gap=3.36% evals=86649 270.13s ls=1
+  [34/40] X-n502-k39 qpso_cluster time=300 seed=23352: D=71607.0 gap=3.44% evals=102026 270.12s ls=1
+  [35/40] X-n502-k39 qpso_cluster time=300 seed=23353: D=71706.0 gap=3.58% evals=99693 270.11s ls=1
+  [36/40] X-n502-k39 qpso_cluster time=300 seed=23354: D=71471.0 gap=3.24% evals=108349 270.11s ls=1
+  [37/40] X-n502-k39 ortools time=300 seed=23351: D=70294.0 gap=1.54% evals=0 299.92s ls=0
+  [38/40] X-n502-k39 ortools time=300 seed=23352: D=70294.0 gap=1.54% evals=0 299.92s ls=0
+  [39/40] X-n502-k39 ortools time=300 seed=23353: D=70294.0 gap=1.54% evals=0 299.92s ls=0
+  [40/40] X-n502-k39 ortools time=300 seed=23354: D=70294.0 gap=1.54% evals=0 299.91s ls=0
+[scaling] done in 890 s
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+budget_type  budget   instance         algo  runs  D_mean  gap_mean_pct  gap_best_pct  wall_s_mean
+       time     120 X-n200-k36      ortools    10 60865.0       3.90420       3.90420     119.9190
+       time     120 X-n200-k36         qpso    10 60834.7       3.85247       3.63618     120.0220
+       time     300 X-n502-k39 qpso_cluster    10 71578.1       3.39771       3.24300     270.1530
+       time     300 X-n502-k39      ortools    10 70294.0       1.54277       1.54277     299.9230
+       time      60 X-n101-k25         qpso    30 28424.6       3.02115       2.23624      60.0071
+       time      60 X-n101-k25      ortools    30 29159.0       5.68301       5.68301      59.9118
+
+wrote:
+  C:\Users\nisha\Quantum-Route-solver\results\tables\scaling_summary.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\scaling_wilcoxon.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\scaling_friedman.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\scaling_meta.json
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_gap_vs_n.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_convergence_X-n200-k36_time120.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_gap_time120.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_convergence_X-n502-k39_time300.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_gap_time300.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_convergence_X-n101-k25_time60.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\scaling_gap_time60.png

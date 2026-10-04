@@ -1,0 +1,3 @@
+budget_type,budget,instance,reference,other,runs,seeds,median_diff,statistic,p_value,significant,direction
+time,120,X-n200-k36,qpso,ortools,10,22345..22354,-28.5,18,0.375,False,ref better
+time,60,X-n101-k25,qpso,ortools,30,21345..21374,-746,0,1.73331e-06,True,ref better

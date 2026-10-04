@@ -23,7 +23,7 @@ import random
 import subprocess
 import sys
 import time
-from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
 from dataclasses import asdict
 from pathlib import Path
 
@@ -46,6 +46,7 @@ INSTANCE_ORDER = ["P-n16-k8", "P-n19-k2", "P-n22-k8", "A-n32-k5", "A-n44-k6", "A
                   "CMT1", "CMT5", "X-n101-k25", "X-n200-k36", "X-n502-k39", "X-n1001-k43",
                   "A-n69-k9"]                          # appended (D35), so earlier seeds are unchanged
 CURVE_STEP = 100
+MIN_FREE_GB = float(os.environ.get("QR_MIN_FREE_GB", "2.0"))   # D51: pause new runs below this
 SUSPEND_FACTOR = 1.10        # a time-budget run longer than this x budget was suspended (sleep) or hit a clock jump
 META_KEYS = ("iterations", "moves", "partial", "ls_calls", "qubo_calls", "qubo_improvements", "qubo_skipped_time",
              "reinits", "solutions_found", "max_abs_key", "curve_t", "start_ts", "end_ts", "cpu_calib_ops_s",
@@ -124,6 +125,38 @@ def pin_current_process(cpu: int) -> bool:
     import ctypes
     k = ctypes.windll.kernel32
     return bool(k.SetProcessAffinityMask(k.GetCurrentProcess(), ctypes.c_size_t(1 << cpu)))
+
+
+def free_memory_gb() -> float | None:
+    """Available physical memory in GB (Windows GlobalMemoryStatusEx); None elsewhere."""
+    if sys.platform != "win32":
+        return None
+    import ctypes
+
+    class MEMSTAT(ctypes.Structure):
+        _fields_ = [("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
+                    ("ullTotalPhys", ctypes.c_ulonglong), ("ullAvailPhys", ctypes.c_ulonglong),
+                    ("ullTotalPageFile", ctypes.c_ulonglong), ("ullAvailPageFile", ctypes.c_ulonglong),
+                    ("ullTotalVirtual", ctypes.c_ulonglong), ("ullAvailVirtual", ctypes.c_ulonglong),
+                    ("ullAvailExtendedVirtual", ctypes.c_ulonglong)]
+    st = MEMSTAT()
+    st.dwLength = ctypes.sizeof(MEMSTAT)
+    ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(st))
+    return st.ullAvailPhys / 2**30
+
+
+def wait_for_memory(min_gb: float, log=print, poll_s: float = 15.0) -> float:
+    """D51: do not start a new run while free memory is below min_gb. Returns seconds waited."""
+    waited, warned = 0.0, False
+    while True:
+        free = free_memory_gb()
+        if free is None or free >= min_gb:
+            return waited
+        if not warned:
+            log(f"  [memory] {free:.1f} GB free < {min_gb:g} GB: pausing new runs until it recovers")
+            warned = True
+        time.sleep(poll_s)
+        waited += poll_s
 
 
 def cpu_calibration(seconds: float = 0.2) -> float:
@@ -384,6 +417,7 @@ def run_experiment(exp: dict, out_dir: Path | None = None, log=print, workers: i
             _PINNED["cpu"] = pin_cpus[0] if pin_current_process(pin_cpus[0]) else None
         warm_up(algos, jobs[0][0])
         for a in args:
+            wait_for_memory(MIN_FREE_GB, log)
             record(*_job(*a))
     else:
         saved = {k: os.environ.get(k) for k in THREAD_ENV}
@@ -398,9 +432,15 @@ def run_experiment(exp: dict, out_dir: Path | None = None, log=print, workers: i
                     cpu_q.put(c)
             with ProcessPoolExecutor(max_workers=workers, initializer=_worker_init,
                                      initargs=(algos, jobs[0][0], cpu_q)) as pool:
-                futs = [pool.submit(_job, *a) for a in args]
-                for fut in as_completed(futs):
-                    record(*fut.result())
+                # submit lazily (at most `workers` in flight) so a low-memory pause holds back new runs (D51)
+                pending, todo = set(), list(args)
+                while todo or pending:
+                    while todo and len(pending) < workers:
+                        wait_for_memory(MIN_FREE_GB, log)
+                        pending.add(pool.submit(_job, *todo.pop(0)))
+                    done_set, pending = wait(pending, return_when=FIRST_COMPLETED)
+                    for fut in done_set:
+                        record(*fut.result())
         finally:
             for k, v in saved.items():
                 if v is None:

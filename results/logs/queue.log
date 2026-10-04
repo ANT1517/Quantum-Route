@@ -3,3 +3,21 @@
 2026-10-04 15:17:48 cluster solver test
 2026-10-04 15:18:09 profile QPSO-full on A-n80-k10 (30 s, idle machine)
 2026-10-04 15:18:59 start bench_core_v1_noqubo
+2026-10-04 15:23:19 queue2: waiting for leftover run_bench processes to exit
+2026-10-04 15:31:18 start bench_core_v1_report
+2026-10-04 15:31:45 done bench_core_v1_report
+2026-10-04 15:31:45 start bench_core_v1_noqubo
+2026-10-04 15:32:00 done bench_core_v1_noqubo
+2026-10-04 15:32:00 start bench_core_v1_report2
+2026-10-04 15:32:25 done bench_core_v1_report2
+2026-10-04 15:32:25 start ablation
+2026-10-04 15:42:40 done ablation
+2026-10-04 15:42:41 start ablation_evals
+2026-10-04 15:43:55 done ablation_evals
+2026-10-04 15:43:55 start alpha_sweep
+2026-10-04 15:49:05 done alpha_sweep
+2026-10-04 15:49:05 start test_cluster
+2026-10-04 15:49:24 done test_cluster
+2026-10-04 15:49:25 start scaling
+2026-10-04 16:04:40 done scaling
+2026-10-04 16:04:40 start milp

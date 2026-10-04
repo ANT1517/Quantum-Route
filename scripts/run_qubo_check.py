@@ -57,7 +57,8 @@ def hyderabad_routes(time_s: float):
         for route in res["routes"]:
             stops = [int(c) for c in route["stops"]]
             if 3 <= len(stops) <= 7:
-                yield f"Hyderabad (QPSO-full routes, {label})", label, stops, dist
+                kind = "short-route variant, K=12, Q=100" if label.endswith("K12") else "demo scenario, K=6, Q=200"
+                yield f"Hyderabad (QPSO-full routes, {label}: {kind})", label, stops, dist
 
 
 def main():

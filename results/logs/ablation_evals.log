@@ -1,0 +1,56 @@
+[ablation_evals] 40 runs to do (0 already recorded), 11 worker(s) -> C:\Users\nisha\Quantum-Route-solver\results\runs\ablation_evals.jsonl
+  [1/40] A-n63-k9 pso_plain evals=12000 seed=17345: D=3325.0 gap=105.75% evals=12000 7.05s ls=0
+  [2/40] A-n63-k9 qpso_base_plain evals=12000 seed=17345: D=3619.0 gap=123.95% evals=12000 7.13s ls=0
+  [3/40] A-n63-k9 pso_plain evals=12000 seed=17346: D=2984.0 gap=n/a evals=12000 7.16s ls=0
+  [4/40] A-n63-k9 qpso_base_plain evals=12000 seed=17346: D=4015.0 gap=148.45% evals=12000 7.15s ls=0
+  [5/40] A-n63-k9 qpso_base_plain evals=12000 seed=17347: D=3351.0 gap=n/a evals=12000 7.18s ls=0
+  [6/40] A-n63-k9 pso_plain evals=12000 seed=17347: D=3818.0 gap=136.26% evals=12000 7.14s ls=0
+  [7/40] A-n63-k9 pso_plain evals=12000 seed=17348: D=3178.0 gap=n/a evals=12000 7.12s ls=0
+  [8/40] A-n63-k9 qpso_base_plain evals=12000 seed=17348: D=3216.0 gap=n/a evals=12000 7.25s ls=0
+  [9/40] A-n63-k9 pso_plain evals=12000 seed=17349: D=3000.0 gap=n/a evals=12000 7.05s ls=0
+  [10/40] A-n63-k9 qpso_base_plain evals=12000 seed=17349: D=3244.0 gap=n/a evals=12000 7.13s ls=0
+  [11/40] A-n63-k9 qpso_base_plain evals=12000 seed=17350: D=3132.0 gap=n/a evals=12000 7.24s ls=0
+  [12/40] A-n63-k9 pso_plain evals=12000 seed=17350: D=3519.0 gap=117.76% evals=12000 6.80s ls=0
+  [13/40] A-n63-k9 pso_plain evals=12000 seed=17352: D=2940.0 gap=n/a evals=12000 6.85s ls=0
+  [14/40] A-n63-k9 pso_plain evals=12000 seed=17351: D=3556.0 gap=120.05% evals=12000 6.91s ls=0
+  [15/40] A-n63-k9 qpso_base_plain evals=12000 seed=17351: D=3967.0 gap=145.48% evals=12000 7.03s ls=0
+  [16/40] A-n63-k9 pso_plain evals=12000 seed=17353: D=3601.0 gap=122.83% evals=12000 6.90s ls=0
+  [17/40] A-n63-k9 qpso_base_plain evals=12000 seed=17352: D=3252.0 gap=n/a evals=12000 7.01s ls=0
+  [18/40] A-n63-k9 qpso_base_plain evals=12000 seed=17353: D=3631.0 gap=124.69% evals=12000 7.08s ls=0
+  [19/40] A-n63-k9 pso_plain evals=12000 seed=17354: D=3172.0 gap=n/a evals=12000 6.97s ls=0
+  [20/40] A-n63-k9 qpso_base_plain evals=12000 seed=17354: D=3355.0 gap=n/a evals=12000 7.12s ls=0
+  [21/40] A-n80-k10 pso_plain evals=12000 seed=18345: D=3869.0 gap=119.46% evals=12000 9.86s ls=0
+  [22/40] A-n80-k10 qpso_base_plain evals=12000 seed=18345: D=4302.0 gap=144.02% evals=12000 9.98s ls=0
+  [23/40] A-n80-k10 pso_plain evals=12000 seed=18347: D=3980.0 gap=125.75% evals=12000 10.17s ls=0
+  [24/40] A-n80-k10 pso_plain evals=12000 seed=18346: D=3956.0 gap=124.39% evals=12000 10.47s ls=0
+  [25/40] A-n80-k10 qpso_base_plain evals=12000 seed=18346: D=4287.0 gap=143.17% evals=12000 10.42s ls=0
+  [26/40] A-n80-k10 pso_plain evals=12000 seed=18348: D=3980.0 gap=125.75% evals=12000 10.34s ls=0
+  [27/40] A-n80-k10 qpso_base_plain evals=12000 seed=18347: D=4303.0 gap=144.07% evals=12000 10.54s ls=0
+  [28/40] A-n80-k10 qpso_base_plain evals=12000 seed=18348: D=4359.0 gap=147.25% evals=12000 10.48s ls=0
+  [29/40] A-n80-k10 pso_plain evals=12000 seed=18349: D=3862.0 gap=119.06% evals=12000 10.46s ls=0
+  [30/40] A-n80-k10 qpso_base_plain evals=12000 seed=18350: D=4353.0 gap=146.91% evals=12000 10.52s ls=0
+  [31/40] A-n80-k10 qpso_base_plain evals=12000 seed=18349: D=4283.0 gap=142.94% evals=12000 10.77s ls=0
+  [32/40] A-n80-k10 pso_plain evals=12000 seed=18350: D=3970.0 gap=125.18% evals=12000 9.79s ls=0
+  [33/40] A-n80-k10 qpso_base_plain evals=12000 seed=18351: D=4310.0 gap=144.47% evals=12000 9.83s ls=0
+  [34/40] A-n80-k10 qpso_base_plain evals=12000 seed=18352: D=4313.0 gap=144.64% evals=12000 6.99s ls=0
+  [35/40] A-n80-k10 pso_plain evals=12000 seed=18352: D=4049.0 gap=129.67% evals=12000 6.92s ls=0
+  [36/40] A-n80-k10 pso_plain evals=12000 seed=18351: D=3945.0 gap=123.77% evals=12000 7.15s ls=0
+  [37/40] A-n80-k10 pso_plain evals=12000 seed=18354: D=4054.0 gap=129.95% evals=12000 6.73s ls=0
+  [38/40] A-n80-k10 pso_plain evals=12000 seed=18353: D=4083.0 gap=131.59% evals=12000 6.95s ls=0
+  [39/40] A-n80-k10 qpso_base_plain evals=12000 seed=18353: D=4278.0 gap=142.65% evals=12000 6.84s ls=0
+  [40/40] A-n80-k10 qpso_base_plain evals=12000 seed=18354: D=4263.0 gap=141.80% evals=12000 6.90s ls=0
+[ablation_evals] done in 52 s
+budget_type  budget  instance            algo  runs  D_mean  gap_mean_pct  gap_best_pct  wall_s_mean
+      evals   12000  A-n63-k9       pso_plain    10  3563.8       120.532       105.755      6.99569
+      evals   12000  A-n63-k9 qpso_base_plain    10  3808.0       135.644       123.948      7.13243
+      evals   12000 A-n80-k10       pso_plain    10  3974.8       125.457       119.058      8.88350
+      evals   12000 A-n80-k10 qpso_base_plain    10  4305.1       144.192       141.804      9.32816
+
+wrote:
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_evals_summary.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_evals_wilcoxon.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_evals_friedman.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_evals_meta.json
+  C:\Users\nisha\Quantum-Route-solver\results\figures\ablation_evals_convergence_A-n63-k9_evals12000.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\ablation_evals_convergence_A-n80-k10_evals12000.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\ablation_evals_gap_evals12000.png
