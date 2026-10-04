@@ -1,0 +1,61 @@
+QuantumRoute
+Home
+Scenario
+Run
+Results
+Fleet
+Path
+Bench
+Quantum
+API 0.4.0
+Demo mode
+Fleet Impact
+Does our own fleet create the jam? Naive routing vs system-optimal (marginal-cost) routing.
+S (VEHICLE-EQUIVALENTS PER ROUTE): 25
+Compare modes
+S = platform scale factor, a modelling assumption: each planned route is treated as S vehicles on the road so the fleet's own flow is visible in the simulated traffic. Traffic is simulated (load-ratio profiles + BPR), not measured.
+NAIVE (everyone fastest)
++
+−
+ Leaflet | © OpenStreetMap contributors
+Externality
+260.02 veh-h
+Max V/C
+1.6
+Edges over capacity
+1,556
+Corridors used
+41
+CO₂ (illustrative)
+61.16 kg
+SYSTEM-OPTIMAL (marginal cost)
++
+−
+ Leaflet | © OpenStreetMap contributors
+Externality
+160.35 veh-h
+Max V/C
+1.6
+Edges over capacity
+800
+Corridors used
+121
+CO₂ (illustrative)
+68.72 kg
+Edge colour by V/C:
+0.5
+0.8
+1
+1.2
+1.4
+· width = fleet flow
+ALL MODES
+METRIC	NAIVE	USER_EQ	SYSTEM_OPT	SYSTEM_OPT VS NAIVE
+Externality (veh-h)	260.02	258.85	160.35	-38.3%
+Max V/C	1.6	1.6	1.6	0.0%
+Edges over capacity	1,556	1,511	800	-48.6%
+Corridors used	41	43	121	+195.1%
+CO₂ (illustrative) (kg)	61.16	61.22	68.72	+12.4%
+Total time (min)	562.54	563.26	665.84	+18.4%
+Congestion delay (min)	175.74	174.29	263.35	+49.9%
+QPSO is a classical, quantum-inspired metaheuristic running on ordinary CPUs. No quantum speedup is claimed. Traffic is simulated.

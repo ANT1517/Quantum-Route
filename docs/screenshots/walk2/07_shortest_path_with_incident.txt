@@ -1,0 +1,36 @@
+QuantumRoute
+Home
+Scenario
+Run
+Results
+Fleet
+Path
+Bench
+Quantum
+API 0.4.0
+Demo mode
+Shortest Path
+
+Time-dependent shortest path (ambulance demo). Click the map to set the source.
+
+Source: 17.4856, 78.2783
+Target: 17.4856, 78.5955
+DEPARTURE
+ALGORITHM
+TD-Dijkstra (exact)
+A*
+Incident on the way (recompute path + ETA)
+Adds a 1 km zone (×3) at the source–target midpoint to this scenario on the backend.
+Compute path
+Source
+Target
++
+−
+ Leaflet | © OpenStreetMap contributors
+BEFORE
+70.1 min ETA
+arrive 18:40 · cost 70.1 · runtime 3.019 s
+WITH INCIDENT
+70.1 min ETA
+arrive 18:40 · cost 70.1 · runtime 2.457 s
+QPSO is a classical, quantum-inspired metaheuristic running on ordinary CPUs. No quantum speedup is claimed. Traffic is simulated.
