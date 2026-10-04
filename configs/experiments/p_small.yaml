@@ -1,0 +1,13 @@
+# Heuristic vs exact evidence (item 4, 2026-10-04): small Augerat P instances with proven optima (.sol files),
+# K = k (D38). QPSO-noQUBO (default engine, D53), PSO+LS and OR-Tools (D55 matrix API), 10 s, 10 runs.
+# Reported next to the MILP table: gap to the proven optimum and time to reach it (from meta.curve_t).
+name: p_small
+description: "P-n16/19/22 (proven optima, K = k): QPSO-noQUBO, PSO+LS, OR-Tools; 10 s, 10 runs"
+instances: [P-n16-k8, P-n19-k2, P-n22-k8]
+runs: 10
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: qpso_noqubo
+variants:
+  qpso_noqubo: {algo: qpso, params: {qubo_slot: {enabled: false}}}
+budgets:
+  - {type: time, value: 10, algorithms: [qpso_noqubo, pso_ls, ortools]}

@@ -34,10 +34,13 @@ class ORTools:
         V = inst.K if inst.K is not None else n
         mgr = pywrapcp.RoutingIndexManager(n + 1, V, 0)
         routing = pywrapcp.RoutingModel(mgr)
-        cb = routing.RegisterTransitCallback(lambda a, b: int(icost[mgr.IndexToNode(a), mgr.IndexToNode(b)]))
+        # D55: costs and demands as C++-side matrix/vector. A Python callback evaluated every arc through the
+        # interpreter and cut OR-Tools' search throughput ~2.6x (CMT1, 30 s: 598 vs 1,580 solutions). Same
+        # model and search parameters; only the evaluation path changes.
+        cb = routing.RegisterTransitMatrix(icost.tolist())
         routing.SetArcCostEvaluatorOfAllVehicles(cb)
         dem = np.rint(inst.demand).astype(int).tolist()
-        dcb = routing.RegisterUnaryTransitCallback(lambda a: dem[mgr.IndexToNode(a)])
+        dcb = routing.RegisterUnaryTransitVector(dem)
         routing.AddDimensionWithVehicleCapacity(dcb, 0, [int(inst.Q)] * V, True, "load")
         prm = pywrapcp.DefaultRoutingSearchParameters()
         prm.first_solution_strategy = getattr(routing_enums_pb2.FirstSolutionStrategy, self.p["first_solution"])

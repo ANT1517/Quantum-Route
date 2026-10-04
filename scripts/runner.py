@@ -57,6 +57,14 @@ PHASES = {
         ("qubo_check", [PY, "-u", "scripts/run_qubo_check.py"]),
         ("api_job_tests", [PY, "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests/api"]),
     ],
+    # D55: OR-Tools re-run with the matrix API (only its rows), then the P-instance heuristic-vs-exact run
+    "d55": [
+        ("d55_move_bench_core_v1", [PY, "scripts/supersede_rows.py", "--exp", "bench_core_v1", "--algos", "ortools", "--tag", "d55"]),
+        ("d55_move_scaling", [PY, "scripts/supersede_rows.py", "--exp", "scaling", "--algos", "ortools", "--tag", "d55"]),
+        ("d55_rerun_bench_core_v1", [PY, "-u", "scripts/run_bench.py", "--exp", "bench_core_v1"]),
+        ("d55_rerun_scaling", [PY, "-u", "scripts/run_bench.py", "--exp", "scaling"]),
+        ("p_small", [PY, "-u", "scripts/run_bench.py", "--exp", "p_small"]),
+    ],
     # optional, after D46: nothing else may run during the P-core check
     "optional": [
         ("pcore_check", [PY, "-u", "scripts/run_bench.py", "--exp", "pcore_check"]),

@@ -37,6 +37,11 @@ def get_optimizer(name: str, params: dict | None = None):
     if name == "qpso":
         from .qpso import QPSO
         return QPSO(**params)
+    if name == "qpso_noqubo":                       # D53: default "QuantumRoute engine" (QUBO slot off)
+        from .qpso import QPSO
+        opt = QPSO(**{"qubo_slot": {"enabled": False}, **params})
+        opt.name = "qpso_noqubo"
+        return opt
     if name == "qpso_base":
         from .qpso import BASE_QPSO, QPSO
         opt = QPSO(**{**BASE_QPSO, **params})
@@ -69,4 +74,4 @@ def get_optimizer(name: str, params: dict | None = None):
     raise KeyError(f"unknown optimizer {name!r}")
 
 
-ALGORITHMS = ("qpso", "qpso_base", "pso", "pso_ls", "ga", "ga_ls", "sa", "rr_ls", "qpso_cluster", "ortools", "nn")
+ALGORITHMS = ("qpso", "qpso_noqubo", "qpso_base", "pso", "pso_ls", "ga", "ga_ls", "sa", "rr_ls", "qpso_cluster", "ortools", "nn")
