@@ -1,0 +1,72 @@
+[bench_core_v1] 1 runs to do (1079 already recorded), 1 worker(s) -> C:\Users\nisha\Quantum-Route-solver\results\runs\bench_core_v1.jsonl
+  [1/1] CMT5 sa time=60 seed=20361: D=1506.2 gap=16.64% evals=83474 60.00s ls=0
+[bench_core_v1] done in 61 s
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+budget_type  budget   instance        algo  runs    D_mean  gap_mean_pct  gap_best_pct  wall_s_mean
+       time      30   A-n32-k5     ortools    30   784.000      0.000000      0.000000      29.9053
+       time      30   A-n32-k5       ga_ls    30   805.300      2.716840      0.000000      30.0025
+       time      30   A-n32-k5        qpso    30   784.000      0.000000      0.000000      30.0050
+       time      30   A-n32-k5      pso_ls    30   784.000      0.000000      0.000000      30.0024
+       time      30   A-n32-k5       rr_ls    30   784.000      0.000000      0.000000      30.0028
+       time      30   A-n32-k5          sa    30   798.400      1.836730      0.000000      30.0027
+       time      30   A-n63-k9        qpso    30  1666.930      3.151820      1.113860      30.0047
+       time      30   A-n63-k9      pso_ls    30  1649.830      2.093650      0.866337      30.0044
+       time      30   A-n63-k9       ga_ls    30  1681.130      4.030530      2.413370      30.0038
+       time      30   A-n63-k9          sa    30  1774.470      9.806110      5.074260      30.0034
+       time      30   A-n63-k9       rr_ls    30  1679.600      3.935640      2.165840      30.0034
+       time      30   A-n63-k9     ortools    30  1737.370      7.510310      7.487620      29.9060
+       time      30  A-n80-k10        qpso    30  1857.970      5.386650      1.815090      30.0051
+       time      30  A-n80-k10      pso_ls    30  1839.370      4.331630      2.609190      30.0046
+       time      30  A-n80-k10       ga_ls    30  1873.530      6.269620      2.212140      30.0043
+       time      30  A-n80-k10          sa    30  2024.930     14.857300      9.812820      30.0037
+       time      30  A-n80-k10       rr_ls    30  1882.800      6.795240      5.275100      30.0043
+       time      30  A-n80-k10     ortools    30  1842.270      4.496120      4.481000      29.9059
+       time      30       CMT1        qpso    30   524.639      0.005302      0.000028      30.0037
+       time      30       CMT1      pso_ls    30   524.697      0.016370      0.000028      30.0028
+       time      30       CMT1       ga_ls    30   544.465      3.784570      0.000028      30.0038
+       time      30       CMT1          sa    30   550.781      4.988510      0.869766      30.0037
+       time      30       CMT1       rr_ls    30   534.304      1.847600      0.098079      30.0033
+       time      30       CMT1     ortools    30   579.926     10.544000     10.544000      29.9064
+       time      60       CMT5        qpso    30  1440.150     11.528300      8.576010      60.0235
+       time      60       CMT5      pso_ls    30  1439.730     11.495900      9.213310      60.0145
+       time      60       CMT5       ga_ls    30  1422.170     10.135800      6.250770      60.0101
+       time      60       CMT5          sa    30  1941.770     50.374800     16.643100      60.0091
+       time      60       CMT5       rr_ls    30  1483.890     14.915600     11.426600      60.0124
+       time      60       CMT5     ortools    30  1470.580     13.884800     13.884800      59.9254
+       time      60 X-n101-k25        qpso    30 28424.600      3.021150      2.236240      60.0071
+       time      60 X-n101-k25      pso_ls    30 28287.000      2.522560      1.841180      60.0066
+       time      60 X-n101-k25       ga_ls    30 28487.100      3.247800      2.011530      60.0054
+       time      60 X-n101-k25       rr_ls    30 28478.800      3.217840      1.949910      60.0060
+       time      60 X-n101-k25     ortools    30 29159.000      5.683010      5.683010      59.9118
+       time      60 X-n101-k25          sa    30 28942.400      4.897970      2.370340      60.0046
+       time      30   A-n32-k5 qpso_noqubo    30   784.000      0.000000      0.000000      30.0027
+       time      30   A-n63-k9 qpso_noqubo    30  1649.430      2.068890      0.804455      30.0038
+       time      30  A-n80-k10 qpso_noqubo    30  1841.370      4.445070      2.439020      30.0044
+       time      30       CMT1 qpso_noqubo    30   524.639      0.005302      0.000028      30.0030
+       time      60       CMT5 qpso_noqubo    30  1432.010     10.897800      7.447790      60.0146
+       time      60 X-n101-k25 qpso_noqubo    30 28323.900      2.656180      2.199990      60.0063
+
+wrote:
+  C:\Users\nisha\Quantum-Route-solver\results\tables\bench_core_v1_summary.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\bench_core_v1_wilcoxon.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\bench_core_v1_friedman.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\bench_core_v1_meta.json
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_convergence_A-n32-k5_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_convergence_A-n63-k9_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_convergence_A-n80-k10_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_convergence_CMT1_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_gap_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_convergence_CMT5_time60.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_convergence_X-n101-k25_time60.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_gap_time60.png

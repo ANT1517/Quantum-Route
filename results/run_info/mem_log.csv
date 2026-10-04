@@ -17,3 +17,17 @@ time,free_gb,step
 2026-10-04 16:31:57,5.24,milp_parallel
 2026-10-04 16:32:57,5.26,milp_parallel
 2026-10-04 16:33:57,5.28,milp_parallel
+2026-10-04 17:02:44,5.04,d51_pass2_move
+2026-10-04 17:03:44,4.97,d51_pass2_bench_core_v1
+2026-10-04 17:04:44,4.78,d51_pass2_ablation
+2026-10-04 17:05:44,4.74,milp_parallel
+2026-10-04 17:06:44,4.73,milp_parallel
+2026-10-04 17:07:44,4.76,milp_parallel
+2026-10-04 17:08:44,4.83,milp_parallel
+2026-10-04 17:09:44,4.59,milp_parallel
+2026-10-04 17:10:44,4.62,milp_parallel
+2026-10-04 17:11:44,4.63,milp_parallel
+2026-10-04 17:12:44,4.40,milp_parallel
+2026-10-04 17:13:44,4.48,milp_parallel
+2026-10-04 17:14:44,4.55,milp_parallel
+2026-10-04 17:15:44,4.92,qubo_check

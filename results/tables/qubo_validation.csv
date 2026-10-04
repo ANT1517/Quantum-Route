@@ -1,0 +1,10 @@
+source,A_factor_x_max_d,routes,m_range,num_reads,neal_feasible_pct,neal_optimal_pct,neal_mean_gap_pct_feasible,neal_max_gap_pct_feasible,twoopt_optimal_pct,twoopt_mean_gap_pct,time_per_route_neal_ms,time_per_route_brute_ms,time_per_route_2opt_ms
+CVRPLIB A (BKS routes),1.5,20,4-7,200,100,80,0.517903,3.14136,100,0,154.189,7.90356,0.026905
+CVRPLIB A (BKS routes),3,20,4-7,200,100,60,1.66515,11,100,0,146.183,7.90356,0.026905
+CVRPLIB A (BKS routes),6,20,4-7,200,100,50,2.06932,13,100,0,138.13,7.90356,0.026905
+"Hyderabad (QPSO-full routes, Hyderabad-60: demo scenario, K=6, Q=200)",1.5,1,4-4,200,100,100,0,0,0,6.4289,51.4311,0.0707001,0.0218999
+"Hyderabad (QPSO-full routes, Hyderabad-60: demo scenario, K=6, Q=200)",3,1,4-4,200,100,100,0,0,0,6.4289,48.6592,0.0707001,0.0218999
+"Hyderabad (QPSO-full routes, Hyderabad-60: demo scenario, K=6, Q=200)",6,1,4-4,200,100,100,0,0,0,6.4289,48.057,0.0707001,0.0218999
+"Hyderabad (QPSO-full routes, Hyderabad-60-K12: short-route variant, K=12, Q=100)",1.5,11,3-7,200,100,72.7273,0.363105,2.08686,72.7273,1.11305,116.562,3.49722,0.0296909
+"Hyderabad (QPSO-full routes, Hyderabad-60-K12: short-route variant, K=12, Q=100)",3,11,3-7,200,100,63.6364,1.83612,7.519,72.7273,1.11305,106.153,3.49722,0.0296909
+"Hyderabad (QPSO-full routes, Hyderabad-60-K12: short-route variant, K=12, Q=100)",6,11,3-7,200,100,81.8182,0.866046,6.40772,72.7273,1.11305,102.088,3.49722,0.0296909

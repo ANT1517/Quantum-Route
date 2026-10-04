@@ -30,3 +30,17 @@
 2026-10-04 16:21:01 runner[main] start d51_audit_after
 2026-10-04 16:21:02 runner[main] done d51_audit_after rc=0
 2026-10-04 16:21:02 runner[main] start milp_parallel
+2026-10-04 17:02:44 runner[resume] start d51_pass2_move
+2026-10-04 17:02:46 runner[resume] done d51_pass2_move rc=0
+2026-10-04 17:02:46 runner[resume] start d51_pass2_bench_core_v1
+2026-10-04 17:04:01 runner[resume] done d51_pass2_bench_core_v1 rc=0
+2026-10-04 17:04:01 runner[resume] start d51_pass2_ablation
+2026-10-04 17:04:46 runner[resume] done d51_pass2_ablation rc=0
+2026-10-04 17:04:46 runner[resume] start d51_audit_final
+2026-10-04 17:04:48 runner[resume] done d51_audit_final rc=0
+2026-10-04 17:04:48 runner[resume] start milp_parallel
+2026-10-04 17:14:52 runner[resume] done milp_parallel rc=0
+2026-10-04 17:14:52 runner[resume] start qubo_check
+2026-10-04 17:15:53 runner[resume] done qubo_check rc=0
+2026-10-04 17:15:53 runner[resume] start api_job_tests
+2026-10-04 17:16:17 runner[resume] done api_job_tests rc=1

@@ -37,9 +37,11 @@ def run(job_id: str, spec: dict, job: dict, q, cancel, timeout_s: float):
     except Exception as e:  # noqa: BLE001  -> FAILED + message (§10.2)
         return {"status": "FAILED", "result": None, "error": f"{type(e).__name__}: {e}",
                 "trace": traceback.format_exc(limit=5)}
+    # the timeout cap was the binding limit: the run ended at the job timeout before its own budget
+    hit_timeout = bool(job.get("timeout_bound")) and time.time() - t0 >= 0.95 * timeout_s
     if cancel.is_set():
         status = "CANCELLED"
-    elif state["timeout"] or res.get("status") == "COMPLETED_PARTIAL":
+    elif state["timeout"] or hit_timeout or res.get("status") == "COMPLETED_PARTIAL":
         status = "COMPLETED_PARTIAL"
     else:
         status = "COMPLETED"

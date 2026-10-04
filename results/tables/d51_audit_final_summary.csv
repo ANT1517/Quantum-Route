@@ -1,0 +1,6 @@
+exp,timed_runs,flagged,min_work_rel,min_ls_rel,min_calib_rel,max_wall_ratio,runs_with_start_time
+ablation,200,0,0.8011,0.7917,0.7576,1.001,200
+alpha_sweep,90,0,0.7829,0.7809,0.7565,1,90
+bench_core_v1,1080,0,0.7807,0.7746,0.7583,1.005,5
+bench_core_v1_noqubo,180,0,0.8608,0.8593,,1.001,180
+scaling,40,0,0.9121,0.9061,0.8643,1,40

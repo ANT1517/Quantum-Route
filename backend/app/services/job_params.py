@@ -32,10 +32,13 @@ def engine_job(body, warm_perm: list[int] | None) -> dict:
             budget["evals"] = int((N or 40) * iterations)
         else:
             budget["time_s"] = DEFAULT_TIME_S
-    if budget["time_s"] is not None:
-        budget["time_s"] = min(float(budget["time_s"]), JOB_TIMEOUT_S)
     if body.algorithm == "ortools" and budget["time_s"] is None:
         budget["time_s"] = DEFAULT_TIME_S              # OR-Tools runs on a time limit only (§7.8)
+    # The job timeout must reach the optimizer's own deadline (D31: LS, QUBO slot and polish stop at it);
+    # should_stop alone is only checked between iterations, so one long LS pass could overrun it.
+    timeout_bound = budget["time_s"] is None or float(budget["time_s"]) > JOB_TIMEOUT_S
+    budget["time_s"] = min(float(budget["time_s"]), JOB_TIMEOUT_S) if budget["time_s"] is not None else JOB_TIMEOUT_S
     w = body.weights.model_dump(exclude_none=True)
     return {"algorithm": body.algorithm, "weights": w, "params": p, "seed": body.seed, "budget": budget,
+            "timeout_bound": timeout_bound,
             "fleet_mode": body.fleet_mode, "warm_start": {"perm": warm_perm} if warm_perm else None}

@@ -1,7 +1,6 @@
 {
-  "pid": 50932,
-  "time": "16:21:02",
-  "step": "milp_parallel",
-  "state": "running",
-  "started": "16:21:02"
+  "pid": 1964,
+  "time": "17:16:17",
+  "step": "api_job_tests",
+  "state": "FAILED rc=1"
 }
