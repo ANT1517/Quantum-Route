@@ -53,6 +53,9 @@ export default function RunOptimizer() {
   const [iters, setIters] = useState(150);
   const [alphaStart, setAlphaStart] = useState(1.0);
   const [alphaEnd, setAlphaEnd] = useState(0.5);
+  // Default = the shipped engine QPSO-noQUBO (tuned): fixed alpha 0.3, chosen on CVRPLIB tuning instances (D54/D59).
+  // A linear alpha schedule is sent only when the user asks for it.
+  const [customAlpha, setCustomAlpha] = useState(false);
   const [seed, setSeed] = useState(7);
   const [fleetMode, setFleetMode] = useState<FleetMode>("naive");
   const [jobId, setJobId] = useState<string | null>(null);
@@ -78,7 +81,7 @@ export default function RunOptimizer() {
     setStarting(true);
     try {
       const p: Record<string, unknown> = { N, iterations: iters };
-      if (algorithm === "qpso") {
+      if (algorithm === "qpso" && customAlpha) {
         p.alpha_start = alphaStart;
         p.alpha_end = alphaEnd;
       }
@@ -188,6 +191,15 @@ export default function RunOptimizer() {
             <input type="number" min={1} className="input" value={iters} onChange={(e) => setIters(Math.max(1, Number(e.target.value)))} />
           </div>
           {algorithm === "qpso" && (
+            <div className="col-span-2 text-xs text-slate-600">
+              <label className="flex items-center gap-2">
+                <input type="checkbox" checked={customAlpha} onChange={(e) => setCustomAlpha(e.target.checked)} />
+                Custom α schedule (linear)
+              </label>
+              {!customAlpha && <div className="mt-1">α = 0.3 fixed — QPSO-noQUBO (tuned), tuned on CVRPLIB tuning instances only.</div>}
+            </div>
+          )}
+          {algorithm === "qpso" && customAlpha && (
             <>
               <div>
                 <label className="label">α start</label>

@@ -18,7 +18,8 @@ def engine_job(body, warm_perm: list[int] | None) -> dict:
                                            "(scripts/run_milp.py); it is not available as a platform job")
     p = body.params.model_dump(exclude_none=True)
     # result labels -> engine settings (integration fix: re-optimize sends the previous result's label)
-    alias = {"qpso_noqubo_tuned": {}, "qpso_noqubo": {"alpha_mode": "adaptive"}, "qpso_full": {"qubo_slot": True}}
+    alias = {"qpso_noqubo_tuned": {}, "qpso_noqubo": {"alpha_mode": "adaptive"}, "qpso_full": {"qubo_slot": True},
+             "qpso_noqubo_linear": {}}            # re-optimize of a custom-alpha run falls back to the shipped engine
     if body.algorithm in alias:
         extra = alias[body.algorithm]
         body = body.model_copy(update={"algorithm": "qpso"})
@@ -58,8 +59,8 @@ def engine_job(body, warm_perm: list[int] | None) -> dict:
     w = body.weights.model_dump(exclude_none=True)
     return {"algorithm": body.algorithm, "weights": w, "params": p, "seed": body.seed, "budget": budget,
             "timeout_bound": timeout_bound,
-            "label": (("qpso_full" if qubo else ("qpso_noqubo" if (a0 is not None or a1 is not None
-                                                                   or p.get("alpha_mode") == "adaptive")
+            "label": (("qpso_full" if qubo else ("qpso_noqubo_linear" if (a0 is not None or a1 is not None)
+                                                else "qpso_noqubo" if p.get("alpha_mode") == "adaptive"
                                                 else "qpso_noqubo_tuned"))
                       if body.algorithm == "qpso" else body.algorithm),
             "fleet_mode": body.fleet_mode, "warm_start": {"perm": warm_perm} if warm_perm else None}

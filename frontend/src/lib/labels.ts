@@ -7,6 +7,7 @@ export const ALGO_LABELS: Record<string, string> = {
   qn_tuned_cluster: "QPSO-noQUBO (tuned), cluster-first",
   qpso_noqubo: "QPSO-noQUBO (adaptive α)",
   qpso_full: "QPSO-full (QUBO slot on)",
+  qpso_noqubo_linear: "QPSO-noQUBO (custom α schedule)",
   pso: "PSO",
   pso_ls: "PSO+LS",
   pso_tuned: "PSO+LS (tuned)",

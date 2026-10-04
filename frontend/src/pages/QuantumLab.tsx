@@ -134,7 +134,7 @@ export default function QuantumLab() {
         )}
         {demo && <div className="text-xs text-slate-500">Demo mode returns the pre-exported qubo_route_demo.json regardless of the route picked.</div>}
         {solve.err && <div className="rounded bg-red-50 p-2 text-sm text-red-800">{solve.err}</div>}
-        {solve.res && <Solution stops={solve.stops} r={solve.res} label={demo ? "MOCK" : undefined} />}
+        {solve.res && <Solution stops={solve.stops} r={solve.res} label={demo ? String((solve.res as { label?: string }).label ?? "pre-exported demo route") : undefined} />}
       </div>
 
       <div className="card space-y-2">

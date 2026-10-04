@@ -9,7 +9,8 @@ from .settings import MAX_CUSTOMERS, MAX_ITERATIONS, MAX_SWARM
 Source = Literal["hyderabad", "synth", "cvrplib"]
 FleetMode = Literal["naive", "user_eq", "system_opt"]
 # result labels are accepted too (re-optimize re-sends the previous result's algorithm label)
-JobAlgorithm = Literal["qpso", "pso", "ga", "sa", "ortools", "milp", "qpso_noqubo_tuned", "qpso_noqubo", "qpso_full"]
+JobAlgorithm = Literal["qpso", "pso", "ga", "sa", "ortools", "milp", "qpso_noqubo_tuned", "qpso_noqubo",
+                       "qpso_noqubo_linear", "qpso_full"]
 
 
 class Strict(BaseModel):
