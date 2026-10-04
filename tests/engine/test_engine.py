@@ -129,15 +129,25 @@ def test_t10_held_karp_equals_brute():
     assert tour_cost(hk, dist) == pytest.approx(tour_cost(brute, dist))
 
 
-def test_t11_heuristic_not_below_milp():
-    from qflux.algos.milp import solve_milp
-    inst = load_instance("P-n16-k8")
-    res = solve_milp(inst, time_limit_s=120)
+@pytest.mark.parametrize("name", ["P-n16-k8", "P-n19-k2", "P-n22-k8"])
+def test_t11_heuristic_not_below_proven_optimum(name):
+    """T11: heuristics never beat the proven optimum stored in the .sol file (CBC with MTZ cannot prove it
+    within a test-friendly time limit, so the MILP is not run here; see scripts/run_milp.py).
+    The optimum assumes the fleet size k from the name (D38), so the fleet limit K = k is applied; a
+    solution that uses more than k vehicles must carry the fleet penalty instead."""
+    from qflux.bench.loader import fleet_size_from_name, read_solution_routes
+    inst = load_instance(name)
+    inst.K = fleet_size_from_name(name)
     e = Evaluator(inst, DIST_W)
-    sol, _ = get_optimizer("sa").run(e, 6000, None, make_rng(11))
-    assert sol.D >= res["objective"] - 1e-6
-    if res["optimal"]:
-        assert res["objective"] == pytest.approx(inst.bks, rel=1e-6)
+    assert e.components(read_solution_routes(name))[1] == pytest.approx(inst.bks)   # .sol is consistent
+    for algo in ("sa", "qpso"):
+        ev = Evaluator(inst, DIST_W)
+        sol, _ = get_optimizer(algo).run(ev, 3000, None, make_rng(11))
+        assert check(inst, sol)[0]
+        if sol.n_vehicles <= inst.K:
+            assert sol.D >= inst.bks - 1e-6
+        else:
+            assert sol.F == pytest.approx(sol.D / ev.refs.D + DIST_W.lam * (sol.n_vehicles - inst.K))
 
 
 def test_t28_flags_change_behaviour(a32):

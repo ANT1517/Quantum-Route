@@ -1,9 +1,27 @@
-"""Reference MILP for small static CVRP (§3.2): two-index formulation with MTZ load constraints, PuLP/CBC."""
-import time
+"""Reference MILP for small static CVRP (§3.2): two-index formulation with MTZ load constraints, PuLP/CBC.
 
-import numpy as np
+MTZ is a weak formulation: within a time limit CBC usually finds good solutions but cannot close the gap.
+Results therefore report CBC's own status, best value, bound and gap, read from the CBC log, and claim an
+optimum only when CBC proved one ("optimal": gap closed before the limit). Proven optima for the
+P instances come from their .sol files, not from this MILP (T11).
+"""
+import re
+import tempfile
+import time
+from pathlib import Path
 
 from qflux.config import load_config
+
+
+def _parse_cbc_log(text: str) -> dict:
+    def num(pattern):
+        m = re.findall(pattern, text)
+        return float(m[-1]) if m else None
+    result = re.findall(r"Result - (.+)", text)
+    return {"cbc_result": result[-1].strip() if result else None,
+            "objective": num(r"Objective value:\s+([-\d.eE+]+)"),
+            "bound": num(r"Lower bound:\s+([-\d.eE+]+)"),
+            "gap_cbc": num(r"Gap:\s+([-\d.eE+]+)")}
 
 
 def solve_milp(inst, time_limit_s: float | None = None, K: int | None = None, msg: bool = False) -> dict:
@@ -11,6 +29,7 @@ def solve_milp(inst, time_limit_s: float | None = None, K: int | None = None, ms
     cfg = load_config()["milp"]
     if inst.n > cfg["max_n"]:
         raise ValueError(f"MILP limited to n <= {cfg['max_n']}")
+    limit = float(time_limit_s or cfg["time_limit_s"])
     n, Q, C = inst.n, float(inst.Q), inst.D
     V = range(n + 1)
     cust = range(1, n + 1)
@@ -28,14 +47,14 @@ def solve_milp(inst, time_limit_s: float | None = None, K: int | None = None, ms
         for j in cust:
             if i != j:
                 prob += u[i] - u[j] + Q * x[i, j] <= Q - float(inst.demand[j])
-    t = time.time()
-    status = prob.solve(pulp.PULP_CBC_CMD(msg=msg, timeLimit=time_limit_s or cfg["time_limit_s"]))
-    wall = time.time() - t
+    with tempfile.TemporaryDirectory() as tmp:
+        log = Path(tmp) / "cbc.log"
+        t = time.time()
+        status = prob.solve(pulp.PULP_CBC_CMD(msg=msg, timeLimit=limit, logPath=str(log)))
+        wall = time.time() - t
+        info = _parse_cbc_log(log.read_text(errors="replace") if log.exists() else "")
     succ = {i: j for (i, j), var in x.items() if var.value() is not None and var.value() > 0.5}
     routes = []
-    for j in cust:
-        if succ.get(0) is None:
-            break
     for (i, j), var in x.items():
         if i == 0 and var.value() is not None and var.value() > 0.5:
             r, cur = [], j
@@ -43,5 +62,12 @@ def solve_milp(inst, time_limit_s: float | None = None, K: int | None = None, ms
                 r.append(cur)
                 cur = succ[cur]
             routes.append(r)
-    return {"status": pulp.LpStatus[status], "optimal": pulp.LpStatus[status] == "Optimal" and wall < (time_limit_s or cfg["time_limit_s"]),
-            "objective": float(pulp.value(prob.objective)), "bound": None, "routes": routes, "wall_s": wall}
+    best = info["objective"] if info["objective"] is not None else pulp.value(prob.objective)
+    bound = info["bound"]
+    gap = None
+    if best is not None and bound is not None and best > 0:
+        gap = 100.0 * (best - bound) / best
+    proved = (info["cbc_result"] or "").lower().startswith("optimal solution found")
+    return {"status": pulp.LpStatus[status], "cbc_result": info["cbc_result"], "optimal": proved,
+            "objective": None if best is None else float(best), "bound": bound, "gap_pct": gap,
+            "routes": routes, "wall_s": wall, "time_limit_s": limit}

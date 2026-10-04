@@ -30,8 +30,8 @@ def summary(df: pd.DataFrame) -> pd.DataFrame:
     for (bt, b, inst, algo), g in df.groupby(["budget_type", "budget", "instance", "algo"], sort=False):
         D = g["best_D"].to_numpy()
         gap = g["gap_pct"].astype(float).to_numpy() if g["gap_pct"].notna().all() else None
-        e5 = [evals_to_within(c, f) for c, f in zip(g["curve"], g["best_F"])]
-        e5 = [x for x in e5 if x is not None]
+        e5 = [x for x in (evals_to_within(c, f, 0.05) for c, f in zip(g["curve"], g["best_F"])) if x is not None]
+        e1 = [x for x in (evals_to_within(c, f, 0.01) for c, f in zip(g["curve"], g["best_F"])) if x is not None]
         rows.append({
             "budget_type": bt, "budget": b, "instance": inst, "algo": algo, "runs": len(g),
             "seeds": _seed_range(g["seed"]),
@@ -40,7 +40,11 @@ def summary(df: pd.DataFrame) -> pd.DataFrame:
             "D_std": D.std(ddof=1) if len(D) > 1 else 0.0,
             "gap_best_pct": None if gap is None else gap.min(),
             "gap_mean_pct": None if gap is None else gap.mean(),
+            "gap_std_pct": None if gap is None else (gap.std(ddof=1) if len(gap) > 1 else 0.0),
             "vehicles_mean": g["n_vehicles"].mean(),
+            "fleet_violations": int(sum(1 for m in g["meta"] if isinstance(m, dict) and m.get("fleet_excess", 0) > 0))
+            if "meta" in g else None,
+            "evals_to_1pct_median": float(np.median(e1)) if e1 else None,
             "evals_to_5pct_median": float(np.median(e5)) if e5 else None,
             "evals_mean": g["evals_used"].mean(), "wall_s_mean": g["wall_s"].mean(),
         })

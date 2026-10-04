@@ -15,6 +15,13 @@ def convention_for(name: str) -> str:
     return "exact" if name.upper().startswith("CMT") else "nint"
 
 
+def fleet_size_from_name(name: str) -> int | None:
+    """k in "X-nN-kK": the fleet size the published optimum of the Augerat P/A instances assumes (D38)."""
+    import re
+    m = re.search(r"-k(\d+)$", name)
+    return int(m.group(1)) if m else None
+
+
 def read_bks(path: Path) -> float | None:
     if not path.exists():
         return None
@@ -42,7 +49,9 @@ def load_instance(name: str, directory: Path | None = None) -> Instance:
         st = np.asarray(raw["service_time"], float).ravel()
         service = np.full(n + 1, float(st[0])) if st.size == 1 else st
         service[0] = 0.0
-    return Instance(name=name, source="cvrplib", n=n, Q=float(raw["capacity"]), K=None, demand=demand,
+    # D38: Augerat A/P optima assume exactly k vehicles; CMT and Uchoa X optima assume an unlimited fleet
+    K = fleet_size_from_name(name) if name[:2] in ("A-", "P-") else None
+    return Instance(name=name, source="cvrplib", n=n, Q=float(raw["capacity"]), K=K, demand=demand,
                     service=service, coords=coords, bks=read_bks(d / f"{name}.sol"),
                     distance_convention=conv, D=euclidean(coords, conv), tau0=0.0)
 
