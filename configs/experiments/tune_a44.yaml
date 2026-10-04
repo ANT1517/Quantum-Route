@@ -1,0 +1,18 @@
+# Tuning log on A-n44-k6 (tuning-only, §11.1; D21: <= 4 configurations per algorithm, all logged).
+# QPSO configs 1-3 (as in tune_a44_kinf, re-run under the D38 fleet rule K = 6) + config 4 = D33, the final
+# configuration used by QPSO-full from now on. No configuration changes after tune_a69 (D35).
+# NOT a benchmark: never quote these numbers.
+name: tune_a44
+description: "A-n44-k6 tuning log: QPSO configs 1-4 (config 4 = D33 = QPSO-full), RR+LS control, PSO+LS, GA+LS, SA. Not a benchmark"
+instances: [A-n44-k6]
+runs: 5
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: qpso_full
+variants:
+  qpso_prefix:   {algo: qpso, params: {memetic: false, rank_renorm: false}}                    # config 1: gbest LS only, no re-normalisation
+  qpso_norenorm: {algo: qpso, params: {memetic: true, rank_renorm: false, memetic_mode: pbest}} # config 2: D28 trigger, no re-normalisation
+  qpso_d28:      {algo: qpso, params: {memetic_mode: pbest}}                                    # config 3: D28 trigger + D32
+  qpso_full:     {algo: qpso, params: {}}                                                       # config 4: D33 + D32 (defaults, final)
+budgets:
+  - {type: evals, value: 12000, algorithms: [qpso_prefix, qpso_norenorm, qpso_d28, qpso_full, rr_ls, pso_ls, ga_ls, sa]}
+  - {type: time, value: 10, algorithms: [qpso_prefix, qpso_norenorm, qpso_d28, qpso_full, rr_ls, pso_ls, ga_ls, sa]}

@@ -1,0 +1,14 @@
+# Core benchmark (§9 Phase 9 item 1; D29 core set, D30 10 runs + parallel, D33 final LS rule, D38 fleet rule).
+# Headline rows: QPSO-full, PSO+LS, GA+LS, SA; OR-Tools on the time budget only (industry reference).
+# Time budget first: it is the primary comparison for hybrids (LS moves are not counted as evaluations).
+# CMT5 is listed last so the very slow eval-budget hybrid runs on it (≈ 8 h per run) come last and can be
+# cut without losing anything else (the harness resumes and keeps every finished run).
+name: bench_core
+description: "Core benchmark: QPSO-full vs PSO+LS vs GA+LS vs SA (+ OR-Tools on time), 10 runs, 30 s and 12,000 evals"
+instances: [A-n32-k5, A-n63-k9, A-n80-k10, CMT1, X-n101-k25, CMT5]
+runs: 10
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: qpso
+budgets:
+  - {type: time, value: 30, algorithms: [qpso, pso_ls, ga_ls, sa, ortools]}
+  - {type: evals, value: 12000, algorithms: [qpso, pso_ls, ga_ls, sa]}
