@@ -1,7 +1,9 @@
 """get_optimizer(name, params): the one place that maps algorithm names to Optimizer objects (§5.2).
 
-Names: qpso, qpso_base, pso, pso_ls, ga, ga_ls, sa, ortools, nn. SA has no +LS variant (D28).
-"+LS" variants use the same LS rule as QPSO (gbest every 10 iterations + memetic LS, Lamarckian; D28).
+Names: qpso, qpso_base, pso, pso_ls, ga, ga_ls, sa, rr_ls, ortools, nn. SA has no +LS variant (D28);
+rr_ls is the random-restart + LS control (D34, ablation only).
+"+LS" variants use the same LS rule as QPSO (gbest every 10 iterations + memetic LS on the best 25% of new
+positions, Lamarckian; D33).
 """
 import time
 
@@ -52,6 +54,9 @@ def get_optimizer(name: str, params: dict | None = None):
     if name == "sa":
         from .sa import SA
         return SA(**params)
+    if name == "rr_ls":
+        from .rrls import RRLS
+        return RRLS(**params)
     if name == "ortools":
         from .ortools_wrap import ORTools
         return ORTools(**params)
@@ -60,4 +65,4 @@ def get_optimizer(name: str, params: dict | None = None):
     raise KeyError(f"unknown optimizer {name!r}")
 
 
-ALGORITHMS = ("qpso", "qpso_base", "pso", "pso_ls", "ga", "ga_ls", "sa", "ortools", "nn")
+ALGORITHMS = ("qpso", "qpso_base", "pso", "pso_ls", "ga", "ga_ls", "sa", "rr_ls", "ortools", "nn")

@@ -60,7 +60,7 @@ def test_rank_normalise_keeps_tours():
         assert (spv_decode(x) == spv_decode(z)).all()
 
 
-@pytest.mark.parametrize("algo", ["qpso", "pso_ls", "ga_ls", "sa", "ortools"])
+@pytest.mark.parametrize("algo", ["qpso", "pso_ls", "ga_ls", "sa", "rr_ls", "ortools"])
 def test_deadline_respected(algo):
     """D31: wall time stays within the time budget (+2% in the benchmark; looser here for CI jitter)."""
     import time
@@ -75,5 +75,5 @@ def test_deadline_respected(algo):
     t = time.time()
     sol, _ = get_optimizer(algo).run(ev, None, 2.0, make_rng(1))
     assert time.time() - t <= 2.0 * 1.05
-    if algo in ("qpso", "pso_ls", "ga_ls"):
+    if algo in ("qpso", "pso_ls", "ga_ls", "rr_ls"):
         assert sol.meta["ls_calls"] > 0
