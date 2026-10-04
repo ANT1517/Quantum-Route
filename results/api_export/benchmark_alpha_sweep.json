@@ -518,6 +518,7 @@
   ],
   "kind": "benchmark",
   "runs": 10,
+  "excluded_rows": {},
   "budget": "30 s"
  },
  "wilcoxon": [

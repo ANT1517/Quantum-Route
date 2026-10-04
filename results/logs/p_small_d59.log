@@ -1,0 +1,56 @@
+[p_small] 30 runs to do (60 already recorded), 11 worker(s) -> C:\Users\nisha\Quantum-Route-solver\results\runs\p_small.jsonl
+  [1/30] P-n16-k8 qn_tuned time=10 seed=12345: D=450.0 gap=0.00% evals=128031 10.00s ls=32022
+  [2/30] P-n16-k8 qn_tuned time=10 seed=12346: D=450.0 gap=0.00% evals=134236 10.00s ls=33563
+  [3/30] P-n16-k8 qn_tuned time=10 seed=12347: D=450.0 gap=0.00% evals=121232 10.00s ls=30290
+  [4/30] P-n16-k8 qn_tuned time=10 seed=12349: D=450.0 gap=0.00% evals=139946 10.00s ls=34977
+  [5/30] P-n16-k8 qn_tuned time=10 seed=12348: D=450.0 gap=0.00% evals=148848 10.00s ls=37212
+  [6/30] P-n16-k8 qn_tuned time=10 seed=12351: D=450.0 gap=0.00% evals=148759 10.00s ls=37168
+  [7/30] P-n16-k8 qn_tuned time=10 seed=12352: D=450.0 gap=0.00% evals=127726 10.00s ls=31932
+  [8/30] P-n16-k8 qn_tuned time=10 seed=12350: D=450.0 gap=0.00% evals=143299 10.00s ls=35802
+  [9/30] P-n16-k8 qn_tuned time=10 seed=12353: D=450.0 gap=0.00% evals=145654 10.00s ls=36412
+  [10/30] P-n16-k8 qn_tuned time=10 seed=12354: D=450.0 gap=0.00% evals=140104 10.00s ls=35055
+  [11/30] P-n19-k2 qn_tuned time=10 seed=13345: D=212.0 gap=0.00% evals=113245 10.00s ls=27442
+  [12/30] P-n19-k2 qn_tuned time=10 seed=13346: D=212.0 gap=0.00% evals=78192 10.00s ls=18988
+  [13/30] P-n19-k2 qn_tuned time=10 seed=13347: D=222.0 gap=4.72% evals=76141 10.00s ls=18534
+  [14/30] P-n19-k2 qn_tuned time=10 seed=13348: D=224.0 gap=5.66% evals=83023 10.00s ls=20089
+  [15/30] P-n19-k2 qn_tuned time=10 seed=13349: D=222.0 gap=4.72% evals=81936 10.00s ls=19877
+  [16/30] P-n19-k2 qn_tuned time=10 seed=13350: D=212.0 gap=0.00% evals=79144 10.00s ls=19160
+  [17/30] P-n19-k2 qn_tuned time=10 seed=13351: D=212.0 gap=0.00% evals=79636 10.00s ls=19342
+  [18/30] P-n19-k2 qn_tuned time=10 seed=13352: D=212.0 gap=0.00% evals=79848 10.00s ls=19392
+  [19/30] P-n19-k2 qn_tuned time=10 seed=13353: D=222.0 gap=4.72% evals=78850 10.00s ls=19130
+  [20/30] P-n19-k2 qn_tuned time=10 seed=13354: D=222.0 gap=4.72% evals=80420 10.00s ls=19504
+  [21/30] P-n22-k8 qn_tuned time=10 seed=14345: D=603.0 gap=0.00% evals=74083 10.00s ls=18306
+  [22/30] P-n22-k8 qn_tuned time=10 seed=14346: D=603.0 gap=0.00% evals=73094 10.00s ls=18003
+  [23/30] P-n22-k8 qn_tuned time=10 seed=14347: D=603.0 gap=0.00% evals=91382 10.00s ls=22612
+  [24/30] P-n22-k8 qn_tuned time=10 seed=14348: D=603.0 gap=0.00% evals=93752 10.00s ls=23170
+  [25/30] P-n22-k8 qn_tuned time=10 seed=14350: D=603.0 gap=0.00% evals=93062 10.00s ls=23018
+  [26/30] P-n22-k8 qn_tuned time=10 seed=14349: D=603.0 gap=0.00% evals=104046 10.00s ls=25735
+  [27/30] P-n22-k8 qn_tuned time=10 seed=14351: D=603.0 gap=0.00% evals=97519 10.00s ls=24045
+  [28/30] P-n22-k8 qn_tuned time=10 seed=14352: D=603.0 gap=0.00% evals=89676 10.00s ls=22085
+  [29/30] P-n22-k8 qn_tuned time=10 seed=14353: D=603.0 gap=0.00% evals=89372 10.00s ls=22039
+  [30/30] P-n22-k8 qn_tuned time=10 seed=14354: D=603.0 gap=0.00% evals=98239 10.00s ls=24341
+[p_small] done in 36 s
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+budget_type  budget instance     algo  runs  D_mean  gap_mean_pct  gap_best_pct  wall_s_mean
+       time      10 P-n16-k8  ortools    10   450.0       0.00000             0      9.95327
+       time      10 P-n16-k8   pso_ls    10   450.0       0.00000             0     10.00070
+       time      10 P-n19-k2  ortools    10   212.0       0.00000             0      9.95387
+       time      10 P-n19-k2   pso_ls    10   221.2       4.33962             0     10.00060
+       time      10 P-n22-k8  ortools    10   603.0       0.00000             0      9.95229
+       time      10 P-n22-k8   pso_ls    10   603.0       0.00000             0     10.00070
+       time      10 P-n16-k8 qn_tuned    10   450.0       0.00000             0     10.00080
+       time      10 P-n19-k2 qn_tuned    10   217.2       2.45283             0     10.00060
+       time      10 P-n22-k8 qn_tuned    10   603.0       0.00000             0     10.00070
+
+wrote:
+  C:\Users\nisha\Quantum-Route-solver\results\tables\p_small_summary.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\p_small_wilcoxon.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\p_small_friedman.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\p_small_meta.json
+  C:\Users\nisha\Quantum-Route-solver\results\figures\p_small_convergence_P-n16-k8_time10.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\p_small_convergence_P-n19-k2_time10.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\p_small_convergence_P-n22-k8_time10.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\p_small_gap_time10.png

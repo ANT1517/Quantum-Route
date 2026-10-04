@@ -1,0 +1,4 @@
+scaling_v2: 60 runs; calibration min 2.91e+06, median 3.48e+06, max 7.36e+06 ops/s; missing 0
+  below threshold: ('X-n200-k36', 'ortools', 82352, np.float64(2910000.0))
+  below threshold: ('X-n200-k36', 'qn_tuned', 82352, np.float64(2985000.0))
+  below threshold: ('X-n502-k39', 'qn_tuned_cluster', 83347, np.float64(2940000.0))

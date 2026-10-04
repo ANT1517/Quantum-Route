@@ -9,6 +9,7 @@ runs: 10
 seed_base: 72345
 weights: [0.0, 1.0, 0.0, 0.0]
 reference: qn_tuned
+references: [qn_tuned, qn_tuned_cluster]     # X-n502 compares the cluster-first variant with OR-Tools
 variants:
   qn_tuned:         {algo: qpso, params: {qubo_slot: {enabled: false}, alpha_mode: fixed, alpha_fixed: 0.3}}
   qn_tuned_cluster: {algo: qpso_cluster, params: {qubo_slot: {enabled: false}, alpha_mode: fixed, alpha_fixed: 0.3}}

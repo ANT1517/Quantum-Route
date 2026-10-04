@@ -1,9 +1,9 @@
 {
   "experiment": "p_small",
   "description": "P-n16/19/22 (proven optima, K = k): QPSO-noQUBO, PSO+LS, OR-Tools; 10 s, 10 runs",
-  "reference": "qpso_noqubo",
+  "reference": "qn_tuned",
   "references": [
-    "qpso_noqubo"
+    "qn_tuned"
   ],
   "multiple_testing": "Holm-Bonferroni per table (p_holm); effect size = paired difference in gap points",
   "weights": [
@@ -20,7 +20,7 @@
       "type": "time",
       "value": 10,
       "algorithms": [
-        "qpso_noqubo",
+        "qn_tuned",
         "pso_ls",
         "ortools"
       ]
@@ -32,6 +32,7 @@
     "P-n22-k8"
   ],
   "import_runs": [],
+  "excluded_algos": [],
   "seeds": [
     12345,
     12346,
@@ -71,8 +72,8 @@
     "pso_ls|time|10": [
       "4bf32eb517e6"
     ],
-    "qpso_noqubo|time|10": [
-      "ba6810408759"
+    "qn_tuned|time|10": [
+      "6ecc2078b4c5"
     ]
   },
   "note": "Measured on one machine; wall times depend on hardware.",
@@ -88,6 +89,27 @@
         "OPENBLAS_NUM_THREADS": "1"
       },
       "git_commit": "73f6def",
+      "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
+      "pinned_cpus": null,
+      "machine": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+        "physical_cores": 12,
+        "logical_threads": 16,
+        "power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+      }
+    },
+    {
+      "started": "2026-10-04 20:03:20",
+      "runs_planned": 30,
+      "workers": 11,
+      "thread_env": {
+        "NUMBA_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "git_commit": "83ae61e",
       "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
       "pinned_cpus": null,
       "machine": {

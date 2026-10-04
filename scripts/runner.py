@@ -85,6 +85,12 @@ PHASES = {
         ("p_small_d59", [PY, "-u", "scripts/run_bench.py", "--exp", "p_small"]),
         ("p_small_d59_calibration", [PY, "scripts/check_calibration.py", "p_small"]),
     ],
+    "p_small_d59": [
+        ("p_small_d59_archive", [PY, "scripts/supersede_rows.py", "--exp", "p_small", "--algos", "qpso_noqubo",
+                                 "--tag", "d59"]),
+        ("p_small_d59", [PY, "-u", "scripts/run_bench.py", "--exp", "p_small"]),
+        ("p_small_d59_calibration", [PY, "scripts/check_calibration.py", "p_small"]),
+    ],
     # optional, after D46: nothing else may run during the P-core check
     "optional": [
         ("pcore_check", [PY, "-u", "scripts/run_bench.py", "--exp", "pcore_check"]),

@@ -20,10 +20,19 @@ On A-n32-k5 and CMT1, tuned PSO+LS has the lower mean (0.00% vs 1.28%; 0.05% vs 
   - GA+LS on A-n32-k5, A-n63-k9, A-n80-k10 and CMT1;
   - SA on all six core instances;
   - random-restart+LS on A-n63-k9, A-n80-k10, CMT1, CMT5 and X-n101-k25 *(PN-<instance>-ga_ls / -sa / -rr_ls)*.
-- **Heuristic vs exact on the P instances** (p_small, QPSO-noQUBO with adaptive α, measured before D59): it reaches the proven optimum in 10/10, 9/10 and 10/10 runs on P-n16-k8, P-n19-k2 and P-n22-k8, with a median time ≤ 0.05 s. The MILP (CBC, 600 s) proves optimality only on P-n16-k8, in 209 s *(E-…)*.
+- **Heuristic vs exact on the P instances** (p_small, shipped engine, 10 s, 10 runs, K = k): QPSO-noQUBO (tuned) reaches the proven optimum in 10/10 runs on P-n16-k8 (median 0.006 s), 5/10 on P-n19-k2 (mean gap 2.45%; median 0.035 s for the runs that reach it) and 10/10 on P-n22-k8 (median 0.011 s). The MILP (CBC, 600 s) proves optimality only on P-n16-k8, in 209 s. OR-Tools reaches the optimum in 10/10 runs on all three *(E-…)*.
+  - The earlier adaptive-α engine reached it in 10/10, 9/10 and 10/10 runs; those rows are archived in `results/runs/p_small.d59_replaced.jsonl`.
 
 ## Scaling (scaling_v2: equal conditions, new seeds, 10 runs, 0.6 s per customer capped at 300 s)
-SCALING_V2_PENDING
+Source: `scaling_v2`, QPSO-noQUBO (tuned) vs OR-Tools, all runs through the runner (CPU calibration 2.9–7.4 M ops/s, median 3.5 M), 0 fleet violations, final audit flags 0.
+
+| Instance (n, budget) | QPSO-noQUBO (tuned) | OR-Tools | Holm p |
+|---|---|---|---|
+| X-n101-k25 (100, 60 s) | **1.87%** | 5.68% | 0.004 |
+| X-n200-k36 (199, 120 s) | 3.36% | **3.08%** | 0.004 |
+| X-n502-k39 (501, 300 s), cluster-first | 3.00% | **1.42%** | 0.002 |
+
+QPSO-noQUBO (tuned) is ahead at n = 100; OR-Tools is ahead at n = 199 and n = 501 *(S-…, SP-…)*. The cluster-first runs stop at about 0.90 of their budget, because the final repair step reaches a local optimum early.
 
 ## Other measured results
 - **0 infeasible solutions and 0 fleet-limit violations** in all benchmark tables *(H1, H2)*.
@@ -51,6 +60,7 @@ These are features of the platform. They are not performance claims.
 - **Runs and seeds:** 30 runs per (algorithm, instance) in confirm_d54 and bench_core_v1; 10 in the ablation, α sweep, scaling and P runs. Within a table, every algorithm sees the same seeds.
 - **Tuning (D54):** α for QPSO-noQUBO and (w, c1, c2) for PSO+LS, 3 configurations each, chosen on the static CVRPLIB tuning instances A-n44-k6 and A-n69-k9 only, under a rule fixed in advance. The choice was committed before the confirmation run. The Hyderabad and SynthCity road-network instances use the same α = 0.3 without separate tuning.
 - **Fleet limit:** Augerat A/P instances use exactly k vehicles, because their published optima assume it; CMT and X instances have no limit (D38). Runs over the limit get no gap and are counted.
+- **CPU calibration of the runner-launched tables:** every run is at least 2.7 M ops/s (background-throttled runs measured about 1.45 M). Nine runs fall between 2.70 and 2.99 M, under the 3.0 M check threshold: 3 in scaling_v2 and 6 in p_small (mostly the PSO+LS and OR-Tools rows). The throughput audit (0.75× rule) flags none of them. They are reported here, not re-run.
 - **CPU conditions (D57):** Windows throttled background-launched processes to about 2.3–2.5× less CPU. Every comparison above is between runs launched the same way. confirm_d54, scaling_v2 and p_small ran via the standalone runner; bench_core_v1 and the ablation ran with all rows throttled. Since D57 the runner is the only way to run experiments (`docs/RUNNING_EXPERIMENTS.md`).
   - Minor caveat: 26 D51 replacement runs in bench_core_v1, the ablation and the α sweep ran faster than their peers.
   - bench_core_v1's OR-Tools rows are excluded from its table for this reason; OR-Tools is compared in confirm_d54.

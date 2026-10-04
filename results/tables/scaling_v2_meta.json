@@ -1,0 +1,128 @@
+{
+  "experiment": "scaling_v2",
+  "description": "Scaling v2: QPSO-noQUBO (tuned) direct on X-n101 (60 s) and X-n200 (120 s), cluster-first on X-n502 (300 s), vs OR-Tools; 10 runs, new seeds, equal launch conditions",
+  "reference": "qn_tuned",
+  "references": [
+    "qn_tuned",
+    "qn_tuned_cluster"
+  ],
+  "multiple_testing": "Holm-Bonferroni per table (p_holm); effect size = paired difference in gap points",
+  "weights": [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "runs_planned": 10,
+  "records": 60,
+  "infeasible": 0,
+  "budgets": [
+    {
+      "type": "time",
+      "value": 60,
+      "algorithms": [
+        "qn_tuned",
+        "ortools"
+      ]
+    },
+    {
+      "type": "time",
+      "value": 120,
+      "algorithms": [
+        "qn_tuned",
+        "ortools"
+      ]
+    },
+    {
+      "type": "time",
+      "value": 300,
+      "algorithms": [
+        "qn_tuned_cluster",
+        "ortools"
+      ]
+    }
+  ],
+  "instances": [
+    "X-n101-k25",
+    "X-n200-k36",
+    "X-n502-k39"
+  ],
+  "import_runs": [],
+  "excluded_algos": [],
+  "seeds": [
+    81345,
+    81346,
+    81347,
+    81348,
+    81349,
+    81350,
+    81351,
+    81352,
+    81353,
+    81354,
+    82345,
+    82346,
+    82347,
+    82348,
+    82349,
+    82350,
+    82351,
+    82352,
+    82353,
+    82354,
+    83345,
+    83346,
+    83347,
+    83348,
+    83349,
+    83350,
+    83351,
+    83352,
+    83353,
+    83354
+  ],
+  "config_hashes": {
+    "ortools|time|60": [
+      "8636c6f9bd36"
+    ],
+    "ortools|time|120": [
+      "c6ed9920ee6e"
+    ],
+    "ortools|time|300": [
+      "3ff858aa6512"
+    ],
+    "qn_tuned|time|60": [
+      "e99fc52ecf24"
+    ],
+    "qn_tuned|time|120": [
+      "b008ed4e2a00"
+    ],
+    "qn_tuned_cluster|time|300": [
+      "f988f9e2f197"
+    ]
+  },
+  "note": "Measured on one machine; wall times depend on hardware.",
+  "launches": [
+    {
+      "started": "2026-10-04 19:46:45",
+      "runs_planned": 60,
+      "workers": 11,
+      "thread_env": {
+        "NUMBA_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "git_commit": "83ae61e",
+      "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
+      "pinned_cpus": null,
+      "machine": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+        "physical_cores": 12,
+        "logical_threads": 16,
+        "power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+      }
+    }
+  ]
+}

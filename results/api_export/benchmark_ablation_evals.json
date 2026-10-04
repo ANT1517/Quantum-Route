@@ -255,6 +255,7 @@
   ],
   "kind": "benchmark",
   "runs": 10,
+  "excluded_rows": {},
   "budget": "12000 evals"
  },
  "wilcoxon": [

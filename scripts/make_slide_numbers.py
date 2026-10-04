@@ -57,10 +57,15 @@ def main():
         add(f"A-{r.instance}-{r.row}", f"Ablation {r.row} vs {r.previous} on {r.instance} (30 s, {r.runs} paired runs)",
             f"mean gap change {f(r.mean_diff_gap_pts, 2)} points; p_holm {r.p_holm:.3g}",
             f"results/tables/ablation_chain.csv ({r.instance}, {r.row})")
-    sc = pd.read_csv(T / "scaling_summary.csv")
+    sc = pd.read_csv(T / "scaling_v2_summary.csv")            # D58: scaling_v2 replaces scaling (D57)
+    sw = pd.concat([pd.read_csv(p) for p in sorted(T.glob("scaling_v2_wilcoxon*.csv"))
+                    if p.stat().st_size > 1], ignore_index=True)
     for r in sc.itertuples():
-        add(f"S-{r.instance}-{r.algo}", f"Scaling: {r.algo} on {r.instance} ({r.budget:g} s, {r.runs} runs)",
-            f"mean gap {f(r.gap_mean_pct)} %", f"results/tables/scaling_summary.csv ({r.instance}, {r.algo})")
+        add(f"S-{r.instance}-{r.algo}", f"Scaling v2 (equal conditions): {r.algo} on {r.instance} ({r.budget:g} s, {r.runs} runs)",
+            f"mean gap {f(r.gap_mean_pct)} % (sd {f(r.gap_std_pct)})", f"results/tables/scaling_v2_summary.csv ({r.instance}, {r.algo})")
+    for r in sw.itertuples():
+        add(f"SP-{r.instance}-{r.other}", f"Scaling v2: {r.reference} vs {r.other} on {r.instance}: Holm p; mean paired gap difference",
+            f"p_holm {r.p_holm:.3g}; {f(r.mean_diff_gap_pts, 3)} gap points", f"results/tables/scaling_v2_wilcoxon*.csv ({r.reference} vs {r.other}, {r.instance})")
     pe = T / "p_vs_exact.csv"
     if pe.exists():
         for r in pd.read_csv(pe).itertuples():

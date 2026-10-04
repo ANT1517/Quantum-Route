@@ -1,7 +1,36 @@
 [
  {
+  "name": "confirm_d54",
+  "title": "Headline (D58): equal conditions, new seeds, 30 runs, Holm-corrected",
+  "kind": "benchmark",
+  "runs": 30,
+  "budgets": [
+   {
+    "type": "time",
+    "value": 30,
+    "algorithms": [
+     "qn_tuned",
+     "pso_tuned",
+     "ga_ls",
+     "ortools"
+    ]
+   },
+   {
+    "type": "time",
+    "value": 60,
+    "algorithms": [
+     "qn_tuned",
+     "pso_tuned",
+     "ga_ls",
+     "ortools"
+    ]
+   }
+  ],
+  "records": 720
+ },
+ {
   "name": "bench_core_v1",
-  "title": "Core benchmark v1: QPSO-full vs PSO+LS vs GA+LS vs SA vs OR-Tools (+ RR+LS control), 30 runs; 30 s (n <= 80), 60 s (n > 80)",
+  "title": "v1: QPSO-noQUBO (adaptive alpha) vs metaheuristics, all rows under equal throttling",
   "kind": "benchmark",
   "runs": 30,
   "budgets": [
@@ -30,7 +59,7 @@
     ]
    }
   ],
-  "records": 1260
+  "records": 1080
  },
  {
   "name": "p_small",
@@ -42,13 +71,46 @@
     "type": "time",
     "value": 10,
     "algorithms": [
-     "qpso_noqubo",
+     "qn_tuned",
      "pso_ls",
      "ortools"
     ]
    }
   ],
   "records": 90
+ },
+ {
+  "name": "scaling_v2",
+  "title": "Scaling: QPSO-noQUBO (tuned) vs OR-Tools, equal conditions",
+  "kind": "benchmark",
+  "runs": 10,
+  "budgets": [
+   {
+    "type": "time",
+    "value": 60,
+    "algorithms": [
+     "qn_tuned",
+     "ortools"
+    ]
+   },
+   {
+    "type": "time",
+    "value": 120,
+    "algorithms": [
+     "qn_tuned",
+     "ortools"
+    ]
+   },
+   {
+    "type": "time",
+    "value": 300,
+    "algorithms": [
+     "qn_tuned_cluster",
+     "ortools"
+    ]
+   }
+  ],
+  "records": 60
  },
  {
   "name": "ablation",
@@ -115,30 +177,5 @@
    }
   ],
   "records": 90
- },
- {
-  "name": "scaling",
-  "title": "Scaling: budget 0.6 s per customer, capped at 300 s (D50). QPSO-full direct (X-n101 60 s reused from bench_core_v1, X-n200 120 s), cluster-first QPSO (X-n502 300 s), OR-Tools reference",
-  "kind": "benchmark",
-  "runs": 10,
-  "budgets": [
-   {
-    "type": "time",
-    "value": 120,
-    "algorithms": [
-     "qpso",
-     "ortools"
-    ]
-   },
-   {
-    "type": "time",
-    "value": 300,
-    "algorithms": [
-     "qpso_cluster",
-     "ortools"
-    ]
-   }
-  ],
-  "records": 100
  }
 ]

@@ -64,3 +64,15 @@
 2026-10-04 19:28:34 runner[d54_rerun] done d54_rerun_confirm rc=0
 2026-10-04 19:28:34 runner[d54_rerun] start d51_audit_confirm2
 2026-10-04 19:28:35 runner[d54_rerun] done d51_audit_confirm2 rc=0
+2026-10-04 19:46:41 runner[scaling_v2] start scaling_v2
+2026-10-04 20:02:31 runner[scaling_v2] done scaling_v2 rc=0
+2026-10-04 20:02:31 runner[scaling_v2] start scaling_v2_audit
+2026-10-04 20:02:33 runner[scaling_v2] done scaling_v2_audit rc=0
+2026-10-04 20:02:33 runner[scaling_v2] start scaling_v2_calibration
+2026-10-04 20:02:33 runner[scaling_v2] done scaling_v2_calibration rc=1
+2026-10-04 20:03:13 runner[p_small_d59] start p_small_d59_archive
+2026-10-04 20:03:14 runner[p_small_d59] done p_small_d59_archive rc=0
+2026-10-04 20:03:14 runner[p_small_d59] start p_small_d59
+2026-10-04 20:04:01 runner[p_small_d59] done p_small_d59 rc=0
+2026-10-04 20:04:01 runner[p_small_d59] start p_small_d59_calibration
+2026-10-04 20:04:01 runner[p_small_d59] done p_small_d59_calibration rc=1
