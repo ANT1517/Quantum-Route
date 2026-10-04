@@ -52,6 +52,7 @@ Naming: **QuantumRoute** is the platform (what judges see). **QuantumFlux** is i
 | QF 3.0 | Engine master doc |
 | QR 1.0 | Product blueprint |
 | **4.0** | Unified doc. Fixes listed in §0.5 |
+| 4.1 | (2026-10-04, Person A) Memetic LS rule, rank re-normalisation, deadline-aware budgets, core set without A-n44-k6, 10 runs + parallel rule, `RunRecord.meta` (D28–D32) |
 
 ### 0.5 Fixes applied during the merge
 | # | Problem | Fix |
@@ -353,6 +354,7 @@ class RunRecord:                     # one JSON line in results/runs/*.jsonl
     evals_used: int; wall_s: float
     curve: list[tuple[int, float]]   # (evals, best_F) every 100 evals
     config_hash: str
+    meta: dict = field(default_factory=dict)   # D28: ls_calls etc.; optional, added in v4.1
 ```
 
 ### 5.2 Engine functions
@@ -663,7 +665,13 @@ After any route-level improvement (LS or QUBO), rebuild the giant tour from the 
 Layered DP V[k][j] = min cost to serve the first j customers with k routes, k ≤ K. O(K·n·L). Removes the need for λ.
 
 ### 7.4 Local search (numba where easy)
-Intra-route 2-opt and or-opt (segments of 1–3); inter-route relocate and swap with capacity checks; first-improvement. Applied to gbest every `ls_every` iterations and to the top-3 pbests. The **same LS schedule** is given to baselines in the "+LS" comparison rows (fairness).
+Intra-route 2-opt and or-opt (segments of 1–3); inter-route relocate and swap with capacity checks; first-improvement. LS moves are scored with `route_cost` and are **not** counted as evaluations.
+**Schedule (D28):**
+1. **gbest:** full LS (2-opt, or-opt, relocate, swap) every `ls_every` = 10 iterations and at final polish.
+2. **Memetic rule:** after each iteration's evaluations, every particle whose new solution improved its own pbest gets LS (2-opt + relocate + swap, first improvement) with Lamarckian write-back to X and P. Capped at the best ⌈25%⌉ of the swarm per iteration (by new fitness) to bound runtime. (Replaces the earlier "top-3 pbests every 10 iterations" rule, which left the swarm unable to compete with a polished gbest; see D28.)
+3. **Fairness:** PSO+LS uses the identical rule. GA+LS: LS on surviving offspring; since the GA is generational with elitism, every offspring survives, so the same ⌈25%⌉ cap (best offspring of the generation) applies. SA has **no** +LS variant (it is already a local search).
+4. Because LS moves are uncounted, the **time budget is the primary fairness comparison for hybrids**; LS calls per run are recorded in `RunRecord.meta["ls_calls"]`.
+5. Every LS call takes the run's deadline and stops when it passes (D31).
 
 ### 7.5 QPSO — `algos/qpso.py`
 
@@ -697,17 +705,20 @@ t = 0, stagnation = 0
 while evals < budget and time < limit and not should_stop():
     alpha = strategy(...)
     X = qpso_positions(X, P, fP, G, alpha, mbest_mode, rng)
+    X_i <- (rank(X_i) + 0.5) / n for every particle      # D32: order-preserving, tours unchanged, keys bounded
     evaluate all X (1 eval each); update P, G (elitist)
-    if t % ls_every == 0: LS on G (+ top-3 P); Lamarck write-back
-    if qubo_slot.enabled and t % qubo_every == 0: QUBO-reorder G's routes with ≤ 7 stops; accept only if better
+    memetic LS on particles whose pbest improved (best 25% cap); Lamarck write-back   # D28
+    if t % ls_every == 0: LS on G; Lamarck write-back
+    if qubo_slot.enabled and t % qubo_every == 0 and enough time left: QUBO-reorder G's routes with ≤ 7 stops; accept only if better
     stagnation = 0 if G improved else stagnation + 1
     if tunneling.enabled and stagnation ≥ 15: tunnel (§7.6); stagnation = 0
     if std(f(X)) < δ·mean(f(X)): re-init worst 20% of X (not P)
     every 5 iterations: callback(progress)
     t += 1
-final polish: full LS + QUBO slot on G
+final polish: full LS + QUBO slot on G (deadline-aware; skipped if too little time is left, D31)
 return G, curve
 ```
+Every step (LS, QUBO slot, tunneling, final polish) receives the run deadline and stops when it passes; the same applies to every algorithm (D31). Rank re-normalisation (D32) is part of the representation, so it is on in QPSO-base, QPSO-full and PSO alike (identical pipeline).
 Evaluation counting: each decoded particle = 1 evaluation; LS/QUBO moves use `route_cost` (not counted). That is why we **also** compare on equal wall-clock time (§11.3).
 
 ### 7.6 Quantum tunneling escape — `algos/tunneling.py`
@@ -1021,7 +1032,7 @@ Acceptance (H12 milestone): judge demo path (§12.1) works **5 times in a row** 
 
 ### Phase 9 — Experiments (H11–H17) [M2, M1 supports]
 Run in this order; stop adding when H17 is reached:
-1. Core benchmark (`bench_core.yaml`): A-n32/44/63/80, CMT1, CMT5 × {QPSO-full, QPSO-base, PSO, PSO+LS, GA, GA+LS, SA} × runs × evals budget; OR-Tools on time budget; repeat core set on the time budget.
+1. Core benchmark (`bench_core.yaml`, D29/D30): A-n32-k5, A-n63-k9, A-n80-k10, CMT1, CMT5, X-n101-k25 (A-n44-k6 is tuning-only, §11.1) × headline rows {QPSO-full, PSO+LS, GA+LS, SA} on the evals and the time budget; OR-Tools on the time budget only; 10 runs. Plain PSO, plain GA and QPSO-base appear in the ablation, not as headline rows.
 2. Ablation (A-n63-k9, A-n80-k10): base → +rank mbest → +Sobol → +adaptive α → +LS/Lamarck → +tunneling → +QUBO slot → +diversity; Wilcoxon each row vs the previous.
 3. α sweep: fixed α ∈ {0.3, 0.5, 0.7, 0.9, 1.0, 1.2}, linear 1.0→0.5, linear 0.8→0.3, adaptive.
 4. Scaling: X-n101, X-n200 direct; X-n502, X-n1001 clustered; SynthCity n = 20, 50, 100, 200, 500 on road graphs.
@@ -1051,7 +1062,7 @@ Checklist §18. Two full rehearsals under 5 minutes. Tag repo `v-idea-submission
 **Never cut:** Split feasibility + checker; QPSO vs PSO vs GA vs OR-Tools on A-instances with convergence plot; ablation on one instance; Hyderabad map; naive vs system-optimal fleet demo; QUBO validation table; honesty statement; demo mode.
 
 ### 9.4 Minimum viable evidence (checkpoint at H12)
-If the plan is at risk at H12, freeze to: QPSO-full vs PSO vs GA vs OR-Tools on 4 A-instances (10 runs) + convergence plot + ablation on A-n63-k9 + Hyderabad Results screen + Fleet Impact screen + Quantum Lab table. That alone is a strong idea-stage submission.
+If the plan is at risk at H12, freeze to: QPSO-full vs PSO+LS vs GA+LS vs SA vs OR-Tools on the 3 core A-instances A-n32-k5, A-n63-k9, A-n80-k10 (10 runs; D29) + convergence plot + ablation on A-n63-k9 + Hyderabad Results screen + Fleet Impact screen + Quantum Lab table. That alone is a strong idea-stage submission.
 
 ---
 
@@ -1123,9 +1134,11 @@ If the plan is at risk at H12, freeze to: QPSO-full vs PSO vs GA vs OR-Tools on 
 | Set | Instances | n | Use |
 |---|---|---|---|
 | Augerat P | P-n16-k8, P-n19-k2, P-n22-k8 | 15–21 | MILP exact comparison |
-| Augerat A | A-n32-k5, A-n44-k6, A-n63-k9, A-n80-k10 | 31–79 | Core benchmark, ablation (A-n44 = tuning only) |
-| CMT | CMT1, CMT5 | 50, 199 | Classic mid/large |
-| Uchoa X | X-n101-k25, X-n200-k36 | 100, 199 | Direct large |
+| Augerat A | A-n32-k5, A-n63-k9, A-n80-k10 | 31–79 | Core benchmark, ablation (A-n63, A-n80) |
+| Augerat A | A-n44-k6 | 43 | **Tuning only**, never in a reported benchmark table (D29) |
+| CMT | CMT1, CMT5 | 50, 199 | Core benchmark (classic mid/large) |
+| Uchoa X | X-n101-k25 | 100 | Core benchmark + direct large |
+| Uchoa X | X-n200-k36 | 199 | Direct large (scaling) |
 | Uchoa X | X-n502-k39, X-n1001-k43 | 501, 1000 | Clustered scaling |
 | SynthCity | n = 20, 50, 100, 200, 500 | – | Road-graph scaling |
 | Hyderabad | 60 (+100, 200) | – | Demos |
@@ -1134,10 +1147,10 @@ If the plan is at risk at H12, freeze to: QPSO-full vs PSO vs GA vs OR-Tools on 
 Augerat/Uchoa (EUC_2D): D = nint(Euclidean) — the BKS assume this. CMT: real Euclidean. Gap is computed **only** when our convention matches the BKS convention.
 
 ### 11.3 Budgets
-Evaluations: 12,000 full evaluations (QPSO/PSO 40 × 300; GA 40 × 300; SA 12,000 moves). Time: 30 s wall clock, single core, same machine, nothing else heavy running. Report both. OR-Tools only on time.
+Evaluations: 12,000 full evaluations (QPSO/PSO 40 × 300; GA 40 × 300; SA 12,000 moves). Time: 30 s wall clock, single core, same machine, nothing else heavy running. Report both. OR-Tools only on time. The time budget is the primary fairness comparison for hybrids, because LS moves are not counted as evaluations (D28). Acceptance: wall time ≤ budget + 2% on every time-budget run (D31).
 
 ### 11.4 Runs and seeds
-30 runs per (algorithm, instance) if the smoke-test timing allows, otherwise 10. The count is printed in every table and caption. Seeds are deterministic.
+**10 runs** per (algorithm, instance) (D30); the count is printed in every table and caption. Seeds are deterministic (seed_base + 1000·instance_idx + run_idx, instance_idx from the §11.1 order). Runs execute in up to (physical cores − 1) parallel processes with `NUMBA_NUM_THREADS=1` and `OMP_NUM_THREADS=1`, so each run uses one core and time-budget runs do not compete for CPU.
 
 ### 11.5 Metrics
 best / mean / std / median / worst of F (and D for CVRPLIB); gap % = (cost − BKS)/BKS × 100; vehicles used; **evaluations to reach within 5% of the final best** (convergence speed); wall time; infeasible count (must be 0).
@@ -1320,6 +1333,11 @@ Finale deck flow (10 slides, later): Title · Problem · Why it matters · Solut
 | D25 | (2026-09-30, Person B) `Instance.T0[i,j]` = free-flow time of the **free-flow-fastest** path; C = max(T(t) − T0, 0) | Paths differ per slot, so "free-flow time of the same path" is not one 2-D matrix; this keeps C ≥ 0. Per-slot own-path free-flow times are kept in the TD cache (`T0_path`) |
 | D26 | (2026-09-30, Person B) An incident is applied to every slot whose centre lies in its window; if none does, to the slot nearest the window midpoint | Short incidents between slot centres would otherwise have no effect on slot matrices. Shortest path (TD-Dijkstra/A*) applies incidents exactly by time |
 | D27 | (2026-09-30, Person B) Python 3.11+ (3.13 tested) | Laptop has 3.13; all pinned deps support it |
+| D28 | (2026-10-04, Person A) Memetic LS rule: LS (2-opt + relocate + swap, Lamarckian) on every particle that improved its pbest, capped at the best 25% of the swarm per iteration; gbest LS every 10 iterations kept. Same rule for PSO+LS; GA+LS applies LS to surviving offspring with the same cap; no SA+LS. LS calls recorded in the new optional `RunRecord.meta` field (§5.1) | Smoke run: with LS only on gbest + top-3 pbests, raw particles never beat the polished gbest, so QPSO's best was fixed after ≈100 evaluations (flat convergence curve). LS moves are uncounted, so the time budget is primary for hybrids |
+| D29 | (2026-10-04, Person A) Core benchmark set: A-n32-k5, A-n63-k9, A-n80-k10, CMT1, CMT5, X-n101-k25; A-n44-k6 is tuning-only (§11.1 wins over the old §9 Phase 9 list) | Never tune on test instances (D21) |
+| D30 | (2026-10-04, Person A) 10 runs per (algorithm, instance); up to (physical cores − 1) parallel processes, each with NUMBA_NUM_THREADS=1, OMP_NUM_THREADS=1 | 30 runs of the time budget alone ≈ 12 h on one core; one core per run keeps time budgets fair |
+| D31 | (2026-10-04, Person A) Deadline-aware LS, QUBO slot, tunneling and final polish for every algorithm; QUBO slot and final polish skipped when too little time is left; OR-Tools gets the remaining time | Smoke run: QPSO overran a 5 s budget by up to 30%. Acceptance: wall ≤ budget + 2% |
+| D32 | (2026-10-04, Person A) Order-preserving rank re-normalisation each iteration in the key swarm (QPSO and PSO): X_i ← (rank(X_i) + 0.5)/n | Diagnosed on A-n44-k6: keys diverged to max\|X\| ≈ 10⁴–10⁵ even with fixed α = 0.75 and α inside [α_min, α_max]. Not a code bug: random-key decoding is invariant to order-preserving rescaling, so a pbest is accepted at any scale; one far coordinate in P drags mbest and the attractor, producing larger heavy-tailed (ln 1/u) jumps in that coordinate. Re-normalising leaves every decoded tour unchanged and bounds the keys in (0, 1) |
 | … | Add new decisions with date/time | |
 
 ---
