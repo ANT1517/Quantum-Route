@@ -53,6 +53,7 @@ Naming: **QuantumRoute** is the platform (what judges see). **QuantumFlux** is i
 | QR 1.0 | Product blueprint |
 | **4.0** | Unified doc. Fixes listed in §0.5 |
 | 4.1 | (2026-10-04, Person A) Memetic LS rule, rank re-normalisation, deadline-aware budgets, core set without A-n44-k6, 10 runs + parallel rule, `RunRecord.meta` (D28–D32) |
+| 4.3 | (2026-10-04, Person A) Time budget only for LS hybrids (D39); 30 runs + wall-time curves `RunRecord.meta["curve_t"]` (D40); fleet-infeasible runs excluded from gaps (D38 addendum) |
 | 4.2 | (2026-10-04, Person A) Memetic trigger = LS on the best 25% of new positions (D33), RR+LS control (D34), A-n69-k9 tuning-only (D35), new bench_core gate (D36), `RunRecord.meta` logged as a frozen-file change (D37), T11 against proven optima, fleet limit K = k for Augerat A/P (D38) |
 
 ### 0.5 Fixes applied during the merge
@@ -910,7 +911,7 @@ Fleet Impact
 | S (vehicle-equivalents per route) [==25==]    iterations: 1 2 3        |
 
 Benchmark Studio
-| Instances [A-n32][A-n63][A-n80][CMT1][CMT5][X-n101]  Runs: 10  Budget: 12,000 evals / 30 s |
+| Instances [A-n32][A-n63][A-n80][CMT1][CMT5][X-n101]  Runs: 30  Budget: 30 s (time)     |
 | Algo    | Mean gap % | Std | Best | Wilcoxon p vs QPSO | Evals to 5%            |
 | Verdict: computed text from the table, e.g. "On A-n63-k9, QPSO+LS had the lowest mean gap (p=...)." |
 ```
@@ -1035,8 +1036,8 @@ Acceptance (H12 milestone): judge demo path (§12.1) works **5 times in a row** 
 
 ### Phase 9 — Experiments (H11–H17) [M2, M1 supports]
 Run in this order; stop adding when H17 is reached:
-1. Core benchmark (`bench_core.yaml`, D29/D30): A-n32-k5, A-n63-k9, A-n80-k10, CMT1, CMT5, X-n101-k25 (A-n44-k6 is tuning-only, §11.1) × headline rows {QPSO-full, PSO+LS, GA+LS, SA} on the evals and the time budget; OR-Tools on the time budget only; 10 runs. Plain PSO, plain GA and QPSO-base appear in the ablation, not as headline rows.
-2. Ablation (A-n63-k9, A-n80-k10): base → +rank mbest → +Sobol → +adaptive α → +LS/Lamarck → +tunneling → +QUBO slot → +diversity; Wilcoxon each row vs the previous.
+1. Core benchmark (`bench_core.yaml`, D29/D39/D40): A-n32-k5, A-n63-k9, A-n80-k10, CMT1, CMT5, X-n101-k25 (A-n44-k6 and A-n69-k9 are tuning-only, §11.1) × {QPSO-full, PSO+LS, GA+LS, SA, OR-Tools} + RR+LS control, **30 s time budget only, 30 runs**. `evals_used` and `ls_calls` are recorded in every RunRecord for transparency. Plain PSO, plain GA and QPSO-base appear in the ablation, not as headline rows.
+2. Ablation (A-n63-k9, A-n80-k10, 30 s time budget, 10 runs): QPSO-base → +rank mbest → +Sobol → +adaptive α → +memetic LS → +tunneling → +QUBO slot → +diversity (= QPSO-full), with PSO+LS and RR+LS as reference rows; Wilcoxon each row vs the previous. Separately, the only evaluation-budget comparison (D39): plain QPSO-base vs plain PSO (no LS), 12,000 evaluations.
 3. α sweep: fixed α ∈ {0.3, 0.5, 0.7, 0.9, 1.0, 1.2}, linear 1.0→0.5, linear 0.8→0.3, adaptive.
 4. Scaling: X-n101, X-n200 direct; X-n502, X-n1001 clustered; SynthCity n = 20, 50, 100, 200, 500 on road graphs.
 5. MILP: P-n16/19/22 vs QPSO. The MILP table reports CBC status, best value, bound and gap as measured (e.g. "time limit, gap x%"); it never claims an optimum CBC did not prove. Proven optima for the P instances come from their `.sol` files (T11).
@@ -1066,7 +1067,7 @@ Checklist §18. Two full rehearsals under 5 minutes. Tag repo `v-idea-submission
 **Never cut:** Split feasibility + checker; QPSO vs PSO vs GA vs OR-Tools on A-instances with convergence plot; ablation on one instance; Hyderabad map; naive vs system-optimal fleet demo; QUBO validation table; honesty statement; demo mode.
 
 ### 9.4 Minimum viable evidence (checkpoint at H12)
-If the plan is at risk at H12, freeze to: QPSO-full vs PSO+LS vs GA+LS vs SA vs OR-Tools on the 3 core A-instances A-n32-k5, A-n63-k9, A-n80-k10 (10 runs; D29) + convergence plot + ablation on A-n63-k9 + Hyderabad Results screen + Fleet Impact screen + Quantum Lab table. That alone is a strong idea-stage submission.
+If the plan is at risk at H12, freeze to: QPSO-full vs PSO+LS vs GA+LS vs SA vs OR-Tools on the 3 core A-instances A-n32-k5, A-n63-k9, A-n80-k10 (30 s time budget, 30 runs; D29, D39, D40) + convergence plot + ablation on A-n63-k9 + Hyderabad Results screen + Fleet Impact screen + Quantum Lab table. That alone is a strong idea-stage submission.
 
 ---
 
@@ -1151,10 +1152,12 @@ If the plan is at risk at H12, freeze to: QPSO-full vs PSO+LS vs GA+LS vs SA vs 
 Augerat/Uchoa (EUC_2D): D = nint(Euclidean) — the BKS assume this. CMT: real Euclidean. Gap is computed **only** when our convention matches the BKS convention.
 
 ### 11.3 Budgets
-Evaluations: 12,000 full evaluations (QPSO/PSO 40 × 300; GA 40 × 300; SA 12,000 moves). Time: 30 s wall clock, single core, same machine, nothing else heavy running. Report both. OR-Tools only on time. The time budget is the primary fairness comparison for hybrids, because LS moves are not counted as evaluations (D28). Acceptance: wall time ≤ budget + 2% on every time-budget run (D31).
+**Time budget (primary, and the only budget for LS hybrids; D39):** 30 s wall clock per run, one core per run (D30), deadline-aware (D31). LS moves are not counted as evaluations, so at 12,000 evaluations QPSO-full needed ≈240 s against ≈32 s for GA+LS on A-n44-k6: an evaluation budget is not an equal budget for hybrids. `evals_used` and `ls_calls` are still recorded in every RunRecord.
+**Evaluation budget (ablation only):** 12,000 full evaluations, used only to compare the non-LS variants (plain QPSO-base vs plain PSO), where an evaluation really is the unit of work. OR-Tools only on time.
+Convergence plots for time-budget runs use wall-clock seconds on the x-axis (`RunRecord.meta["curve_t"]`, D40); evaluation-budget plots use evaluations.
 
 ### 11.4 Runs and seeds
-**10 runs** per (algorithm, instance) (D30); the count is printed in every table and caption. Seeds are deterministic (seed_base + 1000·instance_idx + run_idx, instance_idx from the §11.1 order). Runs execute in up to (physical cores − 1) parallel processes with `NUMBA_NUM_THREADS=1` and `OMP_NUM_THREADS=1`, so each run uses one core and time-budget runs do not compete for CPU.
+**30 runs** per (algorithm, instance) for the core benchmark on the time budget (D40); 10 runs for the ablation, α sweep and scaling; the count is printed in every table and caption. Seeds are deterministic (seed_base + 1000·instance_idx + run_idx, instance_idx from the §11.1 order). Runs execute in up to (physical cores − 1) parallel processes with `NUMBA_NUM_THREADS=1` and `OMP_NUM_THREADS=1`, so each run uses one core and time-budget runs do not compete for CPU.
 
 ### 11.5 Metrics
 best / mean / std / median / worst of F (and D for CVRPLIB); gap % = (cost − BKS)/BKS × 100; vehicles used; **evaluations to reach within 5% of the final best** (convergence speed); wall time; infeasible count (must be 0).
@@ -1348,6 +1351,9 @@ Finale deck flow (10 slides, later): Title · Problem · Why it matters · Solut
 | D36 | (2026-10-04, Person A) Gate for starting bench_core: 0 infeasible, keys bounded, wall ≤ budget + 2%, gap + evals-to-1%/5% table reported for both tuning instances. Replaces "the convergence curve keeps improving" | A converged hybrid is flat by design; flat at ≈1% gap = converged, flat at 5–10% = premature convergence, which the table shows. No requirement that QPSO wins |
 | D37 | (2026-10-04, Person A) `RunRecord.meta: dict` added to the frozen `types.py` (+ contract test). Additive and backward compatible (default empty dict). Noted in MERGE_NOTES.md for Person B | Per-run diagnostics (LS calls, QUBO calls, max\|key\|) without a second results file |
 | D38 | (2026-10-04, Person A) Fleet limit for CVRPLIB: K = k from the name for Augerat A/P, K = ∞ for CMT and Uchoa X (was K = ∞ for all). Gap tables report `fleet_violations` (runs with more than K vehicles) | P-n22-k8: SA found 590 with 9 vehicles, below the proven optimum 603, which assumes 8 vehicles. A gap against an optimum for a different fleet rule is not a fair comparison. Not a tuning change |
+| D38+ | (2026-10-04, Person A) Under K = k a final solution with m > k counts as infeasible for gap purposes: no gap is computed for it, it is excluded from distance/gap statistics and tests, and tables report the number of such runs per algorithm (`fleet_violations`) | Decided with D38 |
+| D39 | (2026-10-04, Person A) bench_core uses the **30 s time budget only**, for all algorithms. The 12,000-evaluation budget is kept only in the ablation for the non-LS variants (plain QPSO-base vs plain PSO). evals_used and ls_calls are recorded in every RunRecord | LS moves are uncounted: at 12,000 evals QPSO-full used ≈240 s vs GA+LS ≈32 s on A-n44-k6 (≈8 h per run estimated on CMT5), so equal evaluations are not equal work |
+| D40 | (2026-10-04, Person A) 30 runs per (algorithm, instance) for bench_core (replaces D30's 10; D30's parallel rule stays). Time-budget convergence plots use wall time: `RunRecord.meta["curve_t"]` = (elapsed_s, best_F) at each improvement (additive, see MERGE_NOTES.md) | The time-only benchmark fits in ≈1 h on 11 workers |
 | … | Add new decisions with date/time | |
 
 ---
