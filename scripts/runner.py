@@ -65,6 +65,9 @@ PHASES = {
         ("d55_rerun_scaling", [PY, "-u", "scripts/run_bench.py", "--exp", "scaling"]),
         ("p_small", [PY, "-u", "scripts/run_bench.py", "--exp", "p_small"]),
     ],
+    # D54 confirmatory round: tuning (tuning instances only), then (after the committed choice) confirmation
+    "d54_tune": [("tune_d54", [PY, "-u", "scripts/run_bench.py", "--exp", "tune_d54"])],
+    "d54_confirm": [("confirm_d54", [PY, "-u", "scripts/run_bench.py", "--exp", "confirm_d54"])],
     # optional, after D46: nothing else may run during the P-core check
     "optional": [
         ("pcore_check", [PY, "-u", "scripts/run_bench.py", "--exp", "pcore_check"]),
