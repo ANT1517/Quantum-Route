@@ -7,10 +7,16 @@
 - Every solution goes through the independent feasibility checker; failures are written to
   <exp>.infeasible.jsonl and never to the main file, so "0 infeasible in N runs" can be counted.
 - Re-running an experiment skips records that already exist (resume after an interruption).
+- Parallel execution (D30): up to (physical cores - 1) worker processes, each pinned to one thread
+  (NUMBA_NUM_THREADS=1, OMP_NUM_THREADS=1), so time-budget runs do not compete for CPU.
 """
 import hashlib
 import json
+import os
+import subprocess
+import sys
 import time
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from dataclasses import asdict
 from pathlib import Path
 
@@ -34,6 +40,31 @@ INSTANCE_ORDER = ["P-n16-k8", "P-n19-k2", "P-n22-k8", "A-n32-k5", "A-n44-k6", "A
 CURVE_STEP = 100
 META_KEYS = ("iterations", "moves", "partial", "ls_calls", "qubo_calls", "qubo_improvements", "qubo_skipped_time",
              "reinits", "solutions_found", "max_abs_key")
+THREAD_ENV = {"NUMBA_NUM_THREADS": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1"}
+
+
+def physical_cores() -> int:
+    try:
+        import psutil
+        n = psutil.cpu_count(logical=False)
+        if n:
+            return int(n)
+    except ImportError:
+        pass
+    if sys.platform == "win32":
+        try:
+            out = subprocess.run(["powershell", "-NoProfile", "-Command",
+                                  "(Get-CimInstance Win32_Processor | Measure-Object NumberOfCores -Sum).Sum"],
+                                 capture_output=True, text=True, timeout=20).stdout.strip()
+            return int(out)
+        except (OSError, ValueError, subprocess.SubprocessError):
+            pass
+    return max(1, (os.cpu_count() or 2) // 2)
+
+
+def default_workers() -> int:
+    return max(1, physical_cores() - 1)
 
 
 def load_experiment(name_or_path: str) -> dict:
@@ -138,7 +169,7 @@ def plan(exp: dict) -> list[tuple]:
 
 
 def warm_up(algos, inst_name: str):
-    """Compile Numba kernels before any timed run (wall times must not include JIT)."""
+    """Compile / load Numba kernels before any timed run (wall times must not include JIT)."""
     inst = load_instance(inst_name)
     for a in dict.fromkeys(algos):
         if a == "ortools":
@@ -149,7 +180,23 @@ def warm_up(algos, inst_name: str):
         get_optimizer(a).run(Evaluator(inst, Weights(wT=0, wD=1)), 200, None, make_rng(0))
 
 
-def run_experiment(exp: dict, out_dir: Path | None = None, log=print) -> Path:
+_INST_CACHE: dict = {}
+
+
+def _worker_init(algos, inst_name):
+    os.environ.update(THREAD_ENV)
+    warm_up(algos, inst_name)
+
+
+def _job(iname, algo, params, w, btype, budget, seed):
+    if iname not in _INST_CACHE:
+        _INST_CACHE.clear()                         # one instance in memory per process
+        _INST_CACHE[iname] = load_instance(iname)
+    rec, ok, errs = single_run(_INST_CACHE[iname], algo, params, w, btype, budget, seed)
+    return asdict(rec), ok, errs
+
+
+def run_experiment(exp: dict, out_dir: Path | None = None, log=print, workers: int | None = None) -> Path:
     out_dir = Path(out_dir or RUNS_DIR)
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / f"{exp['name']}.jsonl"
@@ -158,25 +205,49 @@ def run_experiment(exp: dict, out_dir: Path | None = None, log=print) -> Path:
     w = Weights(*exp.get("weights", [0.0, 1.0, 0.0, 0.0]))
     params = exp.get("params", {}) or {}
     jobs = [j for j in plan(exp) if (j[1], j[0], j[5], j[2], j[3]) not in done]
-    log(f"[{exp['name']}] {len(jobs)} runs to do ({len(done)} already recorded) -> {path}")
+    workers = int(workers or exp.get("workers") or default_workers())
+    workers = max(1, min(workers, len(jobs) or 1))
+    log(f"[{exp['name']}] {len(jobs)} runs to do ({len(done)} already recorded), {workers} worker(s) -> {path}")
     if not jobs:
         return path
-    warm_up([j[1] for j in jobs], jobs[0][0])
-    cache: dict = {}
+    algos = [j[1] for j in jobs]
     t_all = time.time()
-    for k, (iname, algo, btype, budget, r, seed) in enumerate(jobs, 1):
-        if iname not in cache:
-            cache = {iname: load_instance(iname)}       # one instance in memory at a time
-        rec, ok, errs = single_run(cache[iname], algo, dict(params.get(algo, {})), w, btype, budget, seed)
-        line = json.dumps(asdict(rec), default=_jsonable)
+    n_done = 0
+
+    def record(rd, ok, errs):
+        nonlocal n_done
+        n_done += 1
         if ok:
             with open(path, "a", encoding="utf-8") as f:
-                f.write(line + "\n")
+                f.write(json.dumps(rd, default=_jsonable) + "\n")
         else:
             with open(bad_path, "a", encoding="utf-8") as f:
-                f.write(json.dumps({**asdict(rec), "errors": errs}, default=_jsonable) + "\n")
-        gap = "n/a" if rec.gap_pct is None else f"{rec.gap_pct:.2f}%"
-        log(f"  [{k}/{len(jobs)}] {iname} {algo} {btype}={budget:g} seed={seed}: D={rec.best_D:.1f} "
-            f"gap={gap} evals={rec.evals_used} {rec.wall_s:.1f}s{'' if ok else '  INFEASIBLE ' + '; '.join(errs)}")
+                f.write(json.dumps({**rd, "errors": errs}, default=_jsonable) + "\n")
+        gap = "n/a" if rd["gap_pct"] is None else f"{rd['gap_pct']:.2f}%"
+        log(f"  [{n_done}/{len(jobs)}] {rd['instance']} {rd['algo']} {rd['budget_type']}={rd['budget']:g} "
+            f"seed={rd['seed']}: D={rd['best_D']:.1f} gap={gap} evals={rd['evals_used']} {rd['wall_s']:.2f}s "
+            f"ls={rd['meta'].get('ls_calls', 0)}{'' if ok else '  INFEASIBLE ' + '; '.join(errs)}")
+
+    args = [(iname, algo, dict(params.get(algo, {})), w, btype, budget, seed)
+            for (iname, algo, btype, budget, r, seed) in jobs]
+    if workers == 1:
+        warm_up(algos, jobs[0][0])
+        for a in args:
+            record(*_job(*a))
+    else:
+        saved = {k: os.environ.get(k) for k in THREAD_ENV}
+        os.environ.update(THREAD_ENV)               # inherited by the spawned workers
+        try:
+            with ProcessPoolExecutor(max_workers=workers, initializer=_worker_init,
+                                     initargs=(algos, jobs[0][0])) as pool:
+                futs = [pool.submit(_job, *a) for a in args]
+                for fut in as_completed(futs):
+                    record(*fut.result())
+        finally:
+            for k, v in saved.items():
+                if v is None:
+                    os.environ.pop(k, None)
+                else:
+                    os.environ[k] = v
     log(f"[{exp['name']}] done in {time.time() - t_all:.0f} s")
     return path

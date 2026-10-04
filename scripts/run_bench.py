@@ -12,7 +12,7 @@ Outputs:
     results/tables/<exp>_friedman.csv        average ranks across instances
     results/tables/<exp>_meta.json           runs, budgets, seeds, infeasible count, config hashes
     results/figures/<exp>_convergence_<instance>.png, <exp>_gap_<budget>.png
-Run time-budget experiments alone on the machine (§11.3): wall-clock budgets assume nothing else heavy runs.
+Runs use up to (physical cores - 1) single-threaded processes (D30); do not run two experiments at once.
 """
 import argparse
 import json
@@ -73,12 +73,13 @@ def main():
     ap.add_argument("--exp", required=True, help="experiment name in configs/experiments or a yaml path")
     ap.add_argument("--runs", type=int, help="override the number of runs per (algorithm, instance)")
     ap.add_argument("--report-only", action="store_true", help="only rebuild tables and figures")
+    ap.add_argument("--workers", type=int, help="parallel processes (default: physical cores - 1, D30)")
     a = ap.parse_args()
     exp = load_experiment(a.exp)
     if a.runs:
         exp["runs"] = a.runs
     if not a.report_only:
-        run_experiment(exp)
+        run_experiment(exp, workers=a.workers)
     out = report(exp)
     pd.set_option("display.width", 200)
     print(pd.read_csv(out["summary"])[["budget_type", "budget", "instance", "algo", "runs", "D_mean", "gap_mean_pct",

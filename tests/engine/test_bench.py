@@ -14,7 +14,7 @@ from qflux.types import RunRecord
 def test_t08_harness_smoke(tmp_path):
     exp = {"name": "t08", "instances": ["P-n16-k8"], "runs": 2, "weights": [0, 1, 0, 0],
            "budgets": [{"type": "evals", "value": 400, "algorithms": ["qpso", "ga"]}]}
-    path = run_experiment(exp, out_dir=tmp_path, log=lambda *_: None)
+    path = run_experiment(exp, out_dir=tmp_path, log=lambda *_: None, workers=2)    # parallel path (D30)
     recs = read_records(path)
     assert len(recs) == 4
     fields = [f.name for f in dataclasses.fields(RunRecord)]
@@ -26,7 +26,7 @@ def test_t08_harness_smoke(tmp_path):
     assert {r["seed"] for r in recs} == {run_seed("P-n16-k8", 0), run_seed("P-n16-k8", 1)}
     assert all("ls_calls" in r["meta"] for r in recs)
     # resume: nothing is re-run
-    run_experiment(exp, out_dir=tmp_path, log=lambda *_: None)
+    run_experiment(exp, out_dir=tmp_path, log=lambda *_: None, workers=1)
     assert len(read_records(path)) == 4
     json.dumps(recs)
 
