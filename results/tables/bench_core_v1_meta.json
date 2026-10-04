@@ -14,7 +14,7 @@
     0.0
   ],
   "runs_planned": 30,
-  "records": 1260,
+  "records": 1080,
   "infeasible": 0,
   "budgets": [
     {
@@ -54,6 +54,9 @@
     {
       "exp": "bench_core_v1_noqubo"
     }
+  ],
+  "excluded_algos": [
+    "ortools"
   ],
   "seeds": [
     15345,
@@ -243,12 +246,6 @@
     ],
     "ga_ls|time|60": [
       "263b65040262"
-    ],
-    "ortools|time|30": [
-      "6e7db6bd22b6"
-    ],
-    "ortools|time|60": [
-      "8636c6f9bd36"
     ],
     "pso_ls|time|30": [
       "81dce9804009"

@@ -42,6 +42,10 @@ def report(exp: dict, runs_dir: Path = RUNS, tables: Path = TABLES, figures: Pat
                  and r["algo"] in imp.get("algorithms", [r["algo"]])]
         bad += [r for r in read_records(runs_dir / f"{imp['exp']}.infeasible.jsonl")
                 if r["instance"] in imp.get("instances", [r["instance"]])]
+    excl = set(exp.get("exclude_algos") or [])         # D58: rows run under other CPU conditions (D57)
+    if excl:
+        recs = [r for r in recs if r["algo"] not in excl]
+        bad = [r for r in bad if r["algo"] not in excl]
     if not recs:
         raise SystemExit(f"no records in {runs_dir / f'{name}.jsonl'}")
     df = stats.to_frame(recs)
@@ -81,6 +85,7 @@ def report(exp: dict, runs_dir: Path = RUNS, tables: Path = TABLES, figures: Pat
         "budgets": [{"type": b["type"], "value": b["value"], "algorithms": b["algorithms"]} for b in exp["budgets"]],
         "instances": exp["instances"],
         "import_runs": exp.get("import_runs") or [],
+        "excluded_algos": sorted(excl),
         "seeds": sorted({int(r["seed"]) for r in recs}),
         "config_hashes": {f"{a}|{bt}|{b:g}": sorted(g.config_hash.unique().tolist())
                           for (a, bt, b), g in df.groupby(["algo", "budget_type", "budget"])},

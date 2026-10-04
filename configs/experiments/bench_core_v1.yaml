@@ -14,3 +14,4 @@ budgets:
   - {type: time, value: 60, instances: [CMT5, X-n101-k25], algorithms: [qpso, pso_ls, ga_ls, sa, rr_ls, ortools]}
 import_runs:
   - {exp: bench_core_v1_noqubo}    # D45 supplementary row (QPSO-noQUBO), same seeds and budgets
+exclude_algos: [ortools]          # D58: OR-Tools rows ran at full speed after D55, the rest throttled (D57); see confirm_d54

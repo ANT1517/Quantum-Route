@@ -19,11 +19,20 @@ FILE_TYPES = {".png": "image/png", ".svg": "image/svg+xml", ".csv": "text/csv", 
 
 
 # Benchmark Studio opens the first item: headline first, then the supporting experiments.
-ORDER = ["bench_core_v1", "p_small", "ablation", "ablation_evals", "alpha_sweep", "scaling"]
+ORDER = ["confirm_d54", "bench_core_v1", "p_small", "scaling_v2", "ablation", "ablation_evals", "alpha_sweep"]
 MERGED = {"bench_core_v1_noqubo": "bench_core_v1"}      # supplementary rows shown inside another table (D45)
+SUPERSEDED = {"scaling": "scaling_v2"}                   # D57: mixed CPU conditions; replaced
+# D57/D58: rows that ran under different CPU conditions from the rest of their table are not served
+EXCLUDED_ROWS = {"bench_core_v1": {"ortools": "OR-Tools rows re-run at full speed after D55 while the other rows "
+                                              "ran throttled (D57); OR-Tools is compared in confirm_d54 instead"}}
+TITLES = {"confirm_d54": "Headline (D58): equal conditions, new seeds, 30 runs, Holm-corrected",
+          "bench_core_v1": "v1: QPSO-noQUBO (adaptive alpha) vs metaheuristics, all rows under equal throttling",
+          "scaling_v2": "Scaling: QPSO-noQUBO (tuned) vs OR-Tools, equal conditions"}
 
 
 def kind_of(name: str) -> str:
+    if name in SUPERSEDED and (TABLES / f"{SUPERSEDED[name]}_summary.csv").exists():
+        return f"superseded (by {SUPERSEDED[name]})"
     if name in MERGED:
         return f"supplement (merged into {MERGED[name]})"
     if name.startswith("d51_"):
@@ -49,7 +58,7 @@ def list_benchmarks(include_all: bool = False) -> list[dict]:
         if not include_all and kind_of(name) != "benchmark":
             continue
         meta = _meta(name)
-        out.append({"name": name, "title": meta.get("description") or name, "kind": kind_of(name),
+        out.append({"name": name, "title": TITLES.get(name) or meta.get("description") or name, "kind": kind_of(name),
                     "runs": meta.get("runs_planned"), "budgets": meta.get("budgets"), "records": meta.get("records")})
     return out
 
@@ -67,6 +76,9 @@ def benchmark(name: str) -> dict:
         raise ApiError(404, "NOT_FOUND", f"benchmark {name} not found")
     meta = _meta(name)
     summary = pd.read_csv(summ)
+    excluded = EXCLUDED_ROWS.get(name, {})
+    if excluded:
+        summary = summary[~summary.algo.isin(list(excluded))].reset_index(drop=True)
     refs = meta.get("references") or [meta.get("reference", "qpso")]
     for k, ref in enumerate(refs):
         wil = TABLES / (f"{name}_wilcoxon.csv" if k == 0 else f"{name}_wilcoxon_{ref}.csv")
@@ -92,16 +104,21 @@ def benchmark(name: str) -> dict:
                                for r in summary.itertuples()]
     out = {"table": _records(summary),
            "figures": [f"figures/{p.name}" for p in sorted(FIGURES.glob(f"{name}_*.png"))],
-           "meta": {**meta, "kind": kind_of(name), "runs": meta.get("runs_planned"),
+           "meta": {**meta, "kind": kind_of(name), "runs": meta.get("runs_planned"), "excluded_rows": excluded,
                     "budget": ", ".join(f"{b:g} {'s' if t == 'time' else 'evals'}"
                                         for t, b in sorted(set(zip(summary.budget_type, summary.budget))))}}
     for extra in ("wilcoxon", "friedman", "chain", *[f"wilcoxon_{r}" for r in refs[1:]]):
         p = TABLES / f"{name}_{extra}.csv"
         if p.exists() and p.stat().st_size > 1:
             try:
-                out[extra] = _records(pd.read_csv(p))
+                t = pd.read_csv(p)
             except pd.errors.EmptyDataError:
                 out[extra] = []
+                continue
+            for col in ("other", "algo"):           # keep excluded rows out of the side tables too
+                if col in t and excluded:
+                    t = t[~t[col].isin(list(excluded))]
+            out[extra] = _records(t)
     return out
 
 
