@@ -32,6 +32,8 @@ RUNS_DIR = REPO_ROOT / "results" / "runs"
 INSTANCE_ORDER = ["P-n16-k8", "P-n19-k2", "P-n22-k8", "A-n32-k5", "A-n44-k6", "A-n63-k9", "A-n80-k10",
                   "CMT1", "CMT5", "X-n101-k25", "X-n200-k36", "X-n502-k39", "X-n1001-k43"]
 CURVE_STEP = 100
+META_KEYS = ("iterations", "moves", "partial", "ls_calls", "qubo_calls", "qubo_improvements", "qubo_skipped_time",
+             "reinits", "solutions_found")
 
 
 def load_experiment(name_or_path: str) -> dict:
@@ -98,11 +100,13 @@ def single_run(inst, algo: str, params: dict, weights: Weights, budget_type: str
     if inst.bks:                     # our distance convention always matches the BKS one (§11.2)
         gap = 100.0 * (sol.D - inst.bks) / inst.bks
     eff = getattr(opt, "p", params)
+    meta = {k: sol.meta[k] for k in META_KEYS if k in sol.meta}
+    meta["tunnel_events"] = len(sol.meta.get("tunnel_events", []))
     rec = RunRecord(algo=algo, instance=inst.name, seed=seed, budget_type=budget_type, budget=float(budget),
                     best_F=float(sol.F), best_T=float(sol.T), best_D=float(sol.D), best_C=float(sol.C),
                     best_E=float(sol.E), n_vehicles=int(sol.n_vehicles), gap_pct=gap, evals_used=int(ev.evals),
                     wall_s=float(wall), curve=resample_curve(curve, int(ev.evals), float(sol.F)),
-                    config_hash=config_hash(algo, eff, weights, budget_type, budget))
+                    config_hash=config_hash(algo, eff, weights, budget_type, budget), meta=meta)
     return rec, ok, errs
 
 

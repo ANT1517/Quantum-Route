@@ -25,7 +25,7 @@ def test_types_frozen():
     assert _fields(Solution) == ["perm", "routes", "F", "T", "D", "C", "E", "n_vehicles", "feasible", "meta"]
     assert _fields(RunRecord) == ["algo", "instance", "seed", "budget_type", "budget", "best_F", "best_T",
                                   "best_D", "best_C", "best_E", "n_vehicles", "gap_pct", "evals_used",
-                                  "wall_s", "curve", "config_hash"]
+                                  "wall_s", "curve", "config_hash", "meta"]   # meta: D28
     assert Weights().lam == 0.5 and Instance.__dataclass_fields__["tau0"].default == 480.0
 
 
