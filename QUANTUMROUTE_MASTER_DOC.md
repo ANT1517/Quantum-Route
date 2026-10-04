@@ -53,6 +53,7 @@ Naming: **QuantumRoute** is the platform (what judges see). **QuantumFlux** is i
 | QR 1.0 | Product blueprint |
 | **4.0** | Unified doc. Fixes listed in §0.5 |
 | 4.1 | (2026-10-04, Person A) Memetic LS rule, rank re-normalisation, deadline-aware budgets, core set without A-n44-k6, 10 runs + parallel rule, `RunRecord.meta` (D28–D32) |
+| 4.2 | (2026-10-04, Person A) Memetic trigger = LS on the best 25% of new positions (D33), RR+LS control (D34), A-n69-k9 tuning-only (D35), new bench_core gate (D36), `RunRecord.meta` logged as a frozen-file change (D37), T11 against proven optima, fleet limit K = k for Augerat A/P (D38) |
 
 ### 0.5 Fixes applied during the merge
 | # | Problem | Fix |
@@ -188,7 +189,7 @@ w ≥ 0, w_T + w_D + w_C + w_E = 1
 ```
 - References come from the **nearest-neighbour + Split** solution, computed **once** per instance and never changed. Population-relative normalization is forbidden (it makes pbest/gbest comparisons meaningless).
 - `C_ref = max(C_nn, 0.05·T_nn)` so the congestion term never divides by ≈0 at night.
-- λ = 0.5 (configurable). For CVRPLIB, K = ∞ (standard practice) and w = (0, 1, 0, 0).
+- λ = 0.5 (configurable). For CVRPLIB, w = (0, 1, 0, 0); K = k from the instance name for Augerat A/P (their published optima assume exactly k vehicles) and K = ∞ for CMT and Uchoa X (D38). Runs that exceed K are counted (`fleet_violations`) in every table.
 - Hyderabad presets: **Balanced** (0.5, 0.2, 0.2, 0.1), **Fastest** (1, 0, 0, 0), **Greenest** (0.2, 0, 0, 0.8), **Least congestion** (0.3, 0, 0.7, 0).
 - Because every term except the fleet penalty is a sum of per-leg costs, Split minimizes it exactly for a given σ. The fleet penalty is applied after Split (P0); a fleet-limited layered Split is P1 (§7.3.4).
 - Note for judges: C correlates with T but is not identical — it penalizes using congested roads even when they are still the fastest option, which spreads load.
@@ -668,8 +669,8 @@ Layered DP V[k][j] = min cost to serve the first j customers with k routes, k �
 Intra-route 2-opt and or-opt (segments of 1–3); inter-route relocate and swap with capacity checks; first-improvement. LS moves are scored with `route_cost` and are **not** counted as evaluations.
 **Schedule (D28):**
 1. **gbest:** full LS (2-opt, or-opt, relocate, swap) every `ls_every` = 10 iterations and at final polish.
-2. **Memetic rule:** after each iteration's evaluations, every particle whose new solution improved its own pbest gets LS (2-opt + relocate + swap, first improvement) with Lamarckian write-back to X and P. Capped at the best ⌈25%⌉ of the swarm per iteration (by new fitness) to bound runtime. (Replaces the earlier "top-3 pbests every 10 iterations" rule, which left the swarm unable to compete with a polished gbest; see D28.)
-3. **Fairness:** PSO+LS uses the identical rule. GA+LS: LS on surviving offspring; since the GA is generational with elitism, every offspring survives, so the same ⌈25%⌉ cap (best offspring of the generation) applies. SA has **no** +LS variant (it is already a local search).
+2. **Memetic rule (D33, replaces D28's trigger):** after each iteration's evaluations, the best ⌈25%⌉ of the **new positions** (by fresh F) get LS (2-opt + relocate + swap, first improvement) with Lamarckian write-back into X; **then** each particle is compared with its pbest. (D28's trigger, "LS on particles whose pbest improved", stopped firing after ≈4 iterations: raw samples never beat LS-polished pbests.)
+3. **Fairness:** PSO+LS uses the identical rule. GA+LS applies the same rule to the best ⌈25%⌉ of each generation's offspring (generational GA with elitism: every offspring survives). SA has **no** +LS variant (it is already a local search). **RR+LS** (D34, ablation control) applies the same rule to fresh random keys each iteration.
 4. Because LS moves are uncounted, the **time budget is the primary fairness comparison for hybrids**; LS calls per run are recorded in `RunRecord.meta["ls_calls"]`.
 5. Every LS call takes the run's deadline and stops when it passes (D31).
 
@@ -706,8 +707,9 @@ while evals < budget and time < limit and not should_stop():
     alpha = strategy(...)
     X = qpso_positions(X, P, fP, G, alpha, mbest_mode, rng)
     X_i <- (rank(X_i) + 0.5) / n for every particle      # D32: order-preserving, tours unchanged, keys bounded
-    evaluate all X (1 eval each); update P, G (elitist)
-    memetic LS on particles whose pbest improved (best 25% cap); Lamarck write-back   # D28
+    evaluate all X (1 eval each)
+    memetic LS on the best 25% of the new X (by fresh F); Lamarck write-back into X   # D33
+    update P, G (elitist)
     if t % ls_every == 0: LS on G; Lamarck write-back
     if qubo_slot.enabled and t % qubo_every == 0 and enough time left: QUBO-reorder G's routes with ≤ 7 stops; accept only if better
     stagnation = 0 if G improved else stagnation + 1
@@ -787,8 +789,9 @@ On all routes with m = 3..7 from Hyderabad and A-instance solutions: neal vs bru
 | SA | giant tour | 2-opt / relocate / swap moves, geometric cooling tuned to ≈30% initial acceptance | Each move = 1 evaluation |
 | ACO* | – | ACS | Stretch only |
 | OR-Tools | native | PATH_CHEAPEST_ARC + GUIDED_LOCAL_SEARCH, capacity dimension, integer costs | Time budget only; "industry reference" (we do not claim to beat it) |
+| RR+LS (D34) | keys ∈ ℝⁿ | fresh uniform random keys every iteration → Split → the same memetic LS rule and gbest LS as QPSO | **Ablation control, not a headline row**: answers "does the QPSO update add value beyond LS?" Reported whichever way it goes |
 
-Each metaheuristic is reported **plain** and **+LS** (same LS schedule as QPSO).
+Each metaheuristic is reported **plain** and **+LS** (same LS rule as QPSO, D33). Headline rows: QPSO-full, PSO+LS, GA+LS, SA, OR-Tools; plain PSO/GA, QPSO-base and RR+LS appear in the ablation.
 Tuning fairness: each algorithm gets the same small tuning budget (≤ 4 configurations on A-n44-k6 only; never on test instances). Log all tuning runs.
 
 ### 7.9 Exact methods (REQ-14)
@@ -907,7 +910,7 @@ Fleet Impact
 | S (vehicle-equivalents per route) [==25==]    iterations: 1 2 3        |
 
 Benchmark Studio
-| Instances [A-n32][A-n44][A-n63][A-n80][CMT1][CMT5]  Runs: 30  Budget: 12,000 evals |
+| Instances [A-n32][A-n63][A-n80][CMT1][CMT5][X-n101]  Runs: 10  Budget: 12,000 evals / 30 s |
 | Algo    | Mean gap % | Std | Best | Wilcoxon p vs QPSO | Evals to 5%            |
 | Verdict: computed text from the table, e.g. "On A-n63-k9, QPSO+LS had the lowest mean gap (p=...)." |
 ```
@@ -1036,10 +1039,11 @@ Run in this order; stop adding when H17 is reached:
 2. Ablation (A-n63-k9, A-n80-k10): base → +rank mbest → +Sobol → +adaptive α → +LS/Lamarck → +tunneling → +QUBO slot → +diversity; Wilcoxon each row vs the previous.
 3. α sweep: fixed α ∈ {0.3, 0.5, 0.7, 0.9, 1.0, 1.2}, linear 1.0→0.5, linear 0.8→0.3, adaptive.
 4. Scaling: X-n101, X-n200 direct; X-n502, X-n1001 clustered; SynthCity n = 20, 50, 100, 200, 500 on road graphs.
-5. MILP: P-n16/19/22 exact vs QPSO.
+5. MILP: P-n16/19/22 vs QPSO. The MILP table reports CBC status, best value, bound and gap as measured (e.g. "time limit, gap x%"); it never claims an optimum CBC did not prove. Proven optima for the P instances come from their `.sol` files (T11).
 6. Hyderabad: time-of-day comparison (03:00 vs 17:30 plans), fleet demo, incident, ambulance, Pareto (P1).
 7. Warm vs cold re-optimization curve.
 Every table header states runs, budget type, budget and seeds.
+**Gate before starting item 1 (D36):** 0 infeasible solutions, keys bounded, wall time ≤ budget + 2% on every time-budget run, and the gap + evals-to-target (1% and 5% of each run's final value) table reported for both tuning instances (A-n44-k6, A-n69-k9). There is **no** requirement that QPSO wins; the time budget is the primary comparison for hybrids.
 Acceptance: `results/tables/*.csv` + `results/figures/*.png` exist for items 1–4 at minimum; `results/SLIDE_NUMBERS.md` started.
 
 ### Phase 10 — Demo Mode, PPT, Video, README (H16–H21) [M6, M5]
@@ -1081,7 +1085,7 @@ If the plan is at risk at H12, freeze to: QPSO-full vs PSO+LS vs GA+LS vs SA vs 
 | T08 | Bench | Harness smoke run | valid JSONL, all fields present | P0 |
 | T09 | Bench | Wilcoxon on toy data | matches scipy reference | P0 |
 | T10 | Exact | Held-Karp vs brute force, n = 7 | equal cost | P0 |
-| T11 | Exact | Heuristic vs MILP optimum, P-n16 | heuristic ≥ optimum (within tolerance) | P1 |
+| T11 | Exact | Heuristic vs proven optimum from the `.sol` file, P-n16/19/22 | heuristic ≥ optimum (within tolerance) | P1 |
 | T12 | Traffic | BPR monotonic | time strictly increases with load; equals t⁰ at load 0 | P0 |
 | T13 | Traffic | Reachability | every customer ↔ depot reachable in every slot | P0 |
 | T14 | Traffic | Peak multiplier | arterial 17:30 multiplier in [1.7, 2.0]; night ≈ 1.0 | P0 |
@@ -1135,7 +1139,7 @@ If the plan is at risk at H12, freeze to: QPSO-full vs PSO+LS vs GA+LS vs SA vs 
 |---|---|---|---|
 | Augerat P | P-n16-k8, P-n19-k2, P-n22-k8 | 15–21 | MILP exact comparison |
 | Augerat A | A-n32-k5, A-n63-k9, A-n80-k10 | 31–79 | Core benchmark, ablation (A-n63, A-n80) |
-| Augerat A | A-n44-k6 | 43 | **Tuning only**, never in a reported benchmark table (D29) |
+| Augerat A | A-n44-k6, A-n69-k9 | 43, 68 | **Tuning only**, never in a reported benchmark table (D29, D35) |
 | CMT | CMT1, CMT5 | 50, 199 | Core benchmark (classic mid/large) |
 | Uchoa X | X-n101-k25 | 100 | Core benchmark + direct large |
 | Uchoa X | X-n200-k36 | 199 | Direct large (scaling) |
@@ -1338,6 +1342,12 @@ Finale deck flow (10 slides, later): Title · Problem · Why it matters · Solut
 | D30 | (2026-10-04, Person A) 10 runs per (algorithm, instance); up to (physical cores − 1) parallel processes, each with NUMBA_NUM_THREADS=1, OMP_NUM_THREADS=1 | 30 runs of the time budget alone ≈ 12 h on one core; one core per run keeps time budgets fair |
 | D31 | (2026-10-04, Person A) Deadline-aware LS, QUBO slot, tunneling and final polish for every algorithm; QUBO slot and final polish skipped when too little time is left; OR-Tools gets the remaining time | Smoke run: QPSO overran a 5 s budget by up to 30%. Acceptance: wall ≤ budget + 2% |
 | D32 | (2026-10-04, Person A) Order-preserving rank re-normalisation each iteration in the key swarm (QPSO and PSO): X_i ← (rank(X_i) + 0.5)/n | Diagnosed on A-n44-k6: keys diverged to max\|X\| ≈ 10⁴–10⁵ even with fixed α = 0.75 and α inside [α_min, α_max]. Not a code bug: random-key decoding is invariant to order-preserving rescaling, so a pbest is accepted at any scale; one far coordinate in P drags mbest and the attractor, producing larger heavy-tailed (ln 1/u) jumps in that coordinate. Re-normalising leaves every decoded tour unchanged and bounds the keys in (0, 1) |
+| D33 | (2026-10-04, Person A) Memetic trigger: LS on the best ⌈25%⌉ of the new positions (by fresh F), Lamarckian write-back, then the pbest comparison; same rule for PSO+LS and GA+LS. 4th and final tuning configuration | With D28's trigger the memetic step stopped after ≈4 iterations (median fX/fP ≈ 1.96 on A-n44-k6: raw samples never beat polished pbests) |
+| D34 | (2026-10-04, Person A) Control algorithm RR+LS: fresh random keys each iteration → Split → the same LS and memetic rule, same budget. Ablation row only | Answers "does the QPSO update add value beyond LS?"; reported whichever way it goes |
+| D35 | (2026-10-04, Person A) A-n69-k9 (BKS 1159, proven optimal) added as a second tuning-only instance; in no test set | Behaviour at larger n without looking at test instances. No configuration changes after the A-n69-k9 runs |
+| D36 | (2026-10-04, Person A) Gate for starting bench_core: 0 infeasible, keys bounded, wall ≤ budget + 2%, gap + evals-to-1%/5% table reported for both tuning instances. Replaces "the convergence curve keeps improving" | A converged hybrid is flat by design; flat at ≈1% gap = converged, flat at 5–10% = premature convergence, which the table shows. No requirement that QPSO wins |
+| D37 | (2026-10-04, Person A) `RunRecord.meta: dict` added to the frozen `types.py` (+ contract test). Additive and backward compatible (default empty dict). Noted in MERGE_NOTES.md for Person B | Per-run diagnostics (LS calls, QUBO calls, max\|key\|) without a second results file |
+| D38 | (2026-10-04, Person A) Fleet limit for CVRPLIB: K = k from the name for Augerat A/P, K = ∞ for CMT and Uchoa X (was K = ∞ for all). Gap tables report `fleet_violations` (runs with more than K vehicles) | P-n22-k8: SA found 590 with 9 vehicles, below the proven optimum 603, which assumes 8 vehicles. A gap against an optimum for a different fleet rule is not a fair comparison. Not a tuning change |
 | … | Add new decisions with date/time | |
 
 ---
