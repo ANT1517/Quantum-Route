@@ -69,7 +69,8 @@ def main():
 
     print("[1/4] Hyderabad-60 plans at 17:30 and 03:00")
     # QPSO: equal-evaluation budget (§11.3); time_s only bounds the OR-Tools stand-in
-    job = {"algorithm": "qpso", "weights": BALANCED, "seed": args.seed,
+    from qflux.algos.registry import DEFAULT_ENGINE   # D59: QPSO-noQUBO (tuned), the shipped engine
+    job = {"algorithm": DEFAULT_ENGINE, "weights": BALANCED, "seed": args.seed,
            "budget": {"evals": load_config()["budget"]["evals"], "time_s": None if _engine() else args.time_s},
            "job_id": "demo-1730"}
     r1730 = api.run_job(dict(HYD, tau0=1050), job)

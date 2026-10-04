@@ -919,8 +919,10 @@ Fleet Impact
 | S (vehicle-equivalents per route) [==25==]    iterations: 1 2 3        |
 
 Benchmark Studio
-| Instances [A-n32][A-n63][A-n80][CMT1] 30 s · [CMT5][X-n101] 60 s   Runs: 30   |
-| Algo    | Mean gap % | Std | Best | Wilcoxon p vs QPSO | Evals to 5%            |
+| Table [Headline: equal conditions (confirm_d54) ▼]  · v1 · P vs exact · scaling_v2 · ablation   |
+| Instances [A-n32][A-n63][A-n80][CMT1] 30 s · [CMT5][X-n101] 60 s   Runs: 30 (new seeds)        |
+| Rows: QPSO-noQUBO (tuned) · PSO+LS (tuned) · GA+LS · OR-Tools (industry reference)             |
+| Algo    | Mean gap % | Std | Best | Holm p vs QPSO-noQUBO (tuned) | Δ gap pts | Time to 5% |
 | Verdict: computed text from the table, e.g. "On A-n63-k9, QPSO+LS had the lowest mean gap (p=...)." |
 ```
 

@@ -143,7 +143,8 @@ def run_job(spec: dict, job: dict, progress=None, should_stop=None) -> dict:
     refs = compute_refs(inst, bundle)
     t = time.time()
     warm = (job.get("warm_start") or {}).get("perm")
-    sol = solve(inst, w, refs, algorithm=job.get("algorithm", "qpso"), seed=int(job.get("seed", 0)),
+    from qflux.algos.registry import DEFAULT_ENGINE
+    sol = solve(inst, w, refs, algorithm=job.get("algorithm", DEFAULT_ENGINE), seed=int(job.get("seed", 0)),
                 budget=job.get("budget") or {}, params=job.get("params") or {}, warm_start_perm=warm,
                 progress=progress, should_stop=should_stop)
     status = "COMPLETED_PARTIAL" if sol.get("partial") else "COMPLETED"
@@ -183,7 +184,8 @@ def incident_reroute(spec: dict, req: dict) -> dict:
     routes = req.get("routes")
     t = time.time()
     if routes is None:
-        sol = solve(inst, w, refs, algorithm=req.get("algorithm", "qpso"), seed=seed,
+        from qflux.algos.registry import DEFAULT_ENGINE
+        sol = solve(inst, w, refs, algorithm=req.get("algorithm", DEFAULT_ENGINE), seed=seed,
                     budget={"time_s": float(req.get("time_s", 5.0))})
         routes, algo = sol["routes"], sol["algorithm"]
     else:

@@ -3,15 +3,13 @@
     python scripts/export_demo.py
 
 Copies the artefacts written by scripts/run_fleet_demo.py and derives scenarios/home KPI files from them.
-Benchmark and QUBO files are exported from results/tables/ when Person A's experiments exist; until then
-the frontend keeps its clearly-labelled MOCK files for those screens.
+Benchmark and QUBO files are copied from results/api_export/ (scripts/export_api_json.py), i.e. exactly what
+the live API serves, plus the figures they reference.
 """
 import json
 import shutil
 import sys
 from pathlib import Path
-
-import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "engine"))
@@ -21,7 +19,6 @@ from qflux.config import load_config  # noqa: E402
 
 SRC = ROOT / "results" / "demo"
 DST = ROOT / "frontend" / "public" / "demo"
-TABLES = ROOT / "results" / "tables"
 COPY = ["result_demo.json", "result_0300.json", "fleet_demo.json", "incident_demo.json", "shortest_path_demo.json"]
 
 
@@ -63,18 +60,57 @@ def main():
          "source": "results/demo/incident_demo.json (simulated incident)"},
     ])
 
-    # Person A's evidence, when present
-    if (TABLES / "qubo_validation.csv").exists():
-        write("qubo_validation.json", {"table": pd.read_csv(TABLES / "qubo_validation.csv").to_dict("records")})
-    benches = sorted(TABLES.glob("bench_*.csv")) if TABLES.exists() else []
-    if benches:
-        write("benchmarks.json", [{"name": p.stem, "title": p.stem.replace("_", " ")} for p in benches])
-        for p in benches:
-            write(f"benchmark_{p.stem}.json", {"table": pd.read_csv(p).to_dict("records"), "figures": [],
-                                              "meta": {"source": f"results/tables/{p.name}"}})
-    else:
-        print("  (no results/tables/bench_*.csv yet: benchmark/QUBO screens keep their MOCK files)")
+    # Benchmark Studio / Quantum Lab: copy the exact live-API JSON written by scripts/export_api_json.py, so
+    # demo mode shows the same tables as live mode (headline first; tuning, audit and superseded tables are not
+    # exported; Wilcoxon/Friedman tables travel inside their benchmark file instead of appearing as separate
+    # "benchmarks"). Referenced figures are copied to public/demo/figures/.
+    export = ROOT / "results" / "api_export"
+    if not (export / "benchmarks.json").exists():
+        sys.exit("missing results/api_export/: run `python scripts/export_api_json.py` first")
+    items = json.loads((export / "benchmarks.json").read_text(encoding="utf-8"))
+    wanted = {"benchmarks.json", "qubo_validation.json"} | {f"benchmark_{b['name']}.json" for b in items}
+    for old in DST.glob("benchmark_*.json"):          # stale or MOCK benchmark files
+        if old.name not in wanted:
+            old.unlink()
+            print(f"  removed stale frontend/public/demo/{old.name}")
+    for name in sorted(wanted):
+        shutil.copyfile(export / name, DST / name)
+        print(f"  frontend/public/demo/{name}")
+    figs = [ln.strip() for ln in (export / "figures.txt").read_text(encoding="utf-8").splitlines() if ln.strip()]
+    for rel in figs:                                   # "figures/x.png" -> public/demo/figures/x.png
+        src = ROOT / "results" / rel
+        dst = DST / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, dst)
+    print(f"  frontend/public/demo/figures/ ({len(figs)} figures)")
 
+    write("qubo_route_demo.json", qubo_route_demo())
+
+
+def qubo_route_demo() -> dict:
+    """Quantum Lab demo: the route QUBO for one real route with <= 7 stops (neal, fixed seed) + brute-force optimum.
+    Hyderabad-60 (K = 6) routes have about 10 stops; if none has <= 7, the stated short-route variant
+    (K = 12, Q = 100, as in run_qubo_check) is planned with the shipped engine and its shortest route is used."""
+    from qflux.algos.registry import DEFAULT_ENGINE
+    from qflux.core.construct import dispatch_matrix
+    from qflux.quantum.backends import MAX_STOPS, solve_route_request
+    spec = {"source": "hyderabad", "n_customers": 60, "K": 6, "Q": 200, "seed": 7, "tau0": 1050}
+    res = json.loads((SRC / "result_demo.json").read_text(encoding="utf-8"))
+    label = "Hyderabad-60 (17:30), route of the demo plan"
+    short = [r["stops"] for r in res["routes"] if 3 <= len(r["stops"]) <= MAX_STOPS]
+    if not short:
+        spec = dict(spec, K=12, Q=100)
+        res = api.run_job(spec, {"algorithm": DEFAULT_ENGINE, "weights": {"wT": 0.5, "wD": 0.2, "wC": 0.2, "wE": 0.1},
+                                 "seed": 7, "budget": {"time_s": 10}})
+        short = [r["stops"] for r in res["routes"] if 3 <= len(r["stops"]) <= MAX_STOPS]
+        label = "Hyderabad-60 short-route variant (K=12, Q=100, 17:30), planned with QPSO-noQUBO (tuned)"
+    stops = sorted(short, key=len)[-1]                 # the longest route that still fits the QUBO slot
+    inst = api.build_instance(spec)
+    dist = dispatch_matrix(inst).tolist()
+    out = solve_route_request({"route_stops": stops, "backend": "neal", "dist": dist, "seed": 7})
+    out.update(route_stops=stops, backend="neal (classical simulated annealing, dwave-samplers)", label=label,
+               distance="dispatch-slot travel time (minutes)")
+    return out
 
 if __name__ == "__main__":
     main()

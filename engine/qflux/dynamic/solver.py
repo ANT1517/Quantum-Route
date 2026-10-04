@@ -46,7 +46,7 @@ def _warm_up_jit(ev) -> None:
     improve_routes(sol.routes[:2], ev, max_rounds=1)
 
 
-def solve(inst: Instance, w: Weights, refs: Refs, *, algorithm: str = "qpso", seed: int = 0,
+def solve(inst: Instance, w: Weights, refs: Refs, *, algorithm: str = "qpso_noqubo_tuned", seed: int = 0,
           budget: dict | None = None, params: dict | None = None, warm_start_perm=None,
           warm_start_routes=None, progress=None, should_stop=None) -> dict:
     """Returns {"routes", "algorithm", "evals", "convergence", "partial", "perm", "wall_s"}."""

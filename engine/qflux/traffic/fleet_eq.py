@@ -166,7 +166,8 @@ def _default_solver(inst, w, refs, time_s, seed):
                             D_slots=D[None], E_slots=E[None], tau0=inst.tau0)
             perm = None if warm is None else [c for r in warm for c in r]
             evals = cfg["budget"]["evals"] if warm is None else 50 * N
-            return solve(plan, w, refs, algorithm="qpso", seed=seed, budget={"evals": evals},
+            from qflux.algos.registry import DEFAULT_ENGINE
+            return solve(plan, w, refs, algorithm=DEFAULT_ENGINE, seed=seed, budget={"evals": evals},
                          warm_start_perm=perm)["routes"]
         return solve_engine
 

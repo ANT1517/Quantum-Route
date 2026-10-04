@@ -148,7 +148,8 @@ def reroute(inst: Instance, old: TDBundle, new: TDBundle, routes: list[list[int]
 def warm_vs_cold(inst_new: Instance, w: Weights, refs: Refs, warm_routes, time_s: float = 5.0, seed: int = 0):
     """Next dispatch wave: warm-started vs cold solve on the incident-aware instance (convergence curves)."""
     from .solver import solve
-    cold = solve(inst_new, w, refs, algorithm="qpso", seed=seed, budget={"time_s": time_s})
-    warm = solve(inst_new, w, refs, algorithm="qpso", seed=seed, budget={"time_s": time_s / 3.0},
+    from qflux.algos.registry import DEFAULT_ENGINE
+    cold = solve(inst_new, w, refs, algorithm=DEFAULT_ENGINE, seed=seed, budget={"time_s": time_s})
+    warm = solve(inst_new, w, refs, algorithm=DEFAULT_ENGINE, seed=seed, budget={"time_s": time_s / 3.0},
                  warm_start_perm=[c for r in warm_routes for c in r], warm_start_routes=warm_routes)
     return dict(cold=cold, warm=warm)

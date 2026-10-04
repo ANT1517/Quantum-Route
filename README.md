@@ -13,6 +13,10 @@ Hyderabad road graph + BPR traffic · QPSO (Split decoding, local search, tunnel
 MILP/Held-Karp baselines · system-optimal fleet routing · incident re-routing · shortest path ·
 QUBO sub-route slot · benchmark studio with seeds and statistics.
 
+Default engine: **QPSO-noQUBO (tuned)** — QPSO with the QUBO slot off and fixed α = 0.3, tuned on CVRPLIB
+tuning instances only (D59). Google OR-Tools is selectable as the industry reference engine.
+Results and what we can and cannot claim: [`results/RESULTS_SUMMARY.md`](results/RESULTS_SUMMARY.md).
+
 ## Quick start
 ```bash
 python -m venv .venv && .venv/Scripts/activate        # macOS/Linux: source .venv/bin/activate
@@ -25,24 +29,18 @@ cd frontend && npm install && npm run dev      # http://localhost:5173
 ```
 Python 3.11+ (3.13 tested). PuLP must be 2.x.
 
-## Demo data
-```bash
-python scripts/run_fleet_demo.py      # Hyderabad: 17:30 vs 03:00 plans, fleet impact, incident, ambulance
-python scripts/plot_demo.py           # results/demo/fig_fleet_impact.png, fig_time_of_day.png
-python scripts/export_demo.py         # copies real results into frontend/public/demo/ for demo mode
+## Running experiments and demos
+**Every experiment and demo run goes through the standalone runner in its own console window** — see
+[`docs/RUNNING_EXPERIMENTS.md`](docs/RUNNING_EXPERIMENTS.md) (rule D57: background-launched processes were
+throttled to ≈2.3–2.5× less CPU, which made time-budget comparisons unfair).
+```powershell
+Start-Process -FilePath .venv\Scripts\python.exe -ArgumentList "scripts/runner.py --phase demos" -WindowStyle Minimized
 ```
-Each output file records which planner produced it (`algorithm` field).
-
-## Reproduce figures
-```bash
-python scripts/run_bench.py --exp bench_core
-python scripts/run_ablation.py
-python scripts/run_alpha_sweep.py
-python scripts/run_scaling.py
-python scripts/run_fleet_demo.py
-python scripts/run_qubo_check.py
-```
-Headline numbers are traceable in `results/SLIDE_NUMBERS.md`; never copy numbers by hand.
+Phase `demos`: Hyderabad 17:30 vs 03:00 plans, fleet impact (naive / user_eq / system_opt), incident
+re-routing, ambulance shortest path (`run_fleet_demo.py`), demo figures, then the demo-mode export
+(`export_api_json.py`, `export_demo.py` → `frontend/public/demo/`). Each output records which engine
+produced it (`algorithm` field). Benchmark phases and their configs are listed in `scripts/runner.py` and
+`configs/experiments/`. Every quotable number is in `results/SLIDE_NUMBERS.md`; never copy numbers by hand.
 
 ## Architecture
 React (Vite, Leaflet, Recharts) → FastAPI (REST + WebSocket) → QuantumFlux engine (`engine/qflux`) →

@@ -85,7 +85,7 @@ def solve_route_request(req: dict) -> dict:
         local = stops
     else:  # coordinates-free demo: stops index into a provided/unit matrix
         raise ValueError("dist matrix required")
-    out = solve_route_order(local, dist, req.get("backend", "neal"))
+    out = solve_route_order(local, dist, req.get("backend", "neal"), seed=req.get("seed"))
     Q = build_route_qubo(local, dist)
     out["qubo_matrix"] = qubo_matrix(Q, len(local) ** 2).round(4).tolist()
     out["optimal_cost"] = tour_cost(_brute(local, dist), dist)

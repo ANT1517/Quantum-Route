@@ -82,6 +82,7 @@ def get_optimizer(name: str, params: dict | None = None):
 # D59: "QPSO-noQUBO (tuned)". alpha chosen on the static CVRPLIB tuning instances A-n44-k6 and A-n69-k9 (D54,
 # configs/experiments/d54_choice.yaml); road-network (Hyderabad/SynthCity) instances use the same value untuned.
 TUNED_NOQUBO = {"qubo_slot": {"enabled": False}, "alpha_mode": "fixed", "alpha_fixed": 0.3}
+DEFAULT_ENGINE = "qpso_noqubo_tuned"    # D59: the engine used by the app, the demos and every headline number
 DISPLAY_NAMES = {"qpso_noqubo_tuned": "QPSO-noQUBO (tuned)", "qpso_noqubo": "QPSO-noQUBO (adaptive alpha)",
                  "qpso": "QPSO-full", "ortools": "OR-Tools (industry reference engine)"}
 

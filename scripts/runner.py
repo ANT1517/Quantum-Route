@@ -91,6 +91,13 @@ PHASES = {
         ("p_small_d59", [PY, "-u", "scripts/run_bench.py", "--exp", "p_small"]),
         ("p_small_d59_calibration", [PY, "scripts/check_calibration.py", "p_small"]),
     ],
+    # Hyderabad demo artefacts with the shipped engine (not benchmarks), then the demo-mode export
+    "demos": [
+        ("run_fleet_demo", [PY, "-u", "scripts/run_fleet_demo.py"]),
+        ("plot_demo", [PY, "scripts/plot_demo.py"]),
+        ("export_api_json", [PY, "scripts/export_api_json.py"]),
+        ("export_demo", [PY, "-u", "scripts/export_demo.py"]),
+    ],
     # optional, after D46: nothing else may run during the P-core check
     "optional": [
         ("pcore_check", [PY, "-u", "scripts/run_bench.py", "--exp", "pcore_check"]),
