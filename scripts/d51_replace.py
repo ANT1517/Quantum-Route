@@ -15,7 +15,11 @@ RUNS = ROOT / "results" / "runs"
 
 
 def main():
-    audit = pd.read_csv(ROOT / "results" / "tables" / "d51_audit_runs.csv")
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--audit", default="d51_audit", help="audit prefix in results/tables (e.g. d51_audit_after)")
+    a = ap.parse_args()
+    audit = pd.read_csv(ROOT / "results" / "tables" / f"{a.audit}_runs.csv")
     flagged = audit[audit.flagged]
     if flagged.empty:
         print("nothing flagged")

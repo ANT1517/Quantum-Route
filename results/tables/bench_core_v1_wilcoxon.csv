@@ -23,12 +23,12 @@ time,30,CMT1,qpso,pso_ls,30,19345..19374,0,33.5,0.0117466,True,tie
 time,30,CMT1,qpso,qpso_noqubo,30,19345..19374,0,0,1,False,tie
 time,30,CMT1,qpso,rr_ls,30,19345..19374,-8.48374,0,1.72895e-06,True,ref better
 time,30,CMT1,qpso,sa,30,19345..19374,-25.1172,0,1.86265e-09,True,ref better
-time,60,CMT5,qpso,ga_ls,30,20345..20374,16.281,111,0.0113031,True,ref worse
+time,60,CMT5,qpso,ga_ls,30,20345..20374,16.281,115,0.014538,True,ref worse
 time,60,CMT5,qpso,ortools,30,20345..20374,-33.1609,9,6.14673e-08,True,ref better
-time,60,CMT5,qpso,pso_ls,30,20345..20374,2.40184,215,0.730342,False,ref worse
-time,60,CMT5,qpso,qpso_noqubo,30,20345..20374,0,38,0.0123742,True,tie
+time,60,CMT5,qpso,pso_ls,30,20345..20374,2.40184,221,0.823577,False,ref worse
+time,60,CMT5,qpso,qpso_noqubo,30,20345..20374,0,47,0.0172704,True,tie
 time,60,CMT5,qpso,rr_ls,30,20345..20374,-47.1779,7,3.53903e-08,True,ref better
-time,60,CMT5,qpso,sa,30,20345..20374,-532.291,0,1.86265e-09,True,ref better
+time,60,CMT5,qpso,sa,30,20345..20374,-531.601,0,1.86265e-09,True,ref better
 time,60,X-n101-k25,qpso,ga_ls,30,21345..21374,64,214.5,0.711204,False,ref worse
 time,60,X-n101-k25,qpso,ortools,30,21345..21374,-746,0,1.73331e-06,True,ref better
 time,60,X-n101-k25,qpso,pso_ls,30,21345..21374,137.5,25,3.14661e-05,True,ref worse

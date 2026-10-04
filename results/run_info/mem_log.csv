@@ -1,0 +1,19 @@
+time,free_gb,step
+2026-10-04 16:16:57,5.54,d51_rerun_bench_core_v1
+2026-10-04 16:17:57,4.53,d51_rerun_bench_core_v1
+2026-10-04 16:18:57,3.71,d51_rerun_ablation
+2026-10-04 16:19:57,3.80,d51_rerun_ablation
+2026-10-04 16:20:57,5.54,d51_rerun_alpha_sweep
+2026-10-04 16:21:57,4.96,milp_parallel
+2026-10-04 16:22:57,4.75,milp_parallel
+2026-10-04 16:23:57,5.05,milp_parallel
+2026-10-04 16:24:57,5.08,milp_parallel
+2026-10-04 16:25:57,5.03,milp_parallel
+2026-10-04 16:26:57,5.07,milp_parallel
+2026-10-04 16:27:57,5.20,milp_parallel
+2026-10-04 16:28:57,5.26,milp_parallel
+2026-10-04 16:29:57,5.27,milp_parallel
+2026-10-04 16:30:57,5.26,milp_parallel
+2026-10-04 16:31:57,5.24,milp_parallel
+2026-10-04 16:32:57,5.26,milp_parallel
+2026-10-04 16:33:57,5.28,milp_parallel

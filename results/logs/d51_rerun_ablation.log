@@ -1,0 +1,54 @@
+[ablation] 17 runs to do (183 already recorded), 11 worker(s) -> C:\Users\nisha\Quantum-Route-solver\results\runs\ablation.jsonl
+  [1/17] A-n80-k10 pso_ls time=30 seed=18346: D=1857.0 gap=5.33% evals=12548 30.00s ls=3152
+  [2/17] A-n80-k10 a6_qubo time=30 seed=18346: D=1849.0 gap=4.88% evals=6469 30.00s ls=1586
+  [3/17] A-n80-k10 a7_full time=30 seed=18346: D=1849.0 gap=4.88% evals=6371 30.00s ls=1566
+  [4/17] A-n80-k10 a0_base time=30 seed=18346: D=2048.0 gap=16.17% evals=34090 30.01s ls=86
+  [5/17] A-n80-k10 a2_sobol time=30 seed=18346: D=2273.0 gap=28.93% evals=34328 30.01s ls=86
+  [6/17] A-n80-k10 a4_memetic_ls time=30 seed=18346: D=1846.0 gap=4.71% evals=12720 30.00s ls=3199
+  [7/17] A-n80-k10 a5_tunneling time=30 seed=18346: D=1838.0 gap=4.25% evals=12877 30.00s ls=3158
+  [8/17] A-n80-k10 a0_base time=30 seed=18349: D=2100.0 gap=19.12% evals=34089 30.00s ls=86
+  [9/17] A-n80-k10 a4_memetic_ls time=30 seed=18349: D=1830.0 gap=3.80% evals=11920 30.00s ls=2992
+  [10/17] A-n80-k10 a6_qubo time=30 seed=18349: D=1831.0 gap=3.86% evals=5568 30.00s ls=1371
+  [11/17] A-n80-k10 a7_full time=30 seed=18349: D=1831.0 gap=3.86% evals=5568 30.00s ls=1372
+  [12/17] A-n80-k10 rr_ls time=30 seed=18349: D=1869.0 gap=6.01% evals=21120 30.00s ls=5323
+  [13/17] A-n80-k10 a5_tunneling time=30 seed=18349: D=1828.0 gap=3.69% evals=19776 30.00s ls=4851
+  [14/17] A-n80-k10 pso_ls time=30 seed=18349: D=1826.0 gap=3.57% evals=20483 30.00s ls=5162
+  [15/17] A-n80-k10 a7_full time=30 seed=18350: D=1861.0 gap=5.56% evals=9074 30.00s ls=2222
+  [16/17] A-n80-k10 rr_ls time=30 seed=18350: D=1857.0 gap=5.33% evals=21160 30.00s ls=5327
+  [17/17] A-n80-k10 a2_sobol time=30 seed=18350: D=2111.0 gap=19.74% evals=54778 30.00s ls=137
+[ablation] done in 79 s
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+budget_type  budget  instance              algo  runs  D_mean  gap_mean_pct  gap_best_pct  wall_s_mean
+       time      30  A-n63-k9           a7_full    10 1658.90       2.65470      1.113860      30.0038
+       time      30  A-n63-k9 a3_adaptive_alpha    10 1921.00      18.87380     10.767300      30.0040
+       time      30  A-n63-k9           a6_qubo    10 1660.00       2.72277      1.113860      30.0032
+       time      30  A-n63-k9             rr_ls    10 1677.70       3.81807      2.165840      30.0032
+       time      30  A-n63-k9     a4_memetic_ls    10 1650.50       2.13490      1.051980      30.0031
+       time      30  A-n63-k9           a0_base    10 1938.11      19.93260     13.985100      30.0031
+       time      30  A-n63-k9     a1_rank_mbest    10 1940.00      20.04950     12.871300      30.0034
+       time      30  A-n63-k9          a2_sobol    10 1915.80      18.55200     11.509900      30.0031
+       time      30  A-n63-k9            pso_ls    10 1649.90       2.09777      1.175740      30.0030
+       time      30  A-n63-k9      a5_tunneling    10 1650.00       2.10396      0.804455      30.0036
+       time      30 A-n80-k10             rr_ls    10 1883.20       6.81792      5.331820      30.0043
+       time      30 A-n80-k10      a5_tunneling    10 1839.90       4.36188      2.552470      30.0047
+       time      30 A-n80-k10     a1_rank_mbest    10 2126.10      20.59560     12.251800      30.0050
+       time      30 A-n80-k10     a4_memetic_ls    10 1841.20       4.43562      2.552470      30.0050
+       time      30 A-n80-k10          a2_sobol    10 2160.60      22.55250     18.831500      30.0043
+       time      30 A-n80-k10 a3_adaptive_alpha    10 2130.10      20.82250     12.989200      30.0040
+       time      30 A-n80-k10           a7_full    10 1847.90       4.81566      1.815090      30.0053
+       time      30 A-n80-k10            pso_ls    10 1844.30       4.61146      3.573450      30.0041
+       time      30 A-n80-k10           a0_base    10 2107.30      19.52920     11.968200      30.0040
+       time      30 A-n80-k10           a6_qubo    10 1847.90       4.81566      1.815090      30.0035
+
+wrote:
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_summary.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_wilcoxon.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_friedman.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_meta.json
+  C:\Users\nisha\Quantum-Route-solver\results\tables\ablation_chain.csv
+  C:\Users\nisha\Quantum-Route-solver\results\figures\ablation_convergence_A-n63-k9_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\ablation_convergence_A-n80-k10_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\ablation_gap_time30.png

@@ -21,7 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "engine"))
 
-from qflux.bench.harness import free_memory_gb  # noqa: E402
+from qflux.bench.harness import free_memory_gb, keep_awake  # noqa: E402
 
 INFO = ROOT / "results" / "run_info"
 LOGS = ROOT / "results" / "logs"
@@ -36,6 +36,23 @@ PHASES = {
         ("d51_rerun_ablation", [PY, "-u", "scripts/run_bench.py", "--exp", "ablation"]),
         ("d51_rerun_alpha_sweep", [PY, "-u", "scripts/run_bench.py", "--exp", "alpha_sweep"]),
         ("d51_audit_after", [PY, "scripts/audit_throughput.py", "--no-arrivals", "--out", "d51_audit_after"]),
+        ("milp_parallel", [PY, "-u", "scripts/run_milp.py", "--time-limit", "600", "--jobs", "3"]),
+        ("qubo_check", [PY, "-u", "scripts/run_qubo_check.py"]),
+        ("api_job_tests", [PY, "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests/api"]),
+    ],
+    # D51 second (final) pass: re-run the runs the post-rerun audit still flags, then audit once more
+    "d51_pass2": [
+        ("d51_pass2_move", [PY, "scripts/d51_replace.py", "--audit", "d51_audit_after"]),
+        ("d51_pass2_bench_core_v1", [PY, "-u", "scripts/run_bench.py", "--exp", "bench_core_v1"]),
+        ("d51_pass2_ablation", [PY, "-u", "scripts/run_bench.py", "--exp", "ablation"]),
+        ("d51_audit_final", [PY, "scripts/audit_throughput.py", "--no-arrivals", "--out", "d51_audit_final"]),
+    ],
+    # after the 16:21 CBC hang (-threads 1, fixed) and the 16:37-17:01 standby: D51 pass 2, then 4b-4d
+    "resume": [
+        ("d51_pass2_move", [PY, "scripts/d51_replace.py", "--audit", "d51_audit_after"]),
+        ("d51_pass2_bench_core_v1", [PY, "-u", "scripts/run_bench.py", "--exp", "bench_core_v1"]),
+        ("d51_pass2_ablation", [PY, "-u", "scripts/run_bench.py", "--exp", "ablation"]),
+        ("d51_audit_final", [PY, "scripts/audit_throughput.py", "--no-arrivals", "--out", "d51_audit_final"]),
         ("milp_parallel", [PY, "-u", "scripts/run_milp.py", "--time-limit", "600", "--jobs", "3"]),
         ("qubo_check", [PY, "-u", "scripts/run_qubo_check.py"]),
         ("api_job_tests", [PY, "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests/api"]),
@@ -88,6 +105,7 @@ def main():
     if free is not None and free < START_MIN_GB:
         sys.exit(f"only {free:.1f} GB free (< {START_MIN_GB:g} GB); close applications and retry")
     LOCK.write_text(str(os.getpid()))
+    keep_awake(True)                                  # whole runner lifetime (not only benchmark steps)
     stop = threading.Event()
     threading.Thread(target=mem_logger, args=(stop,), daemon=True).start()
     env = dict(os.environ, PYTHONPATH=str(ROOT / "engine"), QR_MIN_FREE_GB=str(PAUSE_MIN_GB), PYTHONUNBUFFERED="1")
@@ -112,6 +130,7 @@ def main():
         return 0
     finally:
         stop.set()
+        keep_awake(False)
         try:
             LOCK.unlink()
         except FileNotFoundError:

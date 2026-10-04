@@ -1,0 +1,22 @@
+                 exp  timed_runs  flagged  min_work_rel  min_ls_rel  min_calib_rel  max_wall_ratio  runs_with_start_time
+            ablation         200        1         0.801       0.792          0.749           1.001                   200
+         alpha_sweep          90        0         0.783       0.781          0.756           1.000                    90
+       bench_core_v1        1080        1         0.781       0.775          0.708           1.005                     5
+bench_core_v1_noqubo         180        0         0.861       0.859            NaN           1.001                   180
+             scaling          40        0         0.912       0.906          0.864           1.000                    40
+
+flagged runs: 2
+          exp              algo  instance  budget  seed start_local flag_reason
+bench_core_v1                sa      CMT5    60.0 20361       16:17 calib 0.71x
+     ablation a3_adaptive_alpha A-n80-k10    30.0 18345       15:37 calib 0.75x
+
+flag rate by 10-minute start window:
+       runs  flagged
+bin                 
+15:10    11        0
+15:20   165        0
+15:30   152        1
+15:40   122        0
+15:50    40        0
+16:10    22        1
+16:20     3        0

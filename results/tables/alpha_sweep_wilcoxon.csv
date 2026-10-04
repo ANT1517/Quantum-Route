@@ -1,9 +1,9 @@
 budget_type,budget,instance,reference,other,runs,seeds,median_diff,statistic,p_value,significant,direction
-time,30,A-n63-k9,alpha_adaptive,alpha_fixed_0.3,10,17345..17354,-1,21,0.541016,False,ref better
+time,30,A-n63-k9,alpha_adaptive,alpha_fixed_0.3,10,17345..17354,14.5,15,0.224609,False,ref worse
 time,30,A-n63-k9,alpha_adaptive,alpha_fixed_0.5,10,17345..17354,3,19.5,0.447266,False,ref worse
 time,30,A-n63-k9,alpha_adaptive,alpha_fixed_0.7,10,17345..17354,-1.5,21,0.886719,False,ref better
 time,30,A-n63-k9,alpha_adaptive,alpha_fixed_0.9,10,17345..17354,-12,14,0.193359,False,ref better
 time,30,A-n63-k9,alpha_adaptive,alpha_fixed_1.0,10,17345..17354,-20.5,14.5,0.201172,False,ref better
 time,30,A-n63-k9,alpha_adaptive,alpha_fixed_1.2,10,17345..17354,-11.5,11.5,0.111328,False,ref better
-time,30,A-n63-k9,alpha_adaptive,alpha_lin_0.8_0.3,10,17345..17354,1,27,0.96875,False,ref worse
+time,30,A-n63-k9,alpha_adaptive,alpha_lin_0.8_0.3,10,17345..17354,7.5,23,0.685547,False,ref worse
 time,30,A-n63-k9,alpha_adaptive,alpha_lin_1.0_0.5,10,17345..17354,-8.5,18,0.375,False,ref better
