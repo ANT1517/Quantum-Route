@@ -65,6 +65,16 @@ def physical_cores() -> int:
     return max(1, (os.cpu_count() or 2) // 2)
 
 
+def keep_awake(on: bool = True):
+    """Ask Windows not to sleep while a benchmark runs (a suspended run gets an unfair time budget).
+    ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED; closing the lid can still suspend the laptop."""
+    if sys.platform != "win32":
+        return
+    import ctypes
+    flags = 0x80000000 | (0x00000001 | 0x00000002 if on else 0)
+    ctypes.windll.kernel32.SetThreadExecutionState(flags)
+
+
 def default_workers() -> int:
     return max(1, physical_cores() - 1)
 

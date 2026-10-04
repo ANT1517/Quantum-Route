@@ -16,6 +16,7 @@ sys.path.insert(0, str(ROOT / "engine"))
 import pandas as pd  # noqa: E402
 
 from qflux.algos.milp import solve_milp  # noqa: E402
+from qflux.bench.harness import keep_awake  # noqa: E402
 from qflux.bench.loader import fleet_size_from_name, load_instance  # noqa: E402
 from qflux.core.evaluate import Evaluator  # noqa: E402
 from qflux.core.feasibility import check  # noqa: E402
@@ -28,6 +29,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--time-limit", type=float, default=None, help="seconds per instance (default: config milp)")
     a = ap.parse_args()
+    keep_awake(True)
     rows = []
     for name in INSTANCES:
         inst = load_instance(name)
@@ -52,6 +54,7 @@ def main():
     out.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(out, index=False, float_format="%.6g")
     print("wrote", out)
+    keep_awake(False)
 
 
 if __name__ == "__main__":

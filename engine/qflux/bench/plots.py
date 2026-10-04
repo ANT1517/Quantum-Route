@@ -99,3 +99,35 @@ def gap_boxplot(df: pd.DataFrame, budget_type: str, budget: float, path: Path) -
     fig.savefig(path, dpi=150)
     plt.close(fig)
     return path
+
+
+def scaling_plot(df: pd.DataFrame, path: Path) -> Path | None:
+    """Gap to BKS and evaluations used vs n (log x), one line per algorithm; each point labelled with its budget."""
+    import re
+    g = df[fleet_ok(df)].copy()
+    if g.empty:
+        return None
+    g["n"] = g.instance.map(lambda s: int(re.search(r"-n(\d+)", s).group(1)) - 1)
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(10, 4))
+    for algo, ga in g.groupby("algo", sort=False):
+        s = ga.groupby(["n", "budget"]).agg(gap=("gap_pct", "median"), q1=("gap_pct", lambda x: x.quantile(0.25)),
+                                            q3=("gap_pct", lambda x: x.quantile(0.75)),
+                                            evals=("evals_used", "median")).reset_index().sort_values("n")
+        a1.errorbar(s.n, s.gap, yerr=[s.gap - s.q1, s.q3 - s.gap], marker="o", capsize=3, label=algo)
+        a2.plot(s.n, s.evals, marker="o", label=algo)
+        for _, row in s.iterrows():
+            a1.annotate(f"{row.budget:g} s", (row.n, row.gap), textcoords="offset points", xytext=(4, 4), fontsize=7)
+    runs = int(g.groupby(["instance", "algo"]).size().min())
+    for ax, lab in ((a1, "gap to BKS (%), median + IQR"), (a2, "evaluations used (median)")):
+        ax.set_xscale("log")
+        ax.set_xlabel("customers n (log scale)")
+        ax.set_ylabel(lab)
+        ax.grid(alpha=0.3)
+        ax.legend(fontsize=8)
+    fig.suptitle(f"Scaling: {runs} runs per point, time budget per instance as labelled, seeds {_seed_range(g.seed.unique())}",
+                 fontsize=9)
+    fig.tight_layout()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+    return path

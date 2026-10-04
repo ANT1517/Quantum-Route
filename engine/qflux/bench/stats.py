@@ -129,3 +129,25 @@ def friedman_table(df: pd.DataFrame, metric: str = "best_D") -> pd.DataFrame:
                          "instances": m.shape[0], "runs_per_cell": runs,
                          "friedman_stat": float(stat), "p_value": float(p)})
     return pd.DataFrame(rows)
+
+
+def chain_table(df: pd.DataFrame, chain: list[str], metric: str = "best_D", alpha: float = 0.05) -> pd.DataFrame:
+    """Ablation: each row of `chain` vs the previous row, paired by seed (fleet-feasible runs only)."""
+    df = df[fleet_ok(df)]
+    rows = []
+    for (bt, b, inst), g in df.groupby(["budget_type", "budget", "instance"], sort=False):
+        piv = g.pivot_table(index="seed", columns="algo", values=metric, aggfunc="first")
+        for prev, cur in zip(chain, chain[1:]):
+            if prev not in piv or cur not in piv:
+                continue
+            pair = piv[[prev, cur]].dropna()
+            if len(pair) < 2:
+                continue
+            stat, p = wilcoxon_pair(pair[cur].to_numpy(), pair[prev].to_numpy())
+            diff = float(np.median(pair[cur] - pair[prev]))
+            rows.append({"budget_type": bt, "budget": b, "instance": inst, "row": cur, "previous": prev,
+                         "runs": len(pair), "seeds": _seed_range(pair.index),
+                         "mean_row": float(pair[cur].mean()), "mean_previous": float(pair[prev].mean()),
+                         "median_diff": diff, "statistic": stat, "p_value": p, "significant": p < alpha,
+                         "direction": "better" if diff < 0 else ("worse" if diff > 0 else "tie")})
+    return pd.DataFrame(rows)

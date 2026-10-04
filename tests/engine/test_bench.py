@@ -77,3 +77,21 @@ def test_deadline_respected(algo):
     assert time.time() - t <= 2.0 * 1.05
     if algo in ("qpso", "pso_ls", "ga_ls", "rr_ls"):
         assert sol.meta["ls_calls"] > 0
+
+
+def test_cluster_qpso_feasible():
+    """D47: cluster-first QPSO returns a feasible solution covering every customer within the time budget."""
+    import time
+    from qflux.algos.registry import get_optimizer
+    from qflux.bench.loader import load_instance
+    from qflux.core.evaluate import Evaluator
+    from qflux.core.feasibility import check
+    from qflux.rng import make_rng
+    from qflux.types import Weights
+    inst = load_instance("X-n502-k39")
+    ev = Evaluator(inst, Weights(wT=0, wD=1))
+    t = time.time()
+    sol, _ = get_optimizer("qpso_cluster").run(ev, None, 8.0, make_rng(5))
+    assert time.time() - t <= 8.0 * 1.05
+    assert check(inst, sol, ev)[0]
+    assert len(sol.meta["clusters"]) == 5 and sum(c["size"] for c in sol.meta["clusters"]) == inst.n

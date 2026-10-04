@@ -25,7 +25,7 @@ sys.path.insert(0, str(ROOT / "engine"))
 import pandas as pd  # noqa: E402
 
 from qflux.bench import plots, stats  # noqa: E402
-from qflux.bench.harness import load_experiment, read_records, run_experiment  # noqa: E402
+from qflux.bench.harness import keep_awake, load_experiment, read_records, run_experiment  # noqa: E402
 
 TABLES = ROOT / "results" / "tables"
 FIGURES = ROOT / "results" / "figures"
@@ -46,6 +46,13 @@ def report(exp: dict, runs_dir: Path = RUNS, tables: Path = TABLES, figures: Pat
     ref = exp.get("reference", "qpso")
     stats.wilcoxon_table(df, ref).to_csv(out["wilcoxon"], index=False, float_format="%.6g")
     stats.friedman_table(df).to_csv(out["friedman"], index=False, float_format="%.6g")
+    if exp.get("scaling_figure") or name.startswith("scaling"):
+        p = plots.scaling_plot(df, figures / f"{name}_gap_vs_n.png")
+        if p:
+            out["figures"].append(p)
+    if exp.get("chain"):                              # ablation: each row vs the previous row
+        out["chain"] = tables / f"{name}_chain.csv"
+        stats.chain_table(df, exp["chain"]).to_csv(out["chain"], index=False, float_format="%.6g")
     for (bt, b), g in df.groupby(["budget_type", "budget"], sort=False):
         for inst in dict.fromkeys(g.instance):
             fig = figures / f"{name}_convergence_{inst}_{bt}{b:g}.png"
@@ -71,16 +78,6 @@ def report(exp: dict, runs_dir: Path = RUNS, tables: Path = TABLES, figures: Pat
     }
     out["meta"].write_text(json.dumps(meta, indent=2), encoding="utf-8")
     return out
-
-
-def keep_awake(on: bool = True):
-    """Ask Windows not to sleep while a benchmark runs (a suspended run gets an unfair time budget).
-    ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED; closing the lid can still suspend the laptop."""
-    if sys.platform != "win32":
-        return
-    import ctypes
-    flags = 0x80000000 | (0x00000001 | 0x00000002 if on else 0)
-    ctypes.windll.kernel32.SetThreadExecutionState(flags)
 
 
 def main():

@@ -839,7 +839,7 @@ Non-dominated archive over (T, D, C, E) (cap 200, crowding-distance pruning). Dr
 
 ### 7.13 Large scale — cluster-first parallel QPSO (REQ-08)
 1. Sweep clustering by polar angle around the depot into clusters of ≈ 100–150 customers.
-2. One QPSO per cluster in parallel (`ProcessPoolExecutor`), budget proportional to cluster size.
+2. One QPSO per cluster, budget proportional to cluster size, run one after another in the same process (D47: one core per run).
 3. Concatenate routes; inter-cluster repair via relocate/swap for boundary customers.
 4. Report X-n502-k39 and X-n1001-k43: gap to BKS, runtime, runtime vs n. Honest note: state-of-the-art solvers (e.g., HGS) reach very small gaps on X instances; we show **scalability behaviour**, not state-of-the-art quality.
 
@@ -1362,6 +1362,7 @@ Finale deck flow (10 slides, later): Title · Problem · Why it matters · Solut
 | D43 | (2026-10-04, Person A) Time budget by size class: 30 s for n ≤ 80 (A-n32, A-n63, A-n80, CMT1), 60 s for n > 80 (CMT5, X-n101); stated on every table and figure. Time-budget runs longer than 1.10× budget are invalid and re-run | Equal time per size class; at n = 199, 30 s gives too few iterations for any swarm (QPSO-full: 44–55 iterations in 60 s on CMT5). Guard added after the laptop entered Modern Standby for ≈28 min during a smoke run (every run then reported ≈1,607 s) |
 | D44 | (2026-10-04, Person A) Timing-fairness check of bench_core_v1: 11 workers = physical cores (12) − 1, so not oversubscribed; runs are interleaved per (instance, seed) in a fixed algorithm order, not in algorithm blocks. Restart with a shuffled order was therefore **not triggered**; v1 continues. Recorded: CPU i7-1360P is hybrid (4 performance + 8 efficiency cores, 16 threads), power plan Balanced; per-run speed spread on the same instance up to ≈1.26–1.29× (SA moves per 30 s). From now on every RunRecord stores start/end timestamps and each launch writes `<exp>.run_info.json` (CPU, cores, power plan, workers, commit) | Needed to check throttling drift (gap vs start time) and to state the hardware with every table |
 | D45 | (2026-10-04, Person A) **Pre-registered before any bench_core_v1 result was seen:** supplementary row QPSO-noQUBO (QPSO-full with the QUBO slot disabled) on the bench_core instances, same seeds and budgets, run right after bench_core_v1 (`bench_core_v1_noqubo.yaml`) | Measures what the QUBO slot costs or adds inside the time budget |
+| D47 | (2026-10-04, Person A) Cluster-first QPSO (`algos/cluster.py`): sweep clusters of ≈125 customers, one QPSO-full per cluster with a time share ∝ cluster size (90% of the budget), then relocate/swap/2-opt repair over all routes in the remaining time. Clusters run **sequentially** in one process, not in parallel as §7.13 said | Keeps one core per run (D30), so the clustered X-n502 run gets the same CPU as every other run |
 | … | Add new decisions with date/time | |
 
 ---

@@ -1,0 +1,13 @@
+# The only evaluation-budget comparison (D39): plain QPSO-base vs plain PSO, no local search at all, so an
+# evaluation really is the unit of work. 12,000 evaluations, 10 runs, A-n63-k9 and A-n80-k10.
+name: ablation_evals
+description: "Plain QPSO-base vs plain PSO (no LS), 12,000 evaluations, 10 runs"
+instances: [A-n63-k9, A-n80-k10]
+runs: 10
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: qpso_base_plain
+variants:
+  qpso_base_plain: {algo: qpso, params: {init: uniform, mbest: uniform, alpha_mode: linear, memetic: false, ls_every: 0, tunneling: {enabled: false}, qubo_slot: {enabled: false}, diversity_delta: 0.0}}
+  pso_plain:       {algo: pso, params: {}}
+budgets:
+  - {type: evals, value: 12000, algorithms: [qpso_base_plain, pso_plain]}
