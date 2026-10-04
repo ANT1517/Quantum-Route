@@ -68,6 +68,12 @@ PHASES = {
     # D54 confirmatory round: tuning (tuning instances only), then (after the committed choice) confirmation
     "d54_tune": [("tune_d54", [PY, "-u", "scripts/run_bench.py", "--exp", "tune_d54"])],
     "d54_confirm": [("confirm_d54", [PY, "-u", "scripts/run_bench.py", "--exp", "confirm_d54"])],
+    "d54_rerun": [
+        ("d54_move_flagged", [PY, "scripts/d51_replace.py", "--audit", "d51_audit_confirm"]),
+        ("d54_rerun_confirm", [PY, "-u", "scripts/run_bench.py", "--exp", "confirm_d54"]),
+        ("d51_audit_confirm2", [PY, "scripts/audit_throughput.py", "--exps", "confirm_d54", "--no-arrivals",
+                                "--out", "d51_audit_confirm2"]),
+    ],
     # optional, after D46: nothing else may run during the P-core check
     "optional": [
         ("pcore_check", [PY, "-u", "scripts/run_bench.py", "--exp", "pcore_check"]),

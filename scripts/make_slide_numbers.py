@@ -81,6 +81,16 @@ def main():
         add("D46", "Hyderabad-60 LS call, generic vs proxy (median ms); TD cost ratio proxy/generic",
             f"{med['generic_td']:.1f} -> {med['proxy_td_verified']:.1f} ms; ratio {(piv.proxy_td_verified / piv.generic_td).mean():.4f}",
             "results/tables/d46_td_ls_speed.csv")
+    cs = T / "confirm_d54_summary.csv"
+    if cs.exists():
+        for r in pd.read_csv(cs).itertuples():
+            add(f"C-{r.instance}-{r.algo}", f"D54 confirmation (new seeds, same launch conditions): mean gap, {r.algo} on "
+                f"{r.instance} ({r.budget:g} s, {r.runs} runs)", f"{f(r.gap_mean_pct)} % (sd {f(r.gap_std_pct)})",
+                f"results/tables/confirm_d54_summary.csv ({r.instance}, {r.algo})")
+        for r in pd.read_csv(T / "confirm_d54_wilcoxon.csv").itertuples():
+            add(f"CP-{r.instance}-{r.other}", f"D54 confirmation: {r.reference} vs {r.other} on {r.instance}: Holm p; "
+                "mean paired gap difference", f"p_holm {r.p_holm:.3g}; {f(r.mean_diff_gap_pts, 3)} gap points",
+                f"results/tables/confirm_d54_wilcoxon.csv ({r.instance}, {r.other})")
     au = pd.read_csv(T / "d51_audit_final_summary.csv")
     add("D51", "Timed runs flagged by the final memory/throughput audit", str(int(au.flagged.sum())),
         "results/tables/d51_audit_final_summary.csv")

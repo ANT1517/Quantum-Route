@@ -1,0 +1,50 @@
+[confirm_d54] 4 runs to do (716 already recorded), 4 worker(s) -> C:\Users\nisha\Quantum-Route-solver\results\runs\confirm_d54.jsonl
+  [1/4] A-n80-k10 ortools time=30 seed=68363: D=1791.0 gap=1.59% evals=0 29.90s ls=0
+  [2/4] A-n80-k10 pso_tuned time=30 seed=68362: D=1801.0 gap=2.16% evals=78560 30.00s ls=19821
+  [3/4] A-n80-k10 ga_ls time=30 seed=68362: D=1850.0 gap=4.93% evals=112493 30.00s ls=29886
+  [4/4] A-n80-k10 pso_tuned time=30 seed=68363: D=1793.0 gap=1.70% evals=78080 30.00s ls=19696
+[confirm_d54] done in 33 s
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+budget_type  budget   instance      algo  runs    D_mean  gap_mean_pct  gap_best_pct  wall_s_mean
+       time      30   A-n32-k5   ortools    30   784.000      0.000000      0.000000      29.9055
+       time      30   A-n32-k5  qn_tuned    30   794.000      1.275510      0.000000      30.0008
+       time      30   A-n32-k5 pso_tuned    30   784.000      0.000000      0.000000      30.0007
+       time      30   A-n32-k5     ga_ls    30   815.833      4.060370      0.000000      30.0008
+       time      30   A-n63-k9  qn_tuned    30  1631.230      0.942657      0.123762      30.0011
+       time      30   A-n63-k9 pso_tuned    30  1636.530      1.270630      0.680693      30.0011
+       time      30   A-n63-k9   ortools    30  1641.000      1.547030      1.547030      29.9027
+       time      30   A-n63-k9     ga_ls    30  1685.030      4.271860      1.423270      30.0011
+       time      30  A-n80-k10 pso_tuned    30  1820.970      3.287960      1.701640      30.0012
+       time      30  A-n80-k10     ga_ls    30  1867.170      5.908490      2.949520      30.0013
+       time      30  A-n80-k10  qn_tuned    30  1783.770      1.177920      0.113443      30.0016
+       time      30  A-n80-k10   ortools    30  1793.200      1.712990      1.588200      29.9024
+       time      30       CMT1   ortools    30   524.611      0.000028      0.000028      29.9039
+       time      30       CMT1 pso_tuned    30   524.891      0.053303      0.000028      30.0010
+       time      30       CMT1     ga_ls    30   542.084      3.330730      0.000028      30.0010
+       time      30       CMT1  qn_tuned    30   525.950      0.255245      0.000028      30.0010
+       time      60       CMT5   ortools    30  1389.390      7.596830      7.596830      59.9049
+       time      60       CMT5     ga_ls    30  1405.480      8.842990      4.826150      60.0031
+       time      60       CMT5  qn_tuned    30  1394.490      7.992280      5.523020      60.0047
+       time      60       CMT5 pso_tuned    30  1416.660      9.708580      7.289710      60.0048
+       time      60 X-n101-k25 pso_tuned    30 28174.100      2.113250      1.391760      60.0024
+       time      60 X-n101-k25   ortools    30 29132.900      5.588300      4.262260      59.9040
+       time      60 X-n101-k25     ga_ls    30 28493.400      3.270630      2.022400      60.0017
+       time      60 X-n101-k25  qn_tuned    30 28096.900      1.833450      1.221410      60.0028
+
+wrote:
+  C:\Users\nisha\Quantum-Route-solver\results\tables\confirm_d54_summary.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\confirm_d54_wilcoxon.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\confirm_d54_friedman.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\confirm_d54_meta.json
+  C:\Users\nisha\Quantum-Route-solver\results\tables\confirm_d54_wilcoxon_pso_tuned.csv
+  C:\Users\nisha\Quantum-Route-solver\results\figures\confirm_d54_convergence_A-n32-k5_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\confirm_d54_convergence_A-n63-k9_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\confirm_d54_convergence_A-n80-k10_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\confirm_d54_convergence_CMT1_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\confirm_d54_gap_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\confirm_d54_convergence_CMT5_time60.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\confirm_d54_convergence_X-n101-k25_time60.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\confirm_d54_gap_time60.png

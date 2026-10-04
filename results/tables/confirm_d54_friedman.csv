@@ -1,0 +1,9 @@
+budget_type,budget,algo,avg_rank,instances,runs_per_cell,friedman_stat,p_value
+time,30,ga_ls,4,4,30,7.46154,0.058555
+time,30,ortools,1.875,4,30,7.46154,0.058555
+time,30,pso_tuned,2.125,4,30,7.46154,0.058555
+time,30,qn_tuned,2,4,30,7.46154,0.058555
+time,60,ga_ls,3,2,30,1.8,0.614935
+time,60,ortools,2.5,2,30,1.8,0.614935
+time,60,pso_tuned,3,2,30,1.8,0.614935
+time,60,qn_tuned,1.5,2,30,1.8,0.614935
