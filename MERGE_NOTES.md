@@ -1,11 +1,20 @@
 # Merge notes for Person B (from the `solver` branch)
 
-Things on `solver` that touch shared files or affect B's code. Source of truth: `QUANTUMROUTE_MASTER_DOC.md` (v4.7, §17 D28–D52).
+## Status (2026-10-04): solver is ready for B to merge
+- Trial merge of `solver` into the latest `origin/Person-B` (78db0c6): **no conflicts**; full test suite in the merged tree: **86 passed**.
+- Results to show: `results/RESULTS_SUMMARY.md` (one page, claims + what we can NOT claim) and `results/SLIDE_NUMBERS.md` (every number -> source file). Never type numbers by hand.
+- **Default engine changed (D53): QPSO-noQUBO.** Registry name `qpso_noqubo`; backend `algorithm: "qpso"` runs it unless `params.qubo_slot = true` (then QPSO-full); results are labelled `qpso_noqubo` / `qpso_full`. B's demos: please switch `scripts/run_fleet_demo.py` (and incident/ambulance planning) from `"qpso"` to `"qpso_noqubo"`, then re-run it and `export_demo.py`. Show QPSO-full next to it wherever results are compared (never hide it).
+- **OR-Tools fixed (D55):** costs via a C++ matrix instead of a Python callback (≈2.6x search throughput); all OR-Tools benchmark rows were re-run. After the fix OR-Tools ranks first at 30 s; the summary says so.
+- **Holm-corrected tables (D56):** `/benchmarks/{name}` rows carry `wilcoxon_p_holm_vs_qpso` (the column the verdict reads), `p_raw_vs_qpso`, `median_diff_gap_pts_vs_qpso`, and the second set `p_holm_vs_qpso_noqubo`, `p_raw_vs_qpso_noqubo`, `median_diff_gap_pts_vs_qpso_noqubo`. Effect size = paired difference in gap points (negative = reference better).
+- `/benchmarks` order: bench_core_v1 (headline, with the QPSO-noQUBO row merged in), p_small (heuristic vs exact), ablation, ablation_evals, alpha_sweep, scaling. Audit/tuning/smoke/merged tables are not listed (`?all=true` shows them with their kind).
+- **Demo mode:** `python scripts/export_api_json.py` writes `results/api_export/` with the exact live-API shapes (`benchmarks.json`, `benchmark_<name>.json`, `qubo_validation.json`) plus `figures.txt` (paths like `figures/x.png`). Suggested change in B's `export_demo.py`: copy those JSON files into `frontend/public/demo/` and the listed PNGs into `frontend/public/demo/figures/` instead of globbing `results/tables/bench_*.csv`.
+
+Things on `solver` that touch shared files or affect B's code. Source of truth: `QUANTUMROUTE_MASTER_DOC.md` (v4.8, §17 D28–D56).
 
 ## Frozen shared files changed
 - **`engine/qflux/types.py`: `RunRecord.meta: dict = field(default_factory=dict)`** (D37). Additive and backward compatible: a new last field with an empty default, so existing `RunRecord(...)` calls still work. `tests/contract/test_contract.py` now expects `"meta"` at the end of the `RunRecord` field list. Take `solver`'s version of both files on merge.
 - **`RunRecord.meta["curve_t"]`** (D40): list of `[elapsed_s, best_F]` at each improvement plus the final point, written for every algorithm. Additive (a key inside `meta`). Time-budget convergence charts in Benchmark Studio should use it, with wall-clock seconds on the x-axis.
-- **`QUANTUMROUTE_MASTER_DOC.md`** (v4.1 → v4.7): §3.4, §5.1, §7.4, §7.5.3, §7.8, §8.2, §9 Phase 9, §9.4, §10.1 (T11), §11.1, §11.3, §11.4, §17 (D28–D52). D24–D27 are B's; A's decisions start at D28.
+- **`QUANTUMROUTE_MASTER_DOC.md`** (v4.1 → v4.8): §3.4, §5.1, §7.4, §7.5.3, §7.8, §8.2, §9 Phase 9, §9.4, §10.1 (T11), §11.1, §11.3, §11.4, §17 (D28–D56). D24–D27 are B's; A's decisions start at D28.
 
 ## Frontend (B's code; not changed by A)
 - **Benchmark Studio** (§8.2 wireframe, updated in the doc): the instance chips should be the core set **A-n32-k5, A-n63-k9, A-n80-k10, CMT1, CMT5, X-n101-k25** (no A-n44-k6, which is tuning-only), with **"Runs: 30"** and time budgets only: **30 s** for A-n32, A-n63, A-n80, CMT1 and **60 s** for CMT5, X-n101 (D39, D40, D43). Convergence charts for bench_core use wall-clock seconds (`meta.curve_t`), not evaluations. Headline rows: QPSO-full, PSO+LS, GA+LS, SA, OR-Tools. Show `fleet_violations` next to the gap (runs with m > k have no gap, D38). Plain PSO/GA, QPSO-base and RR+LS belong to the ablation view.
@@ -40,5 +49,5 @@ Needs B:
 - **Backend job timeout (D52):** a job's time budget is capped at the 120 s timeout and enforced inside the optimizer; T25 runs at n = 399.
 - **QPSO now runs memetic LS (D33)**; on static instances LS uses exact O(1)-delta kernels (D41, ≈100× faster, same results). Time-dependent instances (Hyderabad, SynthCity) still use the generic kernels. For the live demo, use a time budget.
 - **bench_core v0 is superseded** (`results/runs/bench_core_v0_partial.*`): never show it.
-- **Step 8 of the merge (unchanged):** switch `engine/qflux/dynamic/solver.py` to `from qflux.algos.registry import get_optimizer`, then re-run `run_fleet_demo.py` and `export_demo.py`.
+- **Step 8 of the merge:** B's latest `dynamic/solver.py` already uses `qflux.algos.registry.get_optimizer` (verified in the trial merge). Remaining: use `"qpso_noqubo"` in the demos (D53), re-run `run_fleet_demo.py` and `export_demo.py`.
 - **Editable install:** the shared venv imports `qflux` from `~/Quantum-Route/engine` (B's worktree). After merging, reinstall (`pip install -e engine`) or set `PYTHONPATH=<repo>/engine`, otherwise tests import the wrong copy.
