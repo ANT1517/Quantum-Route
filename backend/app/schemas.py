@@ -103,3 +103,5 @@ class FleetCompareIn(Strict):
 class SolveRouteIn(Strict):
     route_stops: Annotated[list[int], Field(min_length=2)]
     backend: Literal["neal", "brute", "2opt", "heldkarp", "qiskit", "dwave"] = "neal"
+    job_id: str | None = None          # optional: which job's scenario the stops belong to
+    scenario_id: str | None = None

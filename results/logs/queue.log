@@ -1,0 +1,5 @@
+2026-10-04 14:32:46 waiting for bench_core_v1
+2026-10-04 15:17:18 bench_core_v1 finished; rebuilding its report with run provenance
+2026-10-04 15:17:48 cluster solver test
+2026-10-04 15:18:09 profile QPSO-full on A-n80-k10 (30 s, idle machine)
+2026-10-04 15:18:59 start bench_core_v1_noqubo

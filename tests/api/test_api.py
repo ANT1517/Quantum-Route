@@ -96,11 +96,23 @@ def test_t27_sql_injection_name_stored_safely(client):
 
 
 def test_benchmarks_listing_marks_kinds(client):
-    items = client.get("/api/benchmarks").json()
-    for it in items:
+    default = client.get("/api/benchmarks").json()
+    assert all(it["kind"] == "benchmark" for it in default)      # Benchmark Studio has no kind filter
+    for it in client.get("/api/benchmarks?all=true").json():
         if it["name"].startswith("tune_"):
             assert "not a benchmark" in it["kind"]
         assert "v0_partial" not in it["name"]
+
+
+def test_benchmark_rows_have_p_values_and_run_arrays(client):
+    items = client.get("/api/benchmarks?all=true").json()
+    if not items:
+        pytest.skip("no tables yet")
+    d = client.get(f"/api/benchmarks/{items[0]['name']}").json()
+    row = d["table"][0]
+    assert {"instance", "algo", "gap_mean_pct", "gap_runs_pct"} <= set(row)
+    assert any(k.startswith("wilcoxon_p_vs_") for k in row)
+    assert isinstance(d["meta"]["budget"], str) and d["meta"]["budget"]
 
 
 @pytest.mark.jobs

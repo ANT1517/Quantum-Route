@@ -1,0 +1,17 @@
+# D49, PRE-REGISTERED on 2026-10-04 before any bench_core_v1 quality number was looked at.
+# P/E-core robustness check: hybrid CPU (4 P-cores + 8 E-cores) + fixed in-group order in bench_core_v1 could map
+# some algorithms to E-cores more often. Re-run a subset with 4 workers, each pinned to its own P-core, on an
+# idle machine: same seeds as bench_core_v1 (seed = seed_base + 1000 * instance_idx + run_idx, runs 0-9).
+# Verdict: do the ranking (mean gap) and the Wilcoxon conclusions (QPSO-full vs each, alpha = 0.05) match
+# bench_core_v1 (+ the noQUBO row) on the same instances and seeds? If not, both are reported and flagged.
+name: pcore_check
+description: "D49 P-core robustness check: 4 workers pinned to P-cores, 30 s, 10 runs, bench_core_v1 seeds"
+instances: [A-n63-k9, A-n80-k10]
+runs: 10
+weights: [0.0, 1.0, 0.0, 0.0]
+reference: qpso
+pin: p_cores
+variants:
+  qpso_noqubo: {algo: qpso, params: {qubo_slot: {enabled: false}}}
+budgets:
+  - {type: time, value: 30, algorithms: [qpso, qpso_noqubo, pso_ls, ga_ls, rr_ls]}

@@ -101,7 +101,7 @@ def gap_boxplot(df: pd.DataFrame, budget_type: str, budget: float, path: Path) -
     return path
 
 
-def scaling_plot(df: pd.DataFrame, path: Path) -> Path | None:
+def scaling_plot(df: pd.DataFrame, path: Path, rule: str | None = None) -> Path | None:
     """Gap to BKS and evaluations used vs n (log x), one line per algorithm; each point labelled with its budget."""
     import re
     g = df[fleet_ok(df)].copy()
@@ -124,7 +124,9 @@ def scaling_plot(df: pd.DataFrame, path: Path) -> Path | None:
         ax.set_ylabel(lab)
         ax.grid(alpha=0.3)
         ax.legend(fontsize=8)
-    fig.suptitle(f"Scaling: {runs} runs per point, time budget per instance as labelled, seeds {_seed_range(g.seed.unique())}",
+    counts = g.groupby("instance").size().to_dict()
+    fig.suptitle(f"Scaling: time budget {rule or 'per instance as labelled'}; runs per point: "
+                 + ", ".join(f"{k} {int(v / g[g.instance == k].algo.nunique())}" for k, v in counts.items()),
                  fontsize=9)
     fig.tight_layout()
     path.parent.mkdir(parents=True, exist_ok=True)

@@ -9,10 +9,17 @@
 - Re-running an experiment skips records that already exist (resume after an interruption).
 - Parallel execution (D30): up to (physical cores - 1) worker processes, each pinned to one thread
   (NUMBA_NUM_THREADS=1, OMP_NUM_THREADS=1), so time-budget runs do not compete for CPU.
+- Order (D49): within each (budget, instance, seed) group the algorithms run in a shuffled order (fixed seed
+  per experiment and group), so no algorithm is systematically first or last in a group.
+- Every run stores a 0.2 s CPU-speed calibration (pure-Python operations per second, measured in the
+  worker right before the run) in meta["cpu_calib_ops_s"], plus start/end timestamps.
+- Optional `pin: p_cores` (D49): one worker per performance core, each process pinned to one logical CPU of
+  its own P-core (hybrid CPUs), so every run gets the same core type.
 """
 import hashlib
 import json
 import os
+import random
 import subprocess
 import sys
 import time
@@ -41,7 +48,8 @@ INSTANCE_ORDER = ["P-n16-k8", "P-n19-k2", "P-n22-k8", "A-n32-k5", "A-n44-k6", "A
 CURVE_STEP = 100
 SUSPEND_FACTOR = 1.10        # a time-budget run longer than this x budget was suspended (sleep) or hit a clock jump
 META_KEYS = ("iterations", "moves", "partial", "ls_calls", "qubo_calls", "qubo_improvements", "qubo_skipped_time",
-             "reinits", "solutions_found", "max_abs_key", "curve_t", "start_ts", "end_ts")
+             "reinits", "solutions_found", "max_abs_key", "curve_t", "start_ts", "end_ts", "cpu_calib_ops_s",
+             "pinned_cpu")
 THREAD_ENV = {"NUMBA_NUM_THREADS": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1",
               "OPENBLAS_NUM_THREADS": "1"}
 
@@ -73,6 +81,60 @@ def keep_awake(on: bool = True):
     import ctypes
     flags = 0x80000000 | (0x00000001 | 0x00000002 if on else 0)
     ctypes.windll.kernel32.SetThreadExecutionState(flags)
+
+
+def cpu_sets() -> list[tuple[int, int, int]]:
+    """[(logical processor, core index, efficiency class)] (Windows CPU-set API); [] elsewhere."""
+    if sys.platform != "win32":
+        return []
+    import ctypes
+    import struct
+    k = ctypes.windll.kernel32
+    need = ctypes.c_ulong(0)
+    k.GetSystemCpuSetInformation(None, 0, ctypes.byref(need), None, 0)
+    buf = ctypes.create_string_buffer(need.value)
+    if not k.GetSystemCpuSetInformation(buf, need, ctypes.byref(need), None, 0):
+        return []
+    raw, off, rows = buf.raw, 0, []
+    while off < need.value:
+        size, typ = struct.unpack_from("<II", raw, off)
+        if typ == 0:
+            _, _, lp, core, _, _, eff = struct.unpack_from("<IHBBBBB", raw, off + 8)
+            rows.append((lp, core, eff))
+        off += size
+    return rows
+
+
+def p_core_cpus() -> list[int]:
+    """One logical CPU per performance core (the highest efficiency class), lowest logical index first."""
+    rows = cpu_sets()
+    if not rows:
+        return []
+    top = max(eff for _, _, eff in rows)
+    first: dict[int, int] = {}
+    for lp, core, eff in sorted(rows):
+        if eff == top and core not in first:
+            first[core] = lp
+    return sorted(first.values())
+
+
+def pin_current_process(cpu: int) -> bool:
+    if sys.platform != "win32":
+        return False
+    import ctypes
+    k = ctypes.windll.kernel32
+    return bool(k.SetProcessAffinityMask(k.GetCurrentProcess(), ctypes.c_size_t(1 << cpu)))
+
+
+def cpu_calibration(seconds: float = 0.2) -> float:
+    """Pure-Python operations per second over `seconds` (a per-run CPU-speed figure, D49)."""
+    n, x = 0, 0
+    t_end = time.perf_counter() + seconds
+    while time.perf_counter() < t_end:
+        for i in range(1000):
+            x = (x * 1103515245 + 12345 + i) & 0x7FFFFFFF
+        n += 1000
+    return n / seconds
 
 
 def default_workers() -> int:
@@ -162,11 +224,13 @@ def single_run(inst, algo: str, params: dict, weights: Weights, budget_type: str
     """One run -> (RunRecord, feasible, errors). `label` names a variant (RunRecord.algo); default = algo."""
     ev = Evaluator(inst, weights)
     opt = get_optimizer(algo, params)
+    calib = cpu_calibration(0.2)                      # measured right before the run, outside its budget
     t = time.time()
     sol, curve = opt.run(ev, int(budget) if budget_type == "evals" else None,
                          float(budget) if budget_type == "time" else None, make_rng(seed))
     wall = time.time() - t
     sol.meta["start_ts"], sol.meta["end_ts"] = round(t, 3), round(t + wall, 3)   # throttling-drift check
+    sol.meta["cpu_calib_ops_s"] = round(calib)
     ok, errs = check(inst, sol, ev)
     gap = None
     fleet_excess = max(0, sol.n_vehicles - inst.K) if inst.K is not None else 0
@@ -201,12 +265,16 @@ def read_records(path: Path) -> list[dict]:
 def plan(exp: dict) -> list[tuple]:
     """[(instance, algo, budget_type, budget, run_idx, seed)] in a stable order."""
     runs = int(exp.get("runs", 3))
+    shuffle = exp.get("shuffle", True)
     jobs = []
     for b in exp["budgets"]:
         for inst in b.get("instances", exp["instances"]):          # a budget may name its own instances
             for r in range(runs):
                 seed = run_seed(inst, r, exp.get("seed_base"))
-                for algo in b["algorithms"]:
+                algos = list(b["algorithms"])
+                if shuffle:                                         # D49: fixed-seed shuffle within the group
+                    random.Random(f"{exp['name']}|{b['type']}|{b['value']}|{inst}|{r}").shuffle(algos)
+                for algo in algos:
                     jobs.append((inst, algo, b["type"], float(b["value"]), r, seed))
     return jobs
 
@@ -226,8 +294,14 @@ def warm_up(algos, inst_name: str):
 _INST_CACHE: dict = {}
 
 
-def _worker_init(algos, inst_name):
+_PINNED: dict = {}
+
+
+def _worker_init(algos, inst_name, cpu_queue=None):
     os.environ.update(THREAD_ENV)
+    if cpu_queue is not None:                         # D49: pin this worker to its own P-core
+        cpu = cpu_queue.get()
+        _PINNED["cpu"] = cpu if pin_current_process(cpu) else None
     warm_up(algos, inst_name)
 
 
@@ -236,6 +310,8 @@ def _job(iname, label, algo, params, w, btype, budget, seed):
         _INST_CACHE.clear()                         # one instance in memory per process
         _INST_CACHE[iname] = load_instance(iname)
     rec, ok, errs = single_run(_INST_CACHE[iname], algo, params, w, btype, budget, seed, label)
+    if "cpu" in _PINNED:
+        rec.meta["pinned_cpu"] = _PINNED["cpu"]
     return asdict(rec), ok, errs
 
 
@@ -248,7 +324,10 @@ def run_experiment(exp: dict, out_dir: Path | None = None, log=print, workers: i
     w = Weights(*exp.get("weights", [0.0, 1.0, 0.0, 0.0]))
     params = exp.get("params", {}) or {}
     jobs = [j for j in plan(exp) if (j[1], j[0], j[5], j[2], j[3]) not in done]
-    workers = int(workers or exp.get("workers") or default_workers())
+    pin_cpus = p_core_cpus() if exp.get("pin") == "p_cores" else []
+    if exp.get("pin") == "p_cores" and not pin_cpus:
+        raise RuntimeError("pin: p_cores requested but no CPU-set information is available")
+    workers = len(pin_cpus) if pin_cpus else int(workers or exp.get("workers") or default_workers())
     workers = max(1, min(workers, len(jobs) or 1))
     log(f"[{exp['name']}] {len(jobs)} runs to do ({len(done)} already recorded), {workers} worker(s) -> {path}")
     if jobs:                                      # provenance of this launch (merged into <exp>_meta.json)
@@ -256,7 +335,9 @@ def run_experiment(exp: dict, out_dir: Path | None = None, log=print, workers: i
         launches = json.loads(info_path.read_text(encoding="utf-8")) if info_path.exists() else []
         launches.append({"started": time.strftime("%Y-%m-%d %H:%M:%S"), "runs_planned": len(jobs),
                          "workers": workers, "thread_env": THREAD_ENV, "git_commit": git_commit(),
-                         "run_order": "per (budget, instance, seed): all algorithms in config order",
+                         "run_order": ("per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)"
+                                       if exp.get("shuffle", True) else "per (budget, instance, seed): config order"),
+                         "pinned_cpus": pin_cpus or None,
                          "machine": machine_info()})
         info_path.write_text(json.dumps(launches, indent=2), encoding="utf-8")
     if not jobs:
@@ -299,6 +380,8 @@ def run_experiment(exp: dict, out_dir: Path | None = None, log=print, workers: i
     args = [(iname, label, *resolve(label), w, btype, budget, seed)
             for (iname, label, btype, budget, r, seed) in jobs]
     if workers == 1:
+        if pin_cpus:
+            _PINNED["cpu"] = pin_cpus[0] if pin_current_process(pin_cpus[0]) else None
         warm_up(algos, jobs[0][0])
         for a in args:
             record(*_job(*a))
@@ -306,8 +389,15 @@ def run_experiment(exp: dict, out_dir: Path | None = None, log=print, workers: i
         saved = {k: os.environ.get(k) for k in THREAD_ENV}
         os.environ.update(THREAD_ENV)               # inherited by the spawned workers
         try:
+            cpu_q = None
+            if pin_cpus:
+                import multiprocessing as mp
+                mgr = mp.Manager()
+                cpu_q = mgr.Queue()
+                for c in pin_cpus[:workers]:
+                    cpu_q.put(c)
             with ProcessPoolExecutor(max_workers=workers, initializer=_worker_init,
-                                     initargs=(algos, jobs[0][0])) as pool:
+                                     initargs=(algos, jobs[0][0], cpu_q)) as pool:
                 futs = [pool.submit(_job, *a) for a in args]
                 for fut in as_completed(futs):
                     record(*fut.result())

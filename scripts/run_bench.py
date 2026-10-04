@@ -36,6 +36,12 @@ def report(exp: dict, runs_dir: Path = RUNS, tables: Path = TABLES, figures: Pat
     name = exp["name"]
     recs = read_records(runs_dir / f"{name}.jsonl")
     bad = read_records(runs_dir / f"{name}.infeasible.jsonl")
+    for imp in exp.get("import_runs") or []:          # records reused from another experiment (not re-run)
+        recs += [r for r in read_records(runs_dir / f"{imp['exp']}.jsonl")
+                 if r["instance"] in imp.get("instances", [r["instance"]])
+                 and r["algo"] in imp.get("algorithms", [r["algo"]])]
+        bad += [r for r in read_records(runs_dir / f"{imp['exp']}.infeasible.jsonl")
+                if r["instance"] in imp.get("instances", [r["instance"]])]
     if not recs:
         raise SystemExit(f"no records in {runs_dir / f'{name}.jsonl'}")
     df = stats.to_frame(recs)
@@ -47,7 +53,7 @@ def report(exp: dict, runs_dir: Path = RUNS, tables: Path = TABLES, figures: Pat
     stats.wilcoxon_table(df, ref).to_csv(out["wilcoxon"], index=False, float_format="%.6g")
     stats.friedman_table(df).to_csv(out["friedman"], index=False, float_format="%.6g")
     if exp.get("scaling_figure") or name.startswith("scaling"):
-        p = plots.scaling_plot(df, figures / f"{name}_gap_vs_n.png")
+        p = plots.scaling_plot(df, figures / f"{name}_gap_vs_n.png", rule=exp.get("budget_rule"))
         if p:
             out["figures"].append(p)
     if exp.get("chain"):                              # ablation: each row vs the previous row
@@ -69,6 +75,7 @@ def report(exp: dict, runs_dir: Path = RUNS, tables: Path = TABLES, figures: Pat
         "records": len(recs), "infeasible": len(bad),
         "budgets": [{"type": b["type"], "value": b["value"], "algorithms": b["algorithms"]} for b in exp["budgets"]],
         "instances": exp["instances"],
+        "import_runs": exp.get("import_runs") or [],
         "seeds": sorted({int(r["seed"]) for r in recs}),
         "config_hashes": {f"{a}|{bt}|{b:g}": sorted(g.config_hash.unique().tolist())
                           for (a, bt, b), g in df.groupby(["algo", "budget_type", "budget"])},

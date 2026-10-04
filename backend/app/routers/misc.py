@@ -55,8 +55,9 @@ async def fleet_compare(body: FleetCompareIn, db: Session = Depends(get_session)
 
 
 @router.get("/benchmarks", tags=["benchmarks"])
-def list_benchmarks():
-    return results.list_benchmarks()
+def list_benchmarks(all: bool = False):  # noqa: A002  (query parameter name)
+    """Benchmarks only; ?all=true also lists tuning and smoke tables (each item carries its kind)."""
+    return results.list_benchmarks(include_all=all)
 
 
 @router.get("/benchmarks/{name}", tags=["benchmarks"])
@@ -77,16 +78,16 @@ def quantum_validation():
 
 @router.post("/quantum/solve-route", tags=["quantum"])
 async def solve_route(body: SolveRouteIn, db: Session = Depends(get_session)):
-    """Route stops are customer ids of the seeded Hyderabad-60 scenario; the distance matrix is its
-    dispatch-slot travel time (minutes). Returns the QUBO matrix and the brute-force optimum for comparison."""
+    """Route stops are customer ids of a scenario; the distance matrix is that scenario's dispatch-slot
+    travel time (minutes). The scenario comes from job_id or scenario_id if given; otherwise from the most
+    recent job whose result contains exactly this route (Quantum Lab sends a route of the last job);
+    otherwise Hyderabad-60. The response says which scenario was used."""
     from qflux.quantum.backends import MAX_STOPS
     if len(body.route_stops) > MAX_STOPS:
         raise ApiError(422, "TOO_MANY_STOPS", f"at most {MAX_STOPS} stops (QUBO has m^2 variables)")
     if len(set(body.route_stops)) != len(body.route_stops):
         raise ApiError(400, "INVALID_INPUT", "route_stops must be distinct")
-    s = db.scalars(select(Scenario).where(Scenario.name == "Hyderabad-60")).first()
-    if s is None:
-        raise ApiError(404, "NOT_FOUND", "seeded scenario Hyderabad-60 is missing")
+    s = _route_scenario(db, body)
 
     def work():
         from qflux.core.construct import dispatch_matrix
@@ -95,8 +96,30 @@ async def solve_route(body: SolveRouteIn, db: Session = Depends(get_session)):
             raise ApiError(400, "INVALID_INPUT", f"route_stops must be customer ids 1..{inst.n}")
         dist = np.asarray(dispatch_matrix(inst), float)
         try:
-            return engine.solve_route_qubo({"route_stops": body.route_stops, "backend": body.backend,
-                                            "dist": dist.tolist()})
+            out = engine.solve_route_qubo({"route_stops": body.route_stops, "backend": body.backend,
+                                           "dist": dist.tolist()})
         except NotImplementedError as e:
             raise ApiError(501, "NOT_IMPLEMENTED", str(e)) from e
+        out["scenario_id"], out["scenario_name"] = s.id, s.name
+        return out
     return await run_in_threadpool(work)
+
+
+def _route_scenario(db: Session, body: SolveRouteIn) -> Scenario:
+    from ..models import Job, Result
+    if body.scenario_id:
+        return svc.get_or_404(db, body.scenario_id)
+    if body.job_id:
+        j = db.get(Job, body.job_id)
+        if j is None:
+            raise ApiError(404, "NOT_FOUND", f"job {body.job_id} not found")
+        return svc.get_or_404(db, j.scenario_id)
+    rows = db.execute(select(Result, Job).join(Job, Job.id == Result.job_id).order_by(Result.created_at.desc())
+                      .limit(200)).all()
+    for res, job in rows:
+        if any(list(r.get("stops", [])) == list(body.route_stops) for r in res.result_json.get("routes", [])):
+            return svc.get_or_404(db, job.scenario_id)
+    s = db.scalars(select(Scenario).where(Scenario.name == "Hyderabad-60")).first()
+    if s is None:
+        raise ApiError(404, "NOT_FOUND", "seeded scenario Hyderabad-60 is missing")
+    return s

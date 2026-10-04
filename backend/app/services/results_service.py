@@ -6,10 +6,13 @@ from pathlib import Path
 
 import pandas as pd
 
+from qflux.bench.harness import read_records
+
 from ..errors import ApiError
 from ..settings import RESULTS_DIR
 
 TABLES = RESULTS_DIR / "tables"
+RUNS = RESULTS_DIR / "runs"
 FIGURES = RESULTS_DIR / "figures"
 FILE_TYPES = {".png": "image/png", ".svg": "image/svg+xml", ".csv": "text/csv", ".json": "application/json",
               ".md": "text/markdown", ".geojson": "application/geo+json"}
@@ -27,10 +30,13 @@ def _records(df: pd.DataFrame) -> list[dict]:
     return json.loads(df.to_json(orient="records"))
 
 
-def list_benchmarks() -> list[dict]:
+def list_benchmarks(include_all: bool = False) -> list[dict]:
+    """Benchmark Studio has no kind filter, so tuning and smoke tables are hidden unless include_all."""
     out = []
     for p in sorted(TABLES.glob("*_summary.csv")):
         name = p.name[: -len("_summary.csv")]
+        if not include_all and kind_of(name) != "benchmark":
+            continue
         meta = _meta(name)
         out.append({"name": name, "title": meta.get("description") or name, "kind": kind_of(name),
                     "runs": meta.get("runs_planned"), "budgets": meta.get("budgets"), "records": meta.get("records")})
@@ -49,11 +55,28 @@ def benchmark(name: str) -> dict:
     if not summ.exists():
         raise ApiError(404, "NOT_FOUND", f"benchmark {name} not found")
     meta = _meta(name)
-    budgets = meta.get("budgets") or []
-    out = {"table": _records(pd.read_csv(summ)),
+    summary = pd.read_csv(summ)
+    ref = meta.get("reference", "qpso")
+    wil = TABLES / f"{name}_wilcoxon.csv"
+    pcol = f"wilcoxon_p_vs_{ref}"                       # Benchmark Studio's verdict reads a /wilcoxon/ column
+    summary[pcol] = None
+    if wil.exists() and wil.stat().st_size > 1:
+        try:
+            w = pd.read_csv(wil)
+            for _, r in w.iterrows():
+                m = ((summary.instance == r.instance) & (summary.algo == r.other) &
+                     (summary.budget_type == r.budget_type) & (summary.budget == r.budget))
+                summary.loc[m, pcol] = r.p_value
+        except pd.errors.EmptyDataError:
+            pass
+    gaps = _gap_arrays(name, meta)                     # per-run gaps -> Benchmark Studio box plot
+    summary["gap_runs_pct"] = [gaps.get((r.budget_type, float(r.budget), r.instance, r.algo), [])
+                               for r in summary.itertuples()]
+    out = {"table": _records(summary),
            "figures": [f"figures/{p.name}" for p in sorted(FIGURES.glob(f"{name}_*.png"))],
            "meta": {**meta, "kind": kind_of(name), "runs": meta.get("runs_planned"),
-                    "budget": ", ".join(f"{b['value']:g} {'s' if b['type'] == 'time' else 'evals'}" for b in budgets)}}
+                    "budget": ", ".join(f"{b:g} {'s' if t == 'time' else 'evals'}"
+                                        for t, b in sorted(set(zip(summary.budget_type, summary.budget))))}}
     for extra in ("wilcoxon", "friedman", "chain"):
         p = TABLES / f"{name}_{extra}.csv"
         if p.exists() and p.stat().st_size > 1:
@@ -61,6 +84,21 @@ def benchmark(name: str) -> dict:
                 out[extra] = _records(pd.read_csv(p))
             except pd.errors.EmptyDataError:
                 out[extra] = []
+    return out
+
+
+def _gap_arrays(name: str, meta: dict) -> dict:
+    """{(budget_type, budget, instance, algo): [gap % per fleet-feasible run]} from the run logs."""
+    recs = read_records(RUNS / f"{name}.jsonl")
+    for imp in meta.get("import_runs") or []:
+        recs += [r for r in read_records(RUNS / f"{imp['exp']}.jsonl")
+                 if r["instance"] in imp.get("instances", [r["instance"]])
+                 and r["algo"] in imp.get("algorithms", [r["algo"]])]
+    out: dict = {}
+    for r in recs:
+        if r.get("gap_pct") is None:
+            continue
+        out.setdefault((r["budget_type"], float(r["budget"]), r["instance"], r["algo"]), []).append(round(r["gap_pct"], 4))
     return out
 
 
