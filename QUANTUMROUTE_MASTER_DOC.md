@@ -53,6 +53,7 @@ Naming: **QuantumRoute** is the platform (what judges see). **QuantumFlux** is i
 | QR 1.0 | Product blueprint |
 | **4.0** | Unified doc. Fixes listed in §0.5 |
 | 4.1 | (2026-10-04, Person A) Memetic LS rule, rank re-normalisation, deadline-aware budgets, core set without A-n44-k6, 10 runs + parallel rule, `RunRecord.meta` (D28–D32) |
+| 4.4 | (2026-10-04, Person A) Exact O(1)-delta LS for static instances (D41); D42 granular neighbourhoods not needed; budgets by size class (D43) |
 | 4.3 | (2026-10-04, Person A) Time budget only for LS hybrids (D39); 30 runs + wall-time curves `RunRecord.meta["curve_t"]` (D40); fleet-infeasible runs excluded from gaps (D38 addendum) |
 | 4.2 | (2026-10-04, Person A) Memetic trigger = LS on the best 25% of new positions (D33), RR+LS control (D34), A-n69-k9 tuning-only (D35), new bench_core gate (D36), `RunRecord.meta` logged as a frozen-file change (D37), T11 against proven optima, fleet limit K = k for Augerat A/P (D38) |
 
@@ -674,6 +675,7 @@ Intra-route 2-opt and or-opt (segments of 1–3); inter-route relocate and swap 
 3. **Fairness:** PSO+LS uses the identical rule. GA+LS applies the same rule to the best ⌈25%⌉ of each generation's offspring (generational GA with elitism: every offspring survives). SA has **no** +LS variant (it is already a local search). **RR+LS** (D34, ablation control) applies the same rule to fresh random keys each iteration.
 4. Because LS moves are uncounted, the **time budget is the primary fairness comparison for hybrids**; LS calls per run are recorded in `RunRecord.meta["ls_calls"]`.
 5. Every LS call takes the run's deadline and stops when it passes (D31).
+6. **Implementation (D41):** on static instances (one traffic slot, e.g. CVRPLIB) every operator uses exact O(1) delta costs from a precomputed leg-cost matrix (2-opt reversal via forward/backward prefix sums, so asymmetric matrices are exact too); loads are maintained incrementally; all inner loops are Numba. Candidate order and the acceptance rule are unchanged, so the local optimum is identical to the generic kernel (equivalence test on 200 seeded tours). Time-dependent instances keep full re-evaluation, only of the 1–2 routes a move touches.
 
 ### 7.5 QPSO — `algos/qpso.py`
 
@@ -1354,6 +1356,8 @@ Finale deck flow (10 slides, later): Title · Problem · Why it matters · Solut
 | D38+ | (2026-10-04, Person A) Under K = k a final solution with m > k counts as infeasible for gap purposes: no gap is computed for it, it is excluded from distance/gap statistics and tests, and tables report the number of such runs per algorithm (`fleet_violations`) | Decided with D38 |
 | D39 | (2026-10-04, Person A) bench_core uses the **30 s time budget only**, for all algorithms. The 12,000-evaluation budget is kept only in the ablation for the non-LS variants (plain QPSO-base vs plain PSO). evals_used and ls_calls are recorded in every RunRecord | LS moves are uncounted: at 12,000 evals QPSO-full used ≈240 s vs GA+LS ≈32 s on A-n44-k6 (≈8 h per run estimated on CMT5), so equal evaluations are not equal work |
 | D40 | (2026-10-04, Person A) 30 runs per (algorithm, instance) for bench_core (replaces D30's 10; D30's parallel rule stays). Time-budget convergence plots use wall time: `RunRecord.meta["curve_t"]` = (elapsed_s, best_F) at each improvement (additive, see MERGE_NOTES.md) | The time-only benchmark fits in ≈1 h on 11 workers |
+| D41 | (2026-10-04, Person A) Exact O(1)-delta LS kernels for static instances (`core/ls_static.py`); same move order and acceptance, so the same local optimum; time-dependent instances unchanged (full re-evaluation of the touched routes) | Profiling: ≈90% of LS time was full route re-evaluation (A-n69-k9 random tour: 233 ms median per memetic LS call, ≈57k route-cost calls). After D41: 1.8 ms (≈130×). A performance fix applied to all hybrids equally, not tuning. bench_core_v0 (stopped, partial) is superseded |
+| D42 | (2026-10-04, Person A) Granular neighbourhoods **not adopted** | Only required if the median LS call stayed > 20 ms on A-n69-k9 random tours after D41; it is 1.8 ms |
 | … | Add new decisions with date/time | |
 
 ---

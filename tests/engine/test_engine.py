@@ -210,3 +210,20 @@ def test_t31_infeasible_sample_keeps_route(monkeypatch):
     out = be.solve_route_order([1, 2, 3], dist, "neal")
     assert out["order"] == [1, 2, 3] and out["feasible"] is False
     assert decode({0: 1, 1: 1}, [1, 2]) is None
+
+
+@pytest.mark.parametrize("name,ops", [("A-n44-k6", "memetic"), ("CMT1", "memetic"), ("A-n44-k6", "all"), ("CMT1", "all")])
+def test_static_delta_ls_equivalent(name, ops):
+    """D41: the O(1)-delta LS returns the same local optimum and cost as the generic LS (200 seeded tours
+    across the four cases: 50 per instance and operator set)."""
+    from qflux.core.localsearch import MEMETIC_OPS, OPS, improve_routes
+    inst = load_instance(name)
+    ev = Evaluator(inst, DIST_W)
+    op_set = MEMETIC_OPS if ops == "memetic" else OPS
+    rng = np.random.default_rng(41)
+    for _ in range(50):
+        routes = ev.decode_routes(rng.permutation(inst.n) + 1)
+        fast = improve_routes(routes, ev, op_set, fast=True)
+        slow = improve_routes(routes, ev, op_set, fast=False)
+        assert fast == slow
+        assert ev.routes_F(fast) == pytest.approx(ev.routes_F(slow), abs=1e-12)

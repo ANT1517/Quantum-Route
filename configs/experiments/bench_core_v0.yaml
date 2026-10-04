@@ -1,8 +1,9 @@
+# SUPERSEDED (stopped, see results/runs/bench_core_v0_partial.SUPERSEDED.md). Use bench_core_v1.yaml.
 # Core benchmark (§9 Phase 9 item 1): D29 core set, D33 final LS rule, D38 fleet rule (K = k for A instances),
 # D39 time budget only (LS moves are uncounted, so an evaluation budget is not an equal budget for hybrids),
 # D40 30 runs per (algorithm, instance). evals_used and ls_calls are still recorded in every RunRecord.
 # Headline rows: QPSO-full, PSO+LS, GA+LS, SA, OR-Tools. RR+LS is the ablation control (D34), not a headline row.
-name: bench_core
+name: bench_core_v0_partial
 description: "Core benchmark: QPSO-full vs PSO+LS vs GA+LS vs SA vs OR-Tools (+ RR+LS control), 30 runs, 30 s time budget"
 instances: [A-n32-k5, A-n63-k9, A-n80-k10, CMT1, CMT5, X-n101-k25]
 runs: 30

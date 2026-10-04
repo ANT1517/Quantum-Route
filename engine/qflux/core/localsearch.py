@@ -199,10 +199,25 @@ def local_search(R, L, loads, demand, Q, A0, A1, A2, A3, A4, sv, tau0, wv, rv, o
 MEMETIC_OPS = ("2opt", "relocate", "swap")
 
 
+def static_matrix(ev):
+    """Leg-cost matrix for single-slot (static) instances, cached on the evaluator; None if time-dependent."""
+    if ev.Ts.shape[0] != 1:
+        return None
+    W = getattr(ev, "_ls_static_W", None)
+    if W is None:
+        from .ls_static import static_leg_matrix
+        W = static_leg_matrix(ev)
+        ev._ls_static_W = W
+    return W
+
+
 def improve_routes(routes, ev, ops=OPS, max_rounds: int = 50, deadline: float | None = None,
-                   inner_cap: int = 25) -> list[list[int]]:
+                   inner_cap: int = 25, fast: bool = True) -> list[list[int]]:
     """First-improvement LS. Stops at a local optimum, after `max_rounds` rounds, or when
-    time.time() passes `deadline` (checked between rounds, D31)."""
+    time.time() passes `deadline` (checked between rounds, D31).
+    Static instances use the exact O(1)-delta kernels (D41; same moves, same order, same local optimum);
+    time-dependent instances re-evaluate only the 1-2 routes a move touches. fast=False forces the generic
+    kernels (used by the equivalence test)."""
     routes = [list(r) for r in routes if r]
     if not routes:
         return routes
@@ -216,9 +231,16 @@ def improve_routes(routes, ev, ops=OPS, max_rounds: int = 50, deadline: float | 
         L[k] = len(r)
         loads[k] = ev.demand[r].sum()
     mask = np.array([op in ops for op in OPS])
+    W = static_matrix(ev) if fast else None
     for _ in range(max_rounds):
         if deadline is not None and time.time() >= deadline:
             break
+        if W is not None:
+            from .ls_static import local_search_static
+            _, improved = local_search_static(R, L, loads, ev.demand, ev.Q, W, mask, 1, inner_cap)
+            if not improved:
+                break
+            continue
         _, improved = local_search(R, L, loads, ev.demand, ev.Q, ev.centers, ev.Ts, ev.Ds, ev.Es, ev.T0, ev.service,
                                    ev.tau0, ev.wv, ev.rv, mask, 1, inner_cap)
         if not improved:
