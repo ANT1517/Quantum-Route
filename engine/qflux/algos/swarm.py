@@ -6,9 +6,11 @@ stopping rules, so a QPSO-vs-PSO comparison isolates the position-update rule.
 - Rank re-normalisation (D32): after every position update X_i <- (rank(X_i) + 0.5) / n. Order-preserving,
   so every decoded tour is unchanged; it keeps keys bounded (random-key decoding has no restoring force on
   the key scale, and without it keys diverged to |X| ~ 1e4-1e5).
-- LS (D28): gbest every `ls_every` iterations (all operators) and, if `memetic`, every particle whose pbest
-  improved this iteration (2-opt + relocate + swap), capped at the best ceil(memetic_frac * N). LS moves are
-  scored with route costs and are not counted as evaluations; `ls_calls` is reported in meta.
+- LS: gbest every `ls_every` iterations (all operators) and, if `memetic`, memetic LS (2-opt + relocate +
+  swap) with Lamarckian write-back. memetic_mode "positions" (D33, default): the best ceil(memetic_frac * N)
+  NEW positions by fresh F, before the pbest comparison. "pbest" (D28, kept to reproduce the tuning log):
+  particles whose pbest improved, best ceil(memetic_frac * N). LS moves are scored with route costs and are
+  not counted as evaluations; `ls_calls` is reported in meta.
 - Deadlines (D31): LS, final polish and every subclass hook get `st.deadline` and stop when it passes.
 """
 import math
@@ -30,7 +32,7 @@ def rank_normalise(X: np.ndarray) -> np.ndarray:
 
 class KeySwarm:
     name = "swarm"
-    defaults: dict = {"rank_renorm": True, "memetic": False, "memetic_frac": 0.25}
+    defaults: dict = {"rank_renorm": True, "memetic": False, "memetic_frac": 0.25, "memetic_mode": "positions"}
 
     def __init__(self, **params):
         self.p = {**KeySwarm.defaults, **self.defaults, **params}
@@ -83,8 +85,31 @@ class KeySwarm:
         """Full LS on gbest every `ls_every` iterations."""
         self.ls_particle(st, ev, rng, int(np.argmin(st.fP)), ("2opt", "oropt", "relocate", "swap"))
 
+    def ls_position(self, st: "State", ev, rng, i: int) -> bool:
+        """D33: LS on particle i's NEW position, Lamarckian write-back into X (before the pbest comparison)."""
+        routes = ev.decode_routes(spv_decode(st.X[i]))
+        new = improve_routes(routes, ev, MEMETIC_OPS, deadline=st.deadline)
+        st.meta["ls_calls"] += 1
+        f = ev.routes_F(new)                         # uncounted
+        if f < st.fX[i] - 1e-12:
+            perm = np.array([c for r in new for c in r], dtype=np.int64)
+            if self.p.get("lamarck", True):
+                st.X[i] = encode_perm(perm, rng)
+            st.fX[i] = f
+            st.offer_routes(new, ev)
+            return True
+        return False
+
+    def memetic_positions(self, st: "State", ev, rng, evaluated: np.ndarray):
+        """D33: LS on the best ceil(frac * N) new positions by fresh F."""
+        cap = max(1, math.ceil(float(self.p["memetic_frac"]) * len(st.fP)))
+        for i in evaluated[np.argsort(st.fX[evaluated])][:cap]:
+            if st.out_of_time():
+                break
+            self.ls_position(st, ev, rng, int(i))
+
     def memetic(self, st: "State", ev, rng, improved: np.ndarray):
-        """LS on particles whose pbest improved this iteration, best ceil(frac * N) first (D28)."""
+        """D28 (memetic_mode "pbest"): LS on particles whose pbest improved, best ceil(frac * N) first."""
         if improved.size == 0:
             return
         cap = max(1, math.ceil(float(self.p["memetic_frac"]) * len(st.fP)))
@@ -123,16 +148,23 @@ class KeySwarm:
             if self.p.get("rank_renorm", True):
                 st.X = rank_normalise(st.X)
             st.meta["max_abs_key"] = max(st.meta["max_abs_key"], float(np.abs(st.X).max()))
-            improved = []
+            evaluated = []
             for i in range(N):
                 if st.over_budget():
                     break
                 st.fX[i] = st.eval_keys(st.X[i])
+                evaluated.append(i)
+            memetic = bool(ls_every and self.p.get("memetic"))
+            mode = self.p.get("memetic_mode", "positions")
+            if memetic and mode == "positions" and evaluated and not st.out_of_time():
+                self.memetic_positions(st, ev, rng, np.array(evaluated, dtype=np.int64))
+            improved = []
+            for i in evaluated:                      # pbest comparison after the memetic step (D33)
                 if st.fX[i] < st.fP[i]:
                     st.P[i] = st.X[i]
                     st.fP[i] = st.fX[i]
                     improved.append(i)
-            if ls_every and self.p.get("memetic") and not st.out_of_time():
+            if memetic and mode == "pbest" and not st.out_of_time():
                 self.memetic(st, ev, rng, np.array(improved, dtype=np.int64))
             if ls_every and t % ls_every == 0 and not st.out_of_time():
                 self.polish(st, ev, rng)
