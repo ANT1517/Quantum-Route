@@ -1,6 +1,6 @@
 {
-  "pid": 1964,
-  "time": "17:16:17",
-  "step": "api_job_tests",
-  "state": "FAILED rc=1"
+  "pid": 36848,
+  "time": "18:29:41",
+  "step": null,
+  "state": "phase d55 finished"
 }

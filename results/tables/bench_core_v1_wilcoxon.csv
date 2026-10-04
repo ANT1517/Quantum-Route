@@ -1,37 +1,37 @@
-budget_type,budget,instance,reference,other,runs,seeds,median_diff,statistic,p_value,significant,direction
-time,30,A-n32-k5,qpso,ga_ls,30,15345..15374,-12,0,3.60879e-05,True,ref better
-time,30,A-n32-k5,qpso,ortools,30,15345..15374,0,0,1,False,tie
-time,30,A-n32-k5,qpso,pso_ls,30,15345..15374,0,0,1,False,tie
-time,30,A-n32-k5,qpso,qpso_noqubo,30,15345..15374,0,0,1,False,tie
-time,30,A-n32-k5,qpso,rr_ls,30,15345..15374,0,0,1,False,tie
-time,30,A-n32-k5,qpso,sa,30,15345..15374,0,0,0.00214871,True,tie
-time,30,A-n63-k9,qpso,ga_ls,30,17345..17374,-9,97,0.00914905,True,ref better
-time,30,A-n63-k9,qpso,ortools,30,17345..17374,-71.5,0,1.72786e-06,True,ref better
-time,30,A-n63-k9,qpso,pso_ls,30,17345..17374,17,44.5,0.000109836,True,ref worse
-time,30,A-n63-k9,qpso,qpso_noqubo,30,17345..17374,15,17,1.44292e-05,True,ref worse
-time,30,A-n63-k9,qpso,rr_ls,30,17345..17374,-12,64.5,0.000933946,True,ref better
-time,30,A-n63-k9,qpso,sa,30,17345..17374,-115,0,1.73113e-06,True,ref better
-time,30,A-n80-k10,qpso,ga_ls,30,18345..18374,-2.5,164,0.158745,False,ref better
-time,30,A-n80-k10,qpso,ortools,30,18345..18374,20.5,59,0.000357852,True,ref worse
-time,30,A-n80-k10,qpso,pso_ls,30,18345..18374,18.5,65.5,0.000589968,True,ref worse
-time,30,A-n80-k10,qpso,qpso_noqubo,30,18345..18374,17,53.5,0.0002313,True,ref worse
-time,30,A-n80-k10,qpso,rr_ls,30,18345..18374,-20.5,28.5,2.71076e-05,True,ref better
-time,30,A-n80-k10,qpso,sa,30,18345..18374,-171.5,0,1.73331e-06,True,ref better
-time,30,CMT1,qpso,ga_ls,30,19345..19374,-21.3144,0,2.56136e-06,True,ref better
-time,30,CMT1,qpso,ortools,30,19345..19374,-55.3148,0,9.14614e-07,True,ref better
-time,30,CMT1,qpso,pso_ls,30,19345..19374,0,33.5,0.0117466,True,tie
-time,30,CMT1,qpso,qpso_noqubo,30,19345..19374,0,0,1,False,tie
-time,30,CMT1,qpso,rr_ls,30,19345..19374,-8.48374,0,1.72895e-06,True,ref better
-time,30,CMT1,qpso,sa,30,19345..19374,-25.1172,0,1.86265e-09,True,ref better
-time,60,CMT5,qpso,ga_ls,30,20345..20374,16.281,115,0.014538,True,ref worse
-time,60,CMT5,qpso,ortools,30,20345..20374,-33.1609,9,6.14673e-08,True,ref better
-time,60,CMT5,qpso,pso_ls,30,20345..20374,2.40184,221,0.823577,False,ref worse
-time,60,CMT5,qpso,qpso_noqubo,30,20345..20374,0,47,0.0172704,True,tie
-time,60,CMT5,qpso,rr_ls,30,20345..20374,-47.1779,7,3.53903e-08,True,ref better
-time,60,CMT5,qpso,sa,30,20345..20374,-531.601,0,1.86265e-09,True,ref better
-time,60,X-n101-k25,qpso,ga_ls,30,21345..21374,64,214.5,0.711204,False,ref worse
-time,60,X-n101-k25,qpso,ortools,30,21345..21374,-746,0,1.73331e-06,True,ref better
-time,60,X-n101-k25,qpso,pso_ls,30,21345..21374,137.5,25,3.14661e-05,True,ref worse
-time,60,X-n101-k25,qpso,qpso_noqubo,30,21345..21374,120.5,64,0.000902569,True,ref worse
-time,60,X-n101-k25,qpso,rr_ls,30,21345..21374,-99.5,156,0.119077,False,ref better
-time,60,X-n101-k25,qpso,sa,30,21345..21374,-505.5,6,2.6077e-08,True,ref better
+budget_type,budget,instance,reference,other,runs,seeds,median_diff,median_diff_gap_pts,mean_diff_gap_pts,statistic,p_value,significant,direction,p_holm,significant_holm,holm_family_size
+time,30,A-n32-k5,qpso,ga_ls,30,15345..15374,-12,-1.53061,-2.71684,0,3.60879e-05,True,ref better,0.000757845,True,36
+time,30,A-n32-k5,qpso,ortools,30,15345..15374,0,0,0,0,1,False,tie,1,False,36
+time,30,A-n32-k5,qpso,pso_ls,30,15345..15374,0,0,0,0,1,False,tie,1,False,36
+time,30,A-n32-k5,qpso,qpso_noqubo,30,15345..15374,0,0,0,0,1,False,tie,1,False,36
+time,30,A-n32-k5,qpso,rr_ls,30,15345..15374,0,0,0,0,1,False,tie,1,False,36
+time,30,A-n32-k5,qpso,sa,30,15345..15374,0,0,-1.83673,0,0.00214871,True,ref better,0.0300819,True,36
+time,30,A-n63-k9,qpso,ga_ls,30,17345..17374,-9,-0.556931,-0.878713,97,0.00914905,True,ref better,0.118938,False,36
+time,30,A-n63-k9,qpso,ortools,30,17345..17374,24.5,1.51609,1.61097,4.5,2.7211e-06,True,ref worse,6.80275e-05,True,36
+time,30,A-n63-k9,qpso,pso_ls,30,17345..17374,17,1.05198,1.05817,44.5,0.000109836,True,ref worse,0.00208688,True,36
+time,30,A-n63-k9,qpso,qpso_noqubo,30,17345..17374,15,0.928218,1.08292,17,1.44292e-05,True,ref worse,0.0003463,True,36
+time,30,A-n63-k9,qpso,rr_ls,30,17345..17374,-12,-0.742574,-0.783828,64.5,0.000933946,True,ref better,0.0144411,True,36
+time,30,A-n63-k9,qpso,sa,30,17345..17374,-115,-7.11634,-6.65429,0,1.73113e-06,True,ref better,5.35974e-05,True,36
+time,30,A-n80-k10,qpso,ga_ls,30,18345..18374,-2.5,-0.141804,-0.882965,164,0.158745,False,ref better,1,False,36
+time,30,A-n80-k10,qpso,ortools,30,18345..18374,65.5,3.71526,3.45812,1,1.91255e-06,True,ref worse,5.35974e-05,True,36
+time,30,A-n80-k10,qpso,pso_ls,30,18345..18374,18.5,1.04935,1.05502,65.5,0.000589968,True,ref worse,0.0100295,True,36
+time,30,A-n80-k10,qpso,qpso_noqubo,30,18345..18374,17,0.964265,0.941577,53.5,0.0002313,True,ref worse,0.00416341,True,36
+time,30,A-n80-k10,qpso,rr_ls,30,18345..18374,-20.5,-1.16279,-1.40858,28.5,2.71076e-05,True,ref better,0.000623475,True,36
+time,30,A-n80-k10,qpso,sa,30,18345..18374,-171.5,-9.72774,-9.4706,0,1.73331e-06,True,ref better,5.35974e-05,True,36
+time,30,CMT1,qpso,ga_ls,30,19345..19374,-21.3144,-4.0629,-3.77926,0,2.56136e-06,True,ref better,6.65953e-05,True,36
+time,30,CMT1,qpso,ortools,30,19345..19374,1.13687e-13,2.16707e-14,0.00527438,0,4.78945e-05,True,ref worse,0.000957891,True,36
+time,30,CMT1,qpso,pso_ls,30,19345..19374,0,0,-0.0110675,33.5,0.0117466,True,ref better,0.140959,False,36
+time,30,CMT1,qpso,qpso_noqubo,30,19345..19374,0,0,7.22356e-16,0,1,False,ref worse,1,False,36
+time,30,CMT1,qpso,rr_ls,30,19345..19374,-8.48374,-1.61715,-1.8423,0,1.72895e-06,True,ref better,5.35974e-05,True,36
+time,30,CMT1,qpso,sa,30,19345..19374,-25.1172,-4.78777,-4.98321,0,1.86265e-09,True,ref better,6.70552e-08,True,36
+time,60,CMT5,qpso,ga_ls,30,20345..20374,16.281,1.26083,1.39245,115,0.014538,True,ref worse,0.159918,False,36
+time,60,CMT5,qpso,ortools,30,20345..20374,48.0347,3.7199,3.93145,0,1.86265e-09,True,ref worse,6.70552e-08,True,36
+time,60,CMT5,qpso,pso_ls,30,20345..20374,2.40184,0.186003,0.0323545,221,0.823577,False,ref worse,1,False,36
+time,60,CMT5,qpso,qpso_noqubo,30,20345..20374,0,0,0.630437,47,0.0172704,True,ref worse,0.172704,False,36
+time,60,CMT5,qpso,rr_ls,30,20345..20374,-47.1779,-3.65355,-3.38736,7,3.53903e-08,True,ref better,1.13249e-06,True,36
+time,60,CMT5,qpso,sa,30,20345..20374,-531.601,-41.1683,-38.8466,0,1.86265e-09,True,ref better,6.70552e-08,True,36
+time,60,X-n101-k25,qpso,ga_ls,30,21345..21374,64,0.23196,-0.226644,214.5,0.711204,False,ref better,1,False,36
+time,60,X-n101-k25,qpso,ortools,30,21345..21374,-727,-2.63492,-2.42507,0,1.73331e-06,True,ref better,5.35974e-05,True,36
+time,60,X-n101-k25,qpso,pso_ls,30,21345..21374,137.5,0.498351,0.498593,25,3.14661e-05,True,ref worse,0.000692254,True,36
+time,60,X-n101-k25,qpso,qpso_noqubo,30,21345..21374,120.5,0.436737,0.364974,64,0.000902569,True,ref worse,0.0144411,True,36
+time,60,X-n101-k25,qpso,rr_ls,30,21345..21374,-99.5,-0.360625,-0.196682,156,0.119077,False,ref better,1,False,36
+time,60,X-n101-k25,qpso,sa,30,21345..21374,-505.5,-1.83212,-1.87682,6,2.6077e-08,True,ref better,8.60542e-07,True,36

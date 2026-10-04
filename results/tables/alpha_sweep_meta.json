@@ -2,6 +2,10 @@
   "experiment": "alpha_sweep",
   "description": "\u03b1 sensitivity of QPSO-full on A-n63-k9: fixed 0.3-1.2, linear 1.0\u21920.5, linear 0.8\u21920.3, adaptive; 30 s, 10 runs",
   "reference": "alpha_adaptive",
+  "references": [
+    "alpha_adaptive"
+  ],
+  "multiple_testing": "Holm-Bonferroni per table (p_holm); effect size = paired difference in gap points",
   "weights": [
     0.0,
     1.0,

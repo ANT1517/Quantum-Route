@@ -1,0 +1,255 @@
+[bench_core_v1] 180 runs to do (900 already recorded), 11 worker(s) -> C:\Users\nisha\Quantum-Route-solver\results\runs\bench_core_v1.jsonl
+  [1/180] A-n32-k5 ortools time=30 seed=15346: D=784.0 gap=0.00% evals=0 30.01s ls=0
+  [2/180] A-n32-k5 ortools time=30 seed=15349: D=784.0 gap=0.00% evals=0 30.03s ls=0
+  [3/180] A-n32-k5 ortools time=30 seed=15352: D=784.0 gap=0.00% evals=0 30.04s ls=0
+  [4/180] A-n32-k5 ortools time=30 seed=15348: D=784.0 gap=0.00% evals=0 30.02s ls=0
+  [5/180] A-n32-k5 ortools time=30 seed=15354: D=784.0 gap=0.00% evals=0 30.03s ls=0
+  [6/180] A-n32-k5 ortools time=30 seed=15353: D=784.0 gap=0.00% evals=0 30.02s ls=0
+  [7/180] A-n32-k5 ortools time=30 seed=15345: D=784.0 gap=0.00% evals=0 30.03s ls=0
+  [8/180] A-n32-k5 ortools time=30 seed=15355: D=784.0 gap=0.00% evals=0 30.02s ls=0
+  [9/180] A-n32-k5 ortools time=30 seed=15351: D=784.0 gap=0.00% evals=0 30.03s ls=0
+  [10/180] A-n32-k5 ortools time=30 seed=15350: D=784.0 gap=0.00% evals=0 30.04s ls=0
+  [11/180] A-n32-k5 ortools time=30 seed=15347: D=784.0 gap=0.00% evals=0 30.06s ls=0
+  [12/180] A-n32-k5 ortools time=30 seed=15356: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [13/180] A-n32-k5 ortools time=30 seed=15357: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [14/180] A-n32-k5 ortools time=30 seed=15358: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [15/180] A-n32-k5 ortools time=30 seed=15360: D=784.0 gap=0.00% evals=0 29.90s ls=0
+  [16/180] A-n32-k5 ortools time=30 seed=15359: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [17/180] A-n32-k5 ortools time=30 seed=15361: D=784.0 gap=0.00% evals=0 29.90s ls=0
+  [18/180] A-n32-k5 ortools time=30 seed=15363: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [19/180] A-n32-k5 ortools time=30 seed=15362: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [20/180] A-n32-k5 ortools time=30 seed=15364: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [21/180] A-n32-k5 ortools time=30 seed=15365: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [22/180] A-n32-k5 ortools time=30 seed=15366: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [23/180] A-n32-k5 ortools time=30 seed=15367: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [24/180] A-n32-k5 ortools time=30 seed=15368: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [25/180] A-n32-k5 ortools time=30 seed=15369: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [26/180] A-n32-k5 ortools time=30 seed=15370: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [27/180] A-n32-k5 ortools time=30 seed=15371: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [28/180] A-n32-k5 ortools time=30 seed=15372: D=784.0 gap=0.00% evals=0 29.90s ls=0
+  [29/180] A-n32-k5 ortools time=30 seed=15373: D=784.0 gap=0.00% evals=0 29.91s ls=0
+  [30/180] A-n32-k5 ortools time=30 seed=15374: D=784.0 gap=0.00% evals=0 29.90s ls=0
+  [31/180] A-n63-k9 ortools time=30 seed=17347: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [32/180] A-n63-k9 ortools time=30 seed=17345: D=1640.0 gap=1.49% evals=0 29.90s ls=0
+  [33/180] A-n63-k9 ortools time=30 seed=17346: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [34/180] A-n63-k9 ortools time=30 seed=17348: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [35/180] A-n63-k9 ortools time=30 seed=17349: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [36/180] A-n63-k9 ortools time=30 seed=17351: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [37/180] A-n63-k9 ortools time=30 seed=17350: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [38/180] A-n63-k9 ortools time=30 seed=17352: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [39/180] A-n63-k9 ortools time=30 seed=17353: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [40/180] A-n63-k9 ortools time=30 seed=17354: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [41/180] A-n63-k9 ortools time=30 seed=17355: D=1640.0 gap=1.49% evals=0 29.90s ls=0
+  [42/180] A-n63-k9 ortools time=30 seed=17356: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [43/180] A-n63-k9 ortools time=30 seed=17357: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [44/180] A-n63-k9 ortools time=30 seed=17358: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [45/180] A-n63-k9 ortools time=30 seed=17359: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [46/180] A-n63-k9 ortools time=30 seed=17360: D=1640.0 gap=1.49% evals=0 29.90s ls=0
+  [47/180] A-n63-k9 ortools time=30 seed=17361: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [48/180] A-n63-k9 ortools time=30 seed=17362: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [49/180] A-n63-k9 ortools time=30 seed=17363: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [50/180] A-n63-k9 ortools time=30 seed=17364: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [51/180] A-n63-k9 ortools time=30 seed=17365: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [52/180] A-n63-k9 ortools time=30 seed=17366: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [53/180] A-n63-k9 ortools time=30 seed=17367: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [54/180] A-n63-k9 ortools time=30 seed=17368: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [55/180] A-n63-k9 ortools time=30 seed=17369: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [56/180] A-n63-k9 ortools time=30 seed=17370: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [57/180] A-n63-k9 ortools time=30 seed=17371: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [58/180] A-n63-k9 ortools time=30 seed=17372: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [59/180] A-n63-k9 ortools time=30 seed=17373: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [60/180] A-n63-k9 ortools time=30 seed=17374: D=1641.0 gap=1.55% evals=0 29.90s ls=0
+  [61/180] A-n80-k10 ortools time=30 seed=18345: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [62/180] A-n80-k10 ortools time=30 seed=18346: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [63/180] A-n80-k10 ortools time=30 seed=18349: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [64/180] A-n80-k10 ortools time=30 seed=18348: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [65/180] A-n80-k10 ortools time=30 seed=18350: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [66/180] A-n80-k10 ortools time=30 seed=18347: D=1797.0 gap=1.93% evals=0 29.91s ls=0
+  [67/180] A-n80-k10 ortools time=30 seed=18351: D=1797.0 gap=1.93% evals=0 29.91s ls=0
+  [68/180] A-n80-k10 ortools time=30 seed=18352: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [69/180] A-n80-k10 ortools time=30 seed=18353: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [70/180] A-n80-k10 ortools time=30 seed=18354: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [71/180] A-n80-k10 ortools time=30 seed=18355: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [72/180] A-n80-k10 ortools time=30 seed=18356: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [73/180] A-n80-k10 ortools time=30 seed=18357: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [74/180] A-n80-k10 ortools time=30 seed=18358: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [75/180] A-n80-k10 ortools time=30 seed=18359: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [76/180] A-n80-k10 ortools time=30 seed=18361: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [77/180] A-n80-k10 ortools time=30 seed=18360: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [78/180] A-n80-k10 ortools time=30 seed=18362: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [79/180] A-n80-k10 ortools time=30 seed=18363: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [80/180] A-n80-k10 ortools time=30 seed=18365: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [81/180] A-n80-k10 ortools time=30 seed=18364: D=1797.0 gap=1.93% evals=0 29.91s ls=0
+  [82/180] A-n80-k10 ortools time=30 seed=18366: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [83/180] A-n80-k10 ortools time=30 seed=18367: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [84/180] A-n80-k10 ortools time=30 seed=18368: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [85/180] A-n80-k10 ortools time=30 seed=18369: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [86/180] A-n80-k10 ortools time=30 seed=18370: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [87/180] A-n80-k10 ortools time=30 seed=18371: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [88/180] A-n80-k10 ortools time=30 seed=18372: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [89/180] A-n80-k10 ortools time=30 seed=18373: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [90/180] A-n80-k10 ortools time=30 seed=18374: D=1797.0 gap=1.93% evals=0 29.90s ls=0
+  [91/180] CMT1 ortools time=30 seed=19345: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [92/180] CMT1 ortools time=30 seed=19347: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [93/180] CMT1 ortools time=30 seed=19346: D=524.6 gap=0.00% evals=0 29.91s ls=0
+  [94/180] CMT1 ortools time=30 seed=19348: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [95/180] CMT1 ortools time=30 seed=19349: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [96/180] CMT1 ortools time=30 seed=19350: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [97/180] CMT1 ortools time=30 seed=19351: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [98/180] CMT1 ortools time=30 seed=19352: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [99/180] CMT1 ortools time=30 seed=19353: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [100/180] CMT1 ortools time=30 seed=19354: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [101/180] CMT1 ortools time=30 seed=19355: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [102/180] CMT1 ortools time=30 seed=19356: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [103/180] CMT1 ortools time=30 seed=19358: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [104/180] CMT1 ortools time=30 seed=19357: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [105/180] CMT1 ortools time=30 seed=19359: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [106/180] CMT1 ortools time=30 seed=19360: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [107/180] CMT1 ortools time=30 seed=19361: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [108/180] CMT1 ortools time=30 seed=19362: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [109/180] CMT1 ortools time=30 seed=19363: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [110/180] CMT1 ortools time=30 seed=19364: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [111/180] CMT1 ortools time=30 seed=19365: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [112/180] CMT1 ortools time=30 seed=19366: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [113/180] CMT1 ortools time=30 seed=19367: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [114/180] CMT1 ortools time=30 seed=19368: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [115/180] CMT1 ortools time=30 seed=19369: D=524.6 gap=0.00% evals=0 29.91s ls=0
+  [116/180] CMT1 ortools time=30 seed=19370: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [117/180] CMT1 ortools time=30 seed=19371: D=524.6 gap=0.00% evals=0 29.91s ls=0
+  [118/180] CMT1 ortools time=30 seed=19372: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [119/180] CMT1 ortools time=30 seed=19373: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [120/180] CMT1 ortools time=30 seed=19374: D=524.6 gap=0.00% evals=0 29.90s ls=0
+  [121/180] CMT5 ortools time=60 seed=20345: D=1389.4 gap=7.60% evals=0 59.91s ls=0
+  [122/180] CMT5 ortools time=60 seed=20346: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [123/180] CMT5 ortools time=60 seed=20347: D=1389.4 gap=7.60% evals=0 59.91s ls=0
+  [124/180] CMT5 ortools time=60 seed=20348: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [125/180] CMT5 ortools time=60 seed=20349: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [126/180] CMT5 ortools time=60 seed=20350: D=1389.4 gap=7.60% evals=0 59.91s ls=0
+  [127/180] CMT5 ortools time=60 seed=20354: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [128/180] CMT5 ortools time=60 seed=20351: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [129/180] CMT5 ortools time=60 seed=20352: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [130/180] CMT5 ortools time=60 seed=20353: D=1389.4 gap=7.60% evals=0 59.91s ls=0
+  [131/180] CMT5 ortools time=60 seed=20355: D=1389.4 gap=7.60% evals=0 59.92s ls=0
+  [132/180] CMT5 ortools time=60 seed=20356: D=1389.4 gap=7.60% evals=0 59.91s ls=0
+  [memory] 2.0 GB free < 2 GB: pausing new runs until it recovers
+  [133/180] CMT5 ortools time=60 seed=20357: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [134/180] CMT5 ortools time=60 seed=20358: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [135/180] CMT5 ortools time=60 seed=20360: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [136/180] CMT5 ortools time=60 seed=20359: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [137/180] CMT5 ortools time=60 seed=20361: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [138/180] CMT5 ortools time=60 seed=20362: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [139/180] CMT5 ortools time=60 seed=20363: D=1389.4 gap=7.60% evals=0 59.91s ls=0
+  [140/180] CMT5 ortools time=60 seed=20364: D=1389.4 gap=7.60% evals=0 59.91s ls=0
+  [141/180] CMT5 ortools time=60 seed=20365: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [142/180] CMT5 ortools time=60 seed=20366: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [143/180] CMT5 ortools time=60 seed=20367: D=1389.4 gap=7.60% evals=0 59.91s ls=0
+  [memory] 1.9 GB free < 2 GB: pausing new runs until it recovers
+  [144/180] CMT5 ortools time=60 seed=20370: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [145/180] CMT5 ortools time=60 seed=20369: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [146/180] CMT5 ortools time=60 seed=20373: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [147/180] CMT5 ortools time=60 seed=20371: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [148/180] CMT5 ortools time=60 seed=20368: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [149/180] X-n101-k25 ortools time=60 seed=21345: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [150/180] X-n101-k25 ortools time=60 seed=21346: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [151/180] CMT5 ortools time=60 seed=20372: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [152/180] CMT5 ortools time=60 seed=20374: D=1389.4 gap=7.60% evals=0 59.90s ls=0
+  [153/180] X-n101-k25 ortools time=60 seed=21347: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [154/180] X-n101-k25 ortools time=60 seed=21348: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [memory] 1.9 GB free < 2 GB: pausing new runs until it recovers
+  [155/180] X-n101-k25 ortools time=60 seed=21358: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [156/180] X-n101-k25 ortools time=60 seed=21351: D=29159.0 gap=5.68% evals=0 59.91s ls=0
+  [157/180] X-n101-k25 ortools time=60 seed=21352: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [158/180] X-n101-k25 ortools time=60 seed=21350: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [159/180] X-n101-k25 ortools time=60 seed=21349: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [160/180] X-n101-k25 ortools time=60 seed=21355: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [161/180] X-n101-k25 ortools time=60 seed=21357: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [162/180] X-n101-k25 ortools time=60 seed=21353: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [163/180] X-n101-k25 ortools time=60 seed=21356: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [164/180] X-n101-k25 ortools time=60 seed=21354: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [165/180] X-n101-k25 ortools time=60 seed=21359: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [166/180] X-n101-k25 ortools time=60 seed=21360: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [167/180] X-n101-k25 ortools time=60 seed=21364: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [168/180] X-n101-k25 ortools time=60 seed=21366: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [169/180] X-n101-k25 ortools time=60 seed=21361: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [170/180] X-n101-k25 ortools time=60 seed=21365: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [171/180] X-n101-k25 ortools time=60 seed=21362: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [172/180] X-n101-k25 ortools time=60 seed=21367: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [173/180] X-n101-k25 ortools time=60 seed=21363: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [174/180] X-n101-k25 ortools time=60 seed=21368: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [175/180] X-n101-k25 ortools time=60 seed=21369: D=29159.0 gap=5.68% evals=0 59.90s ls=0
+  [176/180] X-n101-k25 ortools time=60 seed=21370: D=28767.0 gap=4.26% evals=0 59.90s ls=0
+  [177/180] X-n101-k25 ortools time=60 seed=21371: D=28767.0 gap=4.26% evals=0 59.90s ls=0
+  [178/180] X-n101-k25 ortools time=60 seed=21372: D=28767.0 gap=4.26% evals=0 59.90s ls=0
+  [179/180] X-n101-k25 ortools time=60 seed=21374: D=28767.0 gap=4.26% evals=0 59.90s ls=0
+  [180/180] X-n101-k25 ortools time=60 seed=21373: D=28767.0 gap=4.26% evals=0 59.90s ls=0
+[bench_core_v1] done in 779 s
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+budget_type  budget   instance        algo  runs    D_mean  gap_mean_pct  gap_best_pct  wall_s_mean
+       time      30   A-n32-k5       ga_ls    30   805.300      2.716840      0.000000      30.0025
+       time      30   A-n32-k5        qpso    30   784.000      0.000000      0.000000      30.0050
+       time      30   A-n32-k5      pso_ls    30   784.000      0.000000      0.000000      30.0024
+       time      30   A-n32-k5       rr_ls    30   784.000      0.000000      0.000000      30.0028
+       time      30   A-n32-k5          sa    30   798.400      1.836730      0.000000      30.0027
+       time      30   A-n63-k9        qpso    30  1666.930      3.151820      1.113860      30.0047
+       time      30   A-n63-k9      pso_ls    30  1649.830      2.093650      0.866337      30.0044
+       time      30   A-n63-k9       ga_ls    30  1681.130      4.030530      2.413370      30.0038
+       time      30   A-n63-k9          sa    30  1774.470      9.806110      5.074260      30.0034
+       time      30   A-n63-k9       rr_ls    30  1679.600      3.935640      2.165840      30.0034
+       time      30  A-n80-k10        qpso    30  1857.970      5.386650      1.815090      30.0051
+       time      30  A-n80-k10      pso_ls    30  1839.370      4.331630      2.609190      30.0046
+       time      30  A-n80-k10       ga_ls    30  1873.530      6.269620      2.212140      30.0043
+       time      30  A-n80-k10          sa    30  2024.930     14.857300      9.812820      30.0037
+       time      30  A-n80-k10       rr_ls    30  1882.800      6.795240      5.275100      30.0043
+       time      30       CMT1        qpso    30   524.639      0.005302      0.000028      30.0037
+       time      30       CMT1      pso_ls    30   524.697      0.016370      0.000028      30.0028
+       time      30       CMT1       ga_ls    30   544.465      3.784570      0.000028      30.0038
+       time      30       CMT1          sa    30   550.781      4.988510      0.869766      30.0037
+       time      30       CMT1       rr_ls    30   534.304      1.847600      0.098079      30.0033
+       time      60       CMT5        qpso    30  1440.150     11.528300      8.576010      60.0235
+       time      60       CMT5      pso_ls    30  1439.730     11.495900      9.213310      60.0145
+       time      60       CMT5       ga_ls    30  1422.170     10.135800      6.250770      60.0101
+       time      60       CMT5          sa    30  1941.770     50.374800     16.643100      60.0091
+       time      60       CMT5       rr_ls    30  1483.890     14.915600     11.426600      60.0124
+       time      60 X-n101-k25        qpso    30 28424.600      3.021150      2.236240      60.0071
+       time      60 X-n101-k25      pso_ls    30 28287.000      2.522560      1.841180      60.0066
+       time      60 X-n101-k25       ga_ls    30 28487.100      3.247800      2.011530      60.0054
+       time      60 X-n101-k25       rr_ls    30 28478.800      3.217840      1.949910      60.0060
+       time      60 X-n101-k25          sa    30 28942.400      4.897970      2.370340      60.0046
+       time      30   A-n32-k5     ortools    30   784.000      0.000000      0.000000      29.9511
+       time      30   A-n63-k9     ortools    30  1640.900      1.540840      1.485150      29.9031
+       time      30  A-n80-k10     ortools    30  1797.000      1.928530      1.928530      29.9028
+       time      30       CMT1     ortools    30   524.611      0.000028      0.000028      29.9039
+       time      60       CMT5     ortools    30  1389.390      7.596830      7.596830      59.9046
+       time      60 X-n101-k25     ortools    30 29093.700      5.446220      4.262260      59.9029
+       time      30   A-n32-k5 qpso_noqubo    30   784.000      0.000000      0.000000      30.0027
+       time      30   A-n63-k9 qpso_noqubo    30  1649.430      2.068890      0.804455      30.0038
+       time      30  A-n80-k10 qpso_noqubo    30  1841.370      4.445070      2.439020      30.0044
+       time      30       CMT1 qpso_noqubo    30   524.639      0.005302      0.000028      30.0030
+       time      60       CMT5 qpso_noqubo    30  1432.010     10.897800      7.447790      60.0146
+       time      60 X-n101-k25 qpso_noqubo    30 28323.900      2.656180      2.199990      60.0063
+
+wrote:
+  C:\Users\nisha\Quantum-Route-solver\results\tables\bench_core_v1_summary.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\bench_core_v1_wilcoxon.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\bench_core_v1_friedman.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\bench_core_v1_meta.json
+  C:\Users\nisha\Quantum-Route-solver\results\tables\bench_core_v1_wilcoxon_qpso_noqubo.csv
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_convergence_A-n32-k5_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_convergence_A-n63-k9_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_convergence_A-n80-k10_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_convergence_CMT1_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_gap_time30.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_convergence_CMT5_time60.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_convergence_X-n101-k25_time60.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\bench_core_v1_gap_time60.png

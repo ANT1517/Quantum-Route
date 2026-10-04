@@ -1,9 +1,9 @@
 {
-  "experiment": "ablation_evals",
-  "description": "Plain QPSO-base vs plain PSO (no LS), 12,000 evaluations, 10 runs",
-  "reference": "qpso_base_plain",
+  "experiment": "p_small",
+  "description": "P-n16/19/22 (proven optima, K = k): QPSO-noQUBO, PSO+LS, OR-Tools; 10 s, 10 runs",
+  "reference": "qpso_noqubo",
   "references": [
-    "qpso_base_plain"
+    "qpso_noqubo"
   ],
   "multiple_testing": "Holm-Bonferroni per table (p_holm); effect size = paired difference in gap points",
   "weights": [
@@ -13,58 +13,73 @@
     0.0
   ],
   "runs_planned": 10,
-  "records": 40,
+  "records": 90,
   "infeasible": 0,
   "budgets": [
     {
-      "type": "evals",
-      "value": 12000,
+      "type": "time",
+      "value": 10,
       "algorithms": [
-        "qpso_base_plain",
-        "pso_plain"
+        "qpso_noqubo",
+        "pso_ls",
+        "ortools"
       ]
     }
   ],
   "instances": [
-    "A-n63-k9",
-    "A-n80-k10"
+    "P-n16-k8",
+    "P-n19-k2",
+    "P-n22-k8"
   ],
   "import_runs": [],
   "seeds": [
-    17345,
-    17346,
-    17347,
-    17348,
-    17349,
-    17350,
-    17351,
-    17352,
-    17353,
-    17354,
-    18345,
-    18346,
-    18347,
-    18348,
-    18349,
-    18350,
-    18351,
-    18352,
-    18353,
-    18354
+    12345,
+    12346,
+    12347,
+    12348,
+    12349,
+    12350,
+    12351,
+    12352,
+    12353,
+    12354,
+    13345,
+    13346,
+    13347,
+    13348,
+    13349,
+    13350,
+    13351,
+    13352,
+    13353,
+    13354,
+    14345,
+    14346,
+    14347,
+    14348,
+    14349,
+    14350,
+    14351,
+    14352,
+    14353,
+    14354
   ],
   "config_hashes": {
-    "pso_plain|evals|12000": [
-      "475fc540e0d4"
+    "ortools|time|10": [
+      "4935e8263b65"
     ],
-    "qpso_base_plain|evals|12000": [
-      "35d4788f0f34"
+    "pso_ls|time|10": [
+      "4bf32eb517e6"
+    ],
+    "qpso_noqubo|time|10": [
+      "ba6810408759"
     ]
   },
   "note": "Measured on one machine; wall times depend on hardware.",
   "launches": [
     {
-      "started": "2026-10-04 15:42:54",
-      "runs_planned": 40,
+      "started": "2026-10-04 18:27:55",
+      "runs_planned": 90,
       "workers": 11,
       "thread_env": {
         "NUMBA_NUM_THREADS": "1",
@@ -72,7 +87,7 @@
         "MKL_NUM_THREADS": "1",
         "OPENBLAS_NUM_THREADS": "1"
       },
-      "git_commit": "1a3d308",
+      "git_commit": "73f6def",
       "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
       "pinned_cpus": null,
       "machine": {

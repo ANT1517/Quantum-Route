@@ -2,6 +2,11 @@
   "experiment": "bench_core_v1",
   "description": "Core benchmark v1: QPSO-full vs PSO+LS vs GA+LS vs SA vs OR-Tools (+ RR+LS control), 30 runs; 30 s (n <= 80), 60 s (n > 80)",
   "reference": "qpso",
+  "references": [
+    "qpso",
+    "qpso_noqubo"
+  ],
+  "multiple_testing": "Holm-Bonferroni per table (p_holm); effect size = paired difference in gap points",
   "weights": [
     0.0,
     1.0,
@@ -331,6 +336,27 @@
         "OPENBLAS_NUM_THREADS": "1"
       },
       "git_commit": "63adf8d",
+      "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
+      "pinned_cpus": null,
+      "machine": {
+        "platform": "Windows-11-10.0.26200-SP0",
+        "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+        "physical_cores": 12,
+        "logical_threads": 16,
+        "power_scheme": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)"
+      }
+    },
+    {
+      "started": "2026-10-04 18:07:23",
+      "runs_planned": 180,
+      "workers": 11,
+      "thread_env": {
+        "NUMBA_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "git_commit": "73f6def",
       "run_order": "per (budget, instance, seed): algorithms shuffled with a fixed seed (D49)",
       "pinned_cpus": null,
       "machine": {

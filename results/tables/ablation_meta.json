@@ -2,6 +2,10 @@
   "experiment": "ablation",
   "description": "QPSO ablation chain, 30 s, 10 runs, A-n63-k9 and A-n80-k10; PSO+LS and RR+LS reference rows",
   "reference": "a7_full",
+  "references": [
+    "a7_full"
+  ],
+  "multiple_testing": "Holm-Bonferroni per table (p_holm); effect size = paired difference in gap points",
   "weights": [
     0.0,
     1.0,

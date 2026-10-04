@@ -1,0 +1,4 @@
+budget_type,budget,algo,avg_rank,instances,runs_per_cell,friedman_stat,p_value
+time,10,ortools,1.66667,3,10,2,0.367879
+time,10,pso_ls,2.33333,3,10,2,0.367879
+time,10,qpso_noqubo,2,3,10,2,0.367879

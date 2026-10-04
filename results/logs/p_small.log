@@ -1,0 +1,116 @@
+[p_small] 90 runs to do (0 already recorded), 11 worker(s) -> C:\Users\nisha\Quantum-Route-solver\results\runs\p_small.jsonl
+  [1/90] P-n16-k8 ortools time=10 seed=12345: D=450.0 gap=0.00% evals=0 9.95s ls=0
+  [2/90] P-n16-k8 ortools time=10 seed=12346: D=450.0 gap=0.00% evals=0 9.95s ls=0
+  [3/90] P-n16-k8 ortools time=10 seed=12347: D=450.0 gap=0.00% evals=0 9.95s ls=0
+  [4/90] P-n16-k8 ortools time=10 seed=12348: D=450.0 gap=0.00% evals=0 9.95s ls=0
+  [5/90] P-n16-k8 pso_ls time=10 seed=12345: D=450.0 gap=0.00% evals=96574 10.00s ls=24372
+  [6/90] P-n16-k8 qpso_noqubo time=10 seed=12345: D=450.0 gap=0.00% evals=86076 10.00s ls=21524
+  [7/90] P-n16-k8 qpso_noqubo time=10 seed=12346: D=450.0 gap=0.00% evals=96358 10.00s ls=24101
+  [8/90] P-n16-k8 pso_ls time=10 seed=12346: D=450.0 gap=0.00% evals=110422 10.00s ls=27866
+  [9/90] P-n16-k8 qpso_noqubo time=10 seed=12347: D=450.0 gap=0.00% evals=97761 10.00s ls=24471
+  [10/90] P-n16-k8 pso_ls time=10 seed=12347: D=450.0 gap=0.00% evals=122640 10.00s ls=30957
+  [11/90] P-n16-k8 pso_ls time=10 seed=12348: D=450.0 gap=0.00% evals=95867 10.00s ls=24190
+  [12/90] P-n16-k8 ortools time=10 seed=12349: D=450.0 gap=0.00% evals=0 9.95s ls=0
+  [13/90] P-n16-k8 ortools time=10 seed=12350: D=450.0 gap=0.00% evals=0 9.95s ls=0
+  [14/90] P-n16-k8 qpso_noqubo time=10 seed=12348: D=450.0 gap=0.00% evals=92415 10.00s ls=23049
+  [15/90] P-n16-k8 pso_ls time=10 seed=12349: D=450.0 gap=0.00% evals=93680 10.00s ls=23640
+  [16/90] P-n16-k8 ortools time=10 seed=12351: D=450.0 gap=0.00% evals=0 9.95s ls=0
+  [17/90] P-n16-k8 qpso_noqubo time=10 seed=12349: D=450.0 gap=0.00% evals=95124 10.00s ls=23776
+  [18/90] P-n16-k8 ortools time=10 seed=12352: D=450.0 gap=0.00% evals=0 9.95s ls=0
+  [19/90] P-n16-k8 pso_ls time=10 seed=12350: D=450.0 gap=0.00% evals=112320 10.00s ls=28351
+  [20/90] P-n16-k8 qpso_noqubo time=10 seed=12350: D=450.0 gap=0.00% evals=86347 10.00s ls=21620
+  [21/90] P-n16-k8 qpso_noqubo time=10 seed=12351: D=450.0 gap=0.00% evals=87216 10.00s ls=21779
+  [22/90] P-n16-k8 pso_ls time=10 seed=12351: D=450.0 gap=0.00% evals=107040 10.00s ls=27015
+  [23/90] P-n16-k8 ortools time=10 seed=12353: D=450.0 gap=0.00% evals=0 9.95s ls=0
+  [24/90] P-n16-k8 pso_ls time=10 seed=12352: D=450.0 gap=0.00% evals=83720 10.00s ls=21130
+  [25/90] P-n16-k8 qpso_noqubo time=10 seed=12352: D=450.0 gap=0.00% evals=80125 10.00s ls=20044
+  [26/90] P-n16-k8 ortools time=10 seed=12354: D=450.0 gap=0.00% evals=0 9.95s ls=0
+  [27/90] P-n16-k8 pso_ls time=10 seed=12353: D=450.0 gap=0.00% evals=107120 10.00s ls=27036
+  [28/90] P-n16-k8 qpso_noqubo time=10 seed=12353: D=450.0 gap=0.00% evals=78690 10.00s ls=19615
+  [29/90] P-n16-k8 qpso_noqubo time=10 seed=12354: D=450.0 gap=0.00% evals=78608 10.00s ls=19665
+  [30/90] P-n19-k2 ortools time=10 seed=13345: D=212.0 gap=0.00% evals=0 9.95s ls=0
+  [31/90] P-n16-k8 pso_ls time=10 seed=12354: D=450.0 gap=0.00% evals=108480 10.00s ls=27375
+  [32/90] P-n19-k2 qpso_noqubo time=10 seed=13345: D=212.0 gap=0.00% evals=76335 10.00s ls=18503
+  [33/90] P-n19-k2 pso_ls time=10 seed=13345: D=224.0 gap=5.66% evals=73487 10.00s ls=18544
+  [34/90] P-n19-k2 ortools time=10 seed=13346: D=212.0 gap=0.00% evals=0 9.95s ls=0
+  [35/90] P-n19-k2 ortools time=10 seed=13347: D=212.0 gap=0.00% evals=0 9.95s ls=0
+  [36/90] P-n19-k2 qpso_noqubo time=10 seed=13346: D=212.0 gap=0.00% evals=77280 10.00s ls=18719
+  [37/90] P-n19-k2 pso_ls time=10 seed=13346: D=222.0 gap=4.72% evals=77246 10.00s ls=19493
+  [38/90] P-n19-k2 ortools time=10 seed=13348: D=212.0 gap=0.00% evals=0 9.95s ls=0
+  [39/90] P-n19-k2 pso_ls time=10 seed=13347: D=224.0 gap=5.66% evals=79714 10.00s ls=20110
+  [40/90] P-n19-k2 qpso_noqubo time=10 seed=13347: D=212.0 gap=0.00% evals=77309 10.00s ls=18729
+  [41/90] P-n19-k2 qpso_noqubo time=10 seed=13348: D=212.0 gap=0.00% evals=76564 10.00s ls=18554
+  [42/90] P-n19-k2 pso_ls time=10 seed=13348: D=218.0 gap=2.83% evals=76389 10.00s ls=19271
+  [43/90] P-n19-k2 ortools time=10 seed=13349: D=212.0 gap=0.00% evals=0 9.95s ls=0
+  [44/90] P-n19-k2 pso_ls time=10 seed=13349: D=212.0 gap=0.00% evals=83487 10.00s ls=21069
+  [45/90] P-n19-k2 ortools time=10 seed=13350: D=212.0 gap=0.00% evals=0 9.95s ls=0
+  [46/90] P-n19-k2 qpso_noqubo time=10 seed=13349: D=212.0 gap=0.00% evals=82988 10.00s ls=20120
+  [47/90] P-n19-k2 ortools time=10 seed=13351: D=212.0 gap=0.00% evals=0 9.96s ls=0
+  [48/90] P-n19-k2 pso_ls time=10 seed=13350: D=222.0 gap=4.72% evals=74960 10.00s ls=18918
+  [49/90] P-n19-k2 qpso_noqubo time=10 seed=13350: D=212.0 gap=0.00% evals=80198 10.00s ls=19403
+  [50/90] P-n19-k2 ortools time=10 seed=13352: D=212.0 gap=0.00% evals=0 9.95s ls=0
+  [51/90] P-n19-k2 qpso_noqubo time=10 seed=13351: D=212.0 gap=0.00% evals=75161 10.00s ls=18211
+  [52/90] P-n19-k2 pso_ls time=10 seed=13351: D=221.0 gap=4.25% evals=74520 10.00s ls=18804
+  [53/90] P-n19-k2 pso_ls time=10 seed=13352: D=224.0 gap=5.66% evals=77080 10.00s ls=19450
+  [54/90] P-n19-k2 qpso_noqubo time=10 seed=13352: D=212.0 gap=0.00% evals=74839 10.00s ls=18140
+  [55/90] P-n19-k2 pso_ls time=10 seed=13353: D=224.0 gap=5.66% evals=75671 10.00s ls=19089
+  [56/90] P-n19-k2 ortools time=10 seed=13353: D=212.0 gap=0.00% evals=0 9.95s ls=0
+  [57/90] P-n19-k2 ortools time=10 seed=13354: D=212.0 gap=0.00% evals=0 9.95s ls=0
+  [58/90] P-n19-k2 qpso_noqubo time=10 seed=13353: D=212.0 gap=0.00% evals=77191 10.00s ls=18726
+  [59/90] P-n19-k2 pso_ls time=10 seed=13354: D=221.0 gap=4.25% evals=71333 10.00s ls=17999
+  [60/90] P-n22-k8 ortools time=10 seed=14345: D=603.0 gap=0.00% evals=0 9.95s ls=0
+  [61/90] P-n19-k2 qpso_noqubo time=10 seed=13354: D=221.0 gap=4.25% evals=67198 10.00s ls=16292
+  [62/90] P-n22-k8 pso_ls time=10 seed=14345: D=603.0 gap=0.00% evals=64280 10.00s ls=16211
+  [63/90] P-n22-k8 qpso_noqubo time=10 seed=14345: D=603.0 gap=0.00% evals=64562 10.00s ls=15969
+  [64/90] P-n22-k8 ortools time=10 seed=14346: D=603.0 gap=0.00% evals=0 9.95s ls=0
+  [65/90] P-n22-k8 qpso_noqubo time=10 seed=14346: D=603.0 gap=0.00% evals=64050 10.00s ls=15802
+  [66/90] P-n22-k8 pso_ls time=10 seed=14346: D=603.0 gap=0.00% evals=63840 10.00s ls=16107
+  [67/90] P-n22-k8 ortools time=10 seed=14347: D=603.0 gap=0.00% evals=0 9.95s ls=0
+  [68/90] P-n22-k8 ortools time=10 seed=14348: D=603.0 gap=0.00% evals=0 9.95s ls=0
+  [69/90] P-n22-k8 pso_ls time=10 seed=14347: D=603.0 gap=0.00% evals=65720 10.00s ls=16575
+  [70/90] P-n22-k8 qpso_noqubo time=10 seed=14347: D=603.0 gap=0.00% evals=60962 10.00s ls=15048
+  [71/90] P-n22-k8 ortools time=10 seed=14349: D=603.0 gap=0.00% evals=0 9.95s ls=0
+  [72/90] P-n22-k8 pso_ls time=10 seed=14348: D=603.0 gap=0.00% evals=65860 10.00s ls=16615
+  [73/90] P-n22-k8 qpso_noqubo time=10 seed=14348: D=603.0 gap=0.00% evals=62137 10.00s ls=15312
+  [74/90] P-n22-k8 ortools time=10 seed=14350: D=603.0 gap=0.00% evals=0 9.95s ls=0
+  [75/90] P-n22-k8 pso_ls time=10 seed=14349: D=603.0 gap=0.00% evals=68360 10.00s ls=17251
+  [76/90] P-n22-k8 qpso_noqubo time=10 seed=14350: D=603.0 gap=0.00% evals=66081 10.00s ls=16281
+  [77/90] P-n22-k8 qpso_noqubo time=10 seed=14349: D=603.0 gap=0.00% evals=62978 10.00s ls=15575
+  [78/90] P-n22-k8 pso_ls time=10 seed=14350: D=603.0 gap=0.00% evals=65412 10.00s ls=16504
+  [79/90] P-n22-k8 ortools time=10 seed=14351: D=603.0 gap=0.00% evals=0 9.95s ls=0
+  [80/90] P-n22-k8 ortools time=10 seed=14352: D=603.0 gap=0.00% evals=0 9.95s ls=0
+  [81/90] P-n22-k8 qpso_noqubo time=10 seed=14351: D=603.0 gap=0.00% evals=64161 10.00s ls=15809
+  [82/90] P-n22-k8 pso_ls time=10 seed=14351: D=603.0 gap=0.00% evals=65880 10.00s ls=16625
+  [83/90] P-n22-k8 pso_ls time=10 seed=14352: D=603.0 gap=0.00% evals=67320 10.00s ls=16985
+  [84/90] P-n22-k8 ortools time=10 seed=14353: D=603.0 gap=0.00% evals=0 9.95s ls=0
+  [85/90] P-n22-k8 qpso_noqubo time=10 seed=14352: D=603.0 gap=0.00% evals=62188 10.00s ls=15322
+  [86/90] P-n22-k8 pso_ls time=10 seed=14353: D=603.0 gap=0.00% evals=63160 10.00s ls=15934
+  [87/90] P-n22-k8 qpso_noqubo time=10 seed=14353: D=603.0 gap=0.00% evals=66038 10.00s ls=16270
+  [88/90] P-n22-k8 pso_ls time=10 seed=14354: D=603.0 gap=0.00% evals=69800 10.00s ls=17607
+  [89/90] P-n22-k8 ortools time=10 seed=14354: D=603.0 gap=0.00% evals=0 9.95s ls=0
+  [90/90] P-n22-k8 qpso_noqubo time=10 seed=14354: D=603.0 gap=0.00% evals=126337 10.00s ls=31270
+[p_small] done in 100 s
+C:\Users\nisha\Quantum-Route-solver\engine\qflux\bench\plots.py:61: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(Y, axis=0)
+C:\Users\nisha\Quantum-Route\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+budget_type  budget instance        algo  runs  D_mean  gap_mean_pct  gap_best_pct  wall_s_mean
+       time      10 P-n16-k8     ortools    10   450.0      0.000000             0      9.95327
+       time      10 P-n16-k8      pso_ls    10   450.0      0.000000             0     10.00070
+       time      10 P-n16-k8 qpso_noqubo    10   450.0      0.000000             0     10.00080
+       time      10 P-n19-k2     ortools    10   212.0      0.000000             0      9.95387
+       time      10 P-n19-k2 qpso_noqubo    10   212.9      0.424528             0     10.00070
+       time      10 P-n19-k2      pso_ls    10   221.2      4.339620             0     10.00060
+       time      10 P-n22-k8     ortools    10   603.0      0.000000             0      9.95229
+       time      10 P-n22-k8      pso_ls    10   603.0      0.000000             0     10.00070
+       time      10 P-n22-k8 qpso_noqubo    10   603.0      0.000000             0     10.00080
+
+wrote:
+  C:\Users\nisha\Quantum-Route-solver\results\tables\p_small_summary.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\p_small_wilcoxon.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\p_small_friedman.csv
+  C:\Users\nisha\Quantum-Route-solver\results\tables\p_small_meta.json
+  C:\Users\nisha\Quantum-Route-solver\results\figures\p_small_convergence_P-n16-k8_time10.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\p_small_convergence_P-n19-k2_time10.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\p_small_convergence_P-n22-k8_time10.png
+  C:\Users\nisha\Quantum-Route-solver\results\figures\p_small_gap_time10.png
