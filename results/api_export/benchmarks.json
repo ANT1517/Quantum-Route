@@ -1,0 +1,144 @@
+[
+ {
+  "name": "bench_core_v1",
+  "title": "Core benchmark v1: QPSO-full vs PSO+LS vs GA+LS vs SA vs OR-Tools (+ RR+LS control), 30 runs; 30 s (n <= 80), 60 s (n > 80)",
+  "kind": "benchmark",
+  "runs": 30,
+  "budgets": [
+   {
+    "type": "time",
+    "value": 30,
+    "algorithms": [
+     "qpso",
+     "pso_ls",
+     "ga_ls",
+     "sa",
+     "rr_ls",
+     "ortools"
+    ]
+   },
+   {
+    "type": "time",
+    "value": 60,
+    "algorithms": [
+     "qpso",
+     "pso_ls",
+     "ga_ls",
+     "sa",
+     "rr_ls",
+     "ortools"
+    ]
+   }
+  ],
+  "records": 1260
+ },
+ {
+  "name": "p_small",
+  "title": "P-n16/19/22 (proven optima, K = k): QPSO-noQUBO, PSO+LS, OR-Tools; 10 s, 10 runs",
+  "kind": "benchmark",
+  "runs": 10,
+  "budgets": [
+   {
+    "type": "time",
+    "value": 10,
+    "algorithms": [
+     "qpso_noqubo",
+     "pso_ls",
+     "ortools"
+    ]
+   }
+  ],
+  "records": 90
+ },
+ {
+  "name": "ablation",
+  "title": "QPSO ablation chain, 30 s, 10 runs, A-n63-k9 and A-n80-k10; PSO+LS and RR+LS reference rows",
+  "kind": "benchmark",
+  "runs": 10,
+  "budgets": [
+   {
+    "type": "time",
+    "value": 30,
+    "algorithms": [
+     "a0_base",
+     "a1_rank_mbest",
+     "a2_sobol",
+     "a3_adaptive_alpha",
+     "a4_memetic_ls",
+     "a5_tunneling",
+     "a6_qubo",
+     "a7_full",
+     "pso_ls",
+     "rr_ls"
+    ]
+   }
+  ],
+  "records": 200
+ },
+ {
+  "name": "ablation_evals",
+  "title": "Plain QPSO-base vs plain PSO (no LS), 12,000 evaluations, 10 runs",
+  "kind": "benchmark",
+  "runs": 10,
+  "budgets": [
+   {
+    "type": "evals",
+    "value": 12000,
+    "algorithms": [
+     "qpso_base_plain",
+     "pso_plain"
+    ]
+   }
+  ],
+  "records": 40
+ },
+ {
+  "name": "alpha_sweep",
+  "title": "\u03b1 sensitivity of QPSO-full on A-n63-k9: fixed 0.3-1.2, linear 1.0\u21920.5, linear 0.8\u21920.3, adaptive; 30 s, 10 runs",
+  "kind": "benchmark",
+  "runs": 10,
+  "budgets": [
+   {
+    "type": "time",
+    "value": 30,
+    "algorithms": [
+     "alpha_fixed_0.3",
+     "alpha_fixed_0.5",
+     "alpha_fixed_0.7",
+     "alpha_fixed_0.9",
+     "alpha_fixed_1.0",
+     "alpha_fixed_1.2",
+     "alpha_lin_1.0_0.5",
+     "alpha_lin_0.8_0.3",
+     "alpha_adaptive"
+    ]
+   }
+  ],
+  "records": 90
+ },
+ {
+  "name": "scaling",
+  "title": "Scaling: budget 0.6 s per customer, capped at 300 s (D50). QPSO-full direct (X-n101 60 s reused from bench_core_v1, X-n200 120 s), cluster-first QPSO (X-n502 300 s), OR-Tools reference",
+  "kind": "benchmark",
+  "runs": 10,
+  "budgets": [
+   {
+    "type": "time",
+    "value": 120,
+    "algorithms": [
+     "qpso",
+     "ortools"
+    ]
+   },
+   {
+    "type": "time",
+    "value": 300,
+    "algorithms": [
+     "qpso_cluster",
+     "ortools"
+    ]
+   }
+  ],
+  "records": 100
+ }
+]

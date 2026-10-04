@@ -18,7 +18,16 @@ FILE_TYPES = {".png": "image/png", ".svg": "image/svg+xml", ".csv": "text/csv", 
               ".md": "text/markdown", ".geojson": "application/geo+json"}
 
 
+# Benchmark Studio opens the first item: headline first, then the supporting experiments.
+ORDER = ["bench_core_v1", "p_small", "ablation", "ablation_evals", "alpha_sweep", "scaling"]
+MERGED = {"bench_core_v1_noqubo": "bench_core_v1"}      # supplementary rows shown inside another table (D45)
+
+
 def kind_of(name: str) -> str:
+    if name in MERGED:
+        return f"supplement (merged into {MERGED[name]})"
+    if name.startswith("d51_"):
+        return "audit (not a benchmark)"
     if name.startswith("tune_"):
         return "tuning (not a benchmark)"
     if name.startswith("smoke"):
@@ -33,7 +42,9 @@ def _records(df: pd.DataFrame) -> list[dict]:
 def list_benchmarks(include_all: bool = False) -> list[dict]:
     """Benchmark Studio has no kind filter, so tuning and smoke tables are hidden unless include_all."""
     out = []
-    for p in sorted(TABLES.glob("*_summary.csv")):
+    names = [p.name[: -len("_summary.csv")] for p in TABLES.glob("*_summary.csv")]
+    rank = {n: i for i, n in enumerate(ORDER)}
+    for p in [TABLES / f"{n}_summary.csv" for n in sorted(names, key=lambda n: (rank.get(n, len(ORDER)), n))]:
         name = p.name[: -len("_summary.csv")]
         if not include_all and kind_of(name) != "benchmark":
             continue
