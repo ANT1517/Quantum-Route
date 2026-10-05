@@ -8,7 +8,7 @@ import RouteMap from "../components/RouteMap";
 import CongestionChart from "../components/charts/CongestionChart";
 import { Empty, ErrorState, Loading, MockBadge, QueryState } from "../components/States";
 import { DecisionLog, Hi, InsightBlock, InsightsColumn, SignalRow } from "../components/ui/Insights";
-import { Chip, Panel, Segmented, Select } from "../components/ui/primitives";
+import { Chip, Panel, Segmented, Select, TrafficChip } from "../components/ui/primitives";
 import { PageShell, SubNav } from "../components/ui/Shell";
 import { useDemoMode } from "../lib/demoMode";
 import { logEvent } from "../lib/eventLog";
@@ -277,7 +277,7 @@ export default function ScenarioBuilder() {
               preview.data ? (
                 <>
                   <Chip tone="teal">{preview.data.customers.length} customers</Chip>
-                  <Chip>depart {minToHHMM(preview.data.scenario.tau0)}</Chip>
+                  <TrafficChip at={preview.data.scenario.tau0} />
                 </>
               ) : undefined
             }

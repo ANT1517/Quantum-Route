@@ -98,13 +98,13 @@ export default function BenchmarkStudio() {
   });
   const qubo = useQuery({ queryKey: ["qubo-validation"], queryFn: ({ signal }) => quantumValidation({ signal }), enabled: section === "qubo" });
   const milpCsv = useQuery({
-    queryKey: ["milp-csv"],
+    queryKey: ["milp-csv", demo],
     queryFn: async ({ signal }) => {
       const res = await fetch(fileUrl("tables/milp_p_instances.csv"), { signal });
       if (!res.ok || (res.headers.get("content-type") ?? "").includes("text/html")) throw new Error("MILP table not available");
       return parseCsv(await res.text());
     },
-    enabled: section === "milp" && !demo,
+    enabled: section === "milp",
     retry: false,
   });
 
@@ -258,9 +258,7 @@ export default function BenchmarkStudio() {
             </DataTable>
             <div className="text-[11.5px] text-mute">Time column = median time to within 1% of the optimum, as exported.</div>
             <div className="micro pt-1">MILP (CBC) on the same instances</div>
-            {demo ? (
-              <div className="text-[12px] text-mute">The MILP table (results/tables/milp_p_instances.csv) is read through the API in live mode; it is not part of the offline demo export.</div>
-            ) : milpCsv.isLoading ? (
+            {milpCsv.isLoading ? (
               <Loading label="Loading MILP table…" />
             ) : milpCsv.isError ? (
               <div className="text-[12px] text-mute">MILP table unavailable: {String((milpCsv.error as Error).message)}</div>
@@ -320,7 +318,7 @@ export default function BenchmarkStudio() {
           // KPI ranges over the CVRPLIB rows when present (single-route rows would widen them)
           const cv = t.filter((r) => /cvrplib/i.test(String(r.source ?? "")));
           const base = cv.length ? cv : t;
-          const scope = cv.length ? "CVRPLIB routes" : "all rows";
+          const scope = cv.length ? "CVRPLIB routes (≤7 stops)" : "all rows";
           const nums = (k: string) => base.map((r) => r[k]).filter((v): v is number => typeof v === "number");
           const feas = nums("neal_feasible_pct");
           const opt = nums("neal_optimal_pct");

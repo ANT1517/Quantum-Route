@@ -8,7 +8,7 @@ import CongestionChart, { CongestionLegend } from "../components/charts/Congesti
 import RouteMap from "../components/RouteMap";
 import { Empty, MockBadge, QueryState } from "../components/States";
 import { Hi, InsightBlock, InsightsColumn } from "../components/ui/Insights";
-import { Chip, KpiCard, Panel } from "../components/ui/primitives";
+import { Chip, KpiCard, Panel, TrafficChip } from "../components/ui/primitives";
 import { PageShell, SubNav } from "../components/ui/Shell";
 import { setDemoMode, useDemoMode } from "../lib/demoMode";
 import { fmt, minToHHMM } from "../lib/format";
@@ -45,7 +45,7 @@ export default function Home() {
 
   const r = demoResult.data;
   const depart = r ? Math.min(...r.routes.map((x) => x.depart_min).filter((x) => Number.isFinite(x))) : null;
-  const eyebrow = demo ? "DEMO DATA · OFFLINE" : api.isSuccess ? "SYSTEM LIVE" : api.isError ? "API OFFLINE · DEMO MODE AVAILABLE" : "CONNECTING";
+  const eyebrow = demo ? "DEMO DATA · OFFLINE" : api.isSuccess ? "SYSTEM ONLINE" : api.isError ? "API OFFLINE · DEMO MODE AVAILABLE" : "CONNECTING";
 
   return (
     <PageShell
@@ -127,7 +127,14 @@ export default function Home() {
               )}
             </QueryState>
             <div className="grid gap-3 min-[1300px]:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-              <Panel overlay title="Demo plan" chips={r ? <Chip tone="teal">{r.routes.length} routes</Chip> : undefined} meta={r ? `${r.meta.instance} · ${minToHHMM(depart)}` : undefined}>
+              <Panel overlay title="Demo plan" chips={
+                  r ? (
+                    <>
+                      <Chip tone="teal">{r.routes.length} routes</Chip>
+                      <TrafficChip at={depart} />
+                    </>
+                  ) : undefined
+                } meta={r ? `${r.meta.instance} · ${minToHHMM(depart)}` : undefined}>
                 {r ? (
                   <RouteMap
                     routes={r.routes}

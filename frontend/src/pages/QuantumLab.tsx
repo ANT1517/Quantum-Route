@@ -229,7 +229,7 @@ export default function QuantumLab() {
             the sampler matches the brute-force optimum. On classical hardware it is slower than 2-opt.
           </InsightBlock>
           {vt.length > 0 && (
-            <InsightBlock label={`Signal summary (${vtCvrp.length ? "CVRPLIB routes" : "validation table"})`}>
+            <InsightBlock label={`Signal summary (${vtCvrp.length ? "CVRPLIB routes (≤7 stops)" : "validation table"})`}>
               <SignalRow k="neal feasible" v={`${range(nums("neal_feasible_pct"))}%`} tone="lime" />
               <SignalRow k="neal optimal" v={`${range(nums("neal_optimal_pct"))}%`} />
               <SignalRow k="neal ms / route" v={range(nums("time_per_route_neal_ms"))} tone="amber" />

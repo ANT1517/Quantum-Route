@@ -22,7 +22,7 @@ import RouteMap, { type LatLon, type MapLine, type MapPoint } from "../component
 import RouteTable from "../components/RouteTable";
 import { Empty, ErrorState, Loading, MockBadge } from "../components/States";
 import { DecisionLog, Hi, InsightBlock, InsightsColumn, SignalRow } from "../components/ui/Insights";
-import { Checkbox, Chip, DataTable, KpiCard, Panel, Segmented, Select } from "../components/ui/primitives";
+import { Checkbox, Chip, DataTable, KpiCard, Panel, Segmented, Select, TrafficChip } from "../components/ui/primitives";
 import { PageShell, SubNav, type SubNavItem } from "../components/ui/Shell";
 import { useJobProgress } from "../hooks/useJobProgress";
 import { algoLabel } from "../lib/labels";
@@ -60,7 +60,7 @@ function Delta({ a, b, unit }: { a: number; b: number; unit: string }) {
   return <span style={{ color: d.tone === "plain" ? "var(--mute)" : `var(--${d.tone})` }}>{d.text}</span>;
 }
 
-const HERO = { title: "Every van, routed through", titleAccent: "live city traffic." };
+const HERO = { title: "Every van, routed through", titleAccent: "rush-hour city traffic." };
 
 export default function Results() {
   const demo = useDemoMode();
@@ -347,14 +347,15 @@ export default function Results() {
         {kpiRow}
         <Panel
           overlay
-          title="Live route map"
+          title="Route map"
           chips={
             <>
               <Chip tone="teal">{shown.routes.length} routes</Chip>
+              <TrafficChip at={depart} />
               {compare && <Chip tone="amber">incident zone</Chip>}
             </>
           }
-          meta={`${minToHHMM(depart)} departure · simulated traffic`}
+          meta={`${minToHHMM(depart)} departure`}
         >
           {mapFor({ height: 380 })}
           <div className="px-4 py-2.5" style={{ borderTop: "1px solid var(--line)" }}>
@@ -371,7 +372,7 @@ export default function Results() {
     main = (
       <div className="space-y-3">
         {beforeAfter}
-        <Panel overlay title="Routes" chips={<Chip tone="teal">{shown.routes.length} vehicles</Chip>} meta={sp.res ? `shortest path ETA ${fmt(sp.res.eta_min, 1)} min` : undefined}>
+        <Panel overlay title="Routes" chips={<><Chip tone="teal">{shown.routes.length} vehicles</Chip><TrafficChip at={depart} /></>} meta={sp.res ? `shortest path ETA ${fmt(sp.res.eta_min, 1)} min` : undefined}>
           {mapFor({ height: 460, flows: true, sp: true })}
           <div className="flex flex-wrap items-center gap-4 px-4 py-2.5" style={{ borderTop: "1px solid var(--line)" }}>
             {vehicleLegend}
@@ -437,7 +438,7 @@ export default function Results() {
       <div className="space-y-3">
         {beforeAfter}
         <div className={`grid gap-3 ${drawerOpen ? "min-[1300px]:grid-cols-[minmax(0,1fr)_300px]" : ""}`}>
-          <Panel overlay title="Incident map" chips={drawerOpen ? <Chip tone="amber">click the map to place the zone</Chip> : compare ? <Chip tone="amber">incident zone</Chip> : undefined}>
+          <Panel overlay title="Incident map" chips={<><TrafficChip at={depart} />{drawerOpen ? <Chip tone="amber">click the map to place the zone</Chip> : compare ? <Chip tone="amber">incident zone · simulated</Chip> : null}</>}>
             {mapFor({ height: 420, clickable: true })}
           </Panel>
           {drawerOpen && <IncidentDrawer draft={draft} onChange={setDraft} onSubmit={submitIncident} onClose={() => setDrawerOpen(false)} busy={busy} />}

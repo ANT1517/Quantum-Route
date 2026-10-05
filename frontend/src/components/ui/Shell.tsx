@@ -233,7 +233,7 @@ export function LiveRow() {
   } else {
     left = (
       <span className="flex items-center gap-2 text-teal" style={{ textShadow: "0 0 10px rgba(79,227,209,.5)" }}>
-        <span className="dot-live" /> {q.isSuccess ? `SYSTEM LIVE · API ${q.data.version ?? ""}` : "CONNECTING…"}
+        <span className="dot-live" /> {q.isSuccess ? `SYSTEM ONLINE · API ${q.data.version ?? ""}` : "CONNECTING…"}
       </span>
     );
   }

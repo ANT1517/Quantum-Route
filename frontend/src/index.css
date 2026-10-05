@@ -396,13 +396,15 @@ input[type="checkbox"].qr-check:checked::after {
   background: var(--map-bg);
   font-family: var(--font-sans);
 }
+/* OSM attribution stays visible on the dark map */
 .leaflet-control-attribution {
-  background: rgba(3, 3, 4, 0.7) !important;
-  color: var(--label) !important;
-  font-size: 9px !important;
+  background: rgba(3, 3, 4, 0.82) !important;
+  color: var(--mute) !important;
+  font-size: 10px !important;
+  padding: 1px 6px !important;
 }
 .leaflet-control-attribution a {
-  color: var(--mute) !important;
+  color: var(--txt-2) !important;
 }
 .leaflet-bar a {
   background: var(--card-1) !important;

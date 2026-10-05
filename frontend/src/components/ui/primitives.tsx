@@ -23,6 +23,17 @@ export function Chip({ tone = "plain", children, title, className = "" }: { tone
   );
 }
 
+/** "TRAFFIC 17:30 · SIMULATED" — every map/traffic view says the traffic is simulated. */
+export function TrafficChip({ at }: { at?: number | null }) {
+  const t = at != null && Number.isFinite(at) ? ((Math.round(at) % 1440) + 1440) % 1440 : null;
+  const hhmm = t == null ? "" : `${String(Math.floor(t / 60)).padStart(2, "0")}:${String(t % 60).padStart(2, "0")} `;
+  return (
+    <Chip tone="amber" title="Traffic is simulated (time-of-day load-ratio profiles + BPR), not live data.">
+      TRAFFIC {hhmm}· SIMULATED
+    </Chip>
+  );
+}
+
 export function Panel({
   title,
   chips,

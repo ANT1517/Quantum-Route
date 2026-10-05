@@ -8,7 +8,7 @@ import type { ShortestPathResponse } from "../types/result";
 import RouteMap, { type LatLon, type MapLine, type MapPoint } from "../components/RouteMap";
 import { Empty, ErrorState, Loading, MockBadge } from "../components/States";
 import { DecisionLog, Hi, InsightBlock, InsightsColumn, SignalRow } from "../components/ui/Insights";
-import { Checkbox, Chip, DataTable, KpiCard, Panel, Segmented } from "../components/ui/primitives";
+import { Checkbox, Chip, DataTable, KpiCard, Panel, Segmented, TrafficChip } from "../components/ui/primitives";
 import { PageShell, SubNav } from "../components/ui/Shell";
 import { useDemoMode } from "../lib/demoMode";
 import { logEvent } from "../lib/eventLog";
@@ -229,6 +229,7 @@ export default function ShortestPath() {
               {a && <Chip tone="violet">before (dashed)</Chip>}
               {a && <Chip tone="teal">after incident</Chip>}
               {out?.incident && <Chip tone="amber">incident zone · simulated</Chip>}
+              <TrafficChip at={dMin} />
             </>
           }
         >

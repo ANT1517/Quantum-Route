@@ -7,7 +7,7 @@ import type { FleetCompareResponse, FleetMode, FleetResult } from "../types/resu
 import RouteMap from "../components/RouteMap";
 import { Empty, ErrorState, Loading, MockBadge } from "../components/States";
 import { DecisionLog, Hi, InsightBlock, InsightsColumn, SignalRow } from "../components/ui/Insights";
-import { Chip, DataTable, FieldLabel, KpiCard, Panel, Slider } from "../components/ui/primitives";
+import { Chip, DataTable, FieldLabel, KpiCard, Panel, Slider, TrafficChip } from "../components/ui/primitives";
 import { PageShell, SubNav } from "../components/ui/Shell";
 import { vcColor } from "../lib/colors";
 import { useDemoMode } from "../lib/demoMode";
@@ -44,7 +44,7 @@ function pctChange(a: number, b: number): string {
 
 type Section = "maps" | "table";
 
-function ModeMap({ mode, r, plain, customers, depot }: { mode: FleetMode; r: FleetResult | undefined; plain: boolean; customers?: Parameters<typeof RouteMap>[0]["customers"]; depot?: [number, number] | null }) {
+function ModeMap({ mode, r, plain, customers, depot, depart }: { mode: FleetMode; r: FleetResult | undefined; plain: boolean; customers?: Parameters<typeof RouteMap>[0]["customers"]; depot?: [number, number] | null; depart?: number | null }) {
   return (
     <Panel
       overlay
@@ -53,6 +53,7 @@ function ModeMap({ mode, r, plain, customers, depot }: { mode: FleetMode; r: Fle
         r ? (
           <>
             <Chip tone={mode === "system_opt" ? "teal" : "amber"}>max V/C {fmt(r.max_vc, 2)}</Chip>
+            <TrafficChip at={depart ?? r.meta?.tau0} />
             <MockBadge text={r.job_id} />
           </>
         ) : undefined
@@ -189,8 +190,8 @@ export default function FleetImpact() {
           </div>
         )}
         <div className="grid gap-3 min-[1300px]:grid-cols-2">
-          <ModeMap mode="naive" r={modes.naive} plain={plain} customers={scenario.data?.customers} depot={depot} />
-          <ModeMap mode="system_opt" r={modes.system_opt} plain={plain} customers={scenario.data?.customers} depot={depot} />
+          <ModeMap mode="naive" r={modes.naive} plain={plain} customers={scenario.data?.customers} depot={depot} depart={sc?.tau0} />
+          <ModeMap mode="system_opt" r={modes.system_opt} plain={plain} customers={scenario.data?.customers} depot={depot} depart={sc?.tau0} />
         </div>
         <div className="flex flex-wrap items-center gap-3 font-mono text-[10px] text-mute">
           Edge colour by V/C:
