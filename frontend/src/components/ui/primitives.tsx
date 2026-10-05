@@ -92,16 +92,16 @@ export function KpiCard({
 }) {
   const color = tone ? `var(--${tone})` : "var(--txt)";
   return (
-    <div className="qr-kpi px-4 py-3.5" title={title}>
+    <div className="qr-kpi px-4 py-3" title={title}>
       <div className="micro">{label}</div>
-      <div className="mt-2 flex items-baseline gap-1.5">
-        <span className="num text-[30px] font-medium leading-none tracking-tight" style={{ color, textShadow: tone ? `0 0 18px var(--${tone})55` : undefined }}>
+      <div className="mt-1.5 flex items-baseline gap-1.5">
+        <span className="text-[30px] font-semibold leading-none tracking-[-0.02em] tabular-nums" style={{ color, textShadow: tone ? `0 0 18px var(--${tone})55` : undefined }}>
           {value}
         </span>
-        {unit && <span className="font-mono text-[12px] text-mute">{unit}</span>}
+        {unit && <span className="text-[13px] text-mute">{unit}</span>}
       </div>
       {(delta || context) && (
-        <div className="mt-2 flex flex-wrap items-center gap-1.5 text-[11.5px]">
+        <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-[11.5px]">
           {delta && (
             <span className="num" style={{ color: delta.tone === "plain" ? "var(--mute)" : `var(--${delta.tone})` }}>
               {delta.text}

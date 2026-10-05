@@ -6,7 +6,7 @@ import { clock, useEventLog } from "../../lib/eventLog";
 export function InsightsColumn({ children, title = "Engine intelligence" }: { children: ReactNode; title?: string }) {
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-2 text-[13px] font-semibold text-txt">
+      <div className="flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-txt">
         <Sparkles size={15} strokeWidth={1.5} className="text-teal" style={{ filter: "drop-shadow(0 0 4px rgba(79,227,209,.7))" }} />
         {title}
         <span className="dot-live ml-auto" style={{ width: 6, height: 6 }} />
@@ -56,7 +56,7 @@ export function DecisionLog({ lines = [] }: { lines?: Array<{ t?: string; text: 
   return (
     <div>
       <div className="micro mb-1.5">Decision log</div>
-      <div className="box max-h-[260px] space-y-1.5 overflow-y-auto px-3 py-2.5 font-mono text-[10.5px] leading-relaxed">
+      <div className="max-h-[260px] space-y-1.5 overflow-y-auto font-mono text-[10.5px] leading-relaxed">
         {all.length === 0 ? (
           <div className="text-lbl">No events yet.</div>
         ) : (
