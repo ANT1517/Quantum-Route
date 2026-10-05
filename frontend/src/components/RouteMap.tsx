@@ -391,7 +391,7 @@ export default function RouteMap(props: RouteMapProps) {
           </div>
         </>
       ) : (
-        <MapContainer center={center} zoom={12} style={{ height: "100%", width: "100%" }} scrollWheelZoom zoomControl={false} aria-label={ariaLabel}>
+        <MapContainer center={center} zoom={12} style={{ height: "100%", width: "100%" }} scrollWheelZoom zoomControl={false} zoomSnap={0.25} zoomDelta={0.5} aria-label={ariaLabel}>
           {/* CARTO dark_all now answers with an "API key required" image, so the OSM tiles used before are darkened
               with a CSS filter on the tile pane only (.qr-dark-tiles); routes and markers are unaffected. */}
           <TileLayer

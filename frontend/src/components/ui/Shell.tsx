@@ -48,7 +48,7 @@ export function TopNav() {
   };
   return (
     <header className="sticky top-0 z-[1000] backdrop-blur-md" style={{ background: "rgba(3,3,4,.72)", borderBottom: "1px solid var(--line)" }}>
-      <div className="mx-auto flex h-[62px] max-w-[1480px] items-center gap-3 px-4 lg:px-6">
+      <div className="mx-auto flex h-[62px] max-w-[1480px] items-center gap-3 px-4 lg:px-9">
         <Logo />
         <nav aria-label="Main" className="flex min-w-0 flex-1 justify-center overflow-x-auto">
           <ul className="flex items-stretch gap-0.5">
@@ -104,10 +104,10 @@ export interface HeroProps {
 
 export function Hero({ eyebrow, eyebrowTone = "teal", title, titleAccent, lead, actions, meta }: HeroProps) {
   return (
-    <section className="qr-hero qr-fade flex flex-wrap items-end gap-6 pb-7 pt-9">
+    <section className="qr-hero qr-fade flex flex-wrap items-end gap-6 pb-6 pt-7">
       <div className="min-w-0 max-w-[820px] flex-1">
         <div
-          className="mb-4 inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.16em]"
+          className="mb-3 inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.16em]"
           style={{ color: `var(--${eyebrowTone})`, textShadow: `0 0 12px var(--${eyebrowTone})88` }}
         >
           <span className={`dot-live ${eyebrowTone === "amber" ? "dot-amber" : ""}`} />
@@ -115,12 +115,17 @@ export function Hero({ eyebrow, eyebrowTone = "teal", title, titleAccent, lead, 
         </div>
         <h1 className="qr-hero-title text-txt">
           <span className="block">{title}</span>
-          <span className="grad-text block pb-1">{titleAccent}</span>
+          <span className="grad-text inline-block pb-1">{titleAccent}</span>
         </h1>
-        <p className="mt-3 max-w-[640px] text-[15px] leading-relaxed text-mute">{lead}</p>
-        {meta && <div className="mt-2 font-mono text-[11px] text-lbl">{meta}</div>}
+        <p className="mt-2 max-w-[600px] text-[15px] leading-relaxed text-mute">{lead}</p>
+        {meta && !actions && <div className="mt-2 font-mono text-[11px] text-lbl">{meta}</div>}
       </div>
-      {actions && <div className="flex flex-wrap items-center gap-2 pb-1">{actions}</div>}
+      {actions && (
+        <div className="flex flex-col items-end gap-3 pb-1">
+          <div className="flex flex-wrap items-center justify-end gap-2">{actions}</div>
+          {meta && <div className="font-mono text-[11px] text-lbl">{meta}</div>}
+        </div>
+      )}
     </section>
   );
 }
@@ -159,7 +164,7 @@ export function SubNav<T extends string>({
                   type="button"
                   aria-current={on ? "page" : undefined}
                   onClick={() => onChange(it.id)}
-                  className={`relative flex h-9 w-full items-center gap-2.5 whitespace-nowrap rounded-md pl-3 pr-2 text-left text-[13px] transition ${on ? "qr-subnav-active text-white" : "text-mute hover:text-txt2"}`}
+                  className={`relative flex h-10 w-full items-center gap-2.5 whitespace-nowrap rounded-md pl-3 pr-2 text-left text-[13.5px] transition ${on ? "qr-subnav-active text-white" : "text-mute hover:text-txt2"}`}
                   style={on ? { background: "rgba(255,255,255,.035)" } : undefined}
                 >
                   <Icon size={16} strokeWidth={1.5} style={on ? { color: "var(--teal)", filter: "drop-shadow(0 0 4px rgba(79,227,209,.7))" } : undefined} />
@@ -201,7 +206,7 @@ function agoText(at: number | null, now: number): string {
   return `${Math.floor(s / 3600)} H AGO`;
 }
 
-export function LiveRow() {
+export function LiveRow({ inline = false }: { inline?: boolean }) {
   const demo = useDemoMode();
   const lastRun = useLastRunAt();
   const [now, setNow] = useState(Date.now());
@@ -238,7 +243,10 @@ export function LiveRow() {
     );
   }
   return (
-    <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em]" style={{ borderBottom: "1px solid var(--line)" }}>
+    <div
+      className={`flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] uppercase tracking-[0.16em] ${inline ? "pb-3" : "px-4 py-2.5"}`}
+      style={inline ? undefined : { borderBottom: "1px solid var(--line)" }}
+    >
       {left}
       <span className="text-lbl">
         LAST RUN: <span className="text-txt2">{agoText(lastRun, now)}</span>
@@ -266,7 +274,6 @@ export function ConsoleFrame({ subnav, insights, children }: { subnav?: ReactNod
       : "";
   return (
     <div className="qr-frame qr-fade mb-8">
-      <LiveRow />
       <div className={`grid grid-cols-1 ${cols}`}>
         {subnav && (
           <aside className="p-2 min-[1000px]:py-4" style={{ borderRight: "1px solid var(--line)" }}>
@@ -274,6 +281,7 @@ export function ConsoleFrame({ subnav, insights, children }: { subnav?: ReactNod
           </aside>
         )}
         <div className="min-w-0 p-4">
+          <LiveRow inline />
           {insights && (
             <div className="mb-3 flex justify-end min-[1200px]:hidden">
               <button type="button" className="btn-secondary btn-sm" onClick={() => setDrawer(true)} aria-expanded={drawer} aria-controls="qr-insights">

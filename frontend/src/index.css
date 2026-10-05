@@ -371,8 +371,8 @@ input[type="checkbox"].qr-check:checked::after {
 
 /* hero headline */
 .qr-hero-title {
-  font-size: 54px;
-  line-height: 1.04;
+  font-size: 56px;
+  line-height: 1.02;
   font-weight: 600;
   letter-spacing: -0.035em;
 }

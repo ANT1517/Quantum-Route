@@ -13,7 +13,7 @@ export default function Layout() {
       </a>
       <GlobalSvgDefs />
       <TopNav />
-      <main id="qr-main" className="mx-auto w-full max-w-[1480px] flex-1 px-4 lg:px-6">
+      <main id="qr-main" className="mx-auto w-full max-w-[1480px] flex-1 px-4 lg:px-9">
         <ErrorBoundary resetKey={loc.pathname}>
           <Outlet />
         </ErrorBoundary>

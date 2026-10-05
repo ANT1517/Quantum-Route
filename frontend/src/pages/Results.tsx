@@ -357,14 +357,31 @@ export default function Results() {
           }
           meta={`${minToHHMM(depart)} departure`}
         >
-          {mapFor({ height: 380 })}
-          <div className="px-4 py-2.5" style={{ borderTop: "1px solid var(--line)" }}>
-            {vehicleLegend}
+          <div className="relative">
+            {mapFor({ height: 220 })}
+            <div className="pointer-events-none absolute bottom-2 right-2 z-[450] rounded-md px-2.5 py-1.5" style={{ background: "rgba(3,3,4,.78)", border: "1px solid var(--line)" }}>
+              {vehicleLegend}
+            </div>
           </div>
         </Panel>
-        <Panel title="Network congestion · 24 h" chips={<Chip>ρ = V/C · background</Chip>} meta={<CongestionLegend />} bodyClassName="px-2 pb-2">
-          <CongestionChart departMin={depart} height={200} />
-          <div className="px-2 pb-1 font-mono text-[10px] text-lbl">Simulated time-of-day load-ratio profiles (engine/qflux/traffic/profiles.py), not measurements.</div>
+        <Panel
+          title="Network congestion · 24 h"
+          chips={
+            <>
+              <Chip tone="teal">DEPART {minToHHMM(depart)}</Chip>
+              <Chip tone="amber" title="Arterial background load ratio ρ = V/C at departure (simulated profile)">
+                {peak === "PEAK" ? "PEAK " : ""}LOAD ×{loadRatio(depart, 0).toFixed(2)}
+              </Chip>
+            </>
+          }
+          meta="LOAD PROFILE BY ROAD CLASS (SIMULATED)"
+          bodyClassName="px-2 pb-2"
+        >
+          <CongestionChart departMin={depart} height={130} />
+          <div className="flex flex-wrap items-center justify-between gap-2 px-2">
+            <CongestionLegend />
+            <span className="font-mono text-[10px] text-lbl">ρ = V/C, engine/qflux/traffic/profiles.py · not measurements</span>
+          </div>
         </Panel>
       </div>
     );
@@ -554,7 +571,7 @@ export default function Results() {
 
   const insights = (
     <InsightsColumn>
-      <InsightBlock label="Recommended action" tone={compare ? "amber" : "teal"}>
+      <InsightBlock label="Recommended action" tone={compare ? "amber" : undefined}>
         {compare?.report ? (
           <>
             Re-plan <Hi tone={compare.report.accepted ? "lime" : "amber"}>{compare.report.accepted ? "accepted" : "rejected"}</Hi>: it avoids{" "}
