@@ -1,4 +1,5 @@
 import { fmt } from "../lib/format";
+import { DataTable } from "./ui/primitives";
 
 type Row = Record<string, unknown>;
 
@@ -14,42 +15,42 @@ export default function StatsTable({
   columns,
   highlight,
   colorFor,
+  labelFor,
 }: {
   rows: Row[];
   columns?: string[];
   highlight?: (row: Row) => boolean;
   colorFor?: (row: Row) => string | undefined;
+  labelFor?: (col: string) => string;
 }) {
-  if (!rows.length) return <div className="text-sm text-slate-500">Table is empty.</div>;
+  if (!rows.length) return <div className="text-[13px] text-mute">Table is empty.</div>;
   const cols = columns ?? tableColumns(rows);
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full text-sm">
-        <thead>
-          <tr className="border-b border-slate-200 text-left text-xs uppercase text-slate-500">
-            {cols.map((c) => (
-              <th key={c} className="whitespace-nowrap py-2 pr-4">
-                {c.replace(/_/g, " ")}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r, i) => {
-            const col = colorFor?.(r);
-            return (
-              <tr key={i} className={`border-b border-slate-100 ${highlight?.(r) ? "bg-teal-50 font-semibold" : ""}`}>
-                {cols.map((c, j) => (
-                  <td key={c} className={`whitespace-nowrap py-1.5 pr-4 ${typeof r[c] === "number" ? "tabular-nums" : ""}`}>
-                    {j === 0 && col && <span className="mr-2 inline-block h-2.5 w-2.5 rounded-full align-middle" style={{ background: col }} />}
-                    {fmt(r[c], 3)}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <DataTable>
+      <thead>
+        <tr>
+          {cols.map((c) => (
+            <th key={c}>{labelFor ? labelFor(c) : c.replace(/_/g, " ")}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r, i) => {
+          const col = colorFor?.(r);
+          const hi = highlight?.(r);
+          return (
+            <tr key={i} style={hi ? { background: "rgba(79,227,209,.05)" } : undefined}>
+              {cols.map((c, j) => (
+                <td key={c} className={typeof r[c] === "number" ? "n" : ""} style={hi ? { color: "var(--txt)" } : undefined}>
+                  {j === 0 && col && <span className="mr-2 inline-block h-2 w-2 rounded-full align-middle" style={{ background: col, boxShadow: hi ? `0 0 8px ${col}` : undefined }} />}
+                  {fmt(r[c], 3)}
+                  {j === 0 && hi && <span className="chip chip-teal ml-2">best</span>}
+                </td>
+              ))}
+            </tr>
+          );
+        })}
+      </tbody>
+    </DataTable>
   );
 }

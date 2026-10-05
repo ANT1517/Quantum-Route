@@ -26,10 +26,10 @@ export default class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.error) {
       return (
-        <div className="m-4 rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-800" role="alert">
-          <div className="font-semibold">This screen crashed.</div>
-          <div className="mt-1 font-mono text-xs">{this.state.error.message}</div>
-          <button className="btn-secondary mt-2" onClick={() => this.setState({ error: null })}>
+        <div className="m-4 rounded-xl p-4 text-[13px]" role="alert" style={{ background: "rgba(255,122,122,.05)", border: "1px solid rgba(255,122,122,.3)" }}>
+          <div className="font-semibold text-danger">This screen crashed.</div>
+          <div className="mt-1 font-mono text-[11px] text-txt2">{this.state.error.message}</div>
+          <button type="button" className="btn-secondary btn-sm mt-3" onClick={() => this.setState({ error: null })}>
             Try again
           </button>
         </div>

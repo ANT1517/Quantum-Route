@@ -1,0 +1,42 @@
+/* QuantumRoute UI v3 "Luminous Command Center" design tokens (UI_REDESIGN_PROMPT.md §2). */
+:root {
+  --bg: #030304;
+  --frame-1: #0e1115;
+  --frame-2: #07080a;
+  --card-1: #0f1216;
+  --card-2: #0a0c0f;
+  --panel: #090b0e;
+  --map-bg: #06080a;
+  --line: #1a1e24;
+  --line-2: #262b33;
+  --frame-border: #20262e;
+  --grid: #12161b;
+
+  --txt: #f5f6f7;
+  --txt-2: #cfd3d8;
+  --mute: #8c929b;
+  --label: #5a616b;
+  --nav: #b9bec5;
+
+  --teal: #4fe3d1;
+  --teal-deep: #1fa99a;
+  --teal-ice: #c9fff7;
+  --lime: #d6f25c;
+  --amber: #ffb547;
+  --violet: #9aa6ff;
+  --sky: #7fd1ff;
+  --pink: #f3a6e0;
+  --red: #ff7a7a;
+
+  --grad-head: linear-gradient(90deg, #ffffff 0%, #4fe3d1 55%, #d6f25c 100%);
+  --glow-teal: 0 0 12px rgba(79, 227, 209, 0.6);
+
+  --radius-frame: 16px;
+  --radius: 12px;
+  --radius-sm: 8px;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  color-scheme: dark;
+}

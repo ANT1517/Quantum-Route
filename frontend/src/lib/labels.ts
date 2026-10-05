@@ -19,6 +19,17 @@ export const ALGO_LABELS: Record<string, string> = {
   rr_ls: "Random restart + LS (control)",
   ortools: "OR-Tools (industry reference)",
   milp: "MILP (CBC)",
+  // ablation chain / supporting tables (keys as exported in results/)
+  a0_base: "A0 base",
+  a1_rank_mbest: "A1 rank mbest",
+  a2_sobol: "A2 Sobol init",
+  a3_adaptive_alpha: "A3 adaptive α",
+  a4_memetic_ls: "A4 memetic LS",
+  a5_tunneling: "A5 tunneling",
+  a6_qubo: "A6 QUBO slot",
+  a7_full: "A7 full",
+  qpso_base_plain: "QPSO base (no LS)",
+  pso_plain: "PSO (no LS)",
 };
 
 export function algoLabel(key: string | null | undefined): string {

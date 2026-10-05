@@ -1,25 +1,42 @@
-// SVG heatmap of a QUBO matrix (diverging: negative = teal, positive = red).
-export default function QuboHeatmap({ matrix, labels, size = 420 }: { matrix: number[][]; labels?: string[]; size?: number }) {
+// SVG heatmap of a QUBO matrix. Sequential ramp on |Q| (black → violet → teal); the sign is in the tooltip
+// and negative cells carry a dot (colour is never the only cue).
+function ramp(t: number): string {
+  const stops: Array<[number, number[]]> = [
+    [0, [7, 8, 10]],
+    [0.5, [154, 166, 255]],
+    [1, [79, 227, 209]],
+  ];
+  const i = t <= 0.5 ? 0 : 1;
+  const [a, ca] = stops[i];
+  const [b, cb] = stops[i + 1];
+  const u = (t - a) / (b - a);
+  const c = ca.map((x, k) => Math.round(x + (cb[k] - x) * u));
+  return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
+
+export default function QuboHeatmap({ matrix, labels: allLabels, size = 420 }: { matrix: number[][]; labels?: string[]; size?: number }) {
   const n = matrix.length;
-  if (!n) return <div className="text-sm text-slate-500">Empty QUBO matrix.</div>;
+  // axis labels only while readable; cell tooltips always carry them
+  const labels = allLabels && n <= 25 ? allLabels : undefined;
+  if (!n) return <div className="text-[13px] text-mute">Empty QUBO matrix.</div>;
   const maxAbs = Math.max(1e-9, ...matrix.flatMap((r) => r.map((v) => Math.abs(v))));
   const pad = labels ? 56 : 8;
   const cell = (size - pad) / n;
-  const color = (v: number) => {
-    if (v === 0) return "#f8fafc";
-    const t = Math.min(1, Math.abs(v) / maxAbs);
-    const base = v < 0 ? [13, 148, 136] : [220, 38, 38];
-    const c = base.map((b) => Math.round(255 + (b - 255) * (0.15 + 0.85 * t)));
-    return `rgb(${c[0]},${c[1]},${c[2]})`;
-  };
-  const fs = Math.min(10, cell * 0.8);
+  const color = (v: number) => (v === 0 ? "#07080A" : ramp(0.12 + 0.88 * Math.sqrt(Math.min(1, Math.abs(v) / maxAbs))));
+  const fs = Math.min(9, cell * 0.8);
+  const neg = matrix.flat().filter((v) => v < 0).length;
   return (
     <div>
-      <svg viewBox={`0 0 ${size} ${size}`} className="w-full max-w-md" role="img" aria-label="QUBO matrix heatmap">
+      <svg
+        viewBox={`0 0 ${size} ${size}`}
+        className="w-full max-w-[440px]"
+        role="img"
+        aria-label={`QUBO matrix heatmap, ${n} by ${n} variables, ${neg} negative entries, max |Q| ${maxAbs.toPrecision(4)}`}
+      >
         {labels &&
           labels.map((l, i) => (
             <g key={`${l}-${i}`}>
-              <text x={pad - 4} y={pad + cell * (i + 0.5) + 3} textAnchor="end" fontSize={fs} fill="#475569">
+              <text x={pad - 4} y={pad + cell * (i + 0.5) + 3} textAnchor="end" fontSize={fs} fill="#5A616B" fontFamily="JetBrains Mono, monospace">
                 {l}
               </text>
               <text
@@ -27,7 +44,8 @@ export default function QuboHeatmap({ matrix, labels, size = 420 }: { matrix: nu
                 y={pad - 4}
                 textAnchor="start"
                 fontSize={fs}
-                fill="#475569"
+                fill="#5A616B"
+                fontFamily="JetBrains Mono, monospace"
                 transform={`rotate(-60 ${pad + cell * (i + 0.5)} ${pad - 4})`}
               >
                 {l}
@@ -36,20 +54,24 @@ export default function QuboHeatmap({ matrix, labels, size = 420 }: { matrix: nu
           ))}
         {matrix.map((row, i) =>
           row.map((v, j) => (
-            <rect key={`${i}-${j}`} x={pad + j * cell} y={pad + i * cell} width={cell} height={cell} fill={color(v)} stroke="#fff" strokeWidth={0.5}>
-              <title>{`Q[${labels?.[i] ?? i}, ${labels?.[j] ?? j}] = ${v}`}</title>
-            </rect>
+            <g key={`${i}-${j}`}>
+              <rect x={pad + j * cell} y={pad + i * cell} width={cell} height={cell} fill={color(v)} stroke="#030304" strokeWidth={0.5}>
+                <title>{`Q[${allLabels?.[i] ?? i}, ${allLabels?.[j] ?? j}] = ${v}`}</title>
+              </rect>
+              {v < 0 && cell >= 5 && <circle cx={pad + (j + 0.5) * cell} cy={pad + (i + 0.5) * cell} r={Math.min(1.6, cell * 0.15)} fill="#030304" pointerEvents="none" />}
+            </g>
           )),
         )}
       </svg>
-      <div className="mt-2 flex flex-wrap items-center gap-4 text-xs text-slate-500">
-        <span className="flex items-center gap-1">
-          <span className="inline-block h-3 w-3" style={{ background: "rgb(13,148,136)" }} /> negative
+      <div className="mt-3 flex flex-wrap items-center gap-3 font-mono text-[10px] text-mute">
+        <span className="flex items-center gap-2">
+          |Q| 0
+          <span className="inline-block h-2 w-24 rounded" style={{ background: "linear-gradient(90deg,#07080A,#9AA6FF,#4FE3D1)" }} />
+          {maxAbs.toPrecision(4)}
         </span>
-        <span className="flex items-center gap-1">
-          <span className="inline-block h-3 w-3" style={{ background: "rgb(220,38,38)" }} /> positive (penalty / distance)
+        <span className="flex items-center gap-1.5">
+          <span className="inline-block h-2 w-2 rounded-full" style={{ background: "#030304", boxShadow: "0 0 0 1px #8C929B" }} /> dot = negative entry
         </span>
-        <span>|max| = {maxAbs.toPrecision(4)}</span>
       </div>
     </div>
   );

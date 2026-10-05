@@ -1,10 +1,16 @@
+import { AlertTriangle, Inbox, RotateCcw } from "lucide-react";
 import type { ReactNode } from "react";
+import { Skeleton } from "./ui/primitives";
 
 export function Loading({ label = "Loading…" }: { label?: string }) {
   return (
-    <div className="flex items-center gap-2 p-4 text-sm text-slate-500" role="status">
-      <span className="h-4 w-4 animate-spin rounded-full border-2 border-teal-600 border-t-transparent" />
-      {label}
+    <div className="space-y-2 p-4" role="status" aria-live="polite">
+      <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-mute">
+        <span className="dot-live" />
+        {label}
+      </div>
+      <Skeleton height={10} className="w-2/3" />
+      <Skeleton height={10} className="w-1/2" />
     </div>
   );
 }
@@ -12,12 +18,14 @@ export function Loading({ label = "Loading…" }: { label?: string }) {
 export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () => void }) {
   const msg = error instanceof Error ? error.message : String(error ?? "Unknown error");
   return (
-    <div className="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-800" role="alert">
-      <div className="font-semibold">Something went wrong</div>
-      <div className="mt-1">{msg}</div>
+    <div className="rounded-xl p-4 text-[13px]" role="alert" style={{ background: "rgba(255,122,122,.05)", border: "1px solid rgba(255,122,122,.3)" }}>
+      <div className="flex items-center gap-2 font-semibold text-danger">
+        <AlertTriangle size={15} strokeWidth={1.5} /> Something went wrong
+      </div>
+      <div className="mt-1 text-txt2">{msg}</div>
       {onRetry && (
-        <button className="btn-secondary mt-2" onClick={onRetry}>
-          Retry
+        <button type="button" className="btn-secondary btn-sm mt-3" onClick={onRetry}>
+          <RotateCcw size={13} strokeWidth={1.5} /> Retry
         </button>
       )}
     </div>
@@ -26,8 +34,9 @@ export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () =>
 
 export function Empty({ title, children }: { title: string; children?: ReactNode }) {
   return (
-    <div className="rounded-md border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
-      <div className="font-semibold text-slate-700">{title}</div>
+    <div className="rounded-xl p-8 text-center text-[13px] text-mute" style={{ border: "1px dashed var(--line-2)", background: "rgba(255,255,255,.01)" }}>
+      <Inbox size={20} strokeWidth={1.5} className="mx-auto mb-2 text-lbl" />
+      <div className="font-semibold text-txt2">{title}</div>
       {children && <div className="mt-2">{children}</div>}
     </div>
   );
@@ -65,7 +74,7 @@ export function QueryState<T>({
 export function MockBadge({ text }: { text?: string | null }) {
   if (!text || !/mock/i.test(text)) return null;
   return (
-    <span className="badge bg-fuchsia-100 text-fuchsia-800" title="Placeholder data, not a real result">
+    <span className="chip chip-amber" title="Placeholder data, not a real result">
       MOCK DATA
     </span>
   );

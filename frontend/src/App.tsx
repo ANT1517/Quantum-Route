@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Layout from "./components/Layout";
@@ -11,6 +12,9 @@ import Results from "./pages/Results";
 import RunOptimizer from "./pages/RunOptimizer";
 import ScenarioBuilder from "./pages/ScenarioBuilder";
 import ShortestPath from "./pages/ShortestPath";
+
+// Dev-only component gallery; tree-shaken out of production builds.
+const KitchenSink = import.meta.env.DEV ? lazy(() => import("./pages/KitchenSink")) : null;
 
 export default function App() {
   return (
@@ -26,6 +30,16 @@ export default function App() {
           <Route path="bench" element={<BenchmarkStudio />} />
           <Route path="convergence" element={<Convergence />} />
           <Route path="quantum" element={<QuantumLab />} />
+          {KitchenSink && (
+            <Route
+              path="dev/kitchen-sink"
+              element={
+                <Suspense fallback={null}>
+                  <KitchenSink />
+                </Suspense>
+              }
+            />
+          )}
           <Route path="*" element={<Empty title="Page not found" />} />
         </Route>
       </Routes>

@@ -1,45 +1,60 @@
 import type { ResultJSON } from "../types/result";
+import { vehicleColor } from "../lib/colors";
 import { fmt, minToHHMM } from "../lib/format";
+import { DataTable } from "./ui/primitives";
 
-export default function RouteTable({ routes }: { routes: ResultJSON["routes"] }) {
-  if (!routes.length) return <div className="text-sm text-slate-500">No routes in this result.</div>;
+/** Vehicle status table. Load bar = load / capacity; delay share = congestion delay / time. */
+export default function RouteTable({ routes, compact = false }: { routes: ResultJSON["routes"]; compact?: boolean }) {
+  if (!routes.length) return <div className="text-[13px] text-mute">No routes in this result.</div>;
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full text-sm">
-        <thead>
-          <tr className="border-b border-slate-200 text-left text-xs uppercase text-slate-500">
-            <th className="py-2 pr-4">Veh</th>
-            <th className="py-2 pr-4">Stops</th>
-            <th className="py-2 pr-4">Load / Q</th>
-            <th className="py-2 pr-4">Depart → Return</th>
-            <th className="py-2 pr-4">Time (min)</th>
-            <th className="py-2 pr-4">Delay (min)</th>
-            <th className="py-2 pr-4">Km</th>
-            <th className="py-2 pr-4">CO₂ (kg)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {routes.map((r) => (
-            <tr key={r.vehicle} className="border-b border-slate-100">
-              <td className="py-2 pr-4">
-                <span className="mr-2 inline-block h-3 w-3 rounded-full align-middle" style={{ background: r.color }} />
-                {r.vehicle}
+    <DataTable>
+      <thead>
+        <tr>
+          <th>Vehicle</th>
+          {!compact && <th>Stops</th>}
+          <th>Load / Q</th>
+          <th>Depart → Return</th>
+          <th>Time (min)</th>
+          <th>Delay (min)</th>
+          <th>Km</th>
+          <th>CO₂ (kg, illustrative)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {routes.map((r, i) => {
+          const c = vehicleColor(i);
+          const load = r.capacity ? r.load / r.capacity : 0;
+          return (
+            <tr key={r.vehicle}>
+              <td>
+                <span className="flex items-center gap-2">
+                  <span className="inline-block h-2 w-2 rounded-full" style={{ background: c, boxShadow: `0 0 8px ${c}` }} />
+                  <span className="num text-txt">V{r.vehicle}</span>
+                  <span className="text-[11px] text-lbl">{r.stops.length} stops</span>
+                </span>
               </td>
-              <td className="py-2 pr-4 font-mono text-xs">{r.stops.join(" → ")}</td>
-              <td className="py-2 pr-4">
-                {fmt(r.load)} / {fmt(r.capacity)}
+              {!compact && <td className="n max-w-[280px] truncate text-[11px] text-mute" title={r.stops.join(" → ")}>{r.stops.join(" → ")}</td>}
+              <td className="n">
+                <span className="flex items-center gap-2">
+                  <span className="relative inline-block h-1 w-14 overflow-hidden rounded" style={{ background: "var(--line-2)" }} aria-hidden>
+                    <span className="absolute inset-y-0 left-0 rounded" style={{ width: `${Math.min(100, load * 100)}%`, background: c }} />
+                  </span>
+                  {fmt(r.load)} / {fmt(r.capacity)}
+                </span>
               </td>
-              <td className="py-2 pr-4">
+              <td className="n">
                 {minToHHMM(r.depart_min)} → {minToHHMM(r.return_min)}
               </td>
-              <td className="py-2 pr-4">{fmt(r.time_min, 1)}</td>
-              <td className="py-2 pr-4 text-amber-700">{fmt(r.congestion_delay_min, 1)}</td>
-              <td className="py-2 pr-4">{fmt(r.distance_km, 1)}</td>
-              <td className="py-2 pr-4">{fmt(r.co2_kg, 1)}</td>
+              <td className="n text-txt">{fmt(r.time_min, 1)}</td>
+              <td className="n" style={{ color: "var(--amber)" }}>
+                {fmt(r.congestion_delay_min, 1)}
+              </td>
+              <td className="n">{fmt(r.distance_km, 1)}</td>
+              <td className="n">{fmt(r.co2_kg, 1)}</td>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          );
+        })}
+      </tbody>
+    </DataTable>
   );
 }
