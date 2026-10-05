@@ -1,0 +1,4 @@
+instance,n,K,proven_optimum_sol,cbc_result,verdict,best_value,lower_bound,gap_pct,best_vs_optimum_pct,routes_feasible,wall_s,time_limit_s,cbc_threads
+P-n16-k8,15,8,450,Optimal solution found,optimal (proved by CBC),450,,,0,True,208.98,600,1
+P-n19-k2,18,2,212,Stopped on time limit,"time limit, gap 29.4%",232,163.837,29.3806,9.43396,True,600.3,600,1
+P-n22-k8,21,8,603,Stopped on time limit,"time limit, gap 28.6%",606,432.801,28.5807,0.497512,True,600.183,600,1

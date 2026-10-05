@@ -3,6 +3,8 @@ import { useState } from "react";
 import { getJobResult } from "../api/client";
 import ConvergenceChart from "../components/ConvergenceChart";
 import { Empty, ErrorState, Loading } from "../components/States";
+import { Panel } from "../components/ui/primitives";
+import { PageShell } from "../components/ui/Shell";
 import { algoLabel } from "../lib/labels";
 import { algoColor } from "../lib/colors";
 import { useDemoMode } from "../lib/demoMode";
@@ -26,40 +28,48 @@ export default function Convergence() {
     .map((q, i) => (q.data ? { name: `${algoLabel(q.data.algorithm)} · ${ids[i]}`, color: algoColor(q.data.algorithm), points: q.data.convergence } : null))
     .filter((s): s is NonNullable<typeof s> => s !== null);
 
+  const load = () =>
+    setIds(
+      text
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean),
+    );
+
   return (
-    <div className="space-y-4">
-      <div className="card space-y-2">
-        <h1 className="page-title">Convergence overlay</h1>
-        <label className="label">Job ids (comma-separated)</label>
-        <div className="flex gap-2">
-          <input className="input" value={text} onChange={(e) => setText(e.target.value)} placeholder="job ids…" />
-          <button
-            className="btn-primary"
-            onClick={() =>
-              setIds(
-                text
-                  .split(",")
-                  .map((s) => s.trim())
-                  .filter(Boolean),
-              )
-            }
-          >
-            Load
-          </button>
-        </div>
-        {demo && <div className="text-xs text-slate-500">Demo mode: every id resolves to result_demo.json.</div>}
+    <PageShell
+      hero={{
+        eyebrow: `CONVERGENCE OVERLAY · ${ids.length} JOB${ids.length === 1 ? "" : "S"}`,
+        title: "Best-so-far, never worse:",
+        titleAccent: "convergence side by side.",
+        lead: "Overlay the best fitness found so far against evaluations for finished jobs. Curves only fall or stay flat.",
+      }}
+    >
+      <div className="space-y-3">
+        <Panel title="Jobs" bodyClassName="px-4 pb-4">
+          <label className="label" htmlFor="conv-ids">
+            Job ids (comma-separated)
+          </label>
+          <div className="flex gap-2">
+            <input id="conv-ids" className="input num" value={text} onChange={(e) => setText(e.target.value)} onKeyDown={(e) => e.key === "Enter" && load()} placeholder="job ids…" />
+            <button type="button" className="btn-primary" onClick={load}>
+              Load
+            </button>
+          </div>
+          {demo && <div className="mt-2 text-[11.5px] text-mute">Demo mode: every id resolves to result_demo.json.</div>}
+        </Panel>
+        {ids.length === 0 ? (
+          <Empty title="No jobs selected" />
+        ) : qs.some((q) => q.isLoading) ? (
+          <Loading />
+        ) : (
+          <Panel title="Best F vs evaluations" bodyClassName="px-2 pb-3">
+            {qs.map((q, i) => (q.isError ? <ErrorState key={ids[i]} error={q.error} onRetry={() => q.refetch()} /> : null))}
+            <ConvergenceChart series={series} height={380} />
+            <div className="px-2 pt-1 text-[11.5px] text-mute">Median ± IQR bands across seeds come from the exported figures in Benchmarks.</div>
+          </Panel>
+        )}
       </div>
-      {ids.length === 0 ? (
-        <Empty title="No jobs selected" />
-      ) : qs.some((q) => q.isLoading) ? (
-        <Loading />
-      ) : (
-        <div className="card">
-          {qs.map((q, i) => (q.isError ? <ErrorState key={ids[i]} error={q.error} onRetry={() => q.refetch()} /> : null))}
-          <ConvergenceChart series={series} height={380} />
-          <div className="mt-2 text-xs text-slate-500">Median ± IQR bands across seeds come from the exported figures in Benchmark Studio.</div>
-        </div>
-      )}
-    </div>
+    </PageShell>
   );
 }

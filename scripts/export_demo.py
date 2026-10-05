@@ -4,7 +4,10 @@
 
 Copies the artefacts written by scripts/run_fleet_demo.py and derives scenarios/home KPI files from them.
 Benchmark and QUBO files are copied from results/api_export/ (scripts/export_api_json.py), i.e. exactly what
-the live API serves, plus the figures they reference.
+the live API serves, plus the figures they reference. Tables the UI reads through GET /api/files (the MILP
+table for Benchmarks > vs MILP) are copied byte-for-byte to the same relative path under public/demo/.
+
+    python scripts/export_demo.py --tables-only   # only the /files tables (no other demo file is rewritten)
 """
 import json
 import shutil
@@ -86,6 +89,20 @@ def main():
     print(f"  frontend/public/demo/figures/ ({len(figs)} figures)")
 
     write("qubo_route_demo.json", qubo_route_demo())
+    export_tables()
+
+
+# Files the UI fetches through GET /api/files/<path> (path relative to results/). Demo mode resolves the same
+# path to public/demo/<path>, so a verbatim copy keeps the offline screen identical to the live one.
+FILES_TABLES = ["tables/milp_p_instances.csv"]
+
+
+def export_tables() -> None:
+    for rel in FILES_TABLES:
+        dst = DST / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / "results" / rel, dst)
+        print(f"  frontend/public/demo/{rel}")
 
 
 def qubo_route_demo() -> dict:
@@ -114,4 +131,7 @@ def qubo_route_demo() -> dict:
     return out
 
 if __name__ == "__main__":
-    main()
+    if "--tables-only" in sys.argv:
+        export_tables()
+    else:
+        main()

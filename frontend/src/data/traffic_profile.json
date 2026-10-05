@@ -1,0 +1,65 @@
+{
+  "_comment": "Copied exactly from engine/qflux/traffic/profiles.py (SLOT_CENTERS, SLOT_LABELS, GROUP_NAMES, LOAD_RATIO, DAY). Illustrative time-of-day load ratios (simulated traffic), not measurements. Checked by tests/test_traffic_profile_json.py.",
+  "source": "engine/qflux/traffic/profiles.py",
+  "day_min": 1440.0,
+  "slot_centers_min": [
+    180.0,
+    420.0,
+    540.0,
+    780.0,
+    1050.0,
+    1200.0,
+    1380.0
+  ],
+  "slot_labels": [
+    "03:00",
+    "07:00",
+    "09:00",
+    "13:00",
+    "17:30",
+    "20:00",
+    "23:00"
+  ],
+  "groups": [
+    "arterial",
+    "secondary",
+    "residential"
+  ],
+  "load_ratio": [
+    [
+      0.3,
+      0.2,
+      0.1
+    ],
+    [
+      1.1,
+      0.9,
+      0.5
+    ],
+    [
+      1.5,
+      1.2,
+      0.7
+    ],
+    [
+      1.1,
+      0.9,
+      0.5
+    ],
+    [
+      1.55,
+      1.25,
+      0.75
+    ],
+    [
+      1.1,
+      0.9,
+      0.5
+    ],
+    [
+      0.5,
+      0.4,
+      0.2
+    ]
+  ]
+}
